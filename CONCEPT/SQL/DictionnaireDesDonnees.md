@@ -21,7 +21,6 @@ Table ou sont stockés toutes les catégorie des intervenants.
 
 
 
-
 ### CategorieHeures
 
 #### Utilité 
@@ -35,22 +34,6 @@ Table ou sont stockés toutes les catégorie des intervenants.
 
 
 
-### Modules
-
-#### Utilité 
-Table ou sont stockés toutes les modules.
-
-#### Informations et contraintes
-- **codeMod**     : Code du modules (Ex : R1.01/S3.01/S4.ST).                            [ VARCHAR ]
-- **typeMod**     : Type de la modules. Doit être soit 'Ressource', 'SAE', 'Stage/Suivi' [ VARCHAR ]
-- **libCourtMod** : Libellé raccourcit du modules                                        [ VARCHAR ]
-- **libLongMod**  : Libellé allongé du modules                                           [ VARCHAR ]
-- **validMod**    : Validation de la module par l'utilisateur. Simple repère.            [ BOOLEAN ]
-
-**Clé primaire** : codeMod
-
-
-
 ### Semestres
 
 #### Utilité 
@@ -60,7 +43,7 @@ Table ou sont stockés les différents semestres.
 - **numSem**     : Numero du semestre.                                 [ INTEGER ]
 - **nbGpTDSem**  : Nombre de groupe TD dans ce semestre. Doit être > 0 [ INTEGER ]
 - **nbGpTPSem**  : Nombre de groupe TP dans ce semestre. Doit être > 0 [ INTEGER ]
-- **nbGpEtdSem** : Nombre d'étudiants dans ce semestre. Doit être > 0  [ INTEGER ]
+- **nbEtdSem**   : Nombre d'étudiants dans ce semestre. Doit être > 0  [ INTEGER ]
 - **nbSemSem**   : Nombre de semaines dans ce semestre. Doit être > 0  [ INTEGER ]
 
 **Clé primaire** : numSem
@@ -69,43 +52,48 @@ Table ou sont stockés les différents semestres.
 
 ## Tables 1er niveau de liaison
 
+
+### Modules
+
+#### Utilité 
+Table ou sont stockés toutes les modules.
+
+#### Informations et contraintes
+- **codeMod**     : Code du modules (Ex : R1.01/S3.01/S4.ST).                            [ VARCHAR ]
+- **semMod**      : Numero du semestre dans laquel le module est enseigné.               [ LIAISON ]
+- **typeMod**     : Type de la modules. Doit être soit 'Ressource', 'SAE', 'Stage/Suivi' [ VARCHAR ]
+- **libCourtMod** : Libellé raccourcit du modules                                        [ VARCHAR ]
+- **libLongMod**  : Libellé allongé du modules                                           [ VARCHAR ]
+- **validMod**    : Validation de la module par l'utilisateur. Simple repère.            [ BOOLEAN ]
+
+**Clé primaire** : codeMod
+
+
 ### Intervenants
 
 #### Utilité
 Table ou sont stockés tous les intervenants.
 
 #### Informations et contraintes
-- **categInt**    : L'intervenants doit obligatoirement appartenir à une catégorie existante.      [ LIAISON ]
 - **nomInt**      : L'intervenants doit obligatoirement avoir un nom.                              [ VARCHAR ]
 - **prenomInt**   : L'intervenants doit obligatoirement avoir un prenom.                           [ VARCHAR ]
 - **heureMinInt** : Nombre d'heure minimum qu'un intervenants doit faire. Forcément > 0.           [ INTEGER ]
 - **heureMaxInt** : Nombre d'heure maximum qu'un intervenants peut faire. Forcément > heureMinInt. [ INTEGER ]
+- **categInt**    : L'intervenants doit obligatoirement appartenir à une catégorie existante.      [ LIAISON ]
 
 **Clé primaire** : (nomInt, prenomInt)
 
 
 
-### ModulesHeuresPN
+### ModulesCatHeures
 
 #### Utilité 
 Table ou sont stockés le nombre d'heure prévue par le programme national selon les catégories d'heures et modules.
 
 #### Informations et contraintes
-- **codeMod**    : Code du modules (Ex : R1.01/S3.01/S4.ST).             [ LIAISON ]
-- **libCatHeur** : Libellé de la catégorie du type d'heure.              [ LIAISON ]
-- **nbHeurePN**  : Nombre d'heure prévue par le programme. Forcément > 0 [ INTEGER ]
-
-**Clé primaire** : (codeMod,libCatHeur)
-
-
-### ModulesHeures
-
-#### Utilité 
-Table ou sont stockés le nombre d'heure prévue par semaine et le nombre de par le programme national selon les catégories d'heures et modules.
-
-#### Informations et contraintes
 - **codeMod**    : Code du modules (Ex : R1.01/S3.01/S4.ST).                 [ LIAISON ]
 - **libCatHeur** : Libellé de la catégorie du type d'heure.                  [ LIAISON ]
+- **nbHeurePN**  : Nombre d'heure prévue par le programme. Forcément > 0     [ INTEGER ]
 - **nbHeureSem** : Nombre d'heure a distribué parsemaine. Forcément > 0      [ INTEGER ]
 - **nbSemaine**  : Nombre de semaine ou le modules est eduqué. Forcément > 0 [ INTEGER ]
 
@@ -123,15 +111,16 @@ Table ou sont stockés le nombre d'heure prévue par semaine et le nombre de par
 Affecte les heures a des Intervenants 
 
 #### Informations et contraintes
-- **intervenant** : Identifiants de l'intervenants.                              [ LIAISON ]
+- **nomInt**      : Nom de l'intervenants.                                       [ LIAISON ]
+- **prenomInt**   : Prenom de l'intervenants.                                    [ LIAISON ]
+- **modules**     : Identifiants du modules.                                     [ LIAISON ]
 - **catHeures**   : Identifiants de la catégories heures.                        [ LIAISON ]
 - **nbGroupes**   : Nombre de groupe a qui l'intervenants eduque la matière. > 0 [ INTEGER ]
 - **nbSemaine**   : Nombre de semaine ou l'intervenants eduque la matière. > 0   [ INTEGER ]
 - **commentaire** : Commentaire facultatif sur l'affectation.                    [ VARCHAR ]
 
-**Clé primaire** : (nomInt, prenomInt)
-
-**Note**         : La catégorie d'heure "HP" n'as pas de nbSemaine a affecte.
+**Clé primaire** : ((nomInt, prenomInt), codeMod, libCatHeur)
+**Note**         : La catégorie d'heure "HP" n'as pas de nbSemaine a affecte. 
 
 
 
