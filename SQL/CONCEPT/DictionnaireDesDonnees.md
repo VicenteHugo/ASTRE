@@ -41,8 +41,8 @@ Table ou sont stockés les différents semestres.
 
 #### Informations et contraintes
 - **numSem**     : Numero du semestre.                                 [ INTEGER ]
-- **nbGpTDSem**  : Nombre de groupe TD dans ce semestre. Doit être > 0 [ INTEGER ]
-- **nbGpTPSem**  : Nombre de groupe TP dans ce semestre. Doit être > 0 [ INTEGER ]
+- **nbGpTdSem**  : Nombre de groupe TD dans ce semestre. Doit être > 0 [ INTEGER ]
+- **nbGpTpSem**  : Nombre de groupe TP dans ce semestre. Doit être > 0 [ INTEGER ]
 - **nbEtdSem**   : Nombre d'étudiants dans ce semestre. Doit être > 0  [ INTEGER ]
 - **nbSemSem**   : Nombre de semaines dans ce semestre. Doit être > 0  [ INTEGER ]
 
@@ -51,22 +51,6 @@ Table ou sont stockés les différents semestres.
 
 
 ## Tables 1er niveau de liaison
-
-
-### Modules
-
-#### Utilité 
-Table ou sont stockés toutes les modules.
-
-#### Informations et contraintes
-- **codeMod**     : Code du modules (Ex : R1.01/S3.01/S4.ST).                            [ VARCHAR ]
-- **semMod**      : Numero du semestre dans laquel le module est enseigné.               [ LIAISON ]
-- **typeMod**     : Type de la modules. Doit être soit 'Ressource', 'SAE', 'Stage/Suivi' [ VARCHAR ]
-- **libCourtMod** : Libellé raccourcit du modules                                        [ VARCHAR ]
-- **libLongMod**  : Libellé allongé du modules                                           [ VARCHAR ]
-- **validMod**    : Validation de la module par l'utilisateur. Simple repère.            [ BOOLEAN ]
-
-**Clé primaire** : codeMod
 
 
 ### Intervenants
@@ -79,10 +63,30 @@ Table ou sont stockés tous les intervenants.
 - **prenomInt**   : L'intervenants doit obligatoirement avoir un prenom.                           [ VARCHAR ]
 - **heureMinInt** : Nombre d'heure minimum qu'un intervenants doit faire. Forcément > 0.           [ INTEGER ]
 - **heureMaxInt** : Nombre d'heure maximum qu'un intervenants peut faire. Forcément > heureMinInt. [ INTEGER ]
-- **categInt**    : L'intervenants doit obligatoirement appartenir à une catégorie existante.      [ LIAISON ]
+- **libCatInt**   : L'intervenants doit obligatoirement appartenir à une catégorie existante.      [ LIAISON ]
 
 **Clé primaire** : (nomInt, prenomInt)
 
+
+
+### Modules
+
+#### Utilité 
+Table ou sont stockés toutes les modules.
+
+#### Informations et contraintes
+- **codeMod**     : Code du modules (Ex : R1.01/S3.01/S4.ST).                            [ VARCHAR ]
+- **typeMod**     : Type de la modules. Doit être soit 'Ressource', 'SAE', 'Stage/Suivi' [ VARCHAR ]
+- **libCourtMod** : Libellé raccourcit du modules                                        [ VARCHAR ]
+- **libLongMod**  : Libellé allongé du modules                                           [ VARCHAR ]
+- **validMod**    : Validation de la module par l'utilisateur. Simple repère.            [ BOOLEAN ]
+- **semMod**      : Numero du semestre dans laquel le module est enseigné.               [ LIAISON ]
+
+**Clé primaire** : codeMod
+
+
+
+## Tables 2e niveau de liaison
 
 
 ### ModulesCatHeures
@@ -102,24 +106,23 @@ Table ou sont stockés le nombre d'heure prévue par le programme national selon
 **Note**         : Si la catégorie est HP, pas de semaine.
 
 
-
-## Tables 2e niveau de liaison
-
 ### Affectation
 
 #### Utilité
 Affecte les heures a des Intervenants 
 
 #### Informations et contraintes
-- **nomInt**      : Nom de l'intervenants.                                       [ LIAISON ]
-- **prenomInt**   : Prenom de l'intervenants.                                    [ LIAISON ]
-- **modules**     : Identifiants du modules.                                     [ LIAISON ]
-- **catHeures**   : Identifiants de la catégories heures.                        [ LIAISON ]
-- **nbGroupes**   : Nombre de groupe a qui l'intervenants eduque la matière. > 0 [ INTEGER ]
-- **nbSemaine**   : Nombre de semaine ou l'intervenants eduque la matière. > 0   [ INTEGER ]
-- **commentaire** : Commentaire facultatif sur l'affectation.                    [ VARCHAR ]
+- **nomInt**     : Nom de l'intervenants.                                              [ LIAISON ]
+- **prenomInt**  : Prenom de l'intervenants.                                           [ LIAISON ]
+- **codeMod**    : Identifiants du modules.                                            [ LIAISON ]
+- **libCatHeur** : Identifiants de la catégories heures.                               [ LIAISON ]
+- **nbHeurSem**  : Nombre d'heure par semaine ou l'intervenants eduque la matière. > 0 [ INTEGER ]
+- **nbGroupe**   : Nombre de groupe a qui l'intervenants eduque la matière. > 0        [ INTEGER ]
+- **nbSem**      : Nombre de semaine ou l'intervenants eduque la matière. > 0          [ INTEGER ]
+- **commentaire**: Commentaire facultatif sur l'affectation.                           [ VARCHAR ]
 
 **Clé primaire** : ((nomInt, prenomInt), codeMod, libCatHeur)
+
 **Note**         : La catégorie d'heure "HP" n'as pas de nbSemaine a affecte. 
 
 
