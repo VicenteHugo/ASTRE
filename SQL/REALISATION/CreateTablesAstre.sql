@@ -36,7 +36,6 @@ DROP TABLE IF EXISTS CategorieIntervenants;
 
 
 -- Creation des tables ayant un niveau de liaison 0
-
 CREATE TABLE CategorieIntervenants
 (
 	libCatInt      VARCHAR(10) PRIMARY KEY, 
@@ -64,7 +63,6 @@ CREATE TABLE Semestres
 
 
 -- Creation des tables ayant un niveau de liaison 1
-
 CREATE TABLE Modules
 (
 	codeMod     VARCHAR(10) PRIMARY KEY, 
@@ -89,7 +87,6 @@ CREATE TABLE Intervenants
 
 
 -- Creation des tables ayant un niveau de liaison 1
-
 CREATE TABLE ModulesCatHeures
 (
 	codeMod    VARCHAR(10) NOT NULL REFERENCES Modules(codeMod),
