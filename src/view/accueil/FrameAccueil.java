@@ -3,8 +3,6 @@ package view.accueil;
 import javax.swing.*;
 import java.awt.*;
 
-import javax.swing.JFrame;
-
 public class FrameAccueil extends JFrame{
     
     public FrameAccueil() {
@@ -18,6 +16,11 @@ public class FrameAccueil extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setVisible(true);
+    }
+
+    public void changePannel (JPanel panel){
+        this.setContentPane(panel);
+        this.revalidate();
     }
 
     public static void main(String[] args){
