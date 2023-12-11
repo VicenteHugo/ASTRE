@@ -1,4 +1,4 @@
-package METIER;
+package model;
 
 public class CategorieHeures
 {
