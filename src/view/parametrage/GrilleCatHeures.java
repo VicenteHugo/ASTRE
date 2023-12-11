@@ -7,19 +7,19 @@ import javax.swing.table.AbstractTableModel;
 import controleur.Controleur;
 import model.CategorieIntervenants;
 
-public class GrilleCatInt extends AbstractTableModel {
+public class GrilleCatHeures extends AbstractTableModel {
 
 	private String[]   tabEntetes;
 	private Object[][] tabDonnees;
 
-	public GrilleCatInt() {
+	public GrilleCatHeures() {
 		
 		CategorieIntervenants cat;
-		this.tabDonnees = new Object[][] {{ "info_ec" , 1.0 , 200, 250},
-		                                  { "vaca_pro", 1.0 , 200, 250},
-		                                  { "vac_sd"  , 1.0 , 200, 250},
-		                                  { "vaca_ret", 1.0 , 200, 250},
-		                                  { "info_sd" , 1.0 , 200, 250} };
+		this.tabDonnees = new Object[][] {{ "info_ec" , 1.0},
+		                                  { "vaca_pro", 1.0},
+		                                  { "vac_sd"  , 1.0},
+		                                  { "vaca_ret", 1.0},
+		                                  { "info_sd" , 1.0} };
 
 		/*
 		List<CategorieIntervenants> lstClients = ctrl.getCatInt();
@@ -36,7 +36,7 @@ public class GrilleCatInt extends AbstractTableModel {
 			tabDonnees[lig][3] = cat.getHeureMaxCatInt();
 		}*/
 
-		this.tabEntetes = new String[]   {"Libellé", "Coef", "Heures minimum", "Heures maximums"};
+		this.tabEntetes = new String[]   {"Libellé", "Coef"};
 
 	}
 
