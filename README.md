@@ -6,5 +6,5 @@
 - [**Hugo Vicente**       ](https://github.com/VicenteHugo)
 - [**Oscar Cocagne**      ](https://github.com/OcsCgn)
 - [**Adrian Chalansonnet**]()
-- [**Louis Marouard**     ]()
+- [**Louis Marouard**     ](https://github.com/Vermoud27)
 
