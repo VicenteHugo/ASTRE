@@ -4,7 +4,7 @@
   
 - [**Sarah Hautot**       ](https://github.com/SarahHAUTOT)
 - [**Hugo Vicente**       ](https://github.com/VicenteHugo)
-- [**Oscar Cocagne**      ]()
+- [**Oscar Cocagne**      ](https://github.com/OcsCgn)
 - [**Adrian Chalansonnet**]()
 - [**Louis Marouard**     ]()
 
