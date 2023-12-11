@@ -1,5 +1,4 @@
 package view.parametrage;
-
 import javax.swing.*;
 import java.awt.*;
 

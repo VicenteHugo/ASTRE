@@ -4,9 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+import view.accueil.FrameAccueil;
+
+
 public class PanelIntPara extends JPanel implements ActionListener {
 
-	private FrameParametre frame;
+	private FrameAccueil frame;
 	private JTable tblGrilleDonnees;
 
 	private JButton btnValider;
@@ -15,7 +18,7 @@ public class PanelIntPara extends JPanel implements ActionListener {
 	private JButton btnAjouter;
 	private JButton btnSupprimer;
 
-	public PanelIntPara(FrameParametre frame) {
+	public PanelIntPara(FrameAccueil frame) {
 
 		// Frame
 		frame.setTitle("Astre - Paramètre (Intervenants)");
@@ -67,11 +70,11 @@ public class PanelIntPara extends JPanel implements ActionListener {
 
 		if (e.getSource() == this.btnValider) {
 			; // On modifie les données dans la base
-			this.frame.changePannel(new PanelParametre(this.frame));
+			this.frame.changePanel(new PanelParametre(this.frame));
 		}
 
 		if (e.getSource() == this.btnRetour) {
-			this.frame.changePannel(new PanelParametre(this.frame));
+			this.frame.changePanel(new PanelParametre(this.frame));
 		}
 
 		if (e.getSource() == this.btnSupprimer) {

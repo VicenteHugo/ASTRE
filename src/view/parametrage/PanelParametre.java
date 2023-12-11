@@ -1,6 +1,10 @@
 package view.parametrage;
 
 import javax.swing.*;
+
+import view.accueil.FrameAccueil;
+import view.accueil.PanelAccueil;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,12 +15,12 @@ public class PanelParametre extends JPanel implements ActionListener{
 	private JButton btnHeures;
 	private JButton btnAcceuil;
 
-	private FrameParametre frame;
+	private FrameAccueil frame;
 	
-	public PanelParametre(FrameParametre frame) {
+	public PanelParametre(FrameAccueil frame) {
 
 		//Frame
-		frame.setTitle("Astre - Paramètre (Acceuil)");
+		frame.setTitle("Astre - Paramètre (Accueil)");
 		frame.setMinimumSize(new Dimension(400, 400));
 		this.frame = frame;
 
@@ -53,13 +57,13 @@ public class PanelParametre extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) 
 	{
 		if (e.getSource() == this.btnIntervenants)
-			this.frame.changePannel(new PanelIntPara(this.frame));
+			this.frame.changePanel(new PanelIntPara(this.frame));
 
 		if (e.getSource() == this.btnHeures)
-			this.frame.changePannel(new PanelHeurePara(this.frame));
+			this.frame.changePanel(new PanelHeurePara(this.frame));
 
 		if (e.getSource() == this.btnAcceuil)
-			this.frame.dispose();
+			this.frame.changePanel(new PanelAccueil(this.frame));
 	}
 	
 }

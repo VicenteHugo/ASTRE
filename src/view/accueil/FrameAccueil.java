@@ -11,14 +11,14 @@ public class FrameAccueil extends JFrame{
         this.setSize(400, 300);
         this.setLocation(400, 200 );
 
-        this.add ( new PanelAccueil());
+        this.add ( new PanelAccueil(this));
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setVisible(true);
     }
 
-    public void changePannel (JPanel panel){
+    public void changePanel (JPanel panel){
         this.setContentPane(panel);
         this.revalidate();
     }
