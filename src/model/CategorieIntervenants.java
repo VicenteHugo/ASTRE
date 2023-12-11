@@ -1,7 +1,6 @@
 package model;
 
-public class CategorieIntervenants
-{
+public class CategorieIntervenants {
 
 	/*-------------------------------------------------------------*/
 	/*                           ATTRIBUTS                         */
@@ -26,8 +25,7 @@ public class CategorieIntervenants
 	/*-------------------------------------------------------------*/
 
 	/**Constructeur prenant tous les paramètres.*/
-	public CategorieIntervenants (String lib, float coef, int heurMax, int heurMin)
-	{
+	public CategorieIntervenants (String lib, float coef, int heurMax, int heurMin) {
 		this.libCatInt = lib;
 		this.coefCatInt = coef;
 		this.heureMinCatInt = heurMin;
@@ -62,8 +60,7 @@ public class CategorieIntervenants
 	/*                             AUTRES                          */
 	/*-------------------------------------------------------------*/
 
-	public String toString ()
-	{
+	public String toString () {
 		return String.format("\"%10s\" (%2.3f) [%4d - %-4d]", this.libCatInt, this.coefCatInt, this.heureMinCatInt, this.heureMaxCatInt);
 	}
 }
