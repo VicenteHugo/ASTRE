@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class PanelIntPara extends JPanel implements ActionListener{
+public class PanelCatHeures extends JPanel implements ActionListener{
 
 	private FrameParametre frame;
 	private JTable tblGrilleDonnees;
@@ -12,16 +12,16 @@ public class PanelIntPara extends JPanel implements ActionListener{
 	private JButton btnValider;
 	private JButton btnRetour;
 
-	public PanelIntPara(FrameParametre frame) {
+	public PanelCatHeures(FrameParametre frame) {
 
 		// Frame
-		frame.setTitle("Astre - Paramètre (Intervenants)");
+		frame.setTitle("Astre - Paramètre (Heures)");
 		this.frame = frame;
 
 		
 		// Création des composants
 		JScrollPane spGrilleDonnees;
-		this.tblGrilleDonnees = new JTable(new GrilleCatInt());
+		this.tblGrilleDonnees = new JTable(new GrilleCatHeures());
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		this.btnValider = new JButton("Valider");

@@ -20,8 +20,8 @@ public class FrameParametre extends JFrame {
 	
 
 	public void changePannel (JPanel panel){
-		this.getContentPane().removeAll();
-		this.getContentPane().add(panel);
+		this.setContentPane(panel);
+		this.revalidate();
 	}
 	
 	public static void main(String[] args) {
