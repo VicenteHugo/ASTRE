@@ -15,8 +15,15 @@ public class GrilleCatInt extends AbstractTableModel {
 	public GrilleCatInt ()
 	{
 		CategorieIntervenants cat;
-		List<CategorieIntervenants> lstClients = ctrl.getCatInt();
+		this.tabDonnees = new Object[][] {{ "info_ec" , 1.0 , 200, 250},
+		                                  { "vaca_pro", 1.0 , 200, 250},
+		                                  { "vac_sd"  , 1.0 , 200, 250},
+		                                  { "vaca_ret", 1.0 , 200, 250},
+		                                  { "info_sd" , 1.0 , 200, 250} };
 
+		/*
+		List<CategorieIntervenants> lstClients = ctrl.getCatInt();
+		
 		tabDonnees = new Object[lstClients.size()][4];
 
 		for ( int lig=0; lig<lstClients.size(); lig++)
@@ -27,30 +34,24 @@ public class GrilleCatInt extends AbstractTableModel {
 			tabDonnees[lig][1] = cat.getCoefCatInt    ();
 			tabDonnees[lig][2] = cat.getHeureMinCatInt();
 			tabDonnees[lig][3] = cat.getHeureMaxCatInt();
-		}
+		}*/
 
 		this.tabEntetes = new String[]   {"Libellé", "Coef", "Heures minimum", "Heures maximums"};
 
 	}
 
-	public int    getRowCount   () {return this.tabEntetes.length;}
-	public int    getColumnCount() {return this.tabDonnees.length;}
+	public int    getRowCount   () {return this.tabDonnees.length;}
+	public int    getColumnCount() {return this.tabEntetes.length;}
 	
-	public Object getValueAt    (int rowIndex, int columnIndex) {return this.tabDonnees[rowIndex][columnIndex];}
-	public Class  getColumnClass(int c) {return getValueAt(0, c).getClass();}
+	public String getColumnName (int col)          { return this.tabEntetes[col];          }
+	public Object getValueAt    (int row, int col) { return this.tabDonnees[row][col];     }
+	public Class  getColumnClass(int c)            {return getValueAt(0, c).getClass();}
 	
-	public boolean isCellEditable(int row, int col) { return col < 6;}
+	public boolean isCellEditable(int row, int col) { return true;}
 	
-	// public void setValueAt(Object value, int row, int col) {
-	// 	boolean bRet;
+	public void setValueAt(Object value, int row, int col) {
 
-	// 	if (col == 2) {
-	// 		bRet = this.ctrl.majPremiumClient(row, (Boolean) value);
-	// 		if (bRet) {
-	// 			this.tabDonnees[row][col] = value;
-	// 			this.fireTableCellUpdated(row, col);
-	// 		}
-	// 	}
+		this.tabDonnees[row][col] = value;
 
-	// }
+	}
 }
