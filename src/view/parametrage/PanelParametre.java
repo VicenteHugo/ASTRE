@@ -17,6 +17,7 @@ public class PanelParametre extends JPanel implements ActionListener{
 
 		//Frame
 		frame.setTitle("Astre - Paramètre (Acceuil)");
+		frame.setMinimumSize(new Dimension(400, 400));
 		this.frame = frame;
 
 
@@ -55,7 +56,7 @@ public class PanelParametre extends JPanel implements ActionListener{
 			this.frame.changePannel(new PanelIntPara(this.frame));
 
 		if (e.getSource() == this.btnHeures)
-			this.frame.changePannel(new PanelCatHeures(this.frame));
+			this.frame.changePannel(new PanelHeurePara(this.frame));
 
 		if (e.getSource() == this.btnAcceuil)
 			this.frame.dispose();

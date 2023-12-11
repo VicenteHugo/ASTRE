@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class PanelIntPara extends JPanel implements ActionListener {
+public class PanelHeurePara extends JPanel implements ActionListener {
 
 	private FrameParametre frame;
 	private JTable tblGrilleDonnees;
@@ -15,17 +15,17 @@ public class PanelIntPara extends JPanel implements ActionListener {
 	private JButton btnAjouter;
 	private JButton btnSupprimer;
 
-	public PanelIntPara(FrameParametre frame) {
+	public PanelHeurePara(FrameParametre frame) {
 
 		// Frame
-		frame.setTitle("Astre - Paramètre (Intervenants)");
+		frame.setTitle("Astre - Paramètre (Heures)");
 		frame.setMinimumSize(new Dimension(400,150));
 		this.frame = frame;
 
 		// Création des composants
 		JScrollPane spGrilleDonnees;
 		
-		this.tblGrilleDonnees = new JTable(new GrilleCatInt());
+		this.tblGrilleDonnees = new JTable(new GrilleCatHeures());
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		this.btnValider   = new JButton("Valider");
@@ -52,9 +52,7 @@ public class PanelIntPara extends JPanel implements ActionListener {
 
 		// Taille colomne JTable
 		this.tblGrilleDonnees.getColumnModel().getColumn(0).setMinWidth(80);
-		this.tblGrilleDonnees.getColumnModel().getColumn(1).setMinWidth(30);
-		this.tblGrilleDonnees.getColumnModel().getColumn(2).setMinWidth(50);
-		this.tblGrilleDonnees.getColumnModel().getColumn(3).setMinWidth(50);
+		this.tblGrilleDonnees.getColumnModel().getColumn(1).setMinWidth(50);
 
 
 		// Actionnement

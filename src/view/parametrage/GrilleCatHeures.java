@@ -36,7 +36,12 @@ public class GrilleCatHeures extends AbstractTableModel {
 			tabDonnees[lig][3] = cat.getHeureMaxCatInt();
 		}*/
 
-		this.tabEntetes = new String[]   {"Libellé", "Coef"};
+		this.tabEntetes = new String[] { "Libellé", "Coef" };
+		
+
+
+
+		//Taille
 
 	}
 
