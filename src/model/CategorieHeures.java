@@ -1,7 +1,6 @@
 package model;
 
-public class CategorieHeures
-{
+public class CategorieHeures {
 
 	/*-------------------------------------------------------------*/
 	/*                           ATTRIBUTS                         */
@@ -20,8 +19,7 @@ public class CategorieHeures
 	/*-------------------------------------------------------------*/
 
 	/**Constructeur prenant tous les paramètres.*/
-	public CategorieHeures (String lib, float coef)
-	{
+	public CategorieHeures (String lib, float coef) {
 		this.libCatHeur = lib;
 		this.coefCatHeur = coef;
 	}
@@ -50,8 +48,7 @@ public class CategorieHeures
 	/*                             AUTRES                          */
 	/*-------------------------------------------------------------*/
 
-	public String toString ()
-	{
+	public String toString () {
 		return String.format("\"%10s\" (%2.3f)", this.libCatHeur, this.coefCatHeur);
 	}
 }

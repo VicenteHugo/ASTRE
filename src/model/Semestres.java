@@ -1,7 +1,6 @@
 package model;
 
-public class Semestres
-{
+public class Semestres {
 
 	/*-------------------------------------------------------------*/
 	/*                           ATTRIBUTS                         */
@@ -28,8 +27,7 @@ public class Semestres
 	/*-------------------------------------------------------------*/
 
 	/**Constructeur prenant tous les paramètres.*/
-	public Semestres (int num, int nbTd, int nbTp, int nbEtd, int sem)
-	{
+	public Semestres (int num, int nbTd, int nbTp, int nbEtd, int sem) {
 		this.numSem    = num;
 		this.nbGpTdSem = nbTd;
 		this.nbGpTpSem = nbTp;
@@ -67,8 +65,7 @@ public class Semestres
 	/*                             AUTRES                          */
 	/*-------------------------------------------------------------*/
 
-	public String toString ()
-	{
+	public String toString () {
 		return String.format("Sem %1d (%3d etds) : %2d TP et %2d TP sur %3d semaines", this.numSem, this.nbEtdSem, this.nbGpTdSem, this.nbGpTpSem, this.nbSemSem);
 	}
 }

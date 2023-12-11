@@ -1,6 +1,5 @@
 package model;
 
-public class Intervenants 
-{
+public class Intervenants {
 	
 }
