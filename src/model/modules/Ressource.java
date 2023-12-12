@@ -9,26 +9,24 @@ import model.Semestres;
 
 public class Ressource extends Module {
 
-	private int nbHeurePN;
-	private int nbSemaine;
-	private int nbHeureSemaine;
-
 	private List<Integer> listElementCM;
 	private List<Integer> listElementTD;
 	private List<Integer> listElementTP;
+	private List<Integer> listElementTut;
 	private Etat etat;
 
-	public Ressource(Semestres semestres, String code, String libLong, String libCourt) {
-						
-		super(semestres, code, libLong, libCourt);
+	public Ressource(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel) {
+
+		super(semestres, code, libLong, libCourt, heurePonctuel);
 
 		this.listElementCM = new ArrayList<Integer>();
 		this.listElementTD = new ArrayList<Integer>();
 		this.listElementTP = new ArrayList<Integer>();
+
 	}
 
-	public void initList(int heurePNCM, int nbSemaineCM, int heureSemaineCM, CategorieHeures catH) {
-
+	@Override
+	public void initList(int heurePN, int nbSemaine, int heureSemaine, int heurePonctuel, CategorieHeures catH) {
 		List<Integer> list = null;
 		CategorieHeures cH = catH;
 
@@ -48,11 +46,16 @@ public class Ressource extends Module {
 			case "TP":
 				list = this.listElementTP;
 				break;
+
+			case "H tut":
+				list = this.listElementTut;
+				break;
 		}
 
-		list.add(heurePNCM);
-		list.add(nbSemaineCM);
-		list.add(heureSemaineCM);
+		list.add(heurePN);
+		list.add(nbSemaine);
+		list.add(heureSemaine);
+		list.add(heurePonctuel);
 
 		this.heures.put(cH, list);
 	}
