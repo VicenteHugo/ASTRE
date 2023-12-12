@@ -1,7 +1,6 @@
 package model;
 
 public class CategorieHeures {
-public class CategorieHeures {
 
 	/*-------------------------------------------------------------*/
 	/* ATTRIBUTS */
