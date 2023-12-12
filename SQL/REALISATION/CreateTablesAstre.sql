@@ -42,12 +42,13 @@ CREATE TABLE Etat
 -- Création des tables ayant un niveau de liaison 1
 CREATE TABLE CategorieIntervenants
 (
+	codeCatInt     VARCHAR(10), 
 	libCatInt      VARCHAR(10), 
 	coefCatInt     FLOAT DEFAULT 1 CHECK (coefCatInt > 0) ,
 	heureMinCatInt INTEGER NOT NULL CHECK (heureMinCatInt > 0)               ,
 	heureMaxCatInt INTEGER NOT NULL CHECK (heureMaxCatInt >= heureMinCatInt) ,
 	etat           VARCHAR(25) REFERENCES Etat(libEtat),
-	PRIMARY KEY(libCatInt, etat)
+	PRIMARY KEY(codeCatInt, etat)
 );
 
 CREATE TABLE CategorieHeures
