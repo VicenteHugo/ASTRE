@@ -48,14 +48,14 @@ public class PanelAccueil extends JPanel implements ActionListener {
         
     }
     public void actionPerformed(ActionEvent e) 
-	    {
-            if (e.getSource() == this.btnParametre)
-			    this.frame.changePanel(new PanelParametre(this.frame));
-            if (e.getSource() == this.btnPrevisionnel)
-                this.frame.changePanel(new PanelPrevi(this.frame));
-            if (e.getSource() == this.btnIntervenant)
-                this.frame.changePanel(new PanelIntervenants(this.frame));
-            if (e.getSource() == this.btnEtat)
-                this.frame.changePanel(new PanelParametre(this.frame));
-        }
+    {
+        if (e.getSource() == this.btnParametre)
+            this.frame.changePanel(new PanelParametre(this.frame));
+        if (e.getSource() == this.btnPrevisionnel)
+            this.frame.changePanel(new PanelPrevi(this.frame));
+        if (e.getSource() == this.btnIntervenant)
+            this.frame.changePanel(new PanelIntervenants(this.frame));
+        if (e.getSource() == this.btnEtat)
+            this.frame.changePanel(new PanelParametre(this.frame));
+    }
 }
