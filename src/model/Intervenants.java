@@ -132,10 +132,6 @@ public class Intervenants {
 	/* AUTRES */
 	/*-------------------------------------------------------------*/
 
-	public void initListeSemestre() {
-
-	}
-
 	@Override
 	public String toString() {
 		return "Intervenants [categorieIntervenant=" + categorieIntervenant + ", nomIntervenant=" + nomIntervenant

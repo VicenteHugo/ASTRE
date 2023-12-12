@@ -1,58 +1,64 @@
 package model.modules;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import model.CategorieHeures;
+import model.Etat;
 import model.Semestres;
 
 public class Ressource extends Module {
 
-	private String type;
+	private int nbHeurePN;
+	private int nbSemaine;
+	private int nbHeureSemaine;
 
-	private int nbHeureTotal;
-	private List<Integer> listeNombreHeurePn;
-	private HashMap<Integer, Integer> listeNombreHeure;
+	private List<Integer> listElementCM;
+	private List<Integer> listElementTD;
+	private List<Integer> listElementTP;
+	private Etat etat;
 
-	private int heurePonctuel;
+	public Ressource(Semestres semestres, String code, String libLong, String libCourt,
+			int nbHeurePN, int nbSemaine, int nbHeureSemaine) {
+		super(semestres, code, libLong, libCourt);
+		this.nbHeurePN = nbHeurePN;
+		this.nbHeureSemaine = nbHeureSemaine;
+		this.nbSemaine = nbSemaine;
 
-	private int nombreHeurePnTotal;
-	private int nombreHeureAffecte;
-
-	public Ressource(String libelleLongModule, String libelleCourtModule, Semestres semestres, int nbEtudiant,
-			boolean valide,
-			int nbGroupeTD, int nbGroupeTP, int nbHeureCMParSemaine, int nbHeureTDParSemaine,
-			int nbHeureTPParSemaine, int nbHeureTutParSemaine, int nbSemaineCM, int nbSemaineTD, int nbSemaineTP,
-			int nbSemaineTut, int nbHeureCM_PN, int nbHeureTD_PN, int nbHeureTut_PN, int nbHeureTP_PN,
-			int nbHeurePonctuel) {
-
-		super(libelleLongModule, libelleCourtModule, semestres, nbEtudiant, nbGroupeTD, nbGroupeTP, valide);
-		this.listeNombreHeurePn = new ArrayList<Integer>();
-		this.listeNombreHeure = new HashMap<Integer, Integer>();
-
-		this.initListHeurePn(nbHeureCM_PN, nbHeureTD_PN, nbHeureTP_PN, nbHeureTut_PN);
-		this.initNombreHeureSemaine(nbHeureCMParSemaine, nbHeureTDParSemaine, nbHeureTPParSemaine, nbHeureTutParSemaine,
-				nbSemaineCM, nbSemaineTD, nbSemaineTP, nbSemaineTut);
-
-		this.heurePonctuel = heurePonctuel;
-
+		this.listElementCM = new ArrayList<Integer>();
+		this.listElementTD = new ArrayList<Integer>();
+		this.listElementTP = new ArrayList<Integer>();
 	}
 
-	public void initListHeurePn(int nbHeureCM_PN, int nbHeureTD_PN, int nbHeureTP_PN, int nbHeureTut_PN) {
-		this.listeNombreHeurePn.add(nbHeureCM_PN);
-		this.listeNombreHeurePn.add(nbHeureTD_PN);
-		this.listeNombreHeurePn.add(nbHeureTP_PN);
-		this.listeNombreHeurePn.add(nbHeureTut_PN);
-	}
+	public void initList(int heurePNCM, int nbSemaineCM, int heureSemaineCM, String lib) {
+		List<Integer> list = null;
+		CategorieHeures cH = null;
 
-	public void initNombreHeureSemaine(int nbHeureCMParSemaine, int nbHeureTDParSemaine,
-			int nbHeureTPParSemaine, int nbHeureTutParSemaine, int nbSemaineCM, int nbSemaineTD, int nbSemaineTP,
-			int nbSemaineTut) {
-		this.listeNombreHeure.put(nbSemaineCM, nbHeureCMParSemaine);
-		this.listeNombreHeure.put(nbSemaineTD, nbHeureTDParSemaine);
-		this.listeNombreHeure.put(nbSemaineTP, nbHeureTPParSemaine);
-		this.listeNombreHeure.put(nbSemaineTut, nbHeureTutParSemaine);
-	}
+		switch (lib) {
+			case "CM":
+				list = this.listElementCM;
+				break;
 
+			case "TD":
+				list = this.listElementTD;
+				break;
+
+			case "TP":
+				list = this.listElementTP;
+				break;
+		}
+
+		for (CategorieHeures catHeure : Etat.getCategoriesHeures()) {
+			if (lib.equals(catHeure.getlibCatHeur())) {
+				cH = catHeure;
+				break;
+			}
+		}
+
+		list.add(heurePNCM);
+		list.add(nbSemaineCM);
+		list.add(heureSemaineCM);
+
+		this.heures.put(cH, list);
+	}
 }
