@@ -15,11 +15,11 @@ public class GrilleCatInt extends AbstractTableModel {
 	public GrilleCatInt() {
 		
 		CategorieIntervenants cat;
-		this.tabDonnees = new Object[][] {{ "info_ec" , 1.0 , 200, 250},
-		                                  { "vaca_pro", 1.0 , 200, 250},
-		                                  { "vac_sd"  , 1.0 , 200, 250},
-		                                  { "vaca_ret", 1.0 , 200, 250},
-		                                  { "info_sd" , 1.0 , 200, 250} };
+		this.tabDonnees = new Object[][] {{ "info_ec" ,"lib", 1.0 , 200, 250},
+		                                  { "vaca_pro","lib", 1.0 , 200, 250},
+		                                  { "vac_sd"  ,"lib", 1.0 , 200, 250},
+		                                  { "vaca_ret","lib", 1.0 , 200, 250},
+		                                  { "info_sd" ,"lib", 1.0 , 200, 250} };
 
 		/*
 		List<CategorieIntervenants> lstClients = ctrl.getCatInt();
@@ -36,7 +36,7 @@ public class GrilleCatInt extends AbstractTableModel {
 			tabDonnees[lig][3] = cat.getHeureMaxCatInt();
 		}*/
 
-		this.tabEntetes = new String[]   {"Libellé", "Coef", "Heures minimum", "Heures maximums"};
+		this.tabEntetes = new String[]   {"Code","Libellé", "Coef", "Heures minimum", "Heures maximum"};
 
 	}
 
