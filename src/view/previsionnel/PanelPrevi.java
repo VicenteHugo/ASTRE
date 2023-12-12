@@ -5,14 +5,18 @@ import view.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import view.accueil.FrameAccueil;
+import view.accueil.PanelAccueil;
+import view.module.PanelRessources;
 
-public class PanelPrevi extends JPanel {
+public class PanelPrevi extends JPanel implements ActionListener {
     private JTabbedPane ongletSemestres;
      
     private JButton btnCreerRessources;
@@ -56,5 +60,13 @@ public class PanelPrevi extends JPanel {
         panel.add(this.btnSupprimer);
 
         this.add(panel, BorderLayout.SOUTH);
+
+        this.btnCreerRessources.addActionListener(this);
+
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.btnCreerRessources)
+			this.frame.changePanel(new PanelRessources(this.frame));
     }
 }
