@@ -16,7 +16,9 @@ import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
 import view.module.PanelRessources;
 
-public class PanelPrevi extends JPanel implements ActionListener {
+public class PanelPrevi extends JPanel {
+    private FrameAccueil frame;
+
     private JTabbedPane ongletSemestres;
      
     private JButton btnCreerRessources;
@@ -25,13 +27,15 @@ public class PanelPrevi extends JPanel implements ActionListener {
     private JButton btnModifier;
     private JButton btnSupprimer;
 
-    private FrameAccueil frame;
+    private JButton btnAccueil;
+
 
     public PanelPrevi(FrameAccueil frame) {
 
         this.frame = frame;
         frame.setTitle("Astre - Previsionnel (Accueil)");
 		frame.setMinimumSize(new Dimension(600, 400));
+        this.setLayout(new BorderLayout());
 
         ongletSemestres = new JTabbedPane(JTabbedPane.TOP);
         ongletSemestres.addTab("S1", new PanelSemestre());
@@ -61,12 +65,16 @@ public class PanelPrevi extends JPanel implements ActionListener {
 
         this.add(panel, BorderLayout.SOUTH);
 
-        this.btnCreerRessources.addActionListener(this);
-
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnCreerRessources)
-			this.frame.changePanel(new PanelRessources(this.frame));
+        
+        panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
+        this.btnAccueil = new JButton("Accueil");
+        panel.add(this.btnAccueil);
+        
+        this.add(panel, BorderLayout.NORTH);
+        
+        
+        this.btnCreerRessources.addActionListener((e)->{ this.frame.changePanel(new PanelRessources(this.frame));} );
+        this.btnAccueil.addActionListener((e)->{ this.frame.changePanel(new PanelAccueil(this.frame));} );
     }
 }

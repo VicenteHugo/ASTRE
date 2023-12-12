@@ -1,11 +1,15 @@
 package view.module;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,8 +18,10 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import view.accueil.FrameAccueil;
+import view.parametrage.PanelParametre;
+import view.previsionnel.PanelPrevi;
 
-public class PanelRessources extends JPanel {
+public class PanelRessources extends JPanel implements ActionListener{
     
     private FrameAccueil frame;
 
@@ -24,6 +30,9 @@ public class PanelRessources extends JPanel {
     private JButton btnEnregistrer;
     private JButton btnAnnuler;
 
+    private JPanel panelGauche;
+    private JPanel panelDroit;
+
     private JTable tblGrilleDonnees;
     
     public PanelRessources(FrameAccueil frame){
@@ -31,7 +40,7 @@ public class PanelRessources extends JPanel {
         // Frame
         this.frame = frame;
         frame.setTitle("Astre - Prévisionnel - Module");
-		frame.setMinimumSize(new Dimension(700, 400));
+		frame.setMinimumSize(new Dimension(900, 500));
 
         // Composants
         this.btnAjouter     = new JButton("Ajouter");
@@ -39,15 +48,16 @@ public class PanelRessources extends JPanel {
         this.btnEnregistrer = new JButton("Enregistrer");
         this.btnAnnuler     = new JButton("Annuler");
 
+        this.panelGauche = new JPanel();
+        this.panelDroit  = new JPanel();
+
         // Layout
-        this.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.WEST;
+        this.setLayout(new GridLayout(1,2,10,10));
+        this.panelGauche.setLayout(new GridLayout(6,1));
+        this.panelDroit.setLayout(new GridLayout(2,1));
 
         //Positionnement
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gbc.insets = new Insets(10, 10, 10, 10);
+		
 
         JPanel panelInfo = new JPanel();
         panelInfo.setLayout(new GridLayout(2,5));
@@ -62,9 +72,7 @@ public class PanelRessources extends JPanel {
         panelInfo.add(new JTextField("R1.01"));
         panelInfo.add(new JTextField("Initiation au développement"));
         panelInfo.add(new JTextField("Init dev"));
-        this.add(panelInfo, gbc);
-
-        gbc.gridy++;
+        this.panelGauche.add(panelInfo);
 
         JPanel panelNombre = new JPanel();
         panelNombre.setLayout(new GridLayout(2,3));
@@ -75,11 +83,10 @@ public class PanelRessources extends JPanel {
         panelNombre.add(new JTextField("85"));
         panelNombre.add(new JTextField("4"));
         panelNombre.add(new JTextField("7"));
-        this.add(panelNombre, gbc);
+        this.panelGauche.add(panelNombre);
 
-        gbc.gridy++;
-        this.add(new JLabel("PN local(nb h tot/etd)"));
-        gbc.gridy++;
+        this.panelGauche.add(new JLabel("PN local(nb h tot/etd)"));
+
 
         JPanel panelPnLocal = new JPanel();
         panelPnLocal.setLayout(new GridLayout(3,5));
@@ -101,18 +108,16 @@ public class PanelRessources extends JPanel {
         panelPnLocal.add(new JTextField("196"));
         panelPnLocal.add(new JTextField("465"));
 
-        this.add(panelPnLocal, gbc);
-
-        gbc.gridx++;
+        this.panelGauche.add(panelPnLocal);
 
         JPanel panelRépartition = new JPanel();
         panelRépartition.setLayout(new GridLayout(3,5));
+        panelRépartition.add(new JLabel());
         panelRépartition.add(new JLabel("CM"));
         panelRépartition.add(new JLabel());
         panelRépartition.add(new JLabel("TD"));
         panelRépartition.add(new JLabel());
         panelRépartition.add(new JLabel("TP"));
-        panelRépartition.add(new JLabel());
 
         panelRépartition.add(new JLabel("nb Sem"));
         panelRépartition.add(new JLabel("nb h/sem"));
@@ -128,9 +133,7 @@ public class PanelRessources extends JPanel {
         panelRépartition.add(new JTextField("14"));
         panelRépartition.add(new JTextField("2"));
 
-        this.add(panelRépartition, gbc);
-
-        gbc.gridx++;
+        this.panelGauche.add(panelRépartition);
 
         JPanel panelRépartition2 = new JPanel();
         panelRépartition2.setLayout(new GridLayout(4,6));
@@ -162,15 +165,41 @@ public class PanelRessources extends JPanel {
         panelRépartition2.add(new JTextField("36"));
         panelRépartition2.add(new JTextField("437"));
 
-        this.add(panelRépartition2, gbc);
-
-        gbc.gridy++;
+        this.panelGauche.add(panelRépartition2);
 
         this.tblGrilleDonnees = new JTable(new GrilleRessources());
         this.tblGrilleDonnees.setFillsViewportHeight(true);
 
         JScrollPane spGrilleDonnees = new JScrollPane(this.tblGrilleDonnees);
-        this.add(spGrilleDonnees, gbc);
+        this.panelDroit.add(spGrilleDonnees);
+
+        JPanel panelBouton = new JPanel();
+        panelBouton.setLayout(new GridLayout(2,2));
+        JPanel panelBouton1 = new JPanel();
+        JPanel panelBouton2 = new JPanel();
+
+        panelBouton1.add(btnAjouter);
+        panelBouton1.add(btnSupprimer);
+
+        panelBouton2.add(btnEnregistrer);
+        panelBouton2.add(btnAnnuler);
+
+        panelBouton.add(panelBouton1);
+        panelBouton.add(new JPanel());
+        panelBouton.add(new JPanel());
+        panelBouton.add(panelBouton2);
+
+        this.panelDroit.add(panelBouton);
+
+        this.add(panelGauche);
+        this.add(panelDroit);
+
+        this.btnAnnuler.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.btnAnnuler)
+			    this.frame.changePanel(new PanelPrevi(this.frame));
     }
 
 }
