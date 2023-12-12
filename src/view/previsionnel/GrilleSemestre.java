@@ -36,7 +36,7 @@ public class GrilleSemestre extends AbstractTableModel {
     public Object getValueAt(int row, int col) { return this.tabDonnees[row][col]; }
     
     @Override
-    public boolean isCellEditable(int row, int col) { return true; }
+    public boolean isCellEditable(int row, int col) { return false; }
 
     @Override
     public void setValueAt(Object value, int row, int col) {
