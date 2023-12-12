@@ -1,6 +1,6 @@
 package model;
 
-public class IntervenantModuleCategorieHeure {
+public class Association {
     /**nom de l'intervenant */
     private String nomIntervenant;
 
@@ -24,7 +24,7 @@ public class IntervenantModuleCategorieHeure {
 
     /**Constructeur
      */
-    public IntervenantModuleCategorieHeure(String nomIntervenant, String prenomIntervenant, String codeModule, String libelleCategorieHeure, int nbHeureSemaine, int nbSemaine, String commentaire) {
+    public Association(String nomIntervenant, String prenomIntervenant, String codeModule, String libelleCategorieHeure, int nbHeureSemaine, int nbSemaine, String commentaire) {
         this.nomIntervenant        = nomIntervenant;
         this.prenomIntervenant     = prenomIntervenant;
         this.codeModule            = codeModule;

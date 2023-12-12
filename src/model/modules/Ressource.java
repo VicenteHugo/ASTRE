@@ -14,8 +14,8 @@ public class Ressource extends Module {
 	private List<Integer> listElementTP;
 	private Etat etat;
 
-	public Ressource(Semestres semestres, String code, String libLong, String libCourt,
-			int nbHeurePN, int nbSemaine, int nbHeureSemaine) {
+	public Ressource(Semestres semestres, String code, String libLong, String libCourt) {
+						
 		super(semestres, code, libLong, libCourt);
 
 		this.listElementCM = new ArrayList<Integer>();
@@ -23,9 +23,12 @@ public class Ressource extends Module {
 		this.listElementTP = new ArrayList<Integer>();
 	}
 
-	public void initList(int heurePNCM, int nbSemaineCM, int heureSemaineCM, String lib) {
+	public void initList(int heurePNCM, int nbSemaineCM, int heureSemaineCM, CategorieHeures catH) {
+
 		List<Integer> list = null;
-		CategorieHeures cH = null;
+		CategorieHeures cH = catH;
+
+		String lib = catH.getlibCatHeur();
 
 		switch (lib) {
 			case "CM":
@@ -39,13 +42,6 @@ public class Ressource extends Module {
 			case "TP":
 				list = this.listElementTP;
 				break;
-		}
-
-		for (CategorieHeures catHeure : Etat.getCategoriesHeures()) {
-			if (lib.equals(catHeure.getlibCatHeur())) {
-				cH = catHeure;
-				break;
-			}
 		}
 
 		list.add(heurePNCM);

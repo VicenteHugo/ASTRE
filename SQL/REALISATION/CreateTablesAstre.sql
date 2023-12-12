@@ -32,16 +32,30 @@ DROP TABLE IF EXISTS Semestres;
 DROP TABLE IF EXISTS CategorieHeures;
 DROP TABLE IF EXISTS CategorieIntervenants;
 
+DROP TABLE IF EXISTS Etats;
 
 
 
--- Creation des tables ayant un niveau de liaison 0
+
+-- Creation des tables ayant un niveau de liaison 1
+CREATE TABLE Etat 
+(
+	libEtat  VARCHAR(25) PRIMARY KEY,
+	dateCrea DATE        DEFAULT CURRENT_DATE
+);
+
+
+
+
+-- Creation des tables ayant un niveau de liaison 2
 CREATE TABLE CategorieIntervenants
 (
-	libCatInt      VARCHAR(10) PRIMARY KEY, 
+	libCatInt      VARCHAR(10), 
 	coefCatInt     FLOAT       CHECK (coefCatInt > 0)                   DEFAULT 1.0,
 	heureMinCatInt INTEGER     CHECK (heureMinCatInt > 0)               NOT NULL,
-	heureMaxCatInt INTEGER     CHECK (heureMaxCatInt >= heureMinCatInt) NOT NULL
+	heureMaxCatInt INTEGER     CHECK (heureMaxCatInt >= heureMinCatInt) NOT NULL,
+	etat           VARCHAR(25) REFERENCES Etat(libEtat),
+	PRIMARY KEY(libCatInt, etat)
 );
 
 CREATE TABLE CategorieHeures
@@ -62,12 +76,12 @@ CREATE TABLE Semestres
 
 
 
--- Creation des tables ayant un niveau de liaison 1
+-- Creation des tables ayant un niveau de liaison 3
 CREATE TABLE Modules
 (
 	codeMod     VARCHAR(10) PRIMARY KEY, 
 	semMod      INTEGER     NOT NULL REFERENCES Semestres(numSem),
-	typeMod     VARCHAR(11) NOT NULL CHECK (typeMod IN ('Ressource','SAE','Stage/Suivi')),
+	typeMod     VARCHAR(11) NOT NULL CHECK (typeMod IN ('Ressource','Sae','Stage')),
 	libCourtMod VARCHAR(20) NOT NULL,
 	libLongMod  VARCHAR(50) NOT NULL,
 	validMod    BOOLEAN     NOT NULL DEFAULT false
@@ -79,14 +93,14 @@ CREATE TABLE Intervenants
 	prenomInt   VARCHAR(20) NOT NULL,
 	heureMinInt INTEGER     CHECK (heureMinInt > 0)            NOT NULL,
 	heureMaxInt INTEGER     CHECK (heureMaxInt >= heureMinInt) NOT NULL,
-	categInt    NOT NULL    REFERENCES CategorieIntervenants(libCatInt),
+	categInt    VARCHAR(10) NOT NULL    REFERENCES CategorieIntervenants(libCatInt),
 	PRIMARY KEY (nomInt, prenomInt)
 );
 
 
 
 
--- Creation des tables ayant un niveau de liaison 1
+-- Creation des tables ayant un niveau de liaison 4
 CREATE TABLE ModulesCatHeures
 (
 	codeMod    VARCHAR(10) NOT NULL REFERENCES Modules(codeMod),
