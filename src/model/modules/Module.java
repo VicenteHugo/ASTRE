@@ -13,16 +13,17 @@ public abstract class Module {
 	private String libLong;
 	private String libCourt;
 	private boolean valide;
+	private int heurePonctuel;
 
 	/** Liste d'heures(heures PN, nb Semaines, heures par semaines) par catégorie */
 	protected HashMap<CategorieHeures, List<Integer>> heures;
 
-	public Module(Semestres semestres, String code, String libLong, String libCourt) {
+	public Module(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel) {
 		this.semestres = semestres;
 		this.code = code;
 		this.libLong = libLong;
 		this.libCourt = libCourt;
-
+		this.heurePonctuel = heurePonctuel;
 		this.valide = false;
 		this.heures = new HashMap<>();
 	}
@@ -75,5 +76,6 @@ public abstract class Module {
 		this.heures = heures;
 	}
 
-	abstract public void initList(int heurePNCM, int nbSemaineCM, int heureSemaineCM, CategorieHeures catH);
+	abstract public void initList(int heurePN, int nbSemaine, int heureSemaine, int heurePonctuel,
+			CategorieHeures catH);
 }
