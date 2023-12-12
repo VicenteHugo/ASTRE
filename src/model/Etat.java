@@ -3,17 +3,22 @@ package model;
 import java.sql.*;
 import java.util.ArrayList;
 
+import model.modules.Module;
+import model.modules.Ressource;
+import model.modules.Sae;
+import model.modules.Stage;
+
 public class Etat
 {
 	private static Connection connec;
-	private static String     name;
+	// private static String     name;
 
 
 	//Liste de liaison 0
 	/** Liste des catégories d'heures (CM,TP, TD, etc...). */
 	private static ArrayList<CategorieHeures>       lstCategorieHeures;
 	/** Liste des catégories d'intervenants.*/
-	private static ArrayList<CategorieIntervenants> lstCategorieIntervenants;
+	private static ArrayList<Association> lstCategorieIntervenants;
 	/** Liste des catégories des semestres.*/
 	private static ArrayList<Semestres>             lstSemestres;
 
@@ -21,6 +26,13 @@ public class Etat
 	//Liste de laison 1
 	/** Liste des intervenants.*/
 	private static ArrayList<Intervenants> lstIntervenants;
+	/** Liste des modules.*/
+	private static ArrayList<Module>       lstModule;
+
+
+	//Liste de laison 2
+	/** Liste des association.*/
+	private static ArrayList<Association> lstAssociations;
 
 
 	public Etat(String name) {
@@ -39,6 +51,7 @@ public class Etat
 
 			// Générer les deuxièmes tables
 			Etat.genererIntervenants();
+			Etat.genererModules();
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver not found: " + e.getMessage());
@@ -46,11 +59,6 @@ public class Etat
 			System.out.println("SQL Error: " + e.getMessage());
 		}
 	}
-	
-
-
-
-
 
 
 
@@ -100,7 +108,7 @@ public class Etat
 				int hmin = res.getInt("heureMinCatInt");
 				int hmax = res.getInt("heureMaxCatInt");
 
-				Etat.lstCategorieIntervenants.add(new CategorieIntervenants(lib, coef, hmax, hmin));
+				Etat.lstCategorieIntervenants.add(new Association(lib, coef, hmax, hmin));
 			}
 
 			res.close();
@@ -140,17 +148,31 @@ public class Etat
 
 	// Méthode GET
 	public static ArrayList<CategorieHeures>       getCategoriesHeures      () { return Etat.lstCategorieHeures;       }
-	public static ArrayList<CategorieIntervenants> getCategoriesIntervenants() { return Etat.lstCategorieIntervenants; }
+	public static ArrayList<Association> getCategoriesIntervenants() { return Etat.lstCategorieIntervenants; }
 	public static ArrayList<Semestres>             getSemestres             () { return Etat.lstSemestres;             }
 
-	public static CategorieIntervenants getCatInt (String nom)
+	public static Association getCatInt (String nom)
 	{
-		for (CategorieIntervenants c : Etat.lstCategorieIntervenants)
+		for (Association c : Etat.lstCategorieIntervenants)
 			if (c.getlibCatInt().equals(nom))
 				return c;
 
 		return null;
 	}
+
+	public static CategorieHeures getCatHeure (String nom)
+	{
+		for (CategorieHeures c : Etat.lstCategorieHeures)
+			if (c.getlibCatHeur().equals(nom))
+				return c;
+
+		return null;
+	}
+
+
+
+
+
 
 
 
@@ -174,7 +196,7 @@ public class Etat
 				String prenom = res.getString("prenomInt");
 				int    hmin   = res.getInt("heureMinInt");
 				int    hmax   = res.getInt("heureMaxInt");
-				CategorieIntervenants cat = Etat.getCatInt(res.getString("categInt"));
+				Association cat = Etat.getCatInt(res.getString("categInt"));
 
 				Etat.lstIntervenants.add(new Intervenants(cat, nom, prenom, hmin, hmax));
 			}
@@ -186,22 +208,47 @@ public class Etat
 		}
 
 	}
+
 	public static void genererModules() {
-		
-		Etat.lstIntervenants = new ArrayList<>();
+
+		Etat.lstModule = new ArrayList<>();
 
 		try {
 			Statement st = connec.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM Intervenants");
 
 			while (res.next()) {
-				String nom    = res.getString("nomInt");
-				String prenom = res.getString("prenomInt");
-				int    hmin   = res.getInt("heureMinInt");
-				int    hmax   = res.getInt("heureMaxInt");
-				CategorieIntervenants cat = Etat.getCatInt(res.getString("categInt"));
+				Module m = null;
 
-				Etat.lstIntervenants.add(new Intervenants(cat, nom, prenom, hmin, hmax));
+				String type = res.getString("typeMod");
+
+				String code = res.getString("codeMod");
+				String libLong = res.getString("libLongMod");
+				String libCourt = res.getString("libCourtMod");
+
+				Semestres sem = Etat.lstSemestres.get(res.getInt("semMod") - 1);
+
+				if (type.equals("Ressource"))
+					m = new Ressource(sem, code, libLong, libCourt);
+				if (type.equals("Sae"))
+					m = new Sae(sem, code, libLong, libCourt);
+				if (type.equals("Stage"))
+					m = new Stage(sem, code, libLong, libCourt);
+
+				Statement st1 = connec.createStatement();
+				ResultSet res1 = st1.executeQuery("SELECT * FROM ModulesCatHeures WHERE codeMod = " + code);
+
+				while (res1.next()) {
+
+					CategorieHeures catH = Etat.getCatHeure(res.getString("libCatHeur"));
+					int heurePn = res.getInt("nbHeurePN");
+					int heureSem = res.getInt("nbHeureSem");
+					int nbSem = res.getInt("nbSemaine");
+
+					m.initList(heurePn, nbSem, heureSem, catH);
+				}
+
+				Etat.lstModule.add(m);
 			}
 
 			res.close();
@@ -209,8 +256,28 @@ public class Etat
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
+	
+
+
+	// Méthode GET
+	public static ArrayList<Intervenants> getIntervenants () { return Etat.lstIntervenants;}
+	public static ArrayList<Module>       getModules      () { return Etat.lstModule;      }
+
+
+
+
+
+
+
+
+
+	/*--------------------------------------------------------------*/
+	/*                           LIAISON 3                          */
+	/*--------------------------------------------------------------*/
+	
+
+
 
 
 	public static void main(String[] args) {

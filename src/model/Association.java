@@ -1,6 +1,6 @@
 package model;
 
-public class CategorieIntervenants {
+public class Association {
 
 	/*-------------------------------------------------------------*/
 	/*                           ATTRIBUTS                         */
@@ -25,7 +25,7 @@ public class CategorieIntervenants {
 	/*-------------------------------------------------------------*/
 
 	/**Constructeur prenant tous les paramètres.*/
-	public CategorieIntervenants (String lib, float coef, int heurMax, int heurMin) {
+	public Association (String lib, float coef, int heurMax, int heurMin) {
 		this.libCatInt = lib;
 		this.coefCatInt = coef;
 		this.heureMinCatInt = heurMin;

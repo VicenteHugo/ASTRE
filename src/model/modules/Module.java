@@ -6,7 +6,7 @@ import java.util.HashMap;
 import model.CategorieHeures;
 import model.Semestres;
 
-public class Module {
+public abstract class Module {
 
 	private Semestres semestres;
 	private String code;
@@ -74,4 +74,6 @@ public class Module {
 	public void setHeures(HashMap<CategorieHeures, List<Integer>> heures) {
 		this.heures = heures;
 	}
+
+	abstract public void initList(int heurePNCM, int nbSemaineCM, int heureSemaineCM, CategorieHeures catH);
 }

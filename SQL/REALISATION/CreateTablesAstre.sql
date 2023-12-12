@@ -81,7 +81,7 @@ CREATE TABLE Modules
 (
 	codeMod     VARCHAR(10) PRIMARY KEY, 
 	semMod      INTEGER     NOT NULL REFERENCES Semestres(numSem),
-	typeMod     VARCHAR(11) NOT NULL CHECK (typeMod IN ('Ressource','SAE','Stage/Suivi')),
+	typeMod     VARCHAR(11) NOT NULL CHECK (typeMod IN ('Ressource','Sae','Stage')),
 	libCourtMod VARCHAR(20) NOT NULL,
 	libLongMod  VARCHAR(50) NOT NULL,
 	validMod    BOOLEAN     NOT NULL DEFAULT false

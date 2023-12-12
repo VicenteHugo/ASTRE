@@ -9,23 +9,22 @@ import model.Semestres;
 
 public class Sae extends Module {
 
-	private int nbHeurePN;
-
 	private List<Integer> listElementSae;
 	private List<Integer> listElementTut;
-	private Etat etat;
 
 	public Sae(Semestres semestres, String code, String libLong, String libCourt) {
 
 		super(semestres, code, libLong, libCourt);
-		this.nbHeurePN = nbHeurePN;
 		this.listElementSae = new ArrayList<Integer>();
 		this.listElementTut = new ArrayList<Integer>();
 	}
 
-	public void initList(int nbHeurePN, String lib) {
+	public void initList(int heurePNCM, int nbSemaineCM, int heureSemaineCM, CategorieHeures catH) {
+		
 		List<Integer> list = null;
-		CategorieHeures cH = null;
+		CategorieHeures cH = catH;
+
+		String lib = cH.getlibCatHeur();
 
 		switch (lib) {
 			case "SAE":
@@ -44,7 +43,7 @@ public class Sae extends Module {
 			}
 		}
 
-		list.add(nbHeurePN);
+		list.add(heurePNCM);
 		this.heures.put(cH, list);
 	}
 

@@ -10,7 +10,7 @@ public class Intervenants {
 	/*-------------------------------------------------------------*/
 
 	/** Catégorie de l'intervenant. */
-	private CategorieIntervenants categorieIntervenant;
+	private Association categorieIntervenant;
 
 	/** Nom de l'intervenant. */
 	private String nomIntervenant;
@@ -47,7 +47,7 @@ public class Intervenants {
 	 * Constructeur prenant tous les paramètres demandées et initialisants les
 	 * autres par default.
 	 */
-	public Intervenants(CategorieIntervenants categorieIntervenant, String nomIntervenant, String prenomIntervenant,
+	public Intervenants(Association categorieIntervenant, String nomIntervenant, String prenomIntervenant,
 			            int services, int maxHeures) {
 
 		this.categorieIntervenant = categorieIntervenant;
@@ -64,7 +64,7 @@ public class Intervenants {
 	/* GET-TEURS */
 	/*-------------------------------------------------------------*/
 
-	public CategorieIntervenants getCategorieIntervenant() {
+	public Association getCategorieIntervenant() {
 		return categorieIntervenant;
 	}
 
@@ -104,7 +104,7 @@ public class Intervenants {
 	/* SET-TEURS */
 	/*-------------------------------------------------------------*/
 
-	public void setCategorieIntervenant(CategorieIntervenants categorieIntervenant) {
+	public void setCategorieIntervenant(Association categorieIntervenant) {
 		this.categorieIntervenant = categorieIntervenant;
 	}
 
