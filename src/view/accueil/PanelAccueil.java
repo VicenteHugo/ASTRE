@@ -1,17 +1,20 @@
 package view.accueil;
 
+import view.parametrage.*;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PanelAccueil extends JPanel {
+public class PanelAccueil extends JPanel implements ActionListener {
 
     private JButton btnParametre, btnPrevisionnel, btnIntervenant, btnEtat;
-
-    public PanelAccueil() {
+    private FrameAccueil  frame;
+    public PanelAccueil(FrameAccueil frame) {
 
         // création des composants
+        this.frame = frame;
         this.btnParametre = new JButton("Paramètres");
         this.btnPrevisionnel = new JButton("Prévisionnel");
         this.btnIntervenant = new JButton("Intervenants");
@@ -33,5 +36,22 @@ public class PanelAccueil extends JPanel {
         this.add(btnIntervenant,gbc);
         gbc.gridy++;
         this.add(btnEtat,gbc);
+        
+        this.btnParametre.addActionListener(this);
+		this.btnPrevisionnel.addActionListener(this);
+		this.btnIntervenant.addActionListener(this);
+        this.btnEtat.addActionListener(this);
+        
     }
+    public void actionPerformed(ActionEvent e) 
+	    {
+            if (e.getSource() == this.btnParametre)
+			    this.frame.changePanel(new PanelParametre(this.frame));
+            if (e.getSource() == this.btnPrevisionnel)
+                this.frame.changePanel(new PanelParametre(this.frame));
+            if (e.getSource() == this.btnIntervenant)
+                this.frame.changePanel(new PanelParametre(this.frame));
+            if (e.getSource() == this.btnEtat)
+                this.frame.changePanel(new PanelParametre(this.frame));
+        }
 }

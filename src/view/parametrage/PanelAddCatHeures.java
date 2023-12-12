@@ -5,6 +5,9 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import view.accueil.FrameAccueil;
+
+
 public class PanelAddCatHeures extends JPanel implements ActionListener
 {
 	private JLabel lblErrCoef;
@@ -16,10 +19,10 @@ public class PanelAddCatHeures extends JPanel implements ActionListener
 	private JButton btnAnnuler;
 
 
-	private FrameParametre frame;
+	private FrameAccueil frame;
 	private Frame frameM;
 
-	public PanelAddCatHeures (FrameParametre frame, Frame frameM)
+	public PanelAddCatHeures (FrameAccueil frame, Frame frameM)
 	{
 		this.frame  = frame;
 		this.frameM = frameM;

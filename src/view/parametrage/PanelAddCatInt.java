@@ -5,6 +5,9 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import view.accueil.FrameAccueil;
+
+
 public class PanelAddCatInt extends JPanel implements ActionListener
 {
 	private JLabel lblErrCoef;
@@ -20,10 +23,10 @@ public class PanelAddCatInt extends JPanel implements ActionListener
 	private JButton btnAnnuler;
 
 
-	private FrameParametre frame;
+	private FrameAccueil frame;
 	private Frame frameM;
 
-	public PanelAddCatInt (FrameParametre frame, Frame frameM)
+	public PanelAddCatInt (FrameAccueil frame, Frame frameM)
 	{
 		this.frame  = frame;
 		this.frameM = frameM;
