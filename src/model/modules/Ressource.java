@@ -33,6 +33,8 @@ public class Ressource extends Module {
 		CategorieHeures cH = catH;
 
 		String lib = catH.getlibCatHeur();
+		
+
 
 		switch (lib) {
 			case "CM":

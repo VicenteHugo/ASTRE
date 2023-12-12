@@ -42,7 +42,7 @@ public class Etat
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			// Connection
-			Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/Astre", "root", "");
+			Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre", "root", "");
 
 			// Générer les premières tables
 			Etat.genererCategorieHeures();
@@ -196,6 +196,7 @@ public class Etat
 				String prenom = res.getString("prenomInt");
 				int    hmin   = res.getInt("heureMinInt");
 				int    hmax   = res.getInt("heureMaxInt");
+				
 				CategorieIntervenant cat = Etat.getCatInt(res.getString("categInt"));
 
 				Etat.lstIntervenants.add(new Intervenants(cat, nom, prenom, hmin, hmax));
@@ -215,7 +216,7 @@ public class Etat
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Intervenants");
+			ResultSet res = st.executeQuery("SELECT * FROM Modules");
 
 			while (res.next()) {
 				Module m = null;
@@ -228,6 +229,8 @@ public class Etat
 
 				Semestres sem = Etat.lstSemestres.get(res.getInt("semMod") - 1);
 
+				System.out.println(type);
+
 				if (type.equals("Ressource"))
 					m = new Ressource(sem, code, libLong, libCourt);
 				if (type.equals("Sae"))
@@ -236,14 +239,14 @@ public class Etat
 					m = new Stage(sem, code, libLong, libCourt);
 
 				Statement st1 = connec.createStatement();
-				ResultSet res1 = st1.executeQuery("SELECT * FROM ModulesCatHeures WHERE codeMod = " + code);
+				ResultSet res1 = st1.executeQuery("SELECT * FROM ModulesCatHeures WHERE codeMod = '" + code + "'");
 
 				while (res1.next()) {
 
-					CategorieHeures catH = Etat.getCatHeure(res.getString("libCatHeur"));
-					int heurePn = res.getInt("nbHeurePN");
-					int heureSem = res.getInt("nbHeureSem");
-					int nbSem = res.getInt("nbSemaine");
+					CategorieHeures catH = Etat.getCatHeure(res1.getString("libCatHeur"));
+					int heurePn = res1.getInt("nbHeurePN");
+					int heureSem = res1.getInt("nbHeureSem");
+					int nbSem = res1.getInt("nbSemaine");
 
 					m.initList(heurePn, nbSem, heureSem, catH);
 				}
@@ -282,5 +285,10 @@ public class Etat
 
 	public static void main(String[] args) {
 		new Etat("hey");
+
+		for (Intervenants i : Etat.getIntervenants())
+			System.out.println(i);
+
+		System.out.println();
 	}
 }

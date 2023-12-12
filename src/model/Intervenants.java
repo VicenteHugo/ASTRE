@@ -136,7 +136,7 @@ public class Intervenants {
 
 	@Override
 	public String toString() {
-		return "Intervenants [categorieIntervenant=" + categorieIntervenant + ", nomIntervenant=" + nomIntervenant
+		return "Intervenants [categorieIntervenant=" + categorieIntervenant.getlibCatInt() + ", nomIntervenant=" + nomIntervenant
 				+ ", prenomIntervenant=" + prenomIntervenant + ", services=" + services + ", maxHeures=" + maxHeures
 				+ ", totauxSemestreImpaires=" + totauxSemestreImpaires + ", totauxSemestrePaire=" + totauxSemestrePaire
 				+ ", coefficient=" + coefficient + ", listeHeuresSemestre=" + listeHeuresSemestre + "]";
