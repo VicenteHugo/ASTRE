@@ -1,11 +1,16 @@
 package view.previsionnel;
 
+import view.*;
+
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
+import view.accueil.FrameAccueil;
 
 public class PanelPrevi extends JPanel {
     private JTabbedPane ongletSemestres;
@@ -16,7 +21,14 @@ public class PanelPrevi extends JPanel {
     private JButton btnModifier;
     private JButton btnSupprimer;
 
-    public PanelPrevi() {
+    private FrameAccueil frame;
+
+    public PanelPrevi(FrameAccueil frame) {
+
+        this.frame = frame;
+        frame.setTitle("Astre - Previsionnel (Accueil)");
+		frame.setMinimumSize(new Dimension(600, 400));
+
         ongletSemestres = new JTabbedPane(JTabbedPane.TOP);
         ongletSemestres.addTab("S1", new PanelSemestre());
         ongletSemestres.addTab("S2", new PanelSemestre());

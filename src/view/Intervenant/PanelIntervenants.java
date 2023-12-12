@@ -1,7 +1,10 @@
 package view.Intervenant;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,7 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class PanelIntervenants extends JPanel {
+import view.accueil.FrameAccueil;
+import view.accueil.PanelAccueil;
+import view.parametrage.PanelIntPara;
+
+public class PanelIntervenants extends JPanel implements ActionListener{
     private JLabel lblListe;
     private JButton btnAjout;
     private JButton btnSupr;
@@ -17,7 +24,14 @@ public class PanelIntervenants extends JPanel {
     private JButton btnAnnuler;
     private JTable tblGrilleDonnees;
 
-    public PanelIntervenants() {
+    private FrameAccueil frame;
+
+    public PanelIntervenants(FrameAccueil frame) {
+
+        this.frame = frame;
+        frame.setTitle("Astre - Intervenants (Accueil)");
+		frame.setMinimumSize(new Dimension(600, 400));
+
         // Création des composants
         this.lblListe = new JLabel("Liste Intervenant");
         this.btnAjout = new JButton("Ajouter");
@@ -53,5 +67,13 @@ public class PanelIntervenants extends JPanel {
         this.add(panelTable, BorderLayout.CENTER);
         this.add(panelBtn, BorderLayout.SOUTH);
         this.setVisible(true);
+
+        //Action
+		this.btnAnnuler.addActionListener(this);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.btnAnnuler)
+			this.frame.changePanel(new PanelAccueil(this.frame));
     }
 }

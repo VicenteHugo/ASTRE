@@ -1,6 +1,10 @@
 package view.accueil;
 
+import view.Intervenant.PanelIntervenants;
 import view.parametrage.*;
+import view.previsionnel.*;
+import view.previsionnel.PanelPrevi;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -48,9 +52,9 @@ public class PanelAccueil extends JPanel implements ActionListener {
             if (e.getSource() == this.btnParametre)
 			    this.frame.changePanel(new PanelParametre(this.frame));
             if (e.getSource() == this.btnPrevisionnel)
-                this.frame.changePanel(new PanelParametre(this.frame));
+                this.frame.changePanel(new PanelPrevi(this.frame));
             if (e.getSource() == this.btnIntervenant)
-                this.frame.changePanel(new PanelParametre(this.frame));
+                this.frame.changePanel(new PanelIntervenants(this.frame));
             if (e.getSource() == this.btnEtat)
                 this.frame.changePanel(new PanelParametre(this.frame));
         }
