@@ -32,14 +32,14 @@ DROP TABLE IF EXISTS CategorieIntervenants;
 DROP TABLE IF EXISTS Etat;
 
 
--- Création des tables ayant un niveau de liaison 1
+-- Création des tables ayant un niveau de liaison 0
 CREATE TABLE Etat 
 (
 	libEtat  VARCHAR(25) PRIMARY KEY,
 	dateCrea DATE DEFAULT CURRENT_DATE
 );
 
--- Création des tables ayant un niveau de liaison 2
+-- Création des tables ayant un niveau de liaison 1
 CREATE TABLE CategorieIntervenants
 (
 	libCatInt      VARCHAR(10), 
@@ -65,7 +65,7 @@ CREATE TABLE Semestres
 	nbSemSem  INTEGER NOT NULL CHECK (nbSemSem > 0) 
 );
 
--- Création des tables ayant un niveau de liaison 3
+-- Création des tables ayant un niveau de liaison 2
 CREATE TABLE Modules
 (
 	codeMod     VARCHAR(10) PRIMARY KEY, 
@@ -86,11 +86,12 @@ CREATE TABLE Intervenants
 	PRIMARY KEY(nomInt, prenomInt)
 );
 
--- Création des tables ayant un niveau de liaison 4
+-- Création des tables ayant un niveau de liaison 3
 CREATE TABLE ModulesCatHeures
 (
 	codeMod    VARCHAR(10) NOT NULL REFERENCES Modules(codeMod),
 	libCatHeur VARCHAR(10) NOT NULL REFERENCES CategorieHeures(libCatHeur),
+	nbHeurPonc INTEGER DEFAULT 0    NOT NULL,
 	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN > 0),
 	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem > 0),
 	nbSemaine  INTEGER NOT NULL CHECK (nbSemaine > 0),
