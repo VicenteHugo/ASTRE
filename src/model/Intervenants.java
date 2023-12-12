@@ -6,7 +6,7 @@ import java.util.List;
 public class Intervenants {
 
 	/*-------------------------------------------------------------*/
-	/* ATTRIBUTS */
+	/*                           ATTRIBUTS                         */
 	/*-------------------------------------------------------------*/
 
 	/** Catégorie de l'intervenant. */
@@ -48,21 +48,16 @@ public class Intervenants {
 	 * autres par default.
 	 */
 	public Intervenants(CategorieIntervenants categorieIntervenant, String nomIntervenant, String prenomIntervenant,
-			int services, int maxHeures, float coefficient) {
+			            int services, int maxHeures) {
 
 		this.categorieIntervenant = categorieIntervenant;
-		this.nomIntervenant = nomIntervenant;
-		this.prenomIntervenant = prenomIntervenant;
-		this.services = services;
-		this.maxHeures = maxHeures;
+		this.nomIntervenant       = nomIntervenant;
+		this.prenomIntervenant    = prenomIntervenant;
+		this.services             = services;
+		this.maxHeures            = maxHeures;
+
 		this.coefficient = this.categorieIntervenant.getCoefCatInt();
 		this.listeHeuresSemestre = new ArrayList<Integer>();
-
-		this.totauxSemestreImpaires = listeHeuresSemestre.get(1) + listeHeuresSemestre.get(3)
-				+ listeHeuresSemestre.get(5);
-		this.totauxSemestrePaire = listeHeuresSemestre.get(0) + listeHeuresSemestre.get(2)
-				+ listeHeuresSemestre.get(4);
-		this.totalHeures = totauxSemestreImpaires + totauxSemestrePaire;
 	}
 
 	/*-------------------------------------------------------------*/
@@ -91,6 +86,18 @@ public class Intervenants {
 
 	public float getCoefficient() {
 		return coefficient;
+	}
+
+	public int getSommeSemPaire() {
+		return  (int) ((listeHeuresSemestre.get(0) + listeHeuresSemestre.get(2) + listeHeuresSemestre.get(4)) * this.coefficient);
+	}
+	
+	public int getSommeSemImpaire() {
+		return (int) ((listeHeuresSemestre.get(1) + listeHeuresSemestre.get(3) + listeHeuresSemestre.get(5)) * this.coefficient);
+	}
+	
+	public int getSommeSem() {
+		return this.getSommeSemPaire() + this.getSommeSemImpaire();
 	}
 
 	/*-------------------------------------------------------------*/
