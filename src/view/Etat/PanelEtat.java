@@ -37,7 +37,7 @@ public class PanelEtat extends JPanel implements ActionListener {
         this.lstEtat.setSelectedIndex(0);
         
         this.btnSelection = new JButton("Sélectionner");
-        this.btnRetour = new JButton("Retour");
+        this.btnRetour    = new JButton("Retour");
 
         Dimension buttonSize = new Dimension(120, 40);
         this.btnSelection.setPreferredSize(buttonSize);
