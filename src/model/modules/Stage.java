@@ -9,8 +9,6 @@ import model.Semestres;
 
 public class Stage extends Module {
 
-	private int nbHeurePN;
-
 	private List<Integer> listElementRhe;
 	private List<Integer> listElementTut;
 	private Etat etat;
@@ -18,7 +16,6 @@ public class Stage extends Module {
 	public Stage(Semestres semestres, String code, String libLong, String libCourt) {
 		super(semestres, code, libLong, libCourt);
 
-		this.nbHeurePN = nbHeurePN;
 		this.listElementRhe = new ArrayList<Integer>();
 		this.listElementTut = new ArrayList<Integer>();
 	}

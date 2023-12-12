@@ -9,10 +9,6 @@ import model.Semestres;
 
 public class Ressource extends Module {
 
-	private int nbHeurePN;
-	private int nbSemaine;
-	private int nbHeureSemaine;
-
 	private List<Integer> listElementCM;
 	private List<Integer> listElementTD;
 	private List<Integer> listElementTP;
@@ -21,9 +17,6 @@ public class Ressource extends Module {
 	public Ressource(Semestres semestres, String code, String libLong, String libCourt,
 			int nbHeurePN, int nbSemaine, int nbHeureSemaine) {
 		super(semestres, code, libLong, libCourt);
-		this.nbHeurePN = nbHeurePN;
-		this.nbHeureSemaine = nbHeureSemaine;
-		this.nbSemaine = nbSemaine;
 
 		this.listElementCM = new ArrayList<Integer>();
 		this.listElementTD = new ArrayList<Integer>();

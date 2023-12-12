@@ -9,16 +9,12 @@ import model.Semestres;
 
 public class Sae extends Module {
 
-	private int nbHeurePN;
-
 	private List<Integer> listElementSae;
 	private List<Integer> listElementTut;
 	private Etat etat;
 
 	public Sae(Semestres semestres, String code, String libLong, String libCourt) {
-
 		super(semestres, code, libLong, libCourt);
-		this.nbHeurePN = nbHeurePN;
 		this.listElementSae = new ArrayList<Integer>();
 		this.listElementTut = new ArrayList<Integer>();
 	}
