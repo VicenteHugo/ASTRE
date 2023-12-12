@@ -22,7 +22,7 @@ import view.accueil.FrameAccueil;
 import view.parametrage.PanelParametre;
 import view.previsionnel.PanelPrevi;
 
-public class PanelRessources extends JPanel implements ActionListener{
+public class PanelSAE extends JPanel implements ActionListener{
     
     private FrameAccueil frame;
 
@@ -36,7 +36,7 @@ public class PanelRessources extends JPanel implements ActionListener{
 
     private JTable tblGrilleDonnees;
     
-    public PanelRessources(FrameAccueil frame){
+    public PanelSAE(FrameAccueil frame){
         
         // Frame
         this.frame = frame;
@@ -68,11 +68,11 @@ public class PanelRessources extends JPanel implements ActionListener{
         panelInfo.add(new JLabel("libellé long"));
         panelInfo.add(new JLabel("libellé court"));
 
-        panelInfo.add(new JTextField("Ressources"));
-        panelInfo.add(new JTextField("S1"));
-        panelInfo.add(new JTextField("R1.01"));
-        panelInfo.add(new JTextField("Initiation au développement"));
-        panelInfo.add(new JTextField("Init dev"));
+        panelInfo.add(new JTextField("SAE"));
+        panelInfo.add(new JTextField("S3"));
+        panelInfo.add(new JTextField("S3.01"));
+        panelInfo.add(new JTextField("Développement d'une application"));
+        panelInfo.add(new JTextField("Dev appli"));
         this.panelGauche.add(panelInfo);
 
         JPanel panelNombre = new JPanel();
@@ -81,95 +81,49 @@ public class PanelRessources extends JPanel implements ActionListener{
         panelNombre.add(new JLabel("nb gp TD"));
         panelNombre.add(new JLabel("nb gp TP"));
 
-        panelNombre.add(new JTextField("85"));
+        panelNombre.add(new JTextField("52"));
+        panelNombre.add(new JTextField("2"));
         panelNombre.add(new JTextField("4"));
-        panelNombre.add(new JTextField("7"));
         this.panelGauche.add(panelNombre);
 
         this.panelGauche.add(new JLabel("PN local(nb h tot/etd)"));
 
 
         JPanel panelPnLocal = new JPanel();
-        panelPnLocal.setLayout(new GridLayout(3,5));
+        panelPnLocal.setLayout(new GridLayout(2,4));
         panelPnLocal.add(new JLabel());
-        panelPnLocal.add(new JLabel("CM"));
-        panelPnLocal.add(new JLabel("TD"));
-        panelPnLocal.add(new JLabel("TP"));
+        panelPnLocal.add(new JLabel("h Sae"));
+        panelPnLocal.add(new JLabel("h Tut"));
         panelPnLocal.add(new JLabel("∑"));
 
-        panelPnLocal.add(new JLabel());
-        panelPnLocal.add(new JTextField("6"));
-        panelPnLocal.add(new JTextField("65"));
-        panelPnLocal.add(new JTextField("28"));
-        panelPnLocal.add(new JTextField("99"));
-
         panelPnLocal.add(new JLabel("Total (eqtd) promo"));
-        panelPnLocal.add(new JTextField("9"));
-        panelPnLocal.add(new JTextField("260"));
-        panelPnLocal.add(new JTextField("196"));
-        panelPnLocal.add(new JTextField("465"));
+        panelPnLocal.add(new JTextField("40"));
+        panelPnLocal.add(new JTextField("38"));
+        panelPnLocal.add(new JTextField("78"));
 
         this.panelGauche.add(panelPnLocal);
         this.panelGauche.add(new JLabel("Répartition"));
 
         JPanel panelRépartition = new JPanel();
-        panelRépartition.setLayout(new GridLayout(3,5));
+        panelRépartition.setLayout(new GridLayout(3,3));
         panelRépartition.add(new JLabel());
-        panelRépartition.add(new JLabel("CM"));
-        panelRépartition.add(new JLabel());
-        panelRépartition.add(new JLabel("TD"));
-        panelRépartition.add(new JLabel());
-        panelRépartition.add(new JLabel("TP"));
+        panelRépartition.add(new JLabel("h Sae"));
+        panelRépartition.add(new JLabel("h Tut"));
+        panelRépartition.add(new JLabel("∑"));
 
-        panelRépartition.add(new JLabel("nb Sem"));
-        panelRépartition.add(new JLabel("nb h/sem"));
-        panelRépartition.add(new JLabel("nb Sem"));
-        panelRépartition.add(new JLabel("nb h/sem"));
-        panelRépartition.add(new JLabel("nb Sem"));
-        panelRépartition.add(new JLabel("nb h/sem"));
+        panelRépartition.add(new JLabel("total promo (eqdt)"));
+        panelRépartition.add(new JTextField("40"));
+        panelRépartition.add(new JTextField("38"));
+        panelRépartition.add(new JTextField("78"));
 
-        panelRépartition.add(new JTextField("6"));
-        panelRépartition.add(new JTextField("1"));
-        panelRépartition.add(new JTextField("14"));
-        panelRépartition.add(new JTextField("4"));
-        panelRépartition.add(new JTextField("14"));
-        panelRépartition.add(new JTextField("2"));
+        panelRépartition.add(new JLabel("total affecté (eqdt)"));
+        panelRépartition.add(new JTextField("40"));
+        panelRépartition.add(new JTextField("38"));
+        panelRépartition.add(new JTextField("78"));
 
         this.panelGauche.add(panelRépartition);
 
-        JPanel panelRépartition2 = new JPanel();
-        panelRépartition2.setLayout(new GridLayout(4,6));
-        panelRépartition2.add(new JLabel());
-        panelRépartition2.add(new JLabel("CM"));
-        panelRépartition2.add(new JLabel("TD"));
-        panelRépartition2.add(new JLabel("TP"));
-        panelRépartition2.add(new JLabel("heure ponctuelle"));
-        panelRépartition2.add(new JLabel("∑"));
-
-        panelRépartition2.add(new JLabel());
-        panelRépartition2.add(new JTextField("6"));
-        panelRépartition2.add(new JTextField("56"));
-        panelRépartition2.add(new JTextField("28"));
-        panelRépartition2.add(new JTextField("9"));
-        panelRépartition2.add(new JTextField("99"));
-
-        panelRépartition2.add(new JLabel("Total promo(eqtd)"));
-        panelRépartition2.add(new JTextField("9"));
-        panelRépartition2.add(new JTextField("224"));
-        panelRépartition2.add(new JTextField("196"));
-        panelRépartition2.add(new JTextField("36"));
-        panelRépartition2.add(new JTextField("465"));
-
-        panelRépartition2.add(new JLabel("Total affecté(eqtd)"));
-        panelRépartition2.add(new JTextField("9"));
-        panelRépartition2.add(new JTextField("224"));
-        panelRépartition2.add(new JTextField("168"));
-        panelRépartition2.add(new JTextField("36"));
-        panelRépartition2.add(new JTextField("437"));
-
-        this.panelGauche.add(panelRépartition2);
-
-        this.tblGrilleDonnees = new JTable(new GrilleRessources());
+        this.tblGrilleDonnees = new JTable(new GrilleSAE());
         this.tblGrilleDonnees.setFillsViewportHeight(true);
 
         JScrollPane spGrilleDonnees = new JScrollPane(this.tblGrilleDonnees);
