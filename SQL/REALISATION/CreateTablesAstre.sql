@@ -73,7 +73,8 @@ CREATE TABLE Modules
 	typeMod     VARCHAR(11) NOT NULL CHECK (typeMod IN ('Ressource', 'Sae', 'Stage', 'PPP')),
 	libCourtMod VARCHAR(20) NOT NULL,
 	libLongMod  VARCHAR(50) NOT NULL,
-	validMod    BOOLEAN NOT NULL DEFAULT false
+	validMod    BOOLEAN NOT NULL DEFAULT false,
+	nbHeurPonc INTEGER DEFAULT 0    NOT NULL
 );
 
 CREATE TABLE Intervenants
@@ -91,7 +92,6 @@ CREATE TABLE ModulesCatHeures
 (
 	codeMod    VARCHAR(10) NOT NULL REFERENCES Modules(codeMod),
 	libCatHeur VARCHAR(10) NOT NULL REFERENCES CategorieHeures(libCatHeur),
-	nbHeurPonc INTEGER DEFAULT 0    NOT NULL,
 	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN > 0),
 	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem > 0),
 	nbSemaine  INTEGER NOT NULL CHECK (nbSemaine > 0),
