@@ -3,7 +3,7 @@ package view.accueil;
 import view.Intervenant.PanelIntervenants;
 import view.parametrage.*;
 import view.previsionnel.*;
-import view.previsionnel.PanelPrevi;
+import view.Etat.*;
 
 import javax.swing.*;
 
@@ -23,7 +23,13 @@ public class PanelAccueil extends JPanel implements ActionListener {
         this.btnPrevisionnel = new JButton("Prévisionnel");
         this.btnIntervenant = new JButton("Intervenants");
         this.btnEtat = new JButton("Etats");
-
+        
+        Dimension buttonSize = new Dimension(120, 40); // Vous pouvez ajuster la taille selon vos besoins
+        this.btnParametre.setPreferredSize(buttonSize);
+        this.btnPrevisionnel.setPreferredSize(buttonSize);
+        this.btnIntervenant.setPreferredSize(buttonSize);
+        this.btnEtat.setPreferredSize(buttonSize);
+        
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -48,14 +54,14 @@ public class PanelAccueil extends JPanel implements ActionListener {
         
     }
     public void actionPerformed(ActionEvent e) 
-    {
-        if (e.getSource() == this.btnParametre)
-            this.frame.changePanel(new PanelParametre(this.frame));
-        if (e.getSource() == this.btnPrevisionnel)
-            this.frame.changePanel(new PanelPrevi(this.frame));
-        if (e.getSource() == this.btnIntervenant)
-            this.frame.changePanel(new PanelIntervenants(this.frame));
-        if (e.getSource() == this.btnEtat)
-            this.frame.changePanel(new PanelParametre(this.frame));
-    }
+	    {
+            if (e.getSource() == this.btnParametre)
+			    this.frame.changePanel(new PanelParametre(this.frame));
+            if (e.getSource() == this.btnPrevisionnel)
+                this.frame.changePanel(new PanelPrevi(this.frame));
+            if (e.getSource() == this.btnIntervenant)
+                this.frame.changePanel(new PanelIntervenants(this.frame));
+            if (e.getSource() == this.btnEtat)
+                this.frame.changePanel(new PanelEtat(this.frame));
+        }
 }
