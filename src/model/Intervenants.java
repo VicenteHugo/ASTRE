@@ -6,11 +6,11 @@ import java.util.List;
 public class Intervenants {
 
 	/*-------------------------------------------------------------*/
-	/*                           ATTRIBUTS                         */
+	/* ATTRIBUTS */
 	/*-------------------------------------------------------------*/
 
 	/** Catégorie de l'intervenant. */
-	private Association categorieIntervenant;
+	private CategorieIntervenant categorieIntervenant;
 
 	/** Nom de l'intervenant. */
 	private String nomIntervenant;
@@ -47,14 +47,14 @@ public class Intervenants {
 	 * Constructeur prenant tous les paramètres demandées et initialisants les
 	 * autres par default.
 	 */
-	public Intervenants(Association categorieIntervenant, String nomIntervenant, String prenomIntervenant,
-			            int services, int maxHeures) {
+	public Intervenants(CategorieIntervenant categorieIntervenant, String nomIntervenant, String prenomIntervenant,
+			int services, int maxHeures) {
 
 		this.categorieIntervenant = categorieIntervenant;
-		this.nomIntervenant       = nomIntervenant;
-		this.prenomIntervenant    = prenomIntervenant;
-		this.services             = services;
-		this.maxHeures            = maxHeures;
+		this.nomIntervenant = nomIntervenant;
+		this.prenomIntervenant = prenomIntervenant;
+		this.services = services;
+		this.maxHeures = maxHeures;
 
 		this.coefficient = this.categorieIntervenant.getCoefCatInt();
 		this.listeHeuresSemestre = new ArrayList<Integer>();
@@ -64,7 +64,7 @@ public class Intervenants {
 	/* GET-TEURS */
 	/*-------------------------------------------------------------*/
 
-	public Association getCategorieIntervenant() {
+	public CategorieIntervenant getCategorieIntervenant() {
 		return categorieIntervenant;
 	}
 
@@ -89,13 +89,15 @@ public class Intervenants {
 	}
 
 	public int getSommeSemPaire() {
-		return  (int) ((listeHeuresSemestre.get(0) + listeHeuresSemestre.get(2) + listeHeuresSemestre.get(4)) * this.coefficient);
+		return (int) ((listeHeuresSemestre.get(0) + listeHeuresSemestre.get(2) + listeHeuresSemestre.get(4))
+				* this.coefficient);
 	}
-	
+
 	public int getSommeSemImpaire() {
-		return (int) ((listeHeuresSemestre.get(1) + listeHeuresSemestre.get(3) + listeHeuresSemestre.get(5)) * this.coefficient);
+		return (int) ((listeHeuresSemestre.get(1) + listeHeuresSemestre.get(3) + listeHeuresSemestre.get(5))
+				* this.coefficient);
 	}
-	
+
 	public int getSommeSem() {
 		return this.getSommeSemPaire() + this.getSommeSemImpaire();
 	}
@@ -104,7 +106,7 @@ public class Intervenants {
 	/* SET-TEURS */
 	/*-------------------------------------------------------------*/
 
-	public void setCategorieIntervenant(Association categorieIntervenant) {
+	public void setCategorieIntervenant(CategorieIntervenant categorieIntervenant) {
 		this.categorieIntervenant = categorieIntervenant;
 	}
 

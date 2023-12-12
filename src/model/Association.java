@@ -1,66 +1,94 @@
 package model;
 
 public class Association {
+    /**nom de l'intervenant */
+    private String nomIntervenant;
 
-	/*-------------------------------------------------------------*/
-	/*                           ATTRIBUTS                         */
-	/*-------------------------------------------------------------*/
+    /**prenom de l'intervenant */
+    private String prenomIntervenant;
 
-	/** Libellé de la catégorie de l'intervenants. */
-	private String libCatInt;
+    /**code du module */
+    private String codeModule;
 
-	/** Coefficient de la catégorie de l'intervenants pour mettre ses heures en heures TD. */
-	private float coefCatInt;
+    /**libelle categorie d'heure */
+    private String libelleCategorieHeure;
 
-	/** Heur minimum demandé par la catégorie de l'intervenants. */
-	private int heureMinCatInt;
-	
-	/** Heur minimum demandé par la catégorie de l'intervenants. */
-	private int heureMaxCatInt;
+    /**nombre d'heure semaine */
+    private int nbHeureSemaine;
 
-	
+    /**nombre de semaines */
+    private int nbSemaine;
 
-	/*-------------------------------------------------------------*/
-	/*                         CONSTRUCTEURS                       */
-	/*-------------------------------------------------------------*/
+    /**commentaire */
+    private String commentaire;
 
-	/**Constructeur prenant tous les paramètres.*/
-	public Association (String lib, float coef, int heurMax, int heurMin) {
-		this.libCatInt = lib;
-		this.coefCatInt = coef;
-		this.heureMinCatInt = heurMin;
-		this.heureMaxCatInt = heurMax;
-	}
+    /**Constructeur
+     */
+    public Association(String nomIntervenant, String prenomIntervenant, String codeModule, String libelleCategorieHeure, int nbHeureSemaine, int nbSemaine, String commentaire) {
+        this.nomIntervenant        = nomIntervenant;
+        this.prenomIntervenant     = prenomIntervenant;
+        this.codeModule            = codeModule;
+        this.libelleCategorieHeure = libelleCategorieHeure;
+        this.nbHeureSemaine        = nbHeureSemaine;
+        this.nbSemaine             = nbSemaine;
+        this.commentaire           = commentaire;
+    }
 
-	
+    public String getNomIntervenant() {
+        return this.nomIntervenant;
+    }
 
-	/*-------------------------------------------------------------*/
-	/*                           GET-TEURS                         */
-	/*-------------------------------------------------------------*/
+    public void setNomIntervenant(String nomIntervenant) {
+        this.nomIntervenant = nomIntervenant;
+    }
 
-	public String getlibCatInt     () {return this.libCatInt;     }
-	public float  getCoefCatInt    () {return this.coefCatInt;    }
-	public int    getHeureMinCatInt() {return this.heureMinCatInt;}
-	public int    getHeureMaxCatInt() {return this.heureMaxCatInt;}
+    public String getPrenomIntervenant() {
+        return this.prenomIntervenant;
+    }
 
-	
+    public void setPrenomIntervenant(String prenomIntervenant) {
+        this.prenomIntervenant = prenomIntervenant;
+    }
 
-	/*-------------------------------------------------------------*/
-	/*                           SET-TEURS                         */
-	/*-------------------------------------------------------------*/
+    public String getCodeModule() {
+        return this.codeModule;
+    }
 
-	public void setlibCatInt     (String libCatInt     ) { this.libCatInt      = libCatInt     ;}
-	public void setCoefCatInt    (float  CoefCatInt    ) { this.coefCatInt     = CoefCatInt    ;}
-	public void setHeureMinCatInt(int    HeureMinCatInt) { this.heureMinCatInt = HeureMinCatInt;}
-	public void setHeureMaxCatInt(int    HeureMaxCatInt) { this.heureMaxCatInt = HeureMaxCatInt;}
+    public void setCodeModule(String codeModule) {
+        this.codeModule = codeModule;
+    }
 
-	
+    public String getLibelleCategorieHeure() {
+        return this.libelleCategorieHeure;
+    }
 
-	/*-------------------------------------------------------------*/
-	/*                             AUTRES                          */
-	/*-------------------------------------------------------------*/
+    public void setLibelleCategorieHeure(String libelleCategorieHeure) {
+        this.libelleCategorieHeure = libelleCategorieHeure;
+    }
 
-	public String toString () {
-		return String.format("\"%10s\" (%2.3f) [%4d - %-4d]", this.libCatInt, this.coefCatInt, this.heureMinCatInt, this.heureMaxCatInt);
-	}
+    public int getNbHeureSemaine() {
+        return this.nbHeureSemaine;
+    }
+
+    public void setNbHeureSemaine(int nbHeureSemaine) {
+        this.nbHeureSemaine = nbHeureSemaine;
+    }
+
+    public int getNbSemaine() {
+        return this.nbSemaine;
+    }
+
+    public void setNbSemaine(int nbSemaine) {
+        this.nbSemaine = nbSemaine;
+    }
+
+    public String getCommentaire() {
+        return this.commentaire;
+    }
+
+    public void setCommentaire(String commentaire) {
+        this.commentaire = commentaire;
+    }
+
+    
 }

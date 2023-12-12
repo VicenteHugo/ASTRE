@@ -18,7 +18,7 @@ public class Etat
 	/** Liste des catégories d'heures (CM,TP, TD, etc...). */
 	private static ArrayList<CategorieHeures>       lstCategorieHeures;
 	/** Liste des catégories d'intervenants.*/
-	private static ArrayList<Association> lstCategorieIntervenants;
+	private static ArrayList<CategorieIntervenant> lstCategorieIntervenants;
 	/** Liste des catégories des semestres.*/
 	private static ArrayList<Semestres>             lstSemestres;
 
@@ -32,12 +32,12 @@ public class Etat
 
 	//Liste de laison 2
 	/** Liste des association.*/
-	private static ArrayList<Association> lstAssociations;
+	private static ArrayList<CategorieIntervenant> lstAssociations;
 
 
 	public Etat(String name) {
 
-		Etat.name = name;
+		// Etat.name = name;
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -108,7 +108,7 @@ public class Etat
 				int hmin = res.getInt("heureMinCatInt");
 				int hmax = res.getInt("heureMaxCatInt");
 
-				Etat.lstCategorieIntervenants.add(new Association(lib, coef, hmax, hmin));
+				Etat.lstCategorieIntervenants.add(new CategorieIntervenant(lib, coef, hmax, hmin));
 			}
 
 			res.close();
@@ -148,12 +148,12 @@ public class Etat
 
 	// Méthode GET
 	public static ArrayList<CategorieHeures>       getCategoriesHeures      () { return Etat.lstCategorieHeures;       }
-	public static ArrayList<Association> getCategoriesIntervenants() { return Etat.lstCategorieIntervenants; }
+	public static ArrayList<CategorieIntervenant> getCategoriesIntervenants() { return Etat.lstCategorieIntervenants; }
 	public static ArrayList<Semestres>             getSemestres             () { return Etat.lstSemestres;             }
 
-	public static Association getCatInt (String nom)
+	public static CategorieIntervenant getCatInt (String nom)
 	{
-		for (Association c : Etat.lstCategorieIntervenants)
+		for (CategorieIntervenant c : Etat.lstCategorieIntervenants)
 			if (c.getlibCatInt().equals(nom))
 				return c;
 
@@ -196,7 +196,7 @@ public class Etat
 				String prenom = res.getString("prenomInt");
 				int    hmin   = res.getInt("heureMinInt");
 				int    hmax   = res.getInt("heureMaxInt");
-				Association cat = Etat.getCatInt(res.getString("categInt"));
+				CategorieIntervenant cat = Etat.getCatInt(res.getString("categInt"));
 
 				Etat.lstIntervenants.add(new Intervenants(cat, nom, prenom, hmin, hmax));
 			}
