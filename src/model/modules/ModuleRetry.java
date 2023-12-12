@@ -14,6 +14,7 @@ public class ModuleRetry {
 	private String libCourt;
 	private boolean valide;
 
+	/** Liste d'heures(heures PN, nb Semaines, heures par semaines) par catégorie */
 	protected HashMap<CategorieHeures, List<Integer>> heures;
 
 	public ModuleRetry(Semestres semestres, String code, String libLong, String libCourt) {
@@ -73,5 +74,4 @@ public class ModuleRetry {
 	public void setHeures(HashMap<CategorieHeures, List<Integer>> heures) {
 		this.heures = heures;
 	}
-
 }
