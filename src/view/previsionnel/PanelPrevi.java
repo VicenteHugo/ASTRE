@@ -16,6 +16,7 @@ import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
 import view.module.PanelRessources;
 import view.module.PanelSAE;
+import view.module.PanelStage;
 
 public class PanelPrevi extends JPanel {
     private FrameAccueil frame;
@@ -77,6 +78,7 @@ public class PanelPrevi extends JPanel {
         
         this.btnCreerRessources.addActionListener((e)->{ this.frame.changePanel(new PanelRessources(this.frame));} );
         this.btnCreerSae.addActionListener((e)->{ this.frame.changePanel(new PanelSAE(this.frame));} );
+        this.btnCreerStage.addActionListener((e)->{ this.frame.changePanel(new PanelStage(this.frame));} );
         this.btnAccueil.addActionListener((e)->{ this.frame.changePanel(new PanelAccueil(this.frame));} );
     }
 }
