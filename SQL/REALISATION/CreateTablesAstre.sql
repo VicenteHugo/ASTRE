@@ -21,95 +21,80 @@
 
 
 
--- Suppresions des tables
+-- Suppressions des tables
 DROP TABLE IF EXISTS Affectation;
-
 DROP TABLE IF EXISTS ModulesCatHeures;
 DROP TABLE IF EXISTS Modules;
 DROP TABLE IF EXISTS Intervenants;
-
 DROP TABLE IF EXISTS Semestres;
 DROP TABLE IF EXISTS CategorieHeures;
 DROP TABLE IF EXISTS CategorieIntervenants;
-
-DROP TABLE IF EXISTS Etats;
-
+DROP TABLE IF EXISTS Etat;
 
 
-
--- Creation des tables ayant un niveau de liaison 1
+-- Création des tables ayant un niveau de liaison 1
 CREATE TABLE Etat 
 (
 	libEtat  VARCHAR(25) PRIMARY KEY,
-	dateCrea DATE        DEFAULT CURRENT_DATE
+	dateCrea DATE DEFAULT CURRENT_DATE
 );
 
-
-
-
--- Creation des tables ayant un niveau de liaison 2
+-- Création des tables ayant un niveau de liaison 2
 CREATE TABLE CategorieIntervenants
 (
 	libCatInt      VARCHAR(10), 
-	coefCatInt     FLOAT       CHECK (coefCatInt > 0)                   DEFAULT 1.0,
-	heureMinCatInt INTEGER     CHECK (heureMinCatInt > 0)               NOT NULL,
-	heureMaxCatInt INTEGER     CHECK (heureMaxCatInt >= heureMinCatInt) NOT NULL,
+	coefCatInt     FLOAT DEFAULT 1 CHECK (coefCatInt > 0) ,
+	heureMinCatInt INTEGER NOT NULL CHECK (heureMinCatInt > 0)               ,
+	heureMaxCatInt INTEGER NOT NULL CHECK (heureMaxCatInt >= heureMinCatInt) ,
 	etat           VARCHAR(25) REFERENCES Etat(libEtat),
 	PRIMARY KEY(libCatInt, etat)
 );
 
 CREATE TABLE CategorieHeures
 (
-	libCatHeur  VARCHAR(10) PRIMARY KEY, 
-	coefCatHeur FLOAT       CHECK (coefCatHeur > 0) DEFAULT 1.0
+	libCatHeur VARCHAR(10) PRIMARY KEY, 
+	coefCatHeur FLOAT DEFAULT 1.0 CHECK (coefCatHeur > 0)
 );
 
 CREATE TABLE Semestres
 (
 	numSem    INTEGER PRIMARY KEY,
-	nbGpTdSem INTEGER CHECK ( nbGpTdSem > 0) NOT NULL,
-	nbGpTpSem INTEGER CHECK ( nbGpTpSem > 0) NOT NULL,
-	nbEtdSem  INTEGER CHECK ( nbEtdSem  > 0) NOT NULL,
-	nbSemSem  INTEGER CHECK ( nbSemSem  > 0) NOT NULL
+	nbGpTdSem INTEGER NOT NULL CHECK (nbGpTdSem > 0),
+	nbGpTpSem INTEGER NOT NULL CHECK (nbGpTpSem > 0),
+	nbEtdSem  INTEGER NOT NULL CHECK (nbEtdSem > 0) ,
+	nbSemSem  INTEGER NOT NULL CHECK (nbSemSem > 0) 
 );
 
-
-
-
--- Creation des tables ayant un niveau de liaison 3
+-- Création des tables ayant un niveau de liaison 3
 CREATE TABLE Modules
 (
 	codeMod     VARCHAR(10) PRIMARY KEY, 
-	semMod      INTEGER     NOT NULL REFERENCES Semestres(numSem),
-	typeMod     VARCHAR(11) NOT NULL CHECK (typeMod IN ('Ressource','Sae','Stage')),
+	semMod      INTEGER NOT NULL REFERENCES Semestres(numSem),
+	typeMod     VARCHAR(11) NOT NULL CHECK (typeMod IN ('Ressource', 'Sae', 'Stage', 'PPP')),
 	libCourtMod VARCHAR(20) NOT NULL,
 	libLongMod  VARCHAR(50) NOT NULL,
-	validMod    BOOLEAN     NOT NULL DEFAULT false
+	validMod    BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE Intervenants
 (
 	nomInt      VARCHAR(20) NOT NULL,
 	prenomInt   VARCHAR(20) NOT NULL,
-	heureMinInt INTEGER     CHECK (heureMinInt > 0)            NOT NULL,
-	heureMaxInt INTEGER     CHECK (heureMaxInt >= heureMinInt) NOT NULL,
-	categInt    VARCHAR(10) NOT NULL    REFERENCES CategorieIntervenants(libCatInt),
-	PRIMARY KEY (nomInt, prenomInt)
+	heureMinInt INTEGER NOT NULL CHECK (heureMinInt > 0) ,
+	heureMaxInt INTEGER NOT NULL CHECK (heureMaxInt >= heureMinInt),
+	categInt    VARCHAR(10) NOT NULL REFERENCES CategorieIntervenants(libCatInt),
+	PRIMARY KEY(nomInt, prenomInt)
 );
 
-
-
-
--- Creation des tables ayant un niveau de liaison 4
+-- Création des tables ayant un niveau de liaison 4
 CREATE TABLE ModulesCatHeures
 (
 	codeMod    VARCHAR(10) NOT NULL REFERENCES Modules(codeMod),
 	libCatHeur VARCHAR(10) NOT NULL REFERENCES CategorieHeures(libCatHeur),
-	nbHeurePN  INTEGER     NOT NULL CHECK      (nbHeurePN  > 0),
-	nbHeureSem INTEGER     NOT NULL CHECK      (nbHeureSem > 0),
-	nbSemaine  INTEGER     NOT NULL CHECK      (nbSemaine  > 0),
-
-	PRIMARY KEY (codeMod, libCatHeur)
+	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN > 0),
+	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem > 0),
+	nbSemaine  INTEGER NOT NULL CHECK (nbSemaine > 0),
+	PRIMARY KEY(codeMod, libCatHeur)
 );
 
 CREATE TABLE Affectation
@@ -117,9 +102,7 @@ CREATE TABLE Affectation
 	intervenant VARCHAR(20) NOT NULL REFERENCES Intervenants(nomInt, prenomInt),
 	codeMod     VARCHAR(10) NOT NULL REFERENCES Modules(codeMod),
 	libCatHeur  VARCHAR(10) NOT NULL REFERENCES CategorieHeures(libCatHeur),
-	nbHeureSem  INTEGER     NOT NULL CHECK (nbHeureSem > 0),
-	nbGroupe    INTEGER     NOT NULL CHECK (nbGroupe > 0),
-
-	PRIMARY KEY (intervenant, codeMod, libCatHeur)
+	nbHeureSem  INTEGER NOT NULL CHECK (nbHeureSem > 0),
+	nbGroupe    INTEGER NOT NULL CHECK (nbGroupe > 0),
+	PRIMARY KEY(intervenant, codeMod, libCatHeur)
 );
-
