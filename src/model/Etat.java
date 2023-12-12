@@ -15,7 +15,7 @@ public class Etat
 
 
 	//Liste de liaison 0
-	/** Liste des catégories d'heures (CM,TP, TD, etc...). */
+	/** Liste des catégories d'heures (CM, TP, TD, etc...). */
 	private static ArrayList<CategorieHeures>       lstCategorieHeures;
 	/** Liste des catégories d'intervenants.*/
 	private static ArrayList<CategorieIntervenant> lstCategorieIntervenants;
