@@ -1,87 +1,77 @@
 package model.modules;
 
+import java.util.List;
+import java.util.HashMap;
+
+import model.CategorieHeures;
 import model.Semestres;
 
 public class Module {
 
-	private String libelleLongModule;
-	private String libelleCourtModule;
 	private Semestres semestres;
-	private int nbEtudiant;
-	private int nbGroupeTD;
-	private int nbGroupeTP;
+	private String code;
+	private String libLong;
+	private String libCourt;
 	private boolean valide;
 
-	/*-------------------------------------------------------------*/
-	/* CONSTRUCTEURS */
-	/*-------------------------------------------------------------*/
+	/** Liste d'heures(heures PN, nb Semaines, heures par semaines) par catégorie */
+	protected HashMap<CategorieHeures, List<Integer>> heures;
 
-	/**
-	 * Constructeur prenant tous les paramètres demandées.
-	 */
-
-	public Module(String libelleLongModule, String libelleCourtModule, Semestres semestres, int nbEtudiant,
-			int nbGroupeTD, int nbGroupeTP, boolean valide) {
-
-		this.libelleLongModule = libelleLongModule;
-		this.libelleCourtModule = libelleCourtModule;
+	public Module(Semestres semestres, String code, String libLong, String libCourt) {
 		this.semestres = semestres;
-		this.nbEtudiant = nbEtudiant;
-		this.nbGroupeTD = nbGroupeTD;
-		this.nbGroupeTP = nbGroupeTP;
-		this.valide = valide;
+		this.code = code;
+		this.libLong = libLong;
+		this.libCourt = libCourt;
 
-	}
-
-	public String getLibelleLongModule() {
-		return libelleLongModule;
-	}
-
-	public String getLibelleCourtModule() {
-		return libelleCourtModule;
+		this.valide = false;
+		this.heures = new HashMap<>();
 	}
 
 	public Semestres getSemestres() {
-		return semestres;
+		return this.semestres;
 	}
 
-	public int getNbEtudiant() {
-		return nbEtudiant;
+	public String getCode() {
+		return this.code;
 	}
 
-	public int getNbGroupeTD() {
-		return nbGroupeTD;
+	public String getLibLong() {
+		return this.libLong;
 	}
 
-	public int getNbGroupeTP() {
-		return nbGroupeTP;
+	public String getLibCourt() {
+		return this.libCourt;
 	}
 
-	public void setLibelleLongModule(String libelleLongModule) {
-		this.libelleLongModule = libelleLongModule;
+	public boolean isValide() {
+		return this.valide;
 	}
 
-	public void setLibelleCourtModule(String libelleCourtModule) {
-		this.libelleCourtModule = libelleCourtModule;
+	public HashMap<CategorieHeures, List<Integer>> getHeures() {
+		return this.heures;
 	}
 
 	public void setSemestres(Semestres semestres) {
 		this.semestres = semestres;
 	}
 
-	public void setNbEtudiant(int nbEtudiant) {
-		this.nbEtudiant = nbEtudiant;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
-	public void setNbGroupeTD(int nbGroupeTD) {
-		this.nbGroupeTD = nbGroupeTD;
+	public void setLibLong(String libLong) {
+		this.libLong = libLong;
 	}
 
-	public void setNbGroupeTP(int nbGroupeTP) {
-		this.nbGroupeTP = nbGroupeTP;
+	public void setLibCourt(String libCourt) {
+		this.libCourt = libCourt;
 	}
 
-	public boolean isValidate() {
-		return valide;
+	public void setValide(boolean valide) {
+		this.valide = valide;
+	}
+
+	public void setHeures(HashMap<CategorieHeures, List<Integer>> heures) {
+		this.heures = heures;
 	}
 }
