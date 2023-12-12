@@ -13,7 +13,9 @@ public class Ressource extends ModuleRetry {
 	private int nbSemaine;
 	private int nbHeureSemaine;
 
-	private List<Integer> listElement;
+	private List<Integer> listElementCM;
+	private List<Integer> listElementTD;
+	private List<Integer> listElementTP;
 	private Etat etat;
 
 	public Ressource(Semestres semestres, String code, String libLong, String libCourt,
@@ -23,29 +25,40 @@ public class Ressource extends ModuleRetry {
 		this.nbHeureSemaine = nbHeureSemaine;
 		this.nbSemaine = nbSemaine;
 
-		this.listElement = new ArrayList<>();
-		this.listElement.add(nbHeurePN);
-		this.listElement.add(nbHeureSemaine);
-		this.listElement.add(nbSemaine);
+		this.listElementCM = new ArrayList<Integer>();
+		this.listElementTD = new ArrayList<Integer>();
+		this.listElementTP = new ArrayList<Integer>();	
 	}
 
-	public void initList() {
-		ArrayList<CategorieHeures> lstCategorieHeures = Etat.getCategoriesHeures();
-		for (CategorieHeures cH : lstCategorieHeures) {
-			switch (cH.getlibCatHeur()) {
+	public void initList(int heurePNCM, int nbSemaineCM, int heureSemaineCM, String lib) {
+			List<Integer> list = null;
+			CategorieHeures cH = null;
+			
+			switch (lib) {
 				case "CM":
-					this.heures.put(cH, listElement);
+					list = this.listElementCM;	
 					break;
+			
 				case "TD":
-					this.heures.put(cH, listElement);
+					list = this.listElementTD;
 					break;
+
 				case "TP":
-					this.heures.put(cH, listElement);
-					break;
-				default:
+					list = this.listElementTP;
 					break;
 			}
-		}
-	}
 
+			for (CategorieHeures catHeure : Etat.getCategoriesHeures()) {
+				if(lib.equals(catHeure.getlibCatHeur())) {
+					cH = catHeure;
+					break;
+				}
+			}
+			
+			list.add(heurePNCM);
+			list.add(nbSemaineCM);
+			list.add(heureSemaineCM);
+
+			this.heures.put(cH, list);
+	}
 }
