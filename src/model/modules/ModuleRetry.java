@@ -1,6 +1,6 @@
 package model.modules;
 
-import java.awt.List;
+import java.util.List;
 import java.util.HashMap;
 
 import model.CategorieHeures;
@@ -14,7 +14,7 @@ public class ModuleRetry {
 	private String libCourt;
 	private boolean valide;
 
-	protected HashMap<CategorieHeures, List> heures;
+	protected HashMap<CategorieHeures, List<Integer>> heures;
 
 	public ModuleRetry(Semestres semestres, String code, String libLong, String libCourt) {
 		this.semestres = semestres;
@@ -46,7 +46,7 @@ public class ModuleRetry {
 		return this.valide;
 	}
 
-	public HashMap<CategorieHeures, List> getHeures() {
+	public HashMap<CategorieHeures, List<Integer>> getHeures() {
 		return this.heures;
 	}
 
@@ -70,7 +70,7 @@ public class ModuleRetry {
 		this.valide = valide;
 	}
 
-	public void setHeures(HashMap<CategorieHeures, List> heures) {
+	public void setHeures(HashMap<CategorieHeures, List<Integer>> heures) {
 		this.heures = heures;
 	}
 
