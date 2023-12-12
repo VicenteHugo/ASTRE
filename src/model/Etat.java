@@ -28,7 +28,7 @@ public class Etat {
 
 	// Liste de laison 2
 	/** Liste des association. */
-	private static ArrayList<CategorieIntervenant> lstAssociations;
+	private static ArrayList<Affectations> lstAffectations;
 
 	public Etat(String name) {
 
@@ -49,7 +49,7 @@ public class Etat {
 			Etat.genererModules();
 
 			// Générer les troisièmes tables
-			Etat.genererAssociation();
+			Etat.genererAffections();
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver not found: " + e.getMessage());
@@ -258,53 +258,51 @@ public class Etat {
 		return Etat.lstModule;
 	}
 
+	public static Intervenants getIntervenant(String nom, String prenom) {
+		for (Intervenants i : Etat.lstIntervenants)
+			if (i.getNomIntervenant().equals(nom) && i.getPrenomIntervenant().equals(prenom))
+				return i;
+
+		return null;
+	}
+
+	public static Module getModule(String code) {
+		for (Module m : Etat.lstModule)
+			if (m.getCode().equals(code))
+				return m;
+
+		return null;
+	}
+
 	/*--------------------------------------------------------------*/
 	/* LIAISON 3 */
 	/*--------------------------------------------------------------*/
 
 	// Méthode CREATE
-	public static void genererAssociation() {
+	public static void genererAffections() {
 
-		Etat.lstModule = new ArrayList<>();
+		Etat.lstAffectations = new ArrayList<>();
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Modules");
+			ResultSet res = st.executeQuery("SELECT * FROM Affectation");
+
+			// intNom
+			// intPrenom
+			// codeMod
+			// libCatHeur
+			// nbSem
+			// nbGroupe
 
 			while (res.next()) {
-				Module m = null;
 
-				String type = res.getString("typeMod");
-
-				String code = res.getString("codeMod");
-				String libLong = res.getString("libLongMod");
-				String libCourt = res.getString("libCourtMod");
-
-				Semestres sem = Etat.lstSemestres.get(res.getInt("semMod") - 1);
-
-				System.out.println(type);
-
-				if (type.equals("Ressource"))
-					m = new Ressource(sem, code, libLong, libCourt);
-				if (type.equals("Sae"))
-					m = new Sae(sem, code, libLong, libCourt);
-				if (type.equals("Stage"))
-					m = new Stage(sem, code, libLong, libCourt);
-
-				Statement st1 = connec.createStatement();
-				ResultSet res1 = st1.executeQuery("SELECT * FROM ModulesCatHeures WHERE codeMod = '" + code + "'");
-
-				while (res1.next()) {
-
-					CategorieHeures catH = Etat.getCatHeure(res1.getString("libCatHeur"));
-					int heurePn = res1.getInt("nbHeurePN");
-					int heureSem = res1.getInt("nbHeureSem");
-					int nbSem = res1.getInt("nbSemaine");
-
-					m.initList(heurePn, nbSem, heureSem, catH);
-				}
-
-				Etat.lstModule.add(m);
+				Intervenants    inter = Etat.getIntervenant(res.getString("intNom"), res.getString("intPrenom"));
+				Module          mode  = Etat.getModule(res.getString("codeMod"));
+				CategorieHeures cat   = Etat.getCatHeure(res.getString("libCatHeur"));
+				int             nbhs  = res.getInt("nbSem");
+				int             nbg   = res.getInt("nbGroupe");
+				
+				Etat.lstAffectations.add(new Affectation)
 			}
 
 			res.close();

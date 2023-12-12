@@ -1,22 +1,16 @@
 package model;
 
-public class Association {
-    /**nom de l'intervenant */
-    private String nomIntervenant;
+public class Affectations {
+    /**Intervenant */
+    private Intervenants intervenant;
 
-    /**prenom de l'intervenant */
-    private String prenomIntervenant;
+    /**Module */
+    private Module module;
 
-    /**code du module */
-    private String codeModule;
-
-    /**libelle categorie d'heure */
-    private String libelleCategorieHeure;
+    /**Categorie d'heure */
+    private CategorieHeures categorieHeures;
 
     /**nombre d'heure semaine */
-    private int nbHeureSemaine;
-
-    /**nombre de semaines */
     private int nbSemaine;
 
     /**commentaire */
@@ -24,14 +18,12 @@ public class Association {
 
     /**Constructeur
      */
-    public Association(String nomIntervenant, String prenomIntervenant, String codeModule, String libelleCategorieHeure, int nbHeureSemaine, int nbSemaine, String commentaire) {
-        this.nomIntervenant        = nomIntervenant;
-        this.prenomIntervenant     = prenomIntervenant;
-        this.codeModule            = codeModule;
-        this.libelleCategorieHeure = libelleCategorieHeure;
-        this.nbHeureSemaine        = nbHeureSemaine;
-        this.nbSemaine             = nbSemaine;
-        this.commentaire           = commentaire;
+    public Affectations(Intervenants inter, Module module, CategorieHeures categorie,int nbSemaine, String commentaire) {
+        this.intervenant     = inter;
+        this.module          = module;
+        this.categorieHeures = categorie;
+        this.nbSemaine       = nbSemaine;
+        this.commentaire     = commentaire;
     }
 
     public String getNomIntervenant() {

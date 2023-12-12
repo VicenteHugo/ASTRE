@@ -46,6 +46,6 @@ VALUES ('M1', 'Cat1', 20, 10, 2);
 -- Ajoute d'autres liaisons entre modules et catégories d'heures si nécessaire
 
 
-INSERT INTO Affectation (intervenant, codeMod, libCatHeur, nbHeureSem, nbGroupe)
-VALUES ('Nom1', 'M1', 'Cat1', 8, 2);
+INSERT INTO Affectation (intNom, intPrenom, codeMod, libCatHeur, nbSem, nbGroupe)
+VALUES ('Nom1', 'Prenom1', 'M1', 'Cat1', 8, 2);
 -- Ajoute d'autres affectations si nécessaire

@@ -101,10 +101,12 @@ CREATE TABLE ModulesCatHeures
 
 CREATE TABLE Affectation
 (
-	intervenant VARCHAR(20) NOT NULL REFERENCES Intervenants(nomInt, prenomInt),
+	intNom      VARCHAR(20) NOT NULL REFERENCES Intervenants(nomInt),
+	intPrenom   VARCHAR(20) NOT NULL REFERENCES Intervenants(prenomInt),
 	codeMod     VARCHAR(10) NOT NULL REFERENCES Modules(codeMod),
 	libCatHeur  VARCHAR(10) NOT NULL REFERENCES CategorieHeures(libCatHeur),
-	nbHeureSem  INTEGER NOT NULL CHECK (nbHeureSem > 0),
+	nbSem       INTEGER NOT NULL CHECK (nbSem > 0),
 	nbGroupe    INTEGER NOT NULL CHECK (nbGroupe > 0),
-	PRIMARY KEY(intervenant, codeMod, libCatHeur)
+	commentaire VARCHAR(255),
+	PRIMARY KEY(intNom, intPreNom, codeMod, libCatHeur)
 );
