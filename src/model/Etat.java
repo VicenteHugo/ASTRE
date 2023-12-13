@@ -381,7 +381,10 @@ public class Etat {
 
 	public static void ajouterAction(Action a) {Etat.lstActions.add(a); }
 	
-	public static void anuller    () {Etat.lstActions.clear(); }
+	public static void anuller() {
+		Etat.lstActions.clear();
+		Etat.genererInfos();
+	}
 
 	public static void enregistrer() {
 
