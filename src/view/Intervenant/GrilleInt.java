@@ -22,12 +22,14 @@ public class GrilleInt extends AbstractTableModel {
 
 		List<Intervenants> lstIntervenant = Controleur.getControleur().getIntervenants();
 
-		tabDonnees = new Object[lstIntervenant.size()][14];
+		tabDonnees = new Object[lstIntervenant.size()][15];
 
 		for (int lig = 0; lig < lstIntervenant.size(); lig++) {
+
 			Intervenants intervenants = lstIntervenant.get(lig);
 			List<Integer> listeSemaine = new ArrayList<>();
 			int nbHeure = 0;
+
 			for (Semestres semestres : Controleur.getControleur().getSemestres()) {
 				for (Module module : Controleur.getControleur().getModules(semestres)) {
 					for (Affectations affectations : Controleur.getControleur().getAffectations()) {
@@ -41,6 +43,8 @@ public class GrilleInt extends AbstractTableModel {
 				}
 				listeSemaine.add(nbHeure);
 			}
+
+			System.out.println("LAAAAAAAAAAAAAAAAAAA =====>"  + listeSemaine.size());
 
 			tabDonnees[lig][0] = intervenants.getCategorieIntervenant().getLibCatInt();
 			tabDonnees[lig][1] = intervenants.getNomIntervenant();

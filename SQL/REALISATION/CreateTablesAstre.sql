@@ -62,10 +62,10 @@ CREATE TABLE CategorieHeures
 CREATE TABLE Semestres
 (
 	numSem    INTEGER NOT NULL,
-	nbGpTdSem INTEGER NOT NULL CHECK (nbGpTdSem > 0),
-	nbGpTpSem INTEGER NOT NULL CHECK (nbGpTpSem > 0),
-	nbEtdSem  INTEGER NOT NULL CHECK (nbEtdSem > 0) ,
-	nbSemSem  INTEGER NOT NULL CHECK (nbSemSem > 0) ,
+	nbGpTdSem INTEGER DEFAULT 0 CHECK (nbGpTdSem >= 0),
+	nbGpTpSem INTEGER DEFAULT 0 CHECK (nbGpTpSem >= 0),
+	nbEtdSem  INTEGER DEFAULT 0 CHECK (nbEtdSem >= 0) ,
+	nbSemSem  INTEGER DEFAULT 0 CHECK (nbSemSem >= 0) ,
 	etat      VARCHAR(25) REFERENCES Etat(libEtat),
 	PRIMARY KEY(numSem, etat)
 );
@@ -119,3 +119,10 @@ CREATE TABLE Affectation
 	etat        VARCHAR(25) REFERENCES Etat(libEtat),
 	PRIMARY KEY(intNom, intPreNom, codeMod, libCatHeur, etat)
 );
+
+
+
+
+-- Création de la fonctions pour les semestres
+
+
