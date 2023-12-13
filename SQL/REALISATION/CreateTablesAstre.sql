@@ -10,7 +10,7 @@
 	* CategorieHeures      (libCatHeur, coefCatHeur)
 	* Semestres            (numSem, nbGpTdSem, nbGpTpSem, nbEtdSem, nbSemSem)
 
-	* Intervenants         (nomInt, prenomInt, heureMinInt, heureMaxInt, #libCatInt)
+	* Intervenants         (nomInt, prenomInt, heureMinInt, heureMaxInt, #codeCatInt)
 	* Modules              (codeMod, typeMod, libCourtMod, libLongMod, validMod, #numSem)
 
 	* ModulesCatHeures     (#codeMod, #libCatHeur, nbHeurePN, nbHeureSem, nbSemaine)
@@ -84,7 +84,7 @@ CREATE TABLE Intervenants
 	prenomInt   VARCHAR(20) NOT NULL,
 	heureMinInt INTEGER NOT NULL CHECK (heureMinInt > 0) ,
 	heureMaxInt INTEGER NOT NULL CHECK (heureMaxInt >= heureMinInt),
-	categInt    VARCHAR(10) NOT NULL REFERENCES CategorieIntervenants(libCatInt),
+	categInt    VARCHAR(10) NOT NULL REFERENCES CategorieIntervenants(codeCatInt),
 	PRIMARY KEY(nomInt, prenomInt)
 );
 

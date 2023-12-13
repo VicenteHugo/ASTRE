@@ -1,6 +1,19 @@
 package model.action;
 
+import java.util.List;
+
 public abstract class Action 
 {
-	public abstract String getRequeteSQL();
+	
+	protected String requetes;
+	protected List<Object> info;
+	
+	public String getRequeteSQL() {
+		return this.requetes;
+	}
+
+	public List<Object> getInfo() {
+		return this.info;
+	}
+
 }

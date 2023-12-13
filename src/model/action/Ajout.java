@@ -11,8 +11,6 @@ import model.Intervenants;
 import model.modules.Module;
 
 public class Ajout extends Action {
-	private String requetes;
-	private List<Object> info;
 
 	public Ajout(Affectations a) {
 
@@ -22,68 +20,42 @@ public class Ajout extends Action {
 				a.getNbSemaine(), a.getNbGroupe(), a.getCommentaire()));
 	}
 
+
 	public Ajout(Module m) {
-		 
-		this.requetes = "INSERT INTO Modules (codeMod, semMod, typeMod, libCourtMod, libLongMod, validMod, nbHeurPonc) VALUES (?,?,?,?,?,?,?)" ;
+
+		this.requetes = "INSERT INTO Modules (codeMod, semMod, typeMod, libCourtMod, libLongMod, validMod, nbHeurPonc) VALUES (?,?,?,?,?,?,?)";
 
 		this.info = new ArrayList<>(List.of(m.getCode(), m.getSemestres(), m.getClass().getSimpleName(),
-		                                    m.getLibCourt(), m.getLibLong(), m.isValide(), m.getHeurePonctuel() ));
-											
-		for (CategorieHeures cat : m.getHeures().keySet())
-		{
-			List<Integer> lst = ;
+				m.getLibCourt(), m.getLibLong(), m.isValide(), m.getHeurePonctuel()));
+
+		for (CategorieHeures cat : m.getHeures().keySet()) {
+			List<Integer> lst = m.getHeures().get(cat);
 			this.requetes += "INSERT INTO ModulesCatHeures (codeMod, libCatHeur, nbHeurePN, nbHeureSem, nbSemaine) VALUES (?,?,?,?,?)";
-			this.info.addAll(List.of(m.getCode(),cat.getlibCatHeur(), ));
+
+			this.info.addAll(List.of(m.getCode(), cat.getlibCatHeur(), lst.get(0), lst.get(2), lst.get(1)));
 		}
 	}
 
+
 	public Ajout(Intervenants inter) {
 
-		this.requetes = "DELETE FROM Affectation WHERE intNom = ? AND intPrenom = ?";
+		this.requetes = "INSERT INTO Intervenants(nomInt, prenomInt, heureMinInt, heureMaxInt, categInt) VALUES (?,?,?,?,?)";
 
-		String nom = inter.getNomIntervenant();
-		String prenom = inter.getPrenomIntervenant();
-
-		this.info = new ArrayList<>(List.of(nom, prenom, nom, prenom));
+		this.info = new ArrayList<>(List.of(inter.getNomIntervenant(), inter.getPrenomIntervenant(), inter.getServices(), inter.getMaxHeures(), inter.getCategorieIntervenant().getCodeCatInt()));
 	}
 
 	public Ajout(CategorieHeures cat) {
 
-		this.requetes = "DELETE FROM Affectation WHERE libCatHeur = ? ;" +
-				"DELETE FROM ModulesCatHeures WHERE libCatHeur = ? ;" +
-				"DELETE FROM CategorieHeures WHERE libCatHeur = ?";
+		this.requetes = "INSERT INTO CategorieHeures(libCatHeur, coefCatHeur) VALUES (?,?)";
 
-		String code = cat.getlibCatHeur();
-
-		this.info = new ArrayList<>(List.of(code, code, code));
+		this.info = new ArrayList<>(List.of(cat.getlibCatHeur(), cat.getcoefCatHeur()));
 	}
 
 	// On doit supprimer tous les Intervenants et donc leur Affectations.....
 	public Ajout(CategorieIntervenant cat) {
 
-		List<Intervenants> lst = Etat.getIntervenants(cat);
+		this.requetes = "INSERT INTO CategorieIntervenants(libCatHeur, coefCatHeur) VALUES (?,?)";
 
-		for (Intervenants i : lst) {
-			Ajout sup = new Ajout(i);
-			this.requetes += sup.requetes;
-			this.info.addAll(sup.info);
-		}
-
-		this.requetes = "DELETE FROM Affectation WHERE libCatHeur = ? ;" +
-				"DELETE FROM ModulesCatHeures WHERE libCatHeur = ? ;" +
-				"DELETE FROM CategorieHeures WHERE libCatHeur = ?";
-
-		String code = cat.getCodeCatInt();
-
-		this.info.addAll(List.of(code, code, code));
+		this.info = new ArrayList<>(List.of(cat.getlibCatHeur(), cat.getcoefCatHeur()));
 	}
-
-	public String getRequeteSQL() {
-		return this.requetes;
-	}
-
-	public List<Object> getInfo() {
-		return this.info;
-	}
-
 }
