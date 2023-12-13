@@ -14,6 +14,7 @@ import model.action.Ajout;
 import model.modules.Module;
 
 public class Controleur {
+	
 	private static Controleur controleur;
 	private FrameAccueil frameAccueil;
 	private Etat etat;

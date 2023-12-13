@@ -6,7 +6,6 @@ import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
 import model.CategorieIntervenant;
-import model.CategorieIntervenant;
 
 public class GrilleCatInt extends AbstractTableModel {
 
@@ -27,10 +26,11 @@ public class GrilleCatInt extends AbstractTableModel {
 		for (int lig = 0; lig < lstCatInt.size(); lig++) {
 			cat = lstCatInt.get(lig);
 
-			tabDonnees[lig][0] = cat.getLibCatInt();
-			tabDonnees[lig][1] = cat.getCoefCatInt();
-			tabDonnees[lig][2] = cat.getHeureMinCatInt();
-			tabDonnees[lig][3] = cat.getHeureMaxCatInt();
+			tabDonnees[lig][0] = cat.getCodeCatInt();
+			tabDonnees[lig][1] = cat.getLibCatInt();
+			tabDonnees[lig][2] = cat.getCoefCatInt();
+			tabDonnees[lig][3] = cat.getHeureMinCatInt();
+			tabDonnees[lig][4] = cat.getHeureMaxCatInt();
 		}
 
 	}

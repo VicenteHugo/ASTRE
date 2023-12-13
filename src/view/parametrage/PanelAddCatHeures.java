@@ -12,6 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controleur.Controleur;
+import model.CategorieHeures;
+import model.action.Ajout;
 import view.accueil.FrameAccueil;
 
 
@@ -76,7 +79,22 @@ public class PanelAddCatHeures extends JPanel {
 		this.add(panelBas, BorderLayout.SOUTH);
 
 		//Activation
-		this.btnValider.addActionListener((e)->/*On ajoute */System.out.println());
+		this.btnValider.addActionListener((e)->this.ajouterCatHeures());
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
+	}
+	
+	private void ajouterCatHeures ()
+	{
+		String coef = this.txtCoef.getText();
+		String lib  = this.txtLib .getText();
+
+		if (coef.isEmpty() || lib.isEmpty()) return;
+		
+		try 
+		{
+			Controleur.ajouterCategorieHeure(lib, Float.parseFloat(coef));
+			this.frameM.dispose();
+		} catch (Exception e) {
+		}
 	}
 }
