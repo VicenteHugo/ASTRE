@@ -12,13 +12,14 @@ import model.Semestres;
 import model.modules.Module;
 
 public class Controleur {
+	
 	private static Controleur controleur;
 	private FrameAccueil frameAccueil;
 	private Etat etat;
 
 	public Controleur() {
 		this.frameAccueil = new FrameAccueil();
-		this.etat = new Etat(null);
+		this.etat = new Etat();
 	}
 
 	public static Controleur creerControleur() {
