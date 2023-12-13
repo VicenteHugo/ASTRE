@@ -1,0 +1,35 @@
+header {
+    background-color: #0097B2;
+    text-align: left;
+    color: wheat;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: wheat;
+}
+
+/**
+ * titre de la partie
+*/
+h2 {
+    color: #0097B2;
+}
+
+/**
+ * liste des informations
+*/
+li {
+    color: black;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+/**
+ * information générer dans le li 
+*/
+info {
+    color: black;
+    font-weight: normal;
+    font-size: 12px;
+}
