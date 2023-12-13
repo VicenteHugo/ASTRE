@@ -1,5 +1,7 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,12 @@ import model.modules.Stage;
 import model.modules.PPP;
 
 public class Etat {
+
+	/**Liste des Tables.Utile pour la verification de leurs présences. */
+	public static final String[] LST_NOM_TABLES = new String[] 
+	{ "Etat", "CategorieIntervenants", "CategorieHeures", "Semestres", "Intervenants", "Modules","ModulesCatHeures","Affectation"};
+
+
 
 	// Connection/SQL
 	/** Connection vers la bado. */
@@ -51,6 +59,9 @@ public class Etat {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			// Connection
 			Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre", "root", "");
+
+			Etat.verifierTablesPresence();
+
 
 			Statement st = connec.createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM Etat ORDER BY dateCrea DESC");
@@ -407,29 +418,55 @@ public class Etat {
 		Etat.genererInfos();
 		Etat.lstActions.clear();
 	}
+	
+	
 
-	public static void main(String[] args) {
-		new Etat();
+	/*--------------------------------------------------------------*/
+	/* CREATION ET VERIFICATIONS DES TABLES */
+	/*--------------------------------------------------------------*/
 
-		for (Intervenants i : Etat.getIntervenants())
-			System.out.println(i);
 
-		for (Affectations a : Etat.getAffectations())
-			System.out.println(a);
+	private static void verifierTablesPresence() {
 
-		for (Module m : Etat.getModules())
-			System.out.println(m.getClass().getSimpleName());
+		try {
+			for (String nomTable : Etat.LST_NOM_TABLES) {
 
-		CategorieHeures cat = new CategorieHeures("Heeeeey", 1.0f);
+				ResultSet resultSet = Etat.connec.getMetaData().getTables(null, null, nomTable, null);
 
-		Action a = new Ajout(cat);
-		Etat.ajouterAction(a);
-		Etat.enregistrer();
+				if (!resultSet.next())
+					Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
+			}
 
-		a = new Suppression(cat);
-		Etat.ajouterAction(a);
-		Etat.enregistrer();
-
-		System.out.println();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
+	
+	private static void lireFichierSQL(String fic) {
+
+		try (BufferedReader reader = new BufferedReader(new FileReader(fic))) {
+
+			Statement statement = Etat.connec.createStatement();
+            String line;
+            StringBuilder sql = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+				// Ignorer les lignes de commentaires
+				if (!line.trim().startsWith("--") && !line.trim().startsWith("/*") && !line.trim().startsWith("*")) {
+					sql.append(line).append(" ");
+
+					// Si une ligne se termine par ;, alors exécute la requête
+					if (line.trim().endsWith(";")) {
+						System.out.println(sql);
+						statement.execute(sql.toString());
+						sql = new StringBuilder();
+					}
+				}
+			}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+	}
+
 }

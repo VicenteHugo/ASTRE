@@ -6,6 +6,7 @@
 *
 *
 * MLD : 
+	* Etat
 	* CategorieIntervenants(libCatInt, coefCatInt, heureMinCatInt, heureMaxCatInt)
 	* CategorieHeures      (libCatHeur, coefCatHeur)
 	* Semestres            (numSem, nbGpTdSem, nbGpTpSem, nbEtdSem, nbSemSem)
