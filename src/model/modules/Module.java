@@ -2,7 +2,7 @@ package model.modules;
 
 import java.util.List;
 
-
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import model.CategorieHeures;
@@ -10,16 +10,41 @@ import model.Semestres;
 
 public abstract class Module implements Comparable<Module> {
 
+	/*-------------------------------------------------------------*/
+	/* ATTRIBUTS */
+	/*-------------------------------------------------------------*/
+
+	/* Semestre assignée à un module */
 	private Semestres semestres;
+
+	/* Code du module en fonction du semestre et de son libellé */
 	private String code;
+
+	/* Libellé long du module */
 	private String libLong;
+
+	/* Libellé court du module */
 	private String libCourt;
+
+	/* Boolean confirmant la validation du module */
 	private boolean valide;
+
+	/* Le nombre d'heure ponctuel */
 	private int heurePonctuel;
 
-	/** Liste d'heures(heures PN, nb Semaines, heures par semaines) par catégorie */
+	/* L'ensemble des catégories que le modules faient */
+	protected List<CategorieHeures> listCategorieHeure;
+
+	/**
+	 * Liste d'heures(heures PN, nb Semaines, heures par semaines, heures ponctuels)
+	 * par catégorie
+	 */
 	protected HashMap<CategorieHeures, List<Integer>> heures;
 
+	/*
+	 * Constructeur du Module prenant en paramètre le semestre, le code, le libellé
+	 * long et court et les heures ponctuels
+	 */
 	public Module(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel) {
 		this.semestres = semestres;
 		this.code = code;
@@ -27,8 +52,13 @@ public abstract class Module implements Comparable<Module> {
 		this.libCourt = libCourt;
 		this.heurePonctuel = heurePonctuel;
 		this.valide = false;
+		this.listCategorieHeure = new ArrayList<CategorieHeures>();
 		this.heures = new HashMap<>();
 	}
+
+	/*-------------------------------------------------------------*/
+	/* GET-TEURS */
+	/*-------------------------------------------------------------*/
 
 	public Semestres getSemestres() {
 		return this.semestres;
@@ -50,9 +80,21 @@ public abstract class Module implements Comparable<Module> {
 		return this.valide;
 	}
 
+	public int getHeurePonctuel() {
+		return heurePonctuel;
+	}
+
 	public HashMap<CategorieHeures, List<Integer>> getHeures() {
 		return this.heures;
 	}
+
+	public List<CategorieHeures> getListCategorieHeure() {
+		return listCategorieHeure;
+	}
+
+	/*-------------------------------------------------------------*/
+	/* SET-TEURS */
+	/*-------------------------------------------------------------*/
 
 	public void setSemestres(Semestres semestres) {
 		this.semestres = semestres;
@@ -74,22 +116,26 @@ public abstract class Module implements Comparable<Module> {
 		this.valide = valide;
 	}
 
+	public void setHeurePonctuel(int heurePonctuel) {
+		this.heurePonctuel = heurePonctuel;
+	}
+
 	public void setHeures(HashMap<CategorieHeures, List<Integer>> heures) {
 		this.heures = heures;
 	}
+
+	public void setListCategorieHeure(List<CategorieHeures> listCategorieHeure) {
+		this.listCategorieHeure = listCategorieHeure;
+	}
+
+	/*-------------------------------------------------------------*/
+	/* AUTRES */
+	/*-------------------------------------------------------------*/
 
 	abstract public void initList(int heurePN, int nbSemaine, int heureSemaine, int heurePonctuel,
 			CategorieHeures catH);
 
 	public int compareTo(Module module) {
 		return this.code.compareTo(module.code);
-	}
-
-	public int getHeurePonctuel() {
-		return heurePonctuel;
-	}
-
-	public void setHeurePonctuel(int heurePonctuel) {
-		this.heurePonctuel = heurePonctuel;
 	}
 }
