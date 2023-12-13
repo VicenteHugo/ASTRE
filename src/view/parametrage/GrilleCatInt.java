@@ -6,6 +6,7 @@ import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
 import model.CategorieIntervenant;
+import model.CategorieIntervenant;
 
 public class GrilleCatInt extends AbstractTableModel {
 
@@ -14,30 +15,23 @@ public class GrilleCatInt extends AbstractTableModel {
 
 	public GrilleCatInt() {
 
+		Controleur ctrl = Controleur.getControleur();
+
 		CategorieIntervenant cat;
-		this.tabDonnees = new Object[][] { { "info_ec", "lib", 1.0, 200, 250 },
-				{ "vaca_pro", "lib", 1.0, 200, 250 },
-				{ "vac_sd", "lib", 1.0, 200, 250 },
-				{ "vaca_ret", "lib", 1.0, 200, 250 },
-				{ "info_sd", "lib", 1.0, 200, 250 } };
-
-		/*
-		 * List<CategorieIntervenants> lstClients = ctrl.getCatInt();
-		 * 
-		 * tabDonnees = new Object[lstClients.size()][4];
-		 * 
-		 * for ( int lig=0; lig<lstClients.size(); lig++)
-		 * {
-		 * cat = lstClients.get(lig);
-		 * 
-		 * tabDonnees[lig][0] = cat.getlibCatInt ();
-		 * tabDonnees[lig][1] = cat.getCoefCatInt ();
-		 * tabDonnees[lig][2] = cat.getHeureMinCatInt();
-		 * tabDonnees[lig][3] = cat.getHeureMaxCatInt();
-		 * }
-		 */
-
 		this.tabEntetes = new String[] { "Code", "Libellé", "Coef", "Heures minimum", "Heures maximum" };
+
+		List<CategorieIntervenant> lstCatInt = ctrl.getCategorieIntervenants();
+
+		tabDonnees = new Object[lstCatInt.size()][this.tabEntetes.length];
+
+		for (int lig = 0; lig < lstCatInt.size(); lig++) {
+			cat = lstCatInt.get(lig);
+
+			tabDonnees[lig][0] = cat.getLibCatInt();
+			tabDonnees[lig][1] = cat.getCoefCatInt();
+			tabDonnees[lig][2] = cat.getHeureMinCatInt();
+			tabDonnees[lig][3] = cat.getHeureMaxCatInt();
+		}
 
 	}
 
