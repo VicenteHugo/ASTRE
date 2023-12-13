@@ -57,12 +57,14 @@ public class Controleur {
 	}
 
 	public ArrayList<Module> getModules(int i) {
+		
 		ArrayList<Module> retour = new ArrayList<>();
 		for (Module m : Etat.getModules()) {
 			if (m.getSemestres().getNumSem() == i) {
 				retour.add(m);
 			}
 		}
+
 		return retour;
 	}
 

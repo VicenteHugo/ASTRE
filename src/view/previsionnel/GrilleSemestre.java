@@ -1,5 +1,8 @@
 package view.previsionnel;
 
+
+import java.util.List;
+
 import javax.swing.table.AbstractTableModel;
 import controleur.Controleur;
 import model.modules.Module;
@@ -9,8 +12,14 @@ public class GrilleSemestre extends AbstractTableModel {
 
     public GrilleSemestre(int semestre) {
         Controleur ctrl = Controleur.getControleur();
+        System.out.println(semestre);
         
-        int nbModule = ctrl.getModules(semestre).size();
+        List<Module> lst = ctrl.getModules(semestre);
+        System.out.println(lst);
+
+        int nbModule = lst.size();
+        System.out.println(nbModule);
+
         this.tabDonnees = new Object[nbModule][4];
 
         int cpt = 0;
@@ -19,6 +28,7 @@ public class GrilleSemestre extends AbstractTableModel {
             this.tabDonnees[cpt][1] = module.getLibLong();
             this.tabDonnees[cpt][2] = module.getHeurePonctuel() + "/"  + module.getHeurePn();
             this.tabDonnees[cpt][3] = module.isValide();
+            cpt++;
         }
     }
 
@@ -26,7 +36,7 @@ public class GrilleSemestre extends AbstractTableModel {
     public int getRowCount() { return this.tabDonnees.length; }
 
     @Override
-    public int getColumnCount() { return this.tabDonnees[0].length; }
+    public int getColumnCount() { return 4; }
 
     @Override
     public Object getValueAt(int row, int col) { return this.tabDonnees[row][col]; }
