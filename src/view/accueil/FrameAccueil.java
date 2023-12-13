@@ -25,6 +25,7 @@ public class FrameAccueil extends JFrame {
 
     public static void main(String[] args){
         FrameAccueil f = new FrameAccueil();
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
 }
