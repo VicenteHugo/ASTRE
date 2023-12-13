@@ -77,6 +77,7 @@ public class PanelIntPara extends JPanel {
 			f.add(new PanelAddCatInt(this.frame, f));
 			f.setTitle("Ajout d'une catégorie");
 			f.pack();
+			f.setLocationRelativeTo(null);
 			f.setAlwaysOnTop(true);
 			f.setVisible(true);
 		});
