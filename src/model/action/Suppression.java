@@ -12,12 +12,6 @@ import model.modules.Module;
 
 public class Suppression extends Action
 {
-	private String   requetes;
-	private List<String> info;
-
-
-
-
 	public Suppression (Affectations a) 
 	{ 
 		this.requetes = "DELETE FROM Affectation WHERE intNom = ? AND intPrenom = ? AND codeMod = ? AND libCatHeur = ?";
@@ -68,6 +62,6 @@ public class Suppression extends Action
 
 
 	public String       getRequeteSQL() {return this.requetes;}
-	public List<String> getInfo      () {return this.info;}
+	public List<Object> getInfo      () {return this.info;}
 	
 }
