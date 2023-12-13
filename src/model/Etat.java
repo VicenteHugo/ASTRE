@@ -191,6 +191,23 @@ public class Etat {
 
 	}
 
+	public static void supprimerIntervenant(Intervenants intervenants) {
+		try {
+			Statement st = connec.createStatement();
+			st.executeQuery("DELETE * FROM Intervenant WHERE nomInt = "
+					+ intervenants.getNomIntervenant() + ", prenomInt = " + intervenants.getPrenomIntervenant());
+
+			for (Intervenants i : lstIntervenants) {
+				if (i.getNomIntervenant().equals(intervenants.getNomIntervenant())
+						&& i.getPrenomIntervenant().equals(intervenants.getPrenomIntervenant())) {
+					lstIntervenants.remove(i);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public static void genererModules() {
 
 		Etat.lstModule = new ArrayList<>();
@@ -240,6 +257,22 @@ public class Etat {
 
 			res.close();
 			st.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void supprimerModule(Module module) {
+		try {
+			Statement st = connec.createStatement();
+			st.executeQuery("DELETE * FROM Module WHERE codeMod = "
+					+ module.getCode());
+
+			for (Module m : lstModule) {
+				if (m.getCode().equals(module.getCode())) {
+					lstModule.remove(m);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
