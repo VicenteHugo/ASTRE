@@ -13,14 +13,13 @@ public class Stage extends Module {
 
 	}
 
-	public void initList(int heurePNCM, int nbSemaineCM, int heureSemaineCM, int heurePonctuel, CategorieHeures catH) {
+	public void initList(int heurePNCM, int nbSemaineCM, int heureSemaineCM, CategorieHeures catH) {
 
 		List<Integer> list = new ArrayList<>();
 
 		list.add(heurePNCM);
 		list.add(nbSemaineCM);
 		list.add(heureSemaineCM);
-		list.add(heurePonctuel);
 		this.listCategorieHeure.add(catH);
 		this.heures.put(catH, list);
 	}

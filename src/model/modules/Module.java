@@ -132,7 +132,7 @@ public abstract class Module implements Comparable<Module> {
 	/* AUTRES */
 	/*-------------------------------------------------------------*/
 
-	abstract public void initList(int heurePN, int nbSemaine, int heureSemaine, int heurePonctuel,
+	abstract public void initList(int heurePN, int nbSemaine, int heureSemaine,
 			CategorieHeures catH);
 
 	public int compareTo(Module module) {

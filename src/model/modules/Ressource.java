@@ -13,14 +13,13 @@ public class Ressource extends Module {
 	}
 
 	@Override
-	public void initList(int heurePN, int nbSemaine, int heureSemaine, int heurePonctuel, CategorieHeures catH) {
+	public void initList(int heurePN, int nbSemaine, int heureSemaine, CategorieHeures catH) {
 
 		List<Integer> list = new ArrayList<>();
 
 		list.add(heurePN);
 		list.add(nbSemaine);
 		list.add(heureSemaine);
-		list.add(heurePonctuel);
 
 		this.listCategorieHeure.add(catH);
 		this.heures.put(catH, list);
