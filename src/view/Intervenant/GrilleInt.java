@@ -1,6 +1,15 @@
 package view.Intervenant;
 
+import java.util.ArrayList;
+import java.util.List;
+import model.Intervenants;
+import model.Semestres;
+import model.modules.*;
+import model.modules.Module;
+
 import javax.swing.table.AbstractTableModel;
+
+import controleur.Controleur;
 import model.CategorieIntervenant;
 
 public class GrilleInt extends AbstractTableModel {
@@ -9,27 +18,33 @@ public class GrilleInt extends AbstractTableModel {
 	private Object[][] tabDonnees;
 
 	public GrilleInt() {
-		CategorieIntervenant cat;
-		this.tabDonnees = new Object[][] {
-				{ "info_ec", "Boukachour", "Hadhoum", 192, 364, 1, 106.5, 18.0, 0.0, 124.5, 0.0, 0.0, 0.0, 0.0, 124.5 },
-				{ "vaca_pro", "Colignon", "Thomas", 120, 187, "2/3", 40.3, 0.0, 0.0, 40.3, 0.0, 0.0, 0.0, 0.0,
-						40.3 }, };
 
-		/*
-		 * List<CategorieIntervenants> lstClients = ctrl.getCatInt();
-		 * 
-		 * tabDonnees = new Object[lstClients.size()][4];
-		 * 
-		 * for ( int lig=0; lig<lstClients.size(); lig++)
-		 * {
-		 * cat = lstClients.get(lig);
-		 * 
-		 * tabDonnees[lig][0] = cat.getlibCatInt ();
-		 * tabDonnees[lig][1] = cat.getCoefCatInt ();
-		 * tabDonnees[lig][2] = cat.getHeureMinCatInt();
-		 * tabDonnees[lig][3] = cat.getHeureMaxCatInt();
-		 * }
-		 */
+		List<Intervenants> lstIntervenant = Controleur.getControleur().getIntervenants();
+
+		tabDonnees = new Object[lstIntervenant.size()][14];
+
+		for (int lig = 0; lig < lstIntervenant.size(); lig++) {
+			Intervenants intervenants = lstIntervenant.get(lig);
+			List<Integer> listeSemaine = new ArrayList<>();
+
+			for (Semestres semestres : Controleur.getControleur().getSemestres()) {
+				for (Module module : Controleur.getControleur().getModules(semestres)) {
+
+				}
+			}
+
+			tabDonnees[lig][0] = intervenants.getCategorieIntervenant().getLibCatInt();
+			tabDonnees[lig][1] = intervenants.getNomIntervenant();
+			tabDonnees[lig][2] = intervenants.getPrenomIntervenant();
+			tabDonnees[lig][3] = intervenants.getServices();
+			tabDonnees[lig][4] = intervenants.getMaxHeures();
+			tabDonnees[lig][5] = intervenants.getCoefficient();
+
+			tabDonnees[lig][9] = intervenants.getSommeSemImpaire();
+			tabDonnees[lig][13] = intervenants.getSommeSemPaire();
+
+			tabDonnees[lig][14] = intervenants.getSommeSemImpaire() + intervenants.getSommeSemPaire();
+		}
 
 		this.tabEntetes = new String[] { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "CoefTP", "S1", "S3", "S5",
 				"sTot", "S2", "S4", "S6", "sTot", "Total" };

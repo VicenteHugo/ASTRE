@@ -65,6 +65,16 @@ public class Controleur {
 		return retour;
 	}
 
+	public ArrayList<Module> getModules(Semestres semestres) {
+		ArrayList<Module> retour = new ArrayList<>();
+		for (Module m : Etat.getModules()) {
+			if (m.getSemestres().equals(semestres)) {
+				retour.add(m);
+			}
+		}
+		return retour;
+	}
+
 	public ArrayList<Semestres> getSemestres() {
 		return Etat.getSemestres();
 	}
