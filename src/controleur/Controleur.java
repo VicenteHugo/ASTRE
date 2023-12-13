@@ -46,18 +46,14 @@ public class Controleur {
 		return Etat.getModules();
 	}
 
-	public ArrayList<Module> getModules(Semestres semestres) {
+	public ArrayList<Module> getModules(int i) {
 		ArrayList<Module> retour = new ArrayList<>();
 		for (Module m : Etat.getModules()) {
-			if (m.getSemestres().equals(semestres)) {
+			if (m.getSemestres().getNumSem() == i) {
 				retour.add(m);
 			}
 		}
 		return retour;
-	}
-
-	public int getNbModule() {
-		return Etat.getModules().size();
 	}
 
 	public ArrayList<Semestres> getSemestres() {
