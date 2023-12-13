@@ -1,5 +1,7 @@
 package model;
 
+import model.modules.Module;
+
 public class Affectations {
     /**Intervenant */
     private Intervenants intervenant;
@@ -13,61 +15,49 @@ public class Affectations {
     /**nombre d'heure semaine */
     private int nbSemaine;
 
+    /**nombre d'heure semaine */
+    private int nbGroupe;
+
     /**commentaire */
     private String commentaire;
 
     /**Constructeur
      */
-    public Affectations(Intervenants inter, Module module, CategorieHeures categorie,int nbSemaine, String commentaire) {
-        this.intervenant     = inter;
-        this.module          = module;
+    public Affectations(Intervenants inter, Module mode, CategorieHeures categorie, int nbSemaine, int nbGroupe, String commentaire) {
+        this.intervenant = inter;
+        this.module = mode;
         this.categorieHeures = categorie;
-        this.nbSemaine       = nbSemaine;
-        this.commentaire     = commentaire;
+        this.nbSemaine = nbSemaine;
+        this.commentaire = commentaire;
+        this.nbGroupe = nbGroupe;
     }
 
-    public String getNomIntervenant() {
-        return this.nomIntervenant;
+    public Intervenants getIntervenant() {
+        return intervenant;
     }
 
-    public void setNomIntervenant(String nomIntervenant) {
-        this.nomIntervenant = nomIntervenant;
+    public void setIntervenant(Intervenants intervenant) {
+        this.intervenant = intervenant;
     }
 
-    public String getPrenomIntervenant() {
-        return this.prenomIntervenant;
+    public Module getModule() {
+        return module;
     }
 
-    public void setPrenomIntervenant(String prenomIntervenant) {
-        this.prenomIntervenant = prenomIntervenant;
+    public void setModule(Module module) {
+        this.module = module;
     }
 
-    public String getCodeModule() {
-        return this.codeModule;
+    public CategorieHeures getCategorieHeures() {
+        return categorieHeures;
     }
 
-    public void setCodeModule(String codeModule) {
-        this.codeModule = codeModule;
-    }
-
-    public String getLibelleCategorieHeure() {
-        return this.libelleCategorieHeure;
-    }
-
-    public void setLibelleCategorieHeure(String libelleCategorieHeure) {
-        this.libelleCategorieHeure = libelleCategorieHeure;
-    }
-
-    public int getNbHeureSemaine() {
-        return this.nbHeureSemaine;
-    }
-
-    public void setNbHeureSemaine(int nbHeureSemaine) {
-        this.nbHeureSemaine = nbHeureSemaine;
+    public void setCategorieHeures(CategorieHeures categorieHeures) {
+        this.categorieHeures = categorieHeures;
     }
 
     public int getNbSemaine() {
-        return this.nbSemaine;
+        return nbSemaine;
     }
 
     public void setNbSemaine(int nbSemaine) {
@@ -75,12 +65,21 @@ public class Affectations {
     }
 
     public String getCommentaire() {
-        return this.commentaire;
+        return commentaire;
     }
 
     public void setCommentaire(String commentaire) {
         this.commentaire = commentaire;
     }
+
+    @Override
+    public String toString() {
+        return "Affectations [intervenant=" + intervenant + ", module=" + module + ", categorieHeures="
+                + categorieHeures + ", nbSemaine=" + nbSemaine + ", nbGroupe=" + nbGroupe + ", commentaire="
+                + commentaire + "]";
+    }
+
+
 
     
 }

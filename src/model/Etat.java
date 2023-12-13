@@ -148,6 +148,8 @@ public class Etat {
 	}
 
 	public static CategorieIntervenant getCatInt(String nom) {
+
+		System.out.println(nom);
 		for (CategorieIntervenant c : Etat.lstCategorieIntervenants)
 			if (c.getLibCatInt().equals(nom))
 				return c;
@@ -287,22 +289,16 @@ public class Etat {
 			Statement st = connec.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM Affectation");
 
-			// intNom
-			// intPrenom
-			// codeMod
-			// libCatHeur
-			// nbSem
-			// nbGroupe
-
 			while (res.next()) {
 
-				Intervenants    inter = Etat.getIntervenant(res.getString("intNom"), res.getString("intPrenom"));
-				Module          mode  = Etat.getModule(res.getString("codeMod"));
-				CategorieHeures cat   = Etat.getCatHeure(res.getString("libCatHeur"));
-				int             nbhs  = res.getInt("nbSem");
-				int             nbg   = res.getInt("nbGroupe");
-				
-				Etat.lstAffectations.add(new Affectation)
+				Intervenants inter = Etat.getIntervenant(res.getString("intNom"), res.getString("intPrenom"));
+				Module mode = Etat.getModule(res.getString("codeMod"));
+				CategorieHeures cat = Etat.getCatHeure(res.getString("libCatHeur"));
+				int nbs = res.getInt("nbSem");
+				int nbg = res.getInt("nbGroupe");
+				String comm = res.getString("commentaire");
+
+				Etat.lstAffectations.add(new Affectations(inter, mode, cat, nbs, nbg, comm));
 			}
 
 			res.close();
@@ -311,12 +307,20 @@ public class Etat {
 			e.printStackTrace();
 		}
 	}
+	
+	public static ArrayList<Affectations> getAffectations() {return Etat.lstAffectations;}
+
+
+
 
 	public static void main(String[] args) {
 		new Etat("hey");
 
 		for (Intervenants i : Etat.getIntervenants())
 			System.out.println(i);
+
+		for (Affectations a : Etat.getAffectations())
+			System.out.println(a);
 
 		System.out.println();
 	}
