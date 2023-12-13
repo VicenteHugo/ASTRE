@@ -94,9 +94,12 @@ public class PanelHeurePara extends JPanel {
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
+		System.out.println(ind);
 		Controleur.getControleur().supprimerCategorieHeure(ind);
-		if (ind >= 0) this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
-.
+		if (ind >= 0)
+			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
+		
+		this.maj();
 	}
 
 
