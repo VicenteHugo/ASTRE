@@ -82,11 +82,25 @@ public class Controleur {
 
 	public void ajouterCategorieHeure(String lib, float coeff) {
 		Etat.ajouterAction(new Ajout(new CategorieHeures(lib, coeff)));
+		Etat.ajouterCategorieHeure(new CategorieHeures(lib, coeff));
 	}
 
 	public void ajouterCategorieIntervenant(String code, String libCat, float coeff, int heureMinCatInt,
 			int heureMaxCatInt) {
 		Etat.ajouterAction(new Ajout(new CategorieIntervenant(code, libCat, coeff, heureMinCatInt, heureMaxCatInt)));
+		Etat.ajouterCategorieIntervenant(new CategorieIntervenant(code, libCat, coeff, heureMinCatInt, heureMaxCatInt));
+	}
+
+	public void enregistrer() {
+		Etat.enregistrer();
+	}
+
+	public void annuler() {
+		Etat.anuller();
+	}
+
+	public void modifier() {
+
 	}
 
 	/*-------------------------------------------------------------*/
