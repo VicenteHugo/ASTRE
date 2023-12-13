@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -147,5 +148,14 @@ public class PanelStage extends JPanel {
         this.add(panelDroit);
 
         this.btnAnnuler.addActionListener((e)->this.frame.changePanel(new PanelPrevi(this.frame)));
+        this.btnAjouter.addActionListener((e)->{
+			JFrame f = new JFrame();
+			f.add(new PanelAddSAEIntervenant(this.frame, f));
+			f.setTitle("Affecter un Intervenant");
+			f.pack();
+			f.setLocationRelativeTo(null);
+			f.setAlwaysOnTop(true);
+			f.setVisible(true);
+		});
     }
 }

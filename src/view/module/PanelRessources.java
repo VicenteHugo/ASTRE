@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -192,8 +193,5 @@ public class PanelRessources extends JPanel {
 		this.add(panelDroit);
 
 		this.btnAnnuler.addActionListener((e) -> this.frame.changePanel(new PanelPrevi(this.frame)));
-		// this.btnAjouter
-		// .addActionListener((e) -> this.frame.changePanel(new
-		// PanelAddIntervenant(this.frame, frame)));
 	}
 }
