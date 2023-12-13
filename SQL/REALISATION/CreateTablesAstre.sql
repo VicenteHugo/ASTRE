@@ -42,12 +42,13 @@ CREATE TABLE Etat
 -- Création des tables ayant un niveau de liaison 1
 CREATE TABLE CategorieIntervenants
 (
+	codeCatInt     VARCHAR(10), 
 	libCatInt      VARCHAR(10), 
 	coefCatInt     FLOAT DEFAULT 1 CHECK (coefCatInt > 0) ,
 	heureMinCatInt INTEGER NOT NULL CHECK (heureMinCatInt > 0)               ,
 	heureMaxCatInt INTEGER NOT NULL CHECK (heureMaxCatInt >= heureMinCatInt) ,
 	etat           VARCHAR(25) REFERENCES Etat(libEtat),
-	PRIMARY KEY(libCatInt, etat)
+	PRIMARY KEY(codeCatInt, etat)
 );
 
 CREATE TABLE CategorieHeures
@@ -100,10 +101,12 @@ CREATE TABLE ModulesCatHeures
 
 CREATE TABLE Affectation
 (
-	intervenant VARCHAR(20) NOT NULL REFERENCES Intervenants(nomInt, prenomInt),
+	intNom      VARCHAR(20) NOT NULL REFERENCES Intervenants(nomInt),
+	intPrenom   VARCHAR(20) NOT NULL REFERENCES Intervenants(prenomInt),
 	codeMod     VARCHAR(10) NOT NULL REFERENCES Modules(codeMod),
 	libCatHeur  VARCHAR(10) NOT NULL REFERENCES CategorieHeures(libCatHeur),
-	nbHeureSem  INTEGER NOT NULL CHECK (nbHeureSem > 0),
+	nbSem       INTEGER NOT NULL CHECK (nbSem > 0),
 	nbGroupe    INTEGER NOT NULL CHECK (nbGroupe > 0),
-	PRIMARY KEY(intervenant, codeMod, libCatHeur)
+	commentaire VARCHAR(255),
+	PRIMARY KEY(intNom, intPreNom, codeMod, libCatHeur)
 );

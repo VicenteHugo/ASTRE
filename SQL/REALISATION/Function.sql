@@ -17,7 +17,7 @@ INSERT INTO Etat (libEtat) VALUES ('Terminé');
 
 
 INSERT INTO CategorieIntervenants (libCatInt, coefCatInt, heureMinCatInt, heureMaxCatInt, etat)
-VALUES ('Cat1', 1.5, 10, 20, 'En cours');
+VALUES ('PROF', 1.5, 10, 20, 'En cours');
 -- Ajoute d'autres catégories d'intervenants si nécessaire
 
 
@@ -32,20 +32,20 @@ VALUES (1, 5, 4, 100, 4);
 
 
 INSERT INTO Modules (codeMod, semMod, typeMod, libCourtMod, libLongMod, validMod)
-VALUES ('CM', 1, 'Ressource', 'Ressource', 'Long1', true);
+VALUES ('R1.01', 1, 'Ressource', 'Ressource', 'Long1', true);
 -- Ajoute d'autres modules si nécessaire
 
 
 INSERT INTO Intervenants (nomInt, prenomInt, heureMinInt, heureMaxInt, categInt)
-VALUES ('Nom1', 'Prenom1', 15, 30, 'Cat1');
+VALUES ('Nom1', 'Prenom1', 15, 30, 'PROF');
 -- Ajoute d'autres intervenants si nécessaire
 
 
 INSERT INTO ModulesCatHeures (codeMod, libCatHeur, nbHeurePN, nbHeureSem, nbSemaine)
-VALUES ('M1', 'Cat1', 20, 10, 2);
+VALUES ('R1.01', 'CM', 20, 10, 2);
 -- Ajoute d'autres liaisons entre modules et catégories d'heures si nécessaire
 
 
-INSERT INTO Affectation (intervenant, codeMod, libCatHeur, nbHeureSem, nbGroupe)
-VALUES ('Nom1', 'M1', 'Cat1', 8, 2);
+INSERT INTO Affectation (intNom, intPrenom, codeMod, libCatHeur, nbSem, nbGroupe)
+VALUES ('Nom1', 'Prenom1', 'R1.01', 'CM', 8, 2);
 -- Ajoute d'autres affectations si nécessaire

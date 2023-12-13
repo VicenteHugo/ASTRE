@@ -7,6 +7,9 @@ public class CategorieIntervenant {
 	/*-------------------------------------------------------------*/
 
 	/** Libellé de la catégorie de l'intervenants. */
+	private String codeCatInt;
+
+	/** Libellé de la catégorie de l'intervenants. */
 	private String libCatInt;
 
 	/** Coefficient de la catégorie de l'intervenants pour mettre ses heures en heures TD. */
@@ -25,9 +28,10 @@ public class CategorieIntervenant {
 	/*-------------------------------------------------------------*/
 
 	/**Constructeur prenant tous les paramètres.*/
-	public CategorieIntervenant (String lib, float coef, int heurMax, int heurMin) {
-		this.libCatInt = lib;
-		this.coefCatInt = coef;
+	public CategorieIntervenant (String code, String lib, float coef, int heurMax, int heurMin) {
+		this.codeCatInt     = code;
+		this.libCatInt      = lib;
+		this.coefCatInt     = coef;
 		this.heureMinCatInt = heurMin;
 		this.heureMaxCatInt = heurMax;
 	}
@@ -38,7 +42,8 @@ public class CategorieIntervenant {
 	/*                           GET-TEURS                         */
 	/*-------------------------------------------------------------*/
 
-	public String getlibCatInt     () {return this.libCatInt;     }
+	public String getCodeCatInt    () {return this.codeCatInt;    }
+	public String getLibCatInt     () {return this.libCatInt;     }
 	public float  getCoefCatInt    () {return this.coefCatInt;    }
 	public int    getHeureMinCatInt() {return this.heureMinCatInt;}
 	public int    getHeureMaxCatInt() {return this.heureMaxCatInt;}
@@ -49,7 +54,8 @@ public class CategorieIntervenant {
 	/*                           SET-TEURS                         */
 	/*-------------------------------------------------------------*/
 
-	public void setlibCatInt     (String libCatInt     ) { this.libCatInt      = libCatInt     ;}
+	public void setCodeCatInt    (String codeCatInt    ) { this.codeCatInt     = codeCatInt    ;}
+	public void setLibCatInt     (String libCatInt     ) { this.libCatInt      = libCatInt     ;}
 	public void setCoefCatInt    (float  CoefCatInt    ) { this.coefCatInt     = CoefCatInt    ;}
 	public void setHeureMinCatInt(int    HeureMinCatInt) { this.heureMinCatInt = HeureMinCatInt;}
 	public void setHeureMaxCatInt(int    HeureMaxCatInt) { this.heureMaxCatInt = HeureMaxCatInt;}

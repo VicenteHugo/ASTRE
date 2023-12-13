@@ -28,7 +28,7 @@ public class Etat {
 
 	// Liste de laison 2
 	/** Liste des association. */
-	private static ArrayList<CategorieIntervenant> lstAssociations;
+	private static ArrayList<Affectations> lstAffectations;
 
 	public Etat(String name) {
 
@@ -47,6 +47,9 @@ public class Etat {
 			// Générer les deuxièmes tables
 			Etat.genererIntervenants();
 			Etat.genererModules();
+
+			// Générer les troisièmes tables
+			Etat.genererAffections();
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver not found: " + e.getMessage());
@@ -89,12 +92,13 @@ public class Etat {
 			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants");
 
 			while (res.next()) {
+				String code = res.getString("codeCatInt");
 				String lib = res.getString("libCatInt");
 				float coef = res.getFloat("coefCatInt");
 				int hmin = res.getInt("heureMinCatInt");
 				int hmax = res.getInt("heureMaxCatInt");
 
-				Etat.lstCategorieIntervenants.add(new CategorieIntervenant(lib, coef, hmax, hmin));
+				Etat.lstCategorieIntervenants.add(new CategorieIntervenant(code, lib, coef, hmax, hmin));
 			}
 
 			res.close();
@@ -144,8 +148,10 @@ public class Etat {
 	}
 
 	public static CategorieIntervenant getCatInt(String nom) {
+
+		System.out.println(nom);
 		for (CategorieIntervenant c : Etat.lstCategorieIntervenants)
-			if (c.getlibCatInt().equals(nom))
+			if (c.getLibCatInt().equals(nom))
 				return c;
 
 		return null;
@@ -287,15 +293,67 @@ public class Etat {
 		return Etat.lstModule;
 	}
 
+	public static Intervenants getIntervenant(String nom, String prenom) {
+		for (Intervenants i : Etat.lstIntervenants)
+			if (i.getNomIntervenant().equals(nom) && i.getPrenomIntervenant().equals(prenom))
+				return i;
+
+		return null;
+	}
+
+	public static Module getModule(String code) {
+		for (Module m : Etat.lstModule)
+			if (m.getCode().equals(code))
+				return m;
+
+		return null;
+	}
+
 	/*--------------------------------------------------------------*/
 	/* LIAISON 3 */
 	/*--------------------------------------------------------------*/
+
+	// Méthode CREATE
+	public static void genererAffections() {
+
+		Etat.lstAffectations = new ArrayList<>();
+
+		try {
+			Statement st = connec.createStatement();
+			ResultSet res = st.executeQuery("SELECT * FROM Affectation");
+
+			while (res.next()) {
+
+				Intervenants inter = Etat.getIntervenant(res.getString("intNom"), res.getString("intPrenom"));
+				Module mode = Etat.getModule(res.getString("codeMod"));
+				CategorieHeures cat = Etat.getCatHeure(res.getString("libCatHeur"));
+				int nbs = res.getInt("nbSem");
+				int nbg = res.getInt("nbGroupe");
+				String comm = res.getString("commentaire");
+
+				Etat.lstAffectations.add(new Affectations(inter, mode, cat, nbs, nbg, comm));
+			}
+
+			res.close();
+			st.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static ArrayList<Affectations> getAffectations() {return Etat.lstAffectations;}
+
+
+
 
 	public static void main(String[] args) {
 		new Etat("hey");
 
 		for (Intervenants i : Etat.getIntervenants())
 			System.out.println(i);
+
+		for (Affectations a : Etat.getAffectations())
+			System.out.println(a);
 
 		System.out.println();
 	}
