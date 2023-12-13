@@ -2,7 +2,7 @@ package view.accueil;
 
 import javax.swing.*;
 
-public class FrameAccueil extends JFrame{
+public class FrameAccueil extends JFrame {
     
     public FrameAccueil() {
 

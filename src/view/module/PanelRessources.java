@@ -1,15 +1,8 @@
 package view.module;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -19,10 +12,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import view.accueil.FrameAccueil;
-import view.parametrage.PanelParametre;
 import view.previsionnel.PanelPrevi;
 
-public class PanelRessources extends JPanel implements ActionListener{
+public class PanelRessources extends JPanel {
     
     private FrameAccueil frame;
 
@@ -200,12 +192,6 @@ public class PanelRessources extends JPanel implements ActionListener{
         this.add(panelGauche);
         this.add(panelDroit);
 
-        this.btnAnnuler.addActionListener(this);
+        this.btnAnnuler.addActionListener((e)->this.frame.changePanel(new PanelPrevi(this.frame)));
     }
-
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnAnnuler)
-			    this.frame.changePanel(new PanelPrevi(this.frame));
-    }
-
 }

@@ -1,13 +1,19 @@
 package view.parametrage;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import view.accueil.FrameAccueil;
 
 
-public class PanelHeurePara extends JPanel implements ActionListener {
+public class PanelHeurePara extends JPanel {
 
 	private FrameAccueil frame;
 	private JTable tblGrilleDonnees;
@@ -58,36 +64,22 @@ public class PanelHeurePara extends JPanel implements ActionListener {
 		this.tblGrilleDonnees.getColumnModel().getColumn(1).setMinWidth(30);
 
 		// Actionnement
-		this.btnRetour   .addActionListener(this);
-		this.btnValider  .addActionListener(this);
-		this.btnSupprimer.addActionListener(this);
-		this.btnAjouter  .addActionListener(this);
-	}
-
-	public void actionPerformed(ActionEvent e) {
-
-		if (e.getSource() == this.btnValider) {
-			; // On modifie les données dans la base
+		this.btnValider  .addActionListener((e)->{
+			 // On modifie les données dans la base
 			this.frame.changePanel(new PanelParametre(this.frame));
-		}
-
-		if (e.getSource() == this.btnRetour) {
-			this.frame.changePanel(new PanelParametre(this.frame));
-		}
-
-		if (e.getSource() == this.btnSupprimer) {
+		});
+		this.btnRetour   .addActionListener((e)->this.frame.changePanel(new PanelParametre(this.frame)));
+		this.btnSupprimer.addActionListener((e)->{
 			System.out.println("Ligne " + this.tblGrilleDonnees.getSelectedRow() + " supprimé.");
-		}
-
-		if (e.getSource() == this.btnAjouter) {
-			JFrame frame = new JFrame();
-			frame.add(new PanelAddCatHeures(this.frame, frame));
-			frame.setTitle("Ajout d'une catégorie");
-			frame.pack();
-			frame.setAlwaysOnTop(true);
-			frame.setVisible(true);
-		}
-
+		});
+		this.btnAjouter  .addActionListener((e)->{
+			JFrame f = new JFrame();
+			f.add(new PanelAddCatHeures(this.frame, f));
+			f.setTitle("Ajout d'une catégorie");
+			f.pack();
+			f.setLocationRelativeTo(null);
+			f.setAlwaysOnTop(true);
+			f.setVisible(true);
+		});
 	}
-
 }

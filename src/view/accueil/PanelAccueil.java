@@ -6,17 +6,10 @@ import view.previsionnel.*;
 import view.Etat.*;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class PanelAccueil extends JPanel implements ActionListener {
+public class PanelAccueil extends JPanel {
 
     private JButton btnParametre, btnPrevisionnel, btnIntervenant, btnEtat;
     private FrameAccueil  frame;
@@ -53,21 +46,10 @@ public class PanelAccueil extends JPanel implements ActionListener {
         gbc.gridy++;
         this.add(btnEtat,gbc);
         
-        this.btnParametre.addActionListener(this);
-		this.btnPrevisionnel.addActionListener(this);
-		this.btnIntervenant.addActionListener(this);
-        this.btnEtat.addActionListener(this);
+        this.btnParametre.addActionListener((e)->this.frame.changePanel(new PanelParametre(this.frame)));
+		this.btnPrevisionnel.addActionListener((e)->this.frame.changePanel(new PanelPrevi(this.frame)));
+		this.btnIntervenant.addActionListener((e)->this.frame.changePanel(new PanelIntervenants(this.frame)));
+        this.btnEtat.addActionListener((e)->this.frame.changePanel(new PanelEtat(this.frame)));
         
     }
-    public void actionPerformed(ActionEvent e) 
-	    {
-            if (e.getSource() == this.btnParametre)
-			    this.frame.changePanel(new PanelParametre(this.frame));
-            if (e.getSource() == this.btnPrevisionnel)
-                this.frame.changePanel(new PanelPrevi(this.frame));
-            if (e.getSource() == this.btnIntervenant)
-                this.frame.changePanel(new PanelIntervenants(this.frame));
-            if (e.getSource() == this.btnEtat)
-                this.frame.changePanel(new PanelEtat(this.frame));
-        }
 }

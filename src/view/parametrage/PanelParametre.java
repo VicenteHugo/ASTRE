@@ -1,14 +1,18 @@
 package view.parametrage;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
 
-public class PanelParametre extends JPanel implements ActionListener {
+public class PanelParametre extends JPanel {
 
     private JButton btnIntervenants;
     private JButton btnHeures;
@@ -58,19 +62,8 @@ public class PanelParametre extends JPanel implements ActionListener {
         this.add(this.btnAccueil, gbc);
 
         // Action
-        this.btnIntervenants.addActionListener(this);
-        this.btnHeures.addActionListener(this);
-        this.btnAccueil.addActionListener(this);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this.btnIntervenants)
-            this.frame.changePanel(new PanelIntPara(this.frame));
-
-        if (e.getSource() == this.btnHeures)
-            this.frame.changePanel(new PanelHeurePara(this.frame));
-
-        if (e.getSource() == this.btnAccueil)
-            this.frame.changePanel(new PanelAccueil(this.frame));
+        this.btnIntervenants.addActionListener((e)->this.frame.changePanel(new PanelIntPara(this.frame)));
+        this.btnHeures.addActionListener((e)->this.frame.changePanel(new PanelHeurePara(this.frame)));
+        this.btnAccueil.addActionListener((e)->this.frame.changePanel(new PanelAccueil(this.frame)));
     }
 }

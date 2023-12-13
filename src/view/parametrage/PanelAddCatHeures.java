@@ -1,15 +1,21 @@
 package view.parametrage;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import view.accueil.FrameAccueil;
 
 
-public class PanelAddCatHeures extends JPanel implements ActionListener
-{
+public class PanelAddCatHeures extends JPanel {
 	private JLabel lblErrCoef;
 	
 	private JTextField txtLib;
@@ -70,16 +76,7 @@ public class PanelAddCatHeures extends JPanel implements ActionListener
 		this.add(panelBas, BorderLayout.SOUTH);
 
 		//Activation
-		this.btnAnnuler.addActionListener(this);
-		this.btnValider.addActionListener(this);
-	}
-
-
-	public void actionPerformed(ActionEvent e) 
-	{
-		if (e.getSource() == this.btnValider)
-			;//On ajoute
-
-		frameM.dispose();
+		this.btnValider.addActionListener((e)->/*On ajoute */System.out.println());
+		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
 	}
 }
