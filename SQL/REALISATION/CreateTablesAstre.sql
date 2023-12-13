@@ -75,7 +75,7 @@ CREATE TABLE Modules
 	libCourtMod VARCHAR(20) NOT NULL,
 	libLongMod  VARCHAR(50) NOT NULL,
 	validMod    BOOLEAN NOT NULL DEFAULT false,
-	nbHeurPonc INTEGER DEFAULT 0    NOT NULL
+	nbHeurPonc  INTEGER DEFAULT 0    NOT NULL
 );
 
 CREATE TABLE Intervenants

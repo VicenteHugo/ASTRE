@@ -2,11 +2,13 @@ package model;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.modules.Module;
 import model.modules.Ressource;
 import model.modules.Sae;
 import model.modules.Stage;
+import model.modules.PPP;
 
 public class Etat {
 	private static Connection connec;
@@ -243,7 +245,7 @@ public class Etat {
 				if (type.equals("Stage"))
 					m = new Stage(sem, code, libLong, libCourt, heurePonctuel);
 				if (type.equals("PPP"))
-					m = new Stage(sem, code, libLong, libCourt, heurePonctuel);
+					m = new PPP(sem, code, libLong, libCourt, heurePonctuel);
 
 				Statement st1 = connec.createStatement();
 				ResultSet res1 = st1.executeQuery("SELECT * FROM ModulesCatHeures WHERE codeMod = '" + code + "'");
@@ -299,6 +301,17 @@ public class Etat {
 				return i;
 
 		return null;
+	}
+
+	public static List<Intervenants> getIntervenants(CategorieIntervenant cat) {
+
+		List<Intervenants> lstIntervenants = new ArrayList<>();
+
+		for (Intervenants i : Etat.lstIntervenants)
+			if (i.getCategorieIntervenant() == cat)
+				lstIntervenants.add(i);
+
+		return lstIntervenants;
 	}
 
 	public static Module getModule(String code) {
