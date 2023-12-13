@@ -9,6 +9,8 @@ import model.CategorieIntervenant;
 import model.Etat;
 import model.Intervenants;
 import model.Semestres;
+import model.action.Action;
+import model.action.Ajout;
 import model.modules.Module;
 
 public class Controleur {
@@ -18,7 +20,7 @@ public class Controleur {
 
 	public Controleur() {
 		this.frameAccueil = new FrameAccueil();
-		this.etat = new Etat(null);
+		this.etat = new Etat();
 	}
 
 	public static Controleur creerControleur() {
@@ -72,6 +74,19 @@ public class Controleur {
 
 	public void setEtat(Etat etat) {
 		this.etat = etat;
+	}
+
+	/*-------------------------------------------------------------*/
+	/* AUTRE */
+	/*-------------------------------------------------------------*/
+
+	public void ajouterCategorieHeure(String lib, float coeff) {
+		Etat.ajouterAction(new Ajout(new CategorieHeures(lib, coeff)));
+	}
+
+	public void ajouterCategorieIntervenant(String code, String libCat, float coeff, int heureMinCatInt,
+			int heureMaxCatInt) {
+		Etat.ajouterAction(new Ajout(new CategorieIntervenant(code, libCat, coeff, heureMinCatInt, heureMaxCatInt)));
 	}
 
 	/*-------------------------------------------------------------*/
