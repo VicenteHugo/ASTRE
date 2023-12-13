@@ -17,7 +17,7 @@ public class PanelSemestre extends JPanel {
 
     private JTable grilleSemestre;
     
-    public PanelSemestre() {
+    public PanelSemestre(int semestre) {
         this.setLayout(new BorderLayout());
         JPanel panel = new JPanel(new GridLayout(1, 8));
 
@@ -52,7 +52,7 @@ public class PanelSemestre extends JPanel {
 
         this.add(panel, BorderLayout.NORTH);
  
-        this.grilleSemestre = new JTable(new GrilleSemestre());
+        this.grilleSemestre = new JTable(new GrilleSemestre(semestre));
         this.grilleSemestre.setFillsViewportHeight(true);
         this.grilleSemestre.setShowVerticalLines(false);
 

@@ -23,9 +23,4 @@ public class FrameAccueil extends JFrame {
         this.setLocationRelativeTo(null);
         this.revalidate();
     }
-
-    public static void main(String[] args){
-        new FrameAccueil();
-    }
-
 }
