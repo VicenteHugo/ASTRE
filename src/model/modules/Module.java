@@ -81,7 +81,7 @@ public abstract class Module implements Comparable<Module> {
 	}
 
 	public int getHeurePonctuel() {
-		return heurePonctuel;
+		return this.heurePonctuel;
 	}
 
 	public HashMap<CategorieHeures, List<Integer>> getHeures() {
@@ -90,6 +90,14 @@ public abstract class Module implements Comparable<Module> {
 
 	public List<CategorieHeures> getListCategorieHeure() {
 		return listCategorieHeure;
+	}
+
+	public int getHeurePn(){
+		int heurePN = 0;
+		for (CategorieHeures catH : this.heures.keySet()) {
+			heurePN += this.heures.get(catH).get(0);
+		}
+		return heurePN;
 	}
 
 	/*-------------------------------------------------------------*/

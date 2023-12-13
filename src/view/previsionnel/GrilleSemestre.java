@@ -2,28 +2,29 @@ package view.previsionnel;
 
 import javax.swing.table.AbstractTableModel;
 import controleur.Controleur;
+import model.modules.Module;
 
 public class GrilleSemestre extends AbstractTableModel {
     private Object[][] tabDonnees;
 
-    public GrilleSemestre(/*Controleur ctrl, int semestre*/) {
+    public GrilleSemestre(int semestre) {
+        Controleur ctrl = Controleur.getControleur();
         this.tabDonnees = new Object[][] {{"R1.01", "Init Dev", "437/465", true}, {"R2.02", "Dev Web", "0/120", false}};
-        /*int nbModule = ctrl.getNbModule(semestre);
+        int nbModule = ctrl.getModules(semestre).size();
         this.tabDonnees = new Object[nbModule + 1][4];
 
         int cpt = 0;
         for (Module module : ctrl.getModules(semestre)) {
             this.tabDonnees[cpt][0] = module.getCode();
-            this.tabDonnees[cpt][1] = module.getNom();
-            this.tabDonnees[cpt][2] = module.getHeureAff() + "/" module.getHeurePn();
-            this.tabDonnees[cpt][3] = module.estValide();
+            this.tabDonnees[cpt][1] = module.getLibLong();
+            this.tabDonnees[cpt][2] = module.getHeurePonctuel() + "/"  + module.getHeurePn();
+            this.tabDonnees[cpt][3] = module.isValide();
         }
 
         this.tabDonnees[nbModule][0] = "";
         this.tabDonnees[nbModule][1] = "";
         this.tabDonnees[nbModule][2] = "";
         this.tabDonnees[nbModule][3] = "";
-*/
     }
 
     @Override

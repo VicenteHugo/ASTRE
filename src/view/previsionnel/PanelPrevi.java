@@ -36,12 +36,12 @@ public class PanelPrevi extends JPanel {
         this.setLayout(new BorderLayout());
 
         ongletSemestres = new JTabbedPane(JTabbedPane.TOP);
-        ongletSemestres.addTab("S1", new PanelSemestre());
-        ongletSemestres.addTab("S2", new PanelSemestre());
-        ongletSemestres.addTab("S3", new PanelSemestre());
-        ongletSemestres.addTab("S4", new PanelSemestre());
-        ongletSemestres.addTab("S5", new PanelSemestre());
-        ongletSemestres.addTab("S6", new PanelSemestre());
+        ongletSemestres.addTab("S1", new PanelSemestre(1));
+        ongletSemestres.addTab("S2", new PanelSemestre(2));
+        ongletSemestres.addTab("S3", new PanelSemestre(3));
+        ongletSemestres.addTab("S4", new PanelSemestre(4));
+        ongletSemestres.addTab("S5", new PanelSemestre(5));
+        ongletSemestres.addTab("S6", new PanelSemestre(6));
         this.add(ongletSemestres);
 
         JPanel panel = new JPanel(new FlowLayout());
