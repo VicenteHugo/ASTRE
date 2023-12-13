@@ -65,17 +65,7 @@ public class Etat {
 
 			System.out.println(Etat.nom);
 
-			// Générer les premières tables
-			Etat.genererCategorieHeures();
-			Etat.genererCategorieIntervenants();
-			Etat.genererSemestres();
-
-			// Générer les deuxièmes tables
-			Etat.genererIntervenants();
-			Etat.genererModules();
-
-			// Générer les troisièmes tables
-			Etat.genererAffections();
+			Etat.genererInfos();
 
 		} catch (ClassNotFoundException e) {
 			System.out.println("Driver not found: " + e.getMessage());
@@ -85,7 +75,20 @@ public class Etat {
 	}
 
 
+	private static void genererInfos ()
+	{
+		// Générer les premières tables
+		Etat.genererCategorieHeures();
+		Etat.genererCategorieIntervenants();
+		Etat.genererSemestres();
 
+		// Générer les deuxièmes tables
+		Etat.genererIntervenants();
+		Etat.genererModules();
+
+		// Générer les troisièmes tables
+		Etat.genererAffections();
+	} 
 
 
 
@@ -415,7 +418,7 @@ public class Etat {
 			System.out.println(e);
 		}
 
-		
+		Etat.genererInfos();
 		Etat.lstActions.clear();
 	}
 

@@ -14,6 +14,12 @@ import model.modules.Module;
 public class Controleur {
 	private static Controleur controleur;
 	private FrameAccueil frameAccueil;
+	private Etat etat;
+
+	public Controleur() {
+		this.frameAccueil = new FrameAccueil();
+		this.etat = new Etat(null);
+	}
 
 	public static Controleur creerControleur() {
 		if (controleur == null)
@@ -22,12 +28,12 @@ public class Controleur {
 		return controleur;
 	}
 
+	/*-------------------------------------------------------------*/
+	/* GET-TEURS */
+	/*-------------------------------------------------------------*/
+
 	public static Controleur getControleur() {
 		return Controleur.controleur;
-	}
-
-	private Controleur() {
-		this.frameAccueil = new FrameAccueil();
 	}
 
 	public ArrayList<CategorieIntervenant> getCategorieIntervenants() {
@@ -60,6 +66,17 @@ public class Controleur {
 		return Etat.getSemestres();
 	}
 
+	/*-------------------------------------------------------------*/
+	/* SET-TEURS */
+	/*-------------------------------------------------------------*/
+
+	public void setEtat(Etat etat) {
+		this.etat = etat;
+	}
+
+	/*-------------------------------------------------------------*/
+	/* MAIN */
+	/*-------------------------------------------------------------*/
 	public static void main(String[] args) {
 		Controleur.creerControleur();
 	}
