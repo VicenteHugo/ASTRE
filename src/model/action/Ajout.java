@@ -41,8 +41,10 @@ public class Ajout extends Action {
 
 		this.requetes = "INSERT INTO Intervenants(nomInt, prenomInt, heureMinInt, heureMaxInt, categInt) VALUES (?,?,?,?,?)";
 
-		this.info = new ArrayList<>(List.of(inter.getNomIntervenant(), inter.getPrenomIntervenant(), inter.getServices(), inter.getMaxHeures(), inter.getCategorieIntervenant().getCodeCatInt()));
+		this.info = new ArrayList<>(List.of(inter.getNomIntervenant(), inter.getPrenomIntervenant(),
+				inter.getServices(), inter.getMaxHeures(), inter.getCategorieIntervenant().getCodeCatInt()));
 	}
+
 
 	public Ajout(CategorieHeures cat) {
 
@@ -51,11 +53,12 @@ public class Ajout extends Action {
 		this.info = new ArrayList<>(List.of(cat.getlibCatHeur(), cat.getcoefCatHeur()));
 	}
 
+
 	// On doit supprimer tous les Intervenants et donc leur Affectations.....
 	public Ajout(CategorieIntervenant cat) {
+		
+		this.requetes = "INSERT INTO CategorieIntervenants(codeCatInt, libCatInt, coefCatInt, heureMinCatInt, heureMaxCatInt) VALUES (?,?,?,?,?)";
 
-		this.requetes = "INSERT INTO CategorieIntervenants(libCatHeur, coefCatHeur) VALUES (?,?)";
-
-		this.info = new ArrayList<>(List.of(cat.getlibCatHeur(), cat.getcoefCatHeur()));
+		this.info = new ArrayList<>(List.of(cat.getCodeCatInt(), cat.getLibCatInt(), cat.getCoefCatInt(), cat.getHeureMaxCatInt(), cat.getHeureMinCatInt()));
 	}
 }
