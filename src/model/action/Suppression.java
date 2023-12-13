@@ -27,54 +27,37 @@ public class Suppression extends Action
 
 	public Suppression (Module m) 
 	{ 
-		this.requetes = "DELETE FROM Affectation WHERE codeMod = ? ;" +
-		                "DELETE FROM ModulesCatHeures WHERE codeMod = ? ;" +
-		                "DELETE FROM Modules WHERE codeMod = ?" ;
+		this.requetes = "DELETE FROM Modules WHERE codeMod = ?" ;
 
 		String code = m.getCode();
-		this.info = new ArrayList<>(List.of(code, code, code));
+		this.info = new ArrayList<>(List.of(code));
 	}
 
 	public Suppression (Intervenants inter) 
 	{ 
-		this.requetes = "DELETE FROM Affectation WHERE intNom = ? AND intPrenom = ?;" +
-		                "DELETE FROM Intervenants WHERE intNom = ? AND intPrenom = ?";
+		this.requetes = "DELETE FROM Intervenants WHERE intNom = ? AND intPrenom = ?";
 
 		String nom    = inter.getNomIntervenant();
 		String prenom = inter.getPrenomIntervenant();
 
-		this.info = new ArrayList<>(List.of(nom, prenom, nom, prenom));
+		this.info = new ArrayList<>(List.of(nom, prenom));
 	}
 
 	public Suppression (CategorieHeures cat) 
 	{
-		this.requetes = "DELETE FROM Affectation WHERE libCatHeur = ? ;" +
-				"DELETE FROM ModulesCatHeures WHERE libCatHeur = ? ;" +
-				"DELETE FROM CategorieHeures WHERE libCatHeur = ?";
+		this.requetes = "DELETE FROM CategorieHeures WHERE libCatHeur = ?";
 
 		String code = cat.getlibCatHeur();
 
-		this.info = new ArrayList<>(List.of(code, code, code));
+		this.info = new ArrayList<>(List.of(code));
 	}
 
 
 
 	//On doit supprimer tous les Intervenants et donc leur Affectations.....
-	public Suppression (CategorieIntervenant cat) 
-	{
-		List<Intervenants> lst = Etat.getIntervenants(cat);
-
-		for (Intervenants i : lst)
-		{
-			Suppression sup = new Suppression(i);
-			this.requetes += sup.requetes;
-			this.info.addAll(sup.info);
-		}
-
-
-		this.requetes = "DELETE FROM Affectation WHERE libCatHeur = ? ;" +
-		                "DELETE FROM ModulesCatHeures WHERE libCatHeur = ? ;" +
-		                "DELETE FROM CategorieHeures WHERE libCatHeur = ?" ;
+	public Suppression(CategorieIntervenant cat) {
+		
+		this.requetes = "DELETE FROM CategorieHeures WHERE libCatHeur = ?" ;
 
 		String code    = cat.getCodeCatInt();
 
