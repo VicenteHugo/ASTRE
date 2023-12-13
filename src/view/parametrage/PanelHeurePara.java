@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import controleur.Controleur;
 import view.accueil.FrameAccueil;
 
 
@@ -64,22 +65,46 @@ public class PanelHeurePara extends JPanel {
 		this.tblGrilleDonnees.getColumnModel().getColumn(1).setMinWidth(30);
 
 		// Actionnement
-		this.btnValider  .addActionListener((e)->{
-			 // On modifie les données dans la base
-			this.frame.changePanel(new PanelParametre(this.frame));
-		});
-		this.btnRetour   .addActionListener((e)->this.frame.changePanel(new PanelParametre(this.frame)));
-		this.btnSupprimer.addActionListener((e)->{
-			System.out.println("Ligne " + this.tblGrilleDonnees.getSelectedRow() + " supprimé.");
-		});
-		this.btnAjouter  .addActionListener((e)->{
-			JFrame f = new JFrame();
-			f.add(new PanelAddCatHeures(this.frame, f));
-			f.setTitle("Ajout d'une catégorie");
-			f.pack();
-			f.setLocationRelativeTo(null);
-			f.setAlwaysOnTop(true);
-			f.setVisible(true);
-		});
+		this.btnValider.addActionListener((e) -> this.valider());
+		this.btnRetour.addActionListener((e) -> this.annuler());
+		this.btnSupprimer.addActionListener((e) -> this.supprimer());
+		this.btnAjouter.addActionListener((e) -> this.ajouter());
+	}
+	
+	private void annuler() {
+		this.frame.changePanel(new PanelParametre(this.frame));
+		Controleur.getControleur().annuler();
+	}
+	
+	private void valider() {
+		this.frame.changePanel(new PanelParametre(this.frame));
+		Controleur.getControleur().enregistrer();
+	}
+
+	private void ajouter() {
+		JFrame f = new JFrame();
+		f.add(new PanelAddCatHeures(this, f));
+		f.setTitle("Ajout d'une catégorie");
+		f.pack();
+		f.setLocationRelativeTo(null);
+		f.setAlwaysOnTop(true);
+		f.setVisible(true);
+	}
+
+	private void supprimer() {
+
+		int ind = this.tblGrilleDonnees.getSelectedRow();
+		System.out.println(ind);
+		Controleur.getControleur().supprimerCategorieHeure(ind);
+		if (ind >= 0)
+			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
+		
+		this.maj();
+	}
+
+
+
+	public void maj() {
+		this.tblGrilleDonnees.setModel(new GrilleCatHeures()); 
 	}
 }

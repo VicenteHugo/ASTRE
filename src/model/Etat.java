@@ -62,7 +62,6 @@ public class Etat {
 				Etat.nom = "Etat1";
 			}
 
-			System.out.println(Etat.nom);
 
 			Etat.genererInfos();
 
@@ -178,7 +177,6 @@ public class Etat {
 
 	public static CategorieIntervenant getCatInt(String nom) {
 
-		System.out.println(nom);
 		for (CategorieIntervenant c : Etat.lstCategorieIntervenants)
 			if (c.getCodeCatInt().equals(nom))
 				return c;
@@ -250,7 +248,6 @@ public class Etat {
 
 				Semestres sem = Etat.lstSemestres.get(res.getInt("semMod") - 1);
 
-				System.out.println(type);
 
 				if (type.equals("Ressource"))
 					m = new Ressource(sem, code, libLong, libCourt, heurePonctuel);
@@ -370,6 +367,7 @@ public class Etat {
 
 	public static void anuller() {
 		Etat.lstActions.clear();
+		Etat.genererInfos();
 	}
 
 	public static void enregistrer() {
@@ -382,7 +380,6 @@ public class Etat {
 
 				// On met les info dans la requêtes
 				List<Object> lstInfos = a.getInfo();
-				System.out.println(lstInfos.size());
 
 				for (int i = 1; i < lstInfos.size() + 1; i++) {
 

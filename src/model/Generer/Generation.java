@@ -10,8 +10,19 @@ public class Generation {
 
 	private String haut;
 	private String pied;
-	public static void main(String[] a)
+	public Generation()
 	{
+		this.haut  ="<!DOCTYPE HTML>\n";
+		this.haut +="<html lang=\"fr\">\n";
+		this.haut +="<head>\n" ;
+		this.haut +="<meta charset=\"utf-8\" />\n" ;
+		this.haut +="<title>ASTRE-*NomPrenom*</title>\n" ;
+		this.haut +="<link href=\"style/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\">\n";
+		this.haut +="</head>\n" ;
+		this.haut +="<body>\n" ;
+		this.haut +="<header>\n" ;
+		this.haut +="<h1>ASTRE-*NomPrenom*-*CatÃ©gorie*-*(Etat)*</h1>";
+		this.haut +="</header>\n";
 		try
 		{
 			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/test.html") );
@@ -21,8 +32,19 @@ public class Generation {
 			pw.println ( "<head>\n" );
 			pw.println ( "<meta charset=\"utf-8\" />\n" );
             pw.println ( "<title>ASTRE-*NomPrenom*</title>\n" );
-            pw.println ( "<link href=\"style/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\">\n" );
-            pw.println ( "</head>\n" );
+            pw.println ( "<link href=\"style/syle.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\">\n" );
+            pw.println ( "<style>\n" );
+    		pw.println ( "ul {\n" );
+      		pw.println ( "list-style-type: none;\n" );
+     		pw.println ( "padding: 0;\n" );
+    		pw.println ( "margin: 0;}\n" );
+
+    		pw.println ( ".test {\n" );
+      		pw.println ( "display: inline-block;\n" );
+      		pw.println ( "margin-right: 10px;}\n" );
+  			pw.println ( "</style>\n" );
+
+			pw.println ( "</head>\n" );
             pw.println ( "<body>\n" );
 			pw.println ( "<header>\n" );
 			pw.println ( "<h1>ASTRE-*NomPrenom*-*CatÃ©gorie*-*(Etat)*</h1>");
@@ -51,7 +73,6 @@ public class Generation {
 			pw.println ( "</ul>\n" );
 			pw.println ( "</div>\n" );
 
-			
 			pw.println ( "<div>\n" );
 			pw.println ( "<h2>*NomRessourceX*</h2>\n" );
 			pw.println ( "<ul>\n" );
@@ -60,10 +81,11 @@ public class Generation {
 			pw.println ( "<br>\n");
 			pw.println ( "<li>Heures totales par semaine :\n" );
 			pw.println ( "<ul>\n" );
-			pw.println ( "<li>TD</li>\n" );
-			pw.println ( "<li>TP</li>\n" );
-			pw.println ( "<li>CM</li>\n" );
-			pw.println ( "<li>REH</li>\n" );
+			pw.println ( "<li class=\"test\">TD</li>\n" );
+			pw.println ( "<li class=\"test\">TP</li>\n" );
+			pw.println ( "<br>\n" );
+			pw.println ( "<liclass=\"test\">CM</li>\n" );
+			pw.println ( "<li class=\"test\">REH</li>\n" );
 			pw.println ( "<li>Autre</li>\n" );
 			pw.println ( "</ul>\n" );
 			pw.println ( "</li>\n" );
@@ -72,5 +94,9 @@ public class Generation {
 			pw.close();
 		}
 		catch (Exception e){ e.printStackTrace(); }
+	}
+
+	public static void main(String[] args) {
+		Generation g = new Generation();
 	}
 }

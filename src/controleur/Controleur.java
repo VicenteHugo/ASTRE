@@ -11,6 +11,7 @@ import model.Intervenants;
 import model.Semestres;
 import model.action.Action;
 import model.action.Ajout;
+import model.action.Suppression;
 import model.modules.Module;
 
 public class Controleur {
@@ -56,12 +57,14 @@ public class Controleur {
 	}
 
 	public ArrayList<Module> getModules(int i) {
+		
 		ArrayList<Module> retour = new ArrayList<>();
 		for (Module m : Etat.getModules()) {
 			if (m.getSemestres().getNumSem() == i) {
 				retour.add(m);
 			}
 		}
+
 		return retour;
 	}
 
@@ -117,6 +120,7 @@ public class Controleur {
 	public void supprimerCategorieHeure(int i) {
 		if (i >= 0 && i < Etat.getCategoriesHeures().size()) {
 			Etat.getCategoriesHeures().remove(i);
+			Etat.ajouterAction(new Suppression(Etat.getCategoriesHeures().get(i)));
 		}
 	}
 

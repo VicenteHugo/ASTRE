@@ -13,13 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import controleur.Controleur;
-import model.CategorieHeures;
-import model.action.Ajout;
-import view.accueil.FrameAccueil;
 
 
 public class PanelAddCatHeures extends JPanel {
-	private JLabel lblErrCoef;
 	
 	private JTextField txtLib;
 	private JTextField txtCoef;
@@ -28,12 +24,12 @@ public class PanelAddCatHeures extends JPanel {
 	private JButton btnAnnuler;
 
 
-	private FrameAccueil frame;
+	private PanelHeurePara panel;
 	private Frame frameM;
 
-	public PanelAddCatHeures (FrameAccueil frame, Frame frameM)
+	public PanelAddCatHeures (PanelHeurePara panel, Frame frameM)
 	{
-		this.frame  = frame;
+		this.panel  = panel;
 		this.frameM = frameM;
 
 
@@ -92,7 +88,8 @@ public class PanelAddCatHeures extends JPanel {
 		
 		try 
 		{
-			Controleur.ajouterCategorieHeure(lib, Float.parseFloat(coef));
+			Controleur.getControleur().ajouterCategorieHeure(lib, Float.parseFloat(coef));
+			this.panel.maj();
 			this.frameM.dispose();
 		} catch (Exception e) {
 		}
