@@ -16,8 +16,6 @@ public class Ajout extends Action
 	private List<Object> info;
 
 
-
-
 	public Ajout (Affectations a) 
 	{
 		// Intervenants inter, Module mode, CategorieHeures categorie, int nbSemaine,
