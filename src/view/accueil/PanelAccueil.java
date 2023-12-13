@@ -6,6 +6,11 @@ import view.previsionnel.*;
 import view.Etat.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,10 +24,11 @@ public class PanelAccueil extends JPanel implements ActionListener {
 
         // création des composants
         this.frame = frame;
-        this.btnParametre = new JButton("Paramètres");
+        this.frame.setTitle("Accueil");
+        this.btnParametre    = new JButton("Paramètres");
         this.btnPrevisionnel = new JButton("Prévisionnel");
-        this.btnIntervenant = new JButton("Intervenants");
-        this.btnEtat = new JButton("Etats");
+        this.btnIntervenant  = new JButton("Intervenants");
+        this.btnEtat         = new JButton("Etats");
         
         Dimension buttonSize = new Dimension(120, 40); // Vous pouvez ajuster la taille selon vos besoins
         this.btnParametre.setPreferredSize(buttonSize);

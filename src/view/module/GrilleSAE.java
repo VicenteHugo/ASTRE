@@ -1,25 +1,16 @@
-package view.parametrage;
-
-import java.util.List;
+package view.module;
 
 import javax.swing.table.AbstractTableModel;
 
-import controleur.Controleur;
-import model.CategorieIntervenants;
-
-public class GrilleCatInt extends AbstractTableModel {
-
-	private String[]   tabEntetes;
+public class GrilleSAE extends AbstractTableModel {
+    
+    private String[]   tabEntetes;
 	private Object[][] tabDonnees;
 
-	public GrilleCatInt() {
-		
-		CategorieIntervenants cat;
-		this.tabDonnees = new Object[][] {{ "info_ec" ,"lib", 1.0 , 200, 250},
-		                                  { "vaca_pro","lib", 1.0 , 200, 250},
-		                                  { "vac_sd"  ,"lib", 1.0 , 200, 250},
-		                                  { "vaca_ret","lib", 1.0 , 200, 250},
-		                                  { "info_sd" ,"lib", 1.0 , 200, 250} };
+	public GrilleSAE()
+	{
+		this.tabDonnees = new Object[][] {{ "Bouckachour H","SAE",10, 10 ,""},
+		                                  { "Laffaech","SAE" ,5 , 5 , ""},};
 
 		/*
 		List<CategorieIntervenants> lstClients = ctrl.getCatInt();
@@ -36,7 +27,7 @@ public class GrilleCatInt extends AbstractTableModel {
 			tabDonnees[lig][3] = cat.getHeureMaxCatInt();
 		}*/
 
-		this.tabEntetes = new String[]   {"Code","Libellé", "Coef", "Heures minimum", "Heures maximum"};
+		this.tabEntetes = new String[]   {"Intervenants", "Type", "Nb h","tot eqtd","commentaire"};
 
 	}
 
