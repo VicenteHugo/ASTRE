@@ -1,12 +1,16 @@
 package model.modules;
 
 import java.util.List;
+
+import javax.naming.directory.ModificationItem;
+
+import java.util.Comparator;
 import java.util.HashMap;
 
 import model.CategorieHeures;
 import model.Semestres;
 
-public abstract class Module {
+public abstract class Module implements Comparable<Module> {
 
 	private Semestres semestres;
 	private String code;
@@ -78,4 +82,8 @@ public abstract class Module {
 
 	abstract public void initList(int heurePN, int nbSemaine, int heureSemaine, int heurePonctuel,
 			CategorieHeures catH);
+
+	public int compareTo(Module module) {
+		return this.code.compareTo(module.code);
+	}
 }
