@@ -15,12 +15,11 @@ import model.modules.PPP;
 
 public class Etat {
 
-	//Connection/SQL
-	/**Connection vers la bado.*/
+	// Connection/SQL
+	/** Connection vers la bado. */
 	private static Connection connec;
-	/**Nom de l'état.*/
+	/** Nom de l'état. */
 	public static String nom;
-
 
 	// Liste de liaison 0
 	/** Liste des catégories d'heures (CM, TP, TD, etc...). */
@@ -40,8 +39,8 @@ public class Etat {
 	/** Liste des association. */
 	private static ArrayList<Affectations> lstAffectations;
 
-	//Action
-	/** Liste des actions.*/
+	// Action
+	/** Liste des actions. */
 	private static List<Action> lstActions;
 
 	public Etat() {
@@ -74,9 +73,7 @@ public class Etat {
 		}
 	}
 
-
-	private static void genererInfos ()
-	{
+	private static void genererInfos() {
 		// Générer les premières tables
 		Etat.genererCategorieHeures();
 		Etat.genererCategorieIntervenants();
@@ -88,14 +85,10 @@ public class Etat {
 
 		// Générer les troisièmes tables
 		Etat.genererAffections();
-	} 
-
-
-
-
+	}
 
 	/*--------------------------------------------------------------*/
-	/*                            LIAISON 1                         */
+	/* LIAISON 1 */
 	/*--------------------------------------------------------------*/
 
 	// CREATE
@@ -201,14 +194,12 @@ public class Etat {
 		return null;
 	}
 
-
-
-
-
-
+	public static void ajouterCategorieHeure(CategorieHeures categorieHeures) {
+		Etat.lstCategorieHeures.add(categorieHeures);
+	}
 
 	/*--------------------------------------------------------------*/
-	/*                            LIAISON 2                         */
+	/* LIAISON 2 */
 	/*--------------------------------------------------------------*/
 
 	// Méthode CREATE
@@ -329,14 +320,12 @@ public class Etat {
 		return null;
 	}
 
-
-
-
-
-
+	public static void ajouterCategorieIntervenant(CategorieIntervenant categorieIntervenant) {
+		Etat.lstCategorieIntervenants.add(categorieIntervenant);
+	}
 
 	/*--------------------------------------------------------------*/
-	/*                            LIAISON 3                         */
+	/* LIAISON 3 */
 	/*--------------------------------------------------------------*/
 
 	// Méthode CREATE
@@ -366,21 +355,19 @@ public class Etat {
 			e.printStackTrace();
 		}
 	}
-	
-	public static ArrayList<Affectations> getAffectations() {return Etat.lstAffectations;}
 
-
-
-
-
-
+	public static ArrayList<Affectations> getAffectations() {
+		return Etat.lstAffectations;
+	}
 
 	/*--------------------------------------------------------------*/
-	/*                            ACTIONS                           */
+	/* ACTIONS */
 	/*--------------------------------------------------------------*/
 
-	public static void ajouterAction(Action a) {Etat.lstActions.add(a); }
-	
+	public static void ajouterAction(Action a) {
+		Etat.lstActions.add(a);
+	}
+
 	public static void anuller() {
 		Etat.lstActions.clear();
 		Etat.genererInfos();
@@ -391,10 +378,10 @@ public class Etat {
 		try {
 
 			for (Action a : Etat.lstActions) {
-				//On prépare la requêtes.
+				// On prépare la requêtes.
 				PreparedStatement st = connec.prepareStatement(a.getRequeteSQL());
 
-				//On met les info dans la requêtes
+				// On met les info dans la requêtes
 				List<Object> lstInfos = a.getInfo();
 				System.out.println(lstInfos.size());
 
@@ -414,7 +401,7 @@ public class Etat {
 						st.setBoolean(i, (Boolean) info);
 				}
 
-				//On l'execute
+				// On l'execute
 				st.executeUpdate();
 			}
 		} catch (Exception e) {
@@ -424,9 +411,6 @@ public class Etat {
 		Etat.genererInfos();
 		Etat.lstActions.clear();
 	}
-
-
-
 
 	public static void main(String[] args) {
 		new Etat();
@@ -449,7 +433,6 @@ public class Etat {
 		a = new Suppression(cat);
 		Etat.ajouterAction(a);
 		Etat.enregistrer();
-
 
 		System.out.println();
 	}
