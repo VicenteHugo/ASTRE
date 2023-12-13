@@ -79,6 +79,14 @@ public class Affectations {
                 + commentaire + "]";
     }
 
+    public int getNbGroupe() {
+        return nbGroupe;
+    }
+
+    public void setNbGroupe(int nbGroupe) {
+        this.nbGroupe = nbGroupe;
+    }
+
 
 
     
