@@ -2,12 +2,12 @@ package view.Intervenant;
 import javax.swing.table.AbstractTableModel;
 import model.CategorieIntervenants;
 
-public class GrilleCatInt extends AbstractTableModel {
+public class GrilleInt extends AbstractTableModel {
 
 	private String[]   tabEntetes;
 	private Object[][] tabDonnees;
 
-	public GrilleCatInt()
+	public GrilleInt()
 	{
 		CategorieIntervenants cat;
 		this.tabDonnees = new Object[][] {{ "info_ec","Boukachour","Hadhoum", 192 , 364, 1    ,106.5,18.0,0.0,124.5},

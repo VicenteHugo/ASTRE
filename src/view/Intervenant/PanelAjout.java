@@ -13,13 +13,10 @@ import javax.swing.JTable;
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
 
-public class PanelIntervenants extends JPanel {
+public class PanelAjout extends JPanel {
     private JLabel lblListe;
-    private JButton btnAjout;
-    private JButton btnSupr;
     private JButton btnEnregistr;
     private JButton btnAnnuler;
-    private JTable tblGrilleDonnees;
 
     private FrameAccueil frame;
 
