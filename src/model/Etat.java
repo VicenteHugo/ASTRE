@@ -15,9 +15,12 @@ import model.modules.PPP;
 
 public class Etat {
 
-
+	//Connection/SQL
+	/**Connection vers la bado.*/
 	private static Connection connec;
-	// private static String name;
+	/**Nom de l'état.*/
+	public static String nom;
+
 
 	// Liste de liaison 0
 	/** Liste des catégories d'heures (CM, TP, TD, etc...). */
@@ -41,15 +44,16 @@ public class Etat {
 	/** Liste des actions.*/
 	private static List<Action> lstActions;
 
-	public Etat(String name) {
+	public Etat(String nom) {
 
-		// Etat.name = name;
+		Etat.nom = nom;
 		Etat.lstActions = new ArrayList<>();
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			// Connection
 			Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre", "root", "");
+
 
 			// Générer les premières tables
 			Etat.genererCategorieHeures();
@@ -89,7 +93,7 @@ public class Etat {
 		try {
 
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieHeures");
+			ResultSet res = st.executeQuery("SELECT * FROM CategorieHeures WHERE etat = '" + Etat.nom + "'");
 
 			while (res.next())
 				Etat.lstCategorieHeures
@@ -108,7 +112,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants");
+			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants WHERE etat = '" + Etat.nom + "'");
 
 			while (res.next()) {
 				String code = res.getString("codeCatInt");
@@ -133,7 +137,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Semestres");
+			ResultSet res = st.executeQuery("SELECT * FROM Semestres WHERE etat = '" + Etat.nom + "'");
 
 			while (res.next()) {
 
@@ -201,7 +205,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Intervenants");
+			ResultSet res = st.executeQuery("SELECT * FROM Intervenants WHERE etat = '" + Etat.nom + "'");
 
 			while (res.next()) {
 				String nom = res.getString("nomInt");
@@ -222,30 +226,13 @@ public class Etat {
 
 	}
 
-	public static void supprimerIntervenant(Intervenants intervenants) {
-		try {
-			Statement st = connec.createStatement();
-			st.executeQuery("DELETE * FROM Intervenant WHERE nomInt = "
-					+ intervenants.getNomIntervenant() + ", prenomInt = " + intervenants.getPrenomIntervenant());
-
-			for (Intervenants i : lstIntervenants) {
-				if (i.getNomIntervenant().equals(intervenants.getNomIntervenant())
-						&& i.getPrenomIntervenant().equals(intervenants.getPrenomIntervenant())) {
-					lstIntervenants.remove(i);
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public static void genererModules() {
 
 		Etat.lstModule = new ArrayList<>();
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Modules");
+			ResultSet res = st.executeQuery("SELECT * FROM Modules WHERE etat = '" + Etat.nom + "'");
 
 			while (res.next()) {
 				Module m = null;
@@ -288,22 +275,6 @@ public class Etat {
 
 			res.close();
 			st.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public static void supprimerModule(Module module) {
-		try {
-			Statement st = connec.createStatement();
-			st.executeQuery("DELETE * FROM Module WHERE codeMod = "
-					+ module.getCode());
-
-			for (Module m : lstModule) {
-				if (m.getCode().equals(module.getCode())) {
-					lstModule.remove(m);
-				}
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -362,7 +333,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Affectation");
+			ResultSet res = st.executeQuery("SELECT * FROM Affectation WHERE etat = '" + Etat.nom + "'");
 
 			while (res.next()) {
 

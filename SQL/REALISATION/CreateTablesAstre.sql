@@ -35,7 +35,7 @@ DROP TABLE IF EXISTS Etat;
 -- Création des tables ayant un niveau de liaison 0
 CREATE TABLE Etat 
 (
-	libEtat  VARCHAR(25) PRIMARY KEY,
+	etat  VARCHAR(25) PRIMARY KEY,
 	dateCrea DATE DEFAULT CURRENT_DATE
 );
 
@@ -53,29 +53,35 @@ CREATE TABLE CategorieIntervenants
 
 CREATE TABLE CategorieHeures
 (
-	libCatHeur VARCHAR(10) PRIMARY KEY, 
-	coefCatHeur FLOAT DEFAULT 1.0 CHECK (coefCatHeur > 0)
+	libCatHeur  VARCHAR(10), 
+	coefCatHeur FLOAT DEFAULT 1.0 CHECK (coefCatHeur > 0),
+	etat        VARCHAR(25) REFERENCES Etat(libEtat),
+	PRIMARY KEY(libCatHeur, etat)
 );
 
 CREATE TABLE Semestres
 (
-	numSem    INTEGER PRIMARY KEY,
+	numSem    INTEGER NOT NULL,
 	nbGpTdSem INTEGER NOT NULL CHECK (nbGpTdSem > 0),
 	nbGpTpSem INTEGER NOT NULL CHECK (nbGpTpSem > 0),
 	nbEtdSem  INTEGER NOT NULL CHECK (nbEtdSem > 0) ,
-	nbSemSem  INTEGER NOT NULL CHECK (nbSemSem > 0) 
+	nbSemSem  INTEGER NOT NULL CHECK (nbSemSem > 0) ,
+	etat      VARCHAR(25) REFERENCES Etat(libEtat),
+	PRIMARY KEY(numSem, etat)
 );
 
 -- Création des tables ayant un niveau de liaison 2
 CREATE TABLE Modules
 (
-	codeMod     VARCHAR(10) PRIMARY KEY, 
+	codeMod     VARCHAR(10) , 
 	semMod      INTEGER NOT NULL REFERENCES Semestres(numSem),
 	typeMod     VARCHAR(11) NOT NULL CHECK (typeMod IN ('Ressource', 'Sae', 'Stage', 'PPP')),
 	libCourtMod VARCHAR(20) NOT NULL,
 	libLongMod  VARCHAR(50) NOT NULL,
 	validMod    BOOLEAN NOT NULL DEFAULT false,
-	nbHeurPonc  INTEGER DEFAULT 0    NOT NULL
+	nbHeurPonc  INTEGER DEFAULT 0    NOT NULL,
+	etat        VARCHAR(25) REFERENCES Etat(libEtat),
+	PRIMARY KEY(codeMod, etat)
 );
 
 CREATE TABLE Intervenants
@@ -85,7 +91,8 @@ CREATE TABLE Intervenants
 	heureMinInt INTEGER NOT NULL CHECK (heureMinInt > 0) ,
 	heureMaxInt INTEGER NOT NULL CHECK (heureMaxInt >= heureMinInt),
 	categInt    VARCHAR(10) NOT NULL REFERENCES CategorieIntervenants(codeCatInt),
-	PRIMARY KEY(nomInt, prenomInt)
+	etat        VARCHAR(25) REFERENCES Etat(libEtat),
+	PRIMARY KEY(nomInt, prenomInt, etat)
 );
 
 -- Création des tables ayant un niveau de liaison 3
@@ -96,7 +103,8 @@ CREATE TABLE ModulesCatHeures
 	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN > 0),
 	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem > 0),
 	nbSemaine  INTEGER NOT NULL CHECK (nbSemaine > 0),
-	PRIMARY KEY(codeMod, libCatHeur)
+	etat       VARCHAR(25) REFERENCES Etat(libEtat),
+	PRIMARY KEY(codeMod, libCatHeur, etat)
 );
 
 CREATE TABLE Affectation
@@ -108,5 +116,6 @@ CREATE TABLE Affectation
 	nbSem       INTEGER NOT NULL CHECK (nbSem > 0),
 	nbGroupe    INTEGER NOT NULL CHECK (nbGroupe > 0),
 	commentaire VARCHAR(255),
-	PRIMARY KEY(intNom, intPreNom, codeMod, libCatHeur)
+	etat        VARCHAR(25) REFERENCES Etat(libEtat),
+	PRIMARY KEY(intNom, intPreNom, codeMod, libCatHeur, etat)
 );
