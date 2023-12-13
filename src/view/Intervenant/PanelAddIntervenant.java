@@ -41,11 +41,11 @@ public class PanelAddIntervenant extends JPanel {
 
 		//Création
 		this.txtCategorie  = new JTextField(10);
-		this.txtNom        = new JTextField(3);
-		this.txtPrenom     = new JTextField(5);
+		this.txtNom        = new JTextField(10);
+		this.txtPrenom     = new JTextField(10);
 		this.txtHServ      = new JTextField(5);
         this.txtHMax       = new JTextField(5);
-		this.txtCoefTP     = new JTextField(5);
+		this.txtCoefTP     = new JTextField(3);
 
 		this.btnAnnuler = new JButton("Annuler");
 		this.btnValider = new JButton("Valider");
