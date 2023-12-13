@@ -17,6 +17,8 @@ public class GrilleCatHeures extends AbstractTableModel {
 		CategorieHeures cat;
 		this.tabEntetes = new String[] { "Libellé", "Coef" };
 
+
+		Controleur ctrl = Controleur.getControleur();
 		List<CategorieHeures> lstClients = ctrl.getCategorieHeures();
 
 		tabDonnees = new Object[lstClients.size()][this.tabEntetes.length];
