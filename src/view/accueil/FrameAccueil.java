@@ -20,6 +20,7 @@ public class FrameAccueil extends JFrame {
 
     public void changePanel (JPanel panel){
         this.setContentPane(panel);
+        this.setLocationRelativeTo(null);
         this.revalidate();
     }
 
