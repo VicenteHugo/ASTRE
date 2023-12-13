@@ -14,7 +14,7 @@ import model.action.Ajout;
 import model.modules.Module;
 
 public class Controleur {
-	
+
 	private static Controleur controleur;
 	private FrameAccueil frameAccueil;
 	private Etat etat;
@@ -102,6 +102,12 @@ public class Controleur {
 
 	public void modifier() {
 
+	}
+
+	public void supprimerCategorieHeure(int i) {
+		if (i >= 0 && i < Etat.getCategoriesHeures().size()) {
+			Etat.getCategoriesHeures().remove(i);
+		}
 	}
 
 	/*-------------------------------------------------------------*/
