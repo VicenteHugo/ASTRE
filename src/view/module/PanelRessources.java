@@ -193,5 +193,14 @@ public class PanelRessources extends JPanel {
 		this.add(panelDroit);
 
 		this.btnAnnuler.addActionListener((e) -> this.frame.changePanel(new PanelPrevi(this.frame)));
+        this.btnAjouter.addActionListener((e)->{
+			JFrame f = new JFrame();
+			f.add(new PanelAddRessourceIntervenant(this.frame, f));
+			f.setTitle("Affecter un Intervenant");
+			f.pack();
+			f.setLocationRelativeTo(null);
+			f.setAlwaysOnTop(true);
+			f.setVisible(true);
+		});
 	}
 }
