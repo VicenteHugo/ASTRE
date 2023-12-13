@@ -1,7 +1,7 @@
 package view.Intervenant;
 
 import javax.swing.table.AbstractTableModel;
-import model.CategorieIntervenants;
+import model.CategorieIntervenant;
 
 public class GrilleInt extends AbstractTableModel {
 
