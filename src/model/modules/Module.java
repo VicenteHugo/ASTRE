@@ -14,25 +14,25 @@ public abstract class Module implements Comparable<Module> {
 	/* ATTRIBUTS */
 	/*-------------------------------------------------------------*/
 
-	/* Semestre assignée à un module */
+	/** Semestre assignée à un module */
 	private Semestres semestres;
 
-	/* Code du module en fonction du semestre et de son libellé */
+	/** Code du module en fonction du semestre et de son libellé */
 	private String code;
 
-	/* Libellé long du module */
+	/** Libellé long du module */
 	private String libLong;
 
-	/* Libellé court du module */
+	/** Libellé court du module */
 	private String libCourt;
 
-	/* Boolean confirmant la validation du module */
+	/** Boolean confirmant la validation du module */
 	private boolean valide;
 
-	/* Le nombre d'heure ponctuel */
+	/** Le nombre d'heure ponctuel */
 	private int heurePonctuel;
 
-	/* L'ensemble des catégories que le modules faient */
+	/** L'ensemble des catégories que le modules faient */
 	protected List<CategorieHeures> listCategorieHeure;
 
 	/**
