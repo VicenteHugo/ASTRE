@@ -1,7 +1,6 @@
 package view.accueil;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class FrameAccueil extends JFrame{
     
@@ -9,7 +8,8 @@ public class FrameAccueil extends JFrame{
 
         this.setTitle("Accueil");
         this.setSize(400, 300);
-        this.setLocation(400, 200 );
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         this.add ( new PanelAccueil(this));
 
