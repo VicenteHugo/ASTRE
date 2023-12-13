@@ -44,9 +44,8 @@ public class Etat {
 	/** Liste des actions.*/
 	private static List<Action> lstActions;
 
-	public Etat(String nom) {
+	public Etat() {
 
-		Etat.nom = nom;
 		Etat.lstActions = new ArrayList<>();
 
 		try {
@@ -54,6 +53,17 @@ public class Etat {
 			// Connection
 			Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre", "root", "");
 
+			Statement st = connec.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM Etat ORDER BY dateCrea DESC");
+
+			if (rs.next()) {
+				Etat.nom = rs.getString("etat");
+			} else {
+				st.executeUpdate("INSERT INTO Etat (etat) VALUES ('Etat1')");
+				Etat.nom = "Etat1";
+			}
+
+			System.out.println(Etat.nom);
 
 			// Générer les premières tables
 			Etat.genererCategorieHeures();
@@ -174,7 +184,7 @@ public class Etat {
 
 		System.out.println(nom);
 		for (CategorieIntervenant c : Etat.lstCategorieIntervenants)
-			if (c.getLibCatInt().equals(nom))
+			if (c.getCodeCatInt().equals(nom))
 				return c;
 
 		return null;
@@ -413,7 +423,7 @@ public class Etat {
 
 
 	public static void main(String[] args) {
-		new Etat("hey");
+		new Etat();
 
 		for (Intervenants i : Etat.getIntervenants())
 			System.out.println(i);
