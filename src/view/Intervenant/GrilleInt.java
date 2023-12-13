@@ -10,6 +10,7 @@ import model.modules.Module;
 import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
+import model.Affectations;
 import model.CategorieIntervenant;
 
 public class GrilleInt extends AbstractTableModel {
@@ -26,11 +27,19 @@ public class GrilleInt extends AbstractTableModel {
 		for (int lig = 0; lig < lstIntervenant.size(); lig++) {
 			Intervenants intervenants = lstIntervenant.get(lig);
 			List<Integer> listeSemaine = new ArrayList<>();
-
+			int nbHeure = 0;
 			for (Semestres semestres : Controleur.getControleur().getSemestres()) {
 				for (Module module : Controleur.getControleur().getModules(semestres)) {
+					for (Affectations affectations : Controleur.getControleur().getAffectations()) {
+						nbHeure = 0;
+						if (affectations.getModule().equals(module)
+								&& intervenants.equals(affectations.getIntervenant())) {
+							nbHeure += affectations.getNbSemaine() * affectations.getNbGroupe();
+						}
+					}
 
 				}
+				listeSemaine.add(nbHeure);
 			}
 
 			tabDonnees[lig][0] = intervenants.getCategorieIntervenant().getLibCatInt();
@@ -39,10 +48,14 @@ public class GrilleInt extends AbstractTableModel {
 			tabDonnees[lig][3] = intervenants.getServices();
 			tabDonnees[lig][4] = intervenants.getMaxHeures();
 			tabDonnees[lig][5] = intervenants.getCoefficient();
-
+			tabDonnees[lig][6] = listeSemaine.get(0);
+			tabDonnees[lig][7] = listeSemaine.get(2);
+			tabDonnees[lig][8] = listeSemaine.get(4);
 			tabDonnees[lig][9] = intervenants.getSommeSemImpaire();
+			tabDonnees[lig][10] = listeSemaine.get(1);
+			tabDonnees[lig][11] = listeSemaine.get(3);
+			tabDonnees[lig][12] = listeSemaine.get(5);
 			tabDonnees[lig][13] = intervenants.getSommeSemPaire();
-
 			tabDonnees[lig][14] = intervenants.getSommeSemImpaire() + intervenants.getSommeSemPaire();
 		}
 

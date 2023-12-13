@@ -4,6 +4,7 @@ import view.accueil.FrameAccueil;
 
 import java.util.ArrayList;
 
+import model.Affectations;
 import model.CategorieHeures;
 import model.CategorieIntervenant;
 import model.Etat;
@@ -57,7 +58,7 @@ public class Controleur {
 	}
 
 	public ArrayList<Module> getModules(int i) {
-		
+
 		ArrayList<Module> retour = new ArrayList<>();
 		for (Module m : Etat.getModules()) {
 			if (m.getSemestres().getNumSem() == i) {
@@ -80,6 +81,10 @@ public class Controleur {
 
 	public ArrayList<Semestres> getSemestres() {
 		return Etat.getSemestres();
+	}
+
+	public ArrayList<Affectations> getAffectations() {
+		return Etat.getAffectations();
 	}
 
 	/*-------------------------------------------------------------*/
