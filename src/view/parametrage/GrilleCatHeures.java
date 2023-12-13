@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
-import model.CategorieIntervenants;
+import model.CategorieHeures;
 
 public class GrilleCatHeures extends AbstractTableModel {
 
@@ -14,29 +14,22 @@ public class GrilleCatHeures extends AbstractTableModel {
 
 	public GrilleCatHeures() {
 		
-		CategorieIntervenants cat;
-		this.tabDonnees = new Object[][] {{ "info_ec" , 1.0},
-		                                  { "vaca_pro", 1.0},
-		                                  { "vac_sd"  , 1.0},
-		                                  { "vaca_ret", 1.0},
-		                                  { "info_sd" , 1.0} };
+		CategorieHeures cat;
+		this.tabEntetes = new String[] { "Libellé", "Coef" };
 
-		/*
-		List<CategorieIntervenants> lstClients = ctrl.getCatInt();
 		
-		tabDonnees = new Object[lstClients.size()][4];
+		List<CategorieHeures> lstClients = ctrl.getCategorieHeures();
+		
+		tabDonnees = new Object[lstClients.size()][this.tabEntetes.length];
 
 		for ( int lig=0; lig<lstClients.size(); lig++)
 		{
 			cat = lstClients.get(lig);
 
-			tabDonnees[lig][0] = cat.getlibCatInt     ();
-			tabDonnees[lig][1] = cat.getCoefCatInt    ();
-			tabDonnees[lig][2] = cat.getHeureMinCatInt();
-			tabDonnees[lig][3] = cat.getHeureMaxCatInt();
-		}*/
+			tabDonnees[lig][0] = cat.getlibCatHeur ();
+			tabDonnees[lig][1] = cat.getcoefCatHeur();
+		}
 
-		this.tabEntetes = new String[] { "Libellé", "Coef" };
 		
 
 
