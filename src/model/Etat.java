@@ -4,6 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.action.Action;
+import model.action.Ajout;
+import model.action.Suppression;
 import model.modules.Module;
 import model.modules.Ressource;
 import model.modules.Sae;
@@ -11,6 +14,8 @@ import model.modules.Stage;
 import model.modules.PPP;
 
 public class Etat {
+
+
 	private static Connection connec;
 	// private static String name;
 
@@ -32,9 +37,14 @@ public class Etat {
 	/** Liste des association. */
 	private static ArrayList<Affectations> lstAffectations;
 
+	//Action
+	/** Liste des actions.*/
+	private static List<Action> lstActions;
+
 	public Etat(String name) {
 
 		// Etat.name = name;
+		Etat.lstActions = new ArrayList<>();
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -60,8 +70,15 @@ public class Etat {
 		}
 	}
 
+
+
+
+
+
+
+
 	/*--------------------------------------------------------------*/
-	/* LIAISON 0 */
+	/*                            LIAISON 1                         */
 	/*--------------------------------------------------------------*/
 
 	// CREATE
@@ -167,8 +184,14 @@ public class Etat {
 		return null;
 	}
 
+
+
+
+
+
+
 	/*--------------------------------------------------------------*/
-	/* LIAISON 1 */
+	/*                            LIAISON 2                         */
 	/*--------------------------------------------------------------*/
 
 	// Méthode CREATE
@@ -257,7 +280,7 @@ public class Etat {
 					int heureSem = res1.getInt("nbHeureSem");
 					int nbSem = res1.getInt("nbSemaine");
 
-					m.initList(heurePn, nbSem, heureSem, heurePonctuel, catH);
+					m.initList(heurePn, nbSem, heureSem, catH);
 				}
 
 				Etat.lstModule.add(m);
@@ -322,8 +345,14 @@ public class Etat {
 		return null;
 	}
 
+
+
+
+
+
+
 	/*--------------------------------------------------------------*/
-	/* LIAISON 3 */
+	/*                            LIAISON 3                         */
 	/*--------------------------------------------------------------*/
 
 	// Méthode CREATE
@@ -359,6 +388,59 @@ public class Etat {
 
 
 
+
+
+
+	/*--------------------------------------------------------------*/
+	/*                            ACTIONS                           */
+	/*--------------------------------------------------------------*/
+
+	public static void ajouterAction(Action a) {Etat.lstActions.add(a); }
+	
+	public static void anuller    () {Etat.lstActions.clear(); }
+
+	public static void enregistrer() {
+
+		try {
+
+			for (Action a : Etat.lstActions) {
+				//On prépare la requêtes.
+				PreparedStatement st = connec.prepareStatement(a.getRequeteSQL());
+
+				//On met les info dans la requêtes
+				List<Object> lstInfos = a.getInfo();
+				System.out.println(lstInfos.size());
+
+				for (int i = 1; i < lstInfos.size() + 1; i++) {
+
+					Object info = lstInfos.get(i - 1);
+					if (info instanceof String)
+						st.setString(i, (String) info);
+
+					if (info instanceof Integer)
+						st.setInt(i, (Integer) info);
+
+					if (info instanceof Float)
+						st.setFloat(i, (Float) info);
+
+					if (info instanceof Boolean)
+						st.setBoolean(i, (Boolean) info);
+				}
+
+				//On l'execute
+				st.executeUpdate();
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		
+		Etat.lstActions.clear();
+	}
+
+
+
+
 	public static void main(String[] args) {
 		new Etat("hey");
 
@@ -370,6 +452,17 @@ public class Etat {
 
 		for (Module m : Etat.getModules())
 			System.out.println(m.getClass().getSimpleName());
+
+		CategorieHeures cat = new CategorieHeures("Heeeeey", 1.0f);
+
+		Action a = new Ajout(cat);
+		Etat.ajouterAction(a);
+		Etat.enregistrer();
+
+		a = new Suppression(cat);
+		Etat.ajouterAction(a);
+		Etat.enregistrer();
+
 
 		System.out.println();
 	}
