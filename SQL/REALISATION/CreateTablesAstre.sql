@@ -125,4 +125,20 @@ CREATE TABLE Affectation
 
 -- Création de la fonctions pour les semestres
 
+DELIMITER //
+
+CREATE TRIGGER InsertSixSemestres
+AFTER INSERT ON Etat
+FOR EACH ROW
+BEGIN
+    DECLARE i INT DEFAULT 1;
+
+    WHILE i <= 6 DO
+        INSERT INTO Semestres (numSem, etat) VALUES (i, NEW.etat);
+        SET i = i + 1;
+    END WHILE;
+END //
+
+DELIMITER ;
+
 
