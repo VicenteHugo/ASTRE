@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -13,6 +14,7 @@ import javax.swing.JTable;
 
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
+import view.parametrage.PanelAddCatHeures;
 
 public class PanelIntervenants extends JPanel {
     private JLabel lblListe;
@@ -74,5 +76,14 @@ public class PanelIntervenants extends JPanel {
 
         //Action
 		this.btnAnnuler.addActionListener((e)->this.frame.changePanel(new PanelAccueil(this.frame)));
+        this.btnAjout.addActionListener((e)->{
+			JFrame f = new JFrame();
+			f.add(new PanelAddIntervenant(this.frame, f));
+			f.setTitle("Ajout d'un Intervenant");
+			f.pack();
+			f.setLocationRelativeTo(null);
+			f.setAlwaysOnTop(true);
+			f.setVisible(true);
+		});
     }
 }
