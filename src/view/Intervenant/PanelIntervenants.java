@@ -3,6 +3,7 @@ package view.Intervenant;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -43,26 +44,32 @@ public class PanelIntervenants extends JPanel {
         JPanel panelTable = new JPanel();
         JPanel panelBtn   = new JPanel();
         JPanel panelModif = new JPanel();
+        JPanel panelBas = new JPanel();
 
         // Layouts
         this.setLayout(new BorderLayout());
         panelTable.setLayout(new BorderLayout());
         panelBtn.setLayout(new FlowLayout(FlowLayout.LEFT));
-        panelModif.setLayout(new FlowLayout(FlowLayout.LEFT));
+        panelModif.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        panelBas.setLayout(new GridLayout(2,2));
 
         // Positionnement des composants
 
         panelTable.add(this.lblListe, BorderLayout.NORTH);
         panelTable.add(spGrilleDonnees, BorderLayout.CENTER);
+        
         panelModif.add(this.btnAjout);
         panelModif.add(this.btnSupr);
-        panelTable.add(panelModif, BorderLayout.SOUTH);
-
         panelBtn.add(this.btnEnregistr);
         panelBtn.add(this.btnAnnuler);
 
+        panelBas.add(new JPanel());
+        panelBas.add(panelModif);
+        panelBas.add(panelBtn);
+        panelBas.add(new JPanel());
+
         this.add(panelTable, BorderLayout.CENTER);
-        this.add(panelBtn, BorderLayout.SOUTH);
+        this.add(panelBas, BorderLayout.SOUTH);
         this.setVisible(true);
 
         //Action
