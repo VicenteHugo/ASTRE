@@ -1,6 +1,7 @@
 package view.Intervenant;
+
 import javax.swing.table.AbstractTableModel;
-import model.CategorieIntervenants;
+import model.CategorieIntervenant;
 
 public class GrilleInt extends AbstractTableModel {
 
@@ -9,7 +10,7 @@ public class GrilleInt extends AbstractTableModel {
 
 	public GrilleInt()
 	{
-		CategorieIntervenants cat;
+		CategorieIntervenant cat;
 		this.tabDonnees = new Object[][] {{ "info_ec","Boukachour","Hadhoum", 192 , 364, 1    ,106.5,18.0,0.0,124.5,0.0,0.0,0.0,0.0,124.5},
 		                                  { "vaca_pro","Colignon" ,"Thomas" , 120 , 187, "2/3",40.3,0.0,0.0,40.3,0.0,0.0,0.0,0.0,40.3},};
 
