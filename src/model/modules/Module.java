@@ -2,9 +2,7 @@ package model.modules;
 
 import java.util.List;
 
-import javax.naming.directory.ModificationItem;
 
-import java.util.Comparator;
 import java.util.HashMap;
 
 import model.CategorieHeures;
@@ -85,5 +83,13 @@ public abstract class Module implements Comparable<Module> {
 
 	public int compareTo(Module module) {
 		return this.code.compareTo(module.code);
+	}
+
+	public int getHeurePonctuel() {
+		return heurePonctuel;
+	}
+
+	public void setHeurePonctuel(int heurePonctuel) {
+		this.heurePonctuel = heurePonctuel;
 	}
 }

@@ -368,6 +368,9 @@ public class Etat {
 		for (Affectations a : Etat.getAffectations())
 			System.out.println(a);
 
+		for (Module m : Etat.getModules())
+			System.out.println(m.getClass().getSimpleName());
+
 		System.out.println();
 	}
 }
