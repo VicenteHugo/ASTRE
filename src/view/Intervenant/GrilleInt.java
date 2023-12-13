@@ -51,11 +51,11 @@ public class GrilleInt extends AbstractTableModel {
 			tabDonnees[lig][6] = listeSemaine.get(0);
 			tabDonnees[lig][7] = listeSemaine.get(2);
 			tabDonnees[lig][8] = listeSemaine.get(4);
-			tabDonnees[lig][9] = intervenants.getSommeSemImpaire();
+			tabDonnees[lig][9] = listeSemaine.get(0) + listeSemaine.get(2) + listeSemaine.get(4);
 			tabDonnees[lig][10] = listeSemaine.get(1);
 			tabDonnees[lig][11] = listeSemaine.get(3);
 			tabDonnees[lig][12] = listeSemaine.get(5);
-			tabDonnees[lig][13] = intervenants.getSommeSemPaire();
+			tabDonnees[lig][13] = listeSemaine.get(1) + listeSemaine.get(3) + listeSemaine.get(5);
 			tabDonnees[lig][14] = intervenants.getSommeSemImpaire() + intervenants.getSommeSemPaire();
 		}
 
