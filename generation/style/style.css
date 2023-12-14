@@ -1,5 +1,5 @@
 header {
-    background-color: #0097B2;
+    background-color: red;
     text-align: left;
     color: wheat;
 }
@@ -26,7 +26,7 @@ ul {
 .ressource {
     display: inline-block;
     margin-right: 10px;
-    width: 200px; /* Remplacez 100px par la largeur souhaitée */
+    width: 100px; /* Remplacez 100px par la largeur souhaitée */
     overflow: hidden; /* Pour s'assurer que le contenu ne dépasse pas la largeur spécifiée */
     white-space: nowrap; /* Empêche le texte de passer à la ligne */
 }

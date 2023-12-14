@@ -21,33 +21,24 @@ public class Generation {
 		this.haut +="	</head>\n" ;
 		this.haut +="	<body>\n" ;
 		this.haut +="		<header>\n" ;
+		this.haut +="			<img src=\"../lib/logoAstre-nobg.png\" alt=\"LogoAstre\">\n" ;
 		this.haut +="			<h1>ASTRE-*NomPrenom*-*CatÃ©gorie*-*(Etat)*</h1>\n";
+		this.haut +="			<hr>\n" ;
 		this.haut +="		</header>";
 		try
 		{
 			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/ressource.html") );
 
 			pw.println (this.haut);
-            //pw.println ( "<!DOCTYPE HTML>");
-            //pw.println ( "<html lang=\"fr\">");
-			//pw.println ( "	<head>" );
-			//pw.println ( "		<meta charset=\"utf-8\" />");
-            //pw.println ( "		<title>ASTRE-*NomPrenom*</title>");
-            //pw.println ( "		<link href=\"style/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\">");
-			//pw.println ( "	</head>");
-            //pw.println ( "	<body>");
-			//pw.println ( "		<header>");
-			//pw.println ( "			<h1>ASTRE-*NomPrenom*-*CatÃ©gorie*-*(Etat)*</h1>");
-			//pw.println ( "		</header>");
             
-			pw.println ( "		<hr>");
+			
 
 			pw.println ( "		<table>");
   			pw.println ( "			<tr>");
 			pw.println ( "				<td>");
 			pw.println ( "					<div>");
 			pw.println ( "						<h2>Heures</h2>");
-			pw.println ( "						<ul type=\"square\">");
+			pw.println ( "						<ul>");
 			pw.println ( "							<li>Nom :</li>");
 			pw.println ( "							<li>Prenom :</li>");
 			pw.println ( "							<br>");
@@ -61,7 +52,7 @@ public class Generation {
 			pw.println ( "				<td>");
 			pw.println ( "					<div>");
 			pw.println ( "						<h2>Ressources</h2>");
-			pw.println ( "						<ul type=\"square\">");
+			pw.println ( "						<ul>");
 			pw.println ( "						</ul>");
 			pw.println ( "					</div>");
 			pw.println ( "				</td>");
@@ -76,7 +67,7 @@ public class Generation {
 			pw.println ( "							<li>Nb Semaines :</li>");
 			pw.println ( "							<br>");
 			pw.println ( "							<li>Heures totales par semaine :");
-			pw.println ( "								<ul type=\"circle\">" );
+			pw.println ( "								<ul>" );
 			pw.println ( "									<li class=\"ressource\">TD :</li>");
 			pw.println ( "									<li class=\"ressource\">REH :</li>");
 			pw.println ( "									<br>");
@@ -89,6 +80,8 @@ public class Generation {
 			pw.println ( "					</div>");
 			pw.println ( "				</td>");
 			pw.println ( "			</tr>");
+			pw.println ( "		</table>");
+			pw.println ( "		</hr>");
 			pw.close();
 		}
 		catch (Exception e){ e.printStackTrace(); }
