@@ -104,6 +104,10 @@ CREATE TABLE IF NOT EXISTS AffectationETAT
 	FOREIGN KEY(nomInt, prenomInt) REFERENCES IntervenantsETAT(nomInt, prenomInt)
 );
 
+--Générer 6 semestres si il y a rien
+INSERT INTO SemestresETAT (numSem)
+SELECT numSem FROM generate_series(1, 6) numSem
+ON CONFLICT (numSem) DO NOTHING;
 
 
 
