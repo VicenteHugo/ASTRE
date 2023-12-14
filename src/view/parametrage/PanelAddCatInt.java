@@ -105,7 +105,7 @@ public class PanelAddCatInt extends JPanel {
 	}
 
 	private void ajouterCatInt() {
-		String sCode = this.txtCode.getText();
+		String sCode = this.txtCode.getText().toLowerCase();
 		String sLib = this.txtLib.getText();
 		String sCoef = this.txtCoef.getText();
 		String sHmin = this.txtHMin.getText();
