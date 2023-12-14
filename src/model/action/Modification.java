@@ -13,19 +13,22 @@ public class Modification extends Action {
 	private String requetes;
 	private List<Object> info;
 
-	public Modification(Affectations a) {
+	public Modification(Affectations aOld,Affectations aNew) {
 		// Intervenants inter, Module mode, CategorieHeures categorie, int nbSemaine,
 		// int nbGroupe, String commentaire
 
 		// intNom intPrenom codeMod libCatHeur nbSem nbGroupe commentaire
-		this.requetes = "UPDATE Affectation SET nbSem = ?, nbGroupe = ?, commentaire = ? WHERE intNom = ? AND intPrenom = ? AND codeMod = ? AND libCatHeur = ?";
+		this.requetes = "UPDATE Affectation SET intNom, intPrenom = ?, codeMod = ?, libCatHeur = ?,nbSem = ?, nbGroupe = ?, commentaire = ? WHERE intNom = ? AND intPrenom = ? AND codeMod = ? AND libCatHeur = ?";
+		
+		
 		this.info = new ArrayList<>(
-				List.of(a.getNbSemaine(), a.getNbGroupe(), a.getCommentaire(),
-						a.getIntervenant().getNomIntervenant(), a.getIntervenant().getPrenomIntervenant(),
-						a.getModule().getCode(), a.getCategorieHeures()));
+				List.of(aNew.getIntervenant().getNomIntervenant(), aNew.getIntervenant().getPrenomIntervenant(),
+						aNew.getModule().getCode(), aNew.getCategorieHeures().getlibCatHeur(), aNew.getNbSemaine(),
+						aNew.getNbGroupe(), aNew.getCommentaire(), aOld.getIntervenant().getNomIntervenant(),
+						aOld.getModule().getCode(), aOld.getCategorieHeures().getlibCatHeur() ));
 	}
 
-	public Modification(Module m) {
+	public Modification(Module mOld) {
 		this.requetes = "UPDATE Modules SET semMod = ?, libCourtMod = ?, libLongMod = ?, validMod = ?, nbHeurPonc = ? WHERE codeMod = ?";
 		String code = m.getCode();
 		this.info = new ArrayList<>(

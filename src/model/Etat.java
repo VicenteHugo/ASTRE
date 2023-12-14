@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.action.Action;
-import model.action.Ajout;
-import model.action.Suppression;
 import model.modules.Module;
 import model.modules.Ressource;
 import model.modules.Sae;
@@ -450,14 +448,15 @@ public class Etat {
             String line;
             StringBuilder sql = new StringBuilder();
 
-            while ((line = reader.readLine()) != null) {
+			while ((line = reader.readLine()) != null) {
+				
 				// Ignorer les lignes de commentaires
 				if (!line.trim().startsWith("--") && !line.trim().startsWith("/*") && !line.trim().startsWith("*")) {
+					
 					sql.append(line).append(" ");
 
 					// Si une ligne se termine par ;, alors exécute la requête
 					if (line.trim().endsWith(";")) {
-						System.out.println(sql);
 						statement.execute(sql.toString());
 						sql = new StringBuilder();
 					}
