@@ -54,13 +54,19 @@ public class Etat {
 		Etat.lstActions = new ArrayList<>();
 
 		try {
-			Class.forName("org.postgresql.Driver");
+			//Class.forName("org.postgresql.Driver"); //Postgress
+			Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
+
+
 			// Connection
-			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004");
+			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre","root", ""); //MySQL
 			
 			Etat.recupererNomEtat();
 			System.out.println(Etat.nom);
-			Etat.verifierTablesPresence();
+
+			//Lancer le scripts en cas de Table détruite
+			Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
 
 
 			Etat.genererInfos();
@@ -444,28 +450,6 @@ public class Etat {
 	/* CREATION ET VERIFICATIONS DES TABLES */
 	/*--------------------------------------------------------------*/
 
-	private static void verifierTablesPresence() {
-
-		try {
-
-			for (String nomTable : Etat.LST_NOM_TABLES) {
-
-				ResultSet resultSet = Etat.connec.getMetaData().getTables(null, null, nomTable+Etat.nom, new String[] {"TABLE"});
-
-				if (!resultSet.next())
-				{
-					Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
-				}
-
-				resultSet.close();
-			}
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
-
 	private static void recupererNomEtat()
 	{
 		try {
@@ -521,13 +505,14 @@ public class Etat {
 
 				String l = scan.nextLine();
 
-				if (!(l.contains("/*") || l.contains("*/") || l.contains("*") || l.contains("--")))
+				if (!(l.contains("/*") || l.contains("*/") || l.contains("*") || l.contains("--"))) {
 					commande += " " + l;
-
-				if (l.endsWith(";")) {
-					commande = commande.replaceAll("ETAT", Etat.nom);
-					statement.execute(commande);
-					commande = "";
+					if (l.endsWith(";")) {
+						commande = commande.replaceAll("ETAT", Etat.nom);
+						System.out.println(commande + "\n\n\n\n\n");
+						statement.execute(commande);
+						commande = "";
+					}
 				}
 
 			}
