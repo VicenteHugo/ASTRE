@@ -1,7 +1,11 @@
 package view.module;
 
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -18,11 +22,9 @@ public class PanelRessources extends JPanel {
     
     private FrameAccueil frame;
 
-    private JButton btnAjouter;
-    private JButton btnSupprimer;
-    private JButton btnEnregistrer;
-    private JButton btnAnnuler;
-
+    private JButton    btnAjouter,btnSupprimer,btnEnregistrer,btnAnnuler;
+    private JLabel     typeModuleT,semestreT,codeT,libLongT,libCourtT;
+    private JTextField typeModule,semestre,code,libLong,libCourt, nbEtd,nbGpTD,nbGpTP;
     private JPanel panelGauche;
     private JPanel panelDroit;
 
@@ -30,20 +32,56 @@ public class PanelRessources extends JPanel {
     
     public PanelRessources(FrameAccueil frame){
         
+        //Création style
+        Font styleLib = new Font("Arial", Font.PLAIN,11 );
+        
+        
+        
         // Frame
         this.frame = frame;
         frame.setTitle("Astre - Prévisionnel - Module");
 		frame.setMinimumSize(new Dimension(900, 500));
 
-        // Composants
+        // Creation Composants
         this.btnAjouter     = new JButton("Ajouter");
         this.btnSupprimer   = new JButton("Supprimer");
         this.btnEnregistrer = new JButton("Enregistrer");
         this.btnAnnuler     = new JButton("Annuler");
+        
+        this.typeModuleT = new JLabel("type module");
+        this.semestreT   = new JLabel("semestre");
+        this.codeT       = new JLabel("code");
+        this.libLongT    = new JLabel("libellé long");
+        this.libCourtT   = new JLabel("libellé court");
+        
+        this.typeModule = new JTextField("Ressource");
+        this.semestre   = new JTextField("S1");
+        this.code       = new JTextField("R1.01");
+        this.libLong    = new JTextField("Initiation au développement");
+        this.libCourt   = new JTextField("Init dev");
+
+        this.nbEtd    = new JTextField("85");
+        this.nbGpTD   = new JTextField("4");
+        this.nbGpTP   = new JTextField("7");
 
         this.panelGauche = new JPanel();
         this.panelDroit  = new JPanel();
+        this.typeModuleT.setFont(styleLib); // Taille et style de police
+        this.semestreT  .setFont(styleLib);
+        this.codeT      .setFont(styleLib);
+        this.libLongT   .setFont(styleLib);
+        this.libCourtT  .setFont(styleLib);
+        this.typeModule.setPreferredSize(new Dimension(200, 60));
+        this.semestre  .setPreferredSize(new Dimension(200, 50));
+        this.nbEtd     .setPreferredSize(new Dimension(200, 100));
+        this.nbGpTD    .setPreferredSize(new Dimension(200, 100));
+        this.nbGpTP    .setPreferredSize(new Dimension(200, 100));
 
+        this.typeModule.setEditable(false);
+        this.semestre  .setEditable(false);
+        this.nbEtd     .setEditable(false);
+        this.nbGpTD    .setEditable(false);
+        this.nbGpTP    .setEditable(false);
         // Layout
         this.setLayout(new GridLayout(1,2,10,10));
         this.panelGauche.setLayout(new GridLayout(8,1));
@@ -53,18 +91,25 @@ public class PanelRessources extends JPanel {
 		
 
         JPanel panelInfo = new JPanel();
-        panelInfo.setLayout(new GridLayout(2,5));
-        panelInfo.add(new JLabel("type module"));
-        panelInfo.add(new JLabel("semestre"));
-        panelInfo.add(new JLabel("code"));
-        panelInfo.add(new JLabel("libellé long"));
-        panelInfo.add(new JLabel("libellé court"));
+        panelInfo.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 4; // Étendre sur deux colonnes
+        gbc.anchor = GridBagConstraints.CENTER; // Aligner au centre
+        gbc.insets = new Insets(20, 10, 20, 10); // Marges
 
-        panelInfo.add(new JTextField("Ressources"));
-        panelInfo.add(new JTextField("S1"));
-        panelInfo.add(new JTextField("R1.01"));
-        panelInfo.add(new JTextField("Initiation au développement"));
-        panelInfo.add(new JTextField("Init dev"));
+        panelInfo.add(this.typeModuleT);
+        panelInfo.add(this.semestreT);
+        panelInfo.add(this.codeT);
+        panelInfo.add(this.libLongT);
+        panelInfo.add(this.libCourtT);
+
+        panelInfo.add(this.typeModule);
+        panelInfo.add(this.semestre);
+        panelInfo.add(this.code);
+        panelInfo.add(this.libLong);
+        panelInfo.add(this.libCourt);
         this.panelGauche.add(panelInfo);
 
         JPanel panelNombre = new JPanel();
@@ -73,9 +118,9 @@ public class PanelRessources extends JPanel {
         panelNombre.add(new JLabel("nb gp TD"));
         panelNombre.add(new JLabel("nb gp TP"));
 
-        panelNombre.add(new JTextField("85"));
-        panelNombre.add(new JTextField("4"));
-        panelNombre.add(new JTextField("7"));
+        panelNombre.add(this.nbEtd);
+        panelNombre.add(this.nbGpTD);
+        panelNombre.add(this.nbGpTP);
         this.panelGauche.add(panelNombre);
 
         this.panelGauche.add(new JLabel("PN local(nb h tot/etd)"));
