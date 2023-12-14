@@ -18,9 +18,9 @@ import java.io.InputStream;
 
 public class Etat {
 
-	/**Liste des Tables.Utile pour la verification de leurs présences. */
-	public static final String[] LST_NOM_TABLES = new String[] 
-	{ "Etat", "CategorieIntervenants", "CategorieHeures", "Semestres", "Intervenants", "Modules","ModulesCatHeures","Affectation"};
+	/** Liste des Tables.Utile pour la verification de leurs présences. */
+	public static final String[] LST_NOM_TABLES = new String[] { "Etat", "CategorieIntervenants", "CategorieHeures",
+			"Semestres", "Intervenants", "Modules", "ModulesCatHeures", "Affectation" };
 
 	// Connection/SQL
 	/** Connection vers la bado. */
@@ -69,7 +69,6 @@ public class Etat {
 				st.executeUpdate("INSERT INTO Etat (etat) VALUES ('Etat1')");
 				Etat.nom = "Etat1";
 			}
-
 
 			Etat.genererInfos();
 
@@ -127,7 +126,8 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants WHERE etat = '" + Etat.nom + "' ORDER BY codeCatInt DESC");
+			ResultSet res = st.executeQuery(
+					"SELECT * FROM CategorieIntervenants WHERE etat = '" + Etat.nom + "' ORDER BY codeCatInt DESC");
 
 			while (res.next()) {
 				String code = res.getString("codeCatInt");
@@ -238,6 +238,10 @@ public class Etat {
 
 	}
 
+	public static void ajouterIntervenant(Intervenants inter) {
+		Etat.lstIntervenants.add(inter);
+	}
+
 	public static void genererModules() {
 
 		Etat.lstModule = new ArrayList<>();
@@ -257,7 +261,6 @@ public class Etat {
 				int heurePonctuel = res.getInt("nbHeurPonc");
 
 				Semestres sem = Etat.lstSemestres.get(res.getInt("semMod") - 1);
-
 
 				if (type.equals("Ressource"))
 					m = new Ressource(sem, code, libLong, libCourt, heurePonctuel);
@@ -388,7 +391,6 @@ public class Etat {
 				// On prépare la requêtes.
 				PreparedStatement st = connec.prepareStatement(a.getRequeteSQL());
 
-
 				// On met les info dans la requêtes
 				List<Object> lstInfos = a.getInfo();
 
@@ -445,14 +447,10 @@ public class Etat {
 
 		System.out.println();
 	}
-	
-
-	
 
 	/*--------------------------------------------------------------*/
 	/* CREATION ET VERIFICATIONS DES TABLES */
 	/*--------------------------------------------------------------*/
-
 
 	private static void verifierTablesPresence() {
 
@@ -462,9 +460,7 @@ public class Etat {
 
 				ResultSet resultSet = Etat.connec.getMetaData().getTables(null, null, nomTable, null);
 
-
-				if (!resultSet.next())
-				{
+				if (!resultSet.next()) {
 					Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
 				}
 
@@ -476,7 +472,7 @@ public class Etat {
 			System.out.println(e);
 		}
 	}
-	
+
 	private static void lireFichierSQL(String fic) {
 		try {
 
@@ -488,8 +484,8 @@ public class Etat {
 
 				String l = scan.nextLine();
 
-				if (!(l.contains("/*") ||l.contains("*/") || l.contains("*") || l.contains("--")))
-					commande += " " +l;
+				if (!(l.contains("/*") || l.contains("*/") || l.contains("*") || l.contains("--")))
+					commande += " " + l;
 
 				if (l.endsWith(";")) {
 					statement.execute(commande);

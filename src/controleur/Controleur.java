@@ -102,7 +102,8 @@ public class Controleur {
 
 	public boolean ajouterCategorieHeure(String lib, float coeff) {
 
-		if (Etat.getCatHeure(lib) != null) return false;
+		if (Etat.getCatHeure(lib) != null)
+			return false;
 
 		CategorieHeures cat = new CategorieHeures(lib, coeff);
 		Etat.ajouterAction(new Ajout(cat));
@@ -110,10 +111,12 @@ public class Controleur {
 		return true;
 	}
 
-	public boolean ajouterCategorieIntervenant(String code, String libCat, float coeff, int heureMinCatInt,int heureMaxCatInt) {
-		
-		if (Etat.getCatInt(code) != null) return false;
-		
+	public boolean ajouterCategorieIntervenant(String code, String libCat, float coeff, int heureMinCatInt,
+			int heureMaxCatInt) {
+
+		if (Etat.getCatInt(code) != null)
+			return false;
+
 		CategorieIntervenant c = new CategorieIntervenant(code, libCat, coeff, heureMinCatInt, heureMaxCatInt);
 		Etat.ajouterAction(new Ajout(c));
 		Etat.ajouterCategorieIntervenant(c);
@@ -189,6 +192,11 @@ public class Controleur {
 		}
 
 		return false;
+	}
+
+	public void ajouterIntervenant(Intervenants inter) {
+		Etat.ajouterAction(new Ajout(inter));
+		Etat.ajouterIntervenant(inter);
 	}
 
 	/*-------------------------------------------------------------*/
