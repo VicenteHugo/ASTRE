@@ -12,6 +12,7 @@ import model.Intervenants;
 import model.Semestres;
 import model.action.Action;
 import model.action.Ajout;
+import model.action.Modification;
 import model.action.Suppression;
 import model.modules.Module;
 
@@ -118,15 +119,51 @@ public class Controleur {
 		Etat.anuller();
 	}
 
-	public void modifier() {
-
-	}
-
 	public void supprimerCategorieHeure(int i) {
 		if (i >= 0 && i < Etat.getCategoriesHeures().size()) {
 			Etat.getCategoriesHeures().remove(i);
 			Etat.ajouterAction(new Suppression(Etat.getCategoriesHeures().get(i)));
 		}
+	}
+
+	public boolean modifCategorieHeures(int i, String lib, float coef) {
+
+		CategorieHeures cOld = Etat.getCategoriesHeures().get(i);
+		
+		//Si la clé est pris par autre chose que l'objet actuelle               et que l'indice est bon
+		if ((Etat.getCatHeure(lib) == null || Etat.getCatHeure(lib) == cOld) && i >= 0 && i < Etat.getCategoriesHeures().size()) {
+			
+			//On remplace l'objet
+			CategorieHeures cNew = new CategorieHeures(lib, coef);
+			System.out.println(cNew);
+			Etat.getCategoriesHeures().add(i, cNew);
+
+			//On ajouter l'action
+			Etat.ajouterAction(new Modification(cOld, cNew));
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean modifCategorieIntervenants(int i, String lib, float coef) {
+
+		CategorieHeures cOld = Etat.getCategoriesHeures().get(i);
+		
+		//Si la clé est pris par autre chose que l'objet actuelle               et que l'indice est bon
+		if ((Etat.getCatHeure(lib) == null || Etat.getCatHeure(lib) == cOld) && i >= 0 && i < Etat.getCategoriesHeures().size()) {
+			
+			//On remplace l'objet
+			CategorieHeures cNew = new CategorieHeures(lib, coef);
+			System.out.println(cNew);
+			Etat.getCategoriesHeures().add(i, cNew);
+
+			//On ajouter l'action
+			Etat.ajouterAction(new Modification(cOld, cNew));
+			return true;
+		}
+
+		return false;
 	}
 
 	/*-------------------------------------------------------------*/

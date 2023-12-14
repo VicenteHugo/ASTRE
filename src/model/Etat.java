@@ -12,8 +12,15 @@ import model.modules.Ressource;
 import model.modules.Sae;
 import model.modules.Stage;
 import model.modules.PPP;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class Etat {
+	
+	/**Liste des Tables.Utile pour la verification de leurs présences. */
+	public static final String[] LST_NOM_TABLES = new String[] 
+	{ "Etat", "CategorieIntervenants", "CategorieHeures", "Semestres", "Intervenants", "Modules","ModulesCatHeures","Affectation"};
 
 	// Connection/SQL
 	/** Connection vers la bado. */
@@ -431,5 +438,67 @@ public class Etat {
 		Etat.enregistrer();
 
 		System.out.println();
+	}
+	
+	
+
+	/*--------------------------------------------------------------*/
+	/* CREATION ET VERIFICATIONS DES TABLES */
+	/*--------------------------------------------------------------*/
+
+
+	private static void verifierTablesPresence() {
+
+		try {
+
+			for (String nom : Etat.LST_NOM_TABLES)
+				System.out.println(nom);
+
+			for (String nomTable : Etat.LST_NOM_TABLES) {
+
+				ResultSet resultSet = Etat.connec.getMetaData().getTables(null, null, nomTable, null);
+				System.out.print("Table : " + nomTable + " est présent ");
+
+
+				if (!resultSet.next())
+				{
+					System.out.println("faux");
+					Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
+				}
+
+				System.out.println();
+				resultSet.close();
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	private static void lireFichierSQL(String fic) {
+		try {
+
+			String commande = "";
+			Scanner scan = new Scanner(new FileInputStream(fic));
+			Statement statement = Etat.connec.createStatement();
+
+			while (scan.hasNextLine()) {
+
+				String l = scan.nextLine();
+
+				if (!(l.contains("/*") ||l.contains("*/") || l.contains("*") || l.contains("--")))
+					commande += " " +l;
+
+				if (l.endsWith(";")) {
+					statement.execute(commande);
+					commande = "";
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }
