@@ -44,7 +44,7 @@ public class GrilleInt extends AbstractTableModel {
 				listeSemaine.add(nbHeure);
 			}
 
-			System.out.println("LAAAAAAAAAAAAAAAAAAA =====>"  + listeSemaine.size());
+			System.out.println("LAAAAAAAAAAAAAAAAAAA =====>" + listeSemaine.size());
 
 			tabDonnees[lig][0] = intervenants.getCategorieIntervenant().getLibCatInt();
 			tabDonnees[lig][1] = intervenants.getNomIntervenant();
@@ -60,7 +60,8 @@ public class GrilleInt extends AbstractTableModel {
 			tabDonnees[lig][11] = listeSemaine.get(3);
 			tabDonnees[lig][12] = listeSemaine.get(5);
 			tabDonnees[lig][13] = listeSemaine.get(1) + listeSemaine.get(3) + listeSemaine.get(5);
-			tabDonnees[lig][14] = intervenants.getSommeSemImpaire() + intervenants.getSommeSemPaire();
+			tabDonnees[lig][14] = listeSemaine.get(0) + listeSemaine.get(2) + listeSemaine.get(4) + listeSemaine.get(1)
+					+ listeSemaine.get(3) + listeSemaine.get(5);
 		}
 
 		this.tabEntetes = new String[] { "Catégorie", "Nom", "Prénom", "hServ", "hMax", "CoefTP", "S1", "S3", "S5",
