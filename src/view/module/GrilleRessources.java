@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
 import model.Affectations;
+import model.CategorieHeures;
 import model.modules.Ressource;
 
 public class GrilleRessources extends AbstractTableModel {
@@ -15,14 +16,24 @@ public class GrilleRessources extends AbstractTableModel {
 
 	public GrilleRessources() {
 		List<Affectations> listAffectations = new ArrayList<>();
-		this.tabDonnees = new Object[listAffectations.size()][5];
+		this.tabDonnees = new Object[listAffectations.size()][6];
 
 		for (int lig = 0; lig < listAffectations.size(); lig++) {
-
-			tabDonnees[lig][0] = cat.getlibCatInt();
-			tabDonnees[lig][1] = cat.getCoefCatInt();
-			tabDonnees[lig][2] = cat.getHeureMinCatInt();
-			tabDonnees[lig][3] = cat.getHeureMaxCatInt();
+			Affectations affectations = listAffectations.get(lig);
+			if (affectations.getModule().getClass().getName().equals("Ressources")) {
+				List<Integer> listInfosHeure = affectations.getModule().getHeures()
+						.get(affectations.getCategorieHeures());
+				this.tabDonnees[0][lig] = affectations.getIntervenant().getNomIntervenant();
+				this.tabDonnees[1][lig] = affectations.getCategorieHeures().getlibCatHeur();
+				this.tabDonnees[2][lig] = affectations.getNbSemaine();
+				this.tabDonnees[3][lig] = affectations.getNbGroupe() + "|"
+						+ affectations.getNbSemaine();
+				this.tabDonnees[4][lig] = affectations.getNbSemaine()
+						* affectations.getNbGroupe()
+						* listInfosHeure.get(2)
+						* affectations.getCategorieHeures().getcoefCatHeur();
+				this.tabDonnees[5][lig] = affectations.getCommentaire();
+			}
 		}
 
 		this.tabEntetes = new String[] { "Intervenants", "Type", "Nb sem", "nb Gp/nb h", "tot eqtd", "commentaire" };

@@ -21,6 +21,8 @@ public class Affectations {
 	/** commentaire */
 	private String commentaire;
 
+	private int nbHeure;
+
 	/**
 	 * Constructeur
 	 */
@@ -32,6 +34,14 @@ public class Affectations {
 		this.nbSemaine = nbSemaine;
 		this.commentaire = commentaire;
 		this.nbGroupe = nbGroupe;
+	}
+
+	public Affectations(Intervenants inter, Module mode, CategorieHeures categorie, int nbHeure, String commentaire) {
+		this.intervenant = inter;
+		this.module = mode;
+		this.categorieHeures = categorie;
+		this.nbHeure = nbHeure;
+		this.commentaire = commentaire;
 	}
 
 	public Intervenants getIntervenant() {
@@ -87,6 +97,14 @@ public class Affectations {
 
 	public void setNbGroupe(int nbGroupe) {
 		this.nbGroupe = nbGroupe;
+	}
+
+	public int getNbHeure() {
+		return nbHeure;
+	}
+
+	public void setNbHeure(int nbHeure) {
+		this.nbHeure = nbHeure;
 	}
 
 }

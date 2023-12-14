@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Intervenants;
 import model.Semestres;
-import model.modules.*;
 import model.modules.Module;
 
 import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
 import model.Affectations;
-import model.CategorieIntervenant;
 
 public class GrilleInt extends AbstractTableModel {
 
