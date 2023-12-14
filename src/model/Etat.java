@@ -14,13 +14,12 @@ import model.modules.Stage;
 import model.modules.PPP;
 import java.util.Scanner;
 import java.io.FileInputStream;
-import java.io.InputStream;
 
 public class Etat {
 
 	/**Liste des Tables.Utile pour la verification de leurs présences. */
 	public static final String[] LST_NOM_TABLES = new String[] 
-	{ "Etat", "CategorieIntervenants", "CategorieHeures", "Semestres", "Intervenants", "Modules","ModulesCatHeures","Affectation"};
+	{ "CategorieIntervenants", "CategorieHeures", "Semestres", "Intervenants", "Modules","ModulesCatHeures","Affectation"};
 
 	// Connection/SQL
 	/** Connection vers la bado. */
@@ -55,20 +54,13 @@ public class Etat {
 		Etat.lstActions = new ArrayList<>();
 
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("org.postgresql.Driver");
 			// Connection
-			Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre", "root", "");
+			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004");
+			
+			Etat.recupererNomEtat();
+			System.out.println(Etat.nom);
 			Etat.verifierTablesPresence();
-
-			Statement st = connec.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM Etat ORDER BY dateCrea DESC");
-
-			if (rs.next()) {
-				Etat.nom = rs.getString("etat");
-			} else {
-				st.executeUpdate("INSERT INTO Etat (etat) VALUES ('Etat1')");
-				Etat.nom = "Etat1";
-			}
 
 
 			Etat.genererInfos();
@@ -108,7 +100,7 @@ public class Etat {
 		try {
 
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieHeures WHERE etat = '" + Etat.nom + "'");
+			ResultSet res = st.executeQuery("SELECT * FROM CategorieHeures"+ Etat.nom);
 
 			while (res.next())
 				Etat.lstCategorieHeures
@@ -127,7 +119,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants WHERE etat = '" + Etat.nom + "' ORDER BY codeCatInt DESC");
+			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants"+ Etat.nom);
 
 			while (res.next()) {
 				String code = res.getString("codeCatInt");
@@ -152,7 +144,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Semestres WHERE etat = '" + Etat.nom + "'");
+			ResultSet res = st.executeQuery("SELECT * FROM Semestres"+ Etat.nom);
 
 			while (res.next()) {
 
@@ -217,7 +209,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Intervenants WHERE etat = '" + Etat.nom + "'");
+			ResultSet res = st.executeQuery("SELECT * FROM Intervenants"+ Etat.nom);
 
 			while (res.next()) {
 				String nom = res.getString("nomInt");
@@ -244,7 +236,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Modules WHERE etat = '" + Etat.nom + "'");
+			ResultSet res = st.executeQuery("SELECT * FROM Modules"+ Etat.nom);
 
 			while (res.next()) {
 				Module m = null;
@@ -269,7 +261,7 @@ public class Etat {
 					m = new PPP(sem, code, libLong, libCourt, heurePonctuel);
 
 				Statement st1 = connec.createStatement();
-				ResultSet res1 = st1.executeQuery("SELECT * FROM ModulesCatHeures WHERE codeMod = '" + code + "'");
+				ResultSet res1 = st1.executeQuery("SELECT * FROM ModulesCatHeures"+ Etat.nom);
 
 				while (res1.next()) {
 
@@ -342,7 +334,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Affectation WHERE etat = '" + Etat.nom + "'");
+			ResultSet res = st.executeQuery("SELECT * FROM Affectation"+ Etat.nom);
 
 			while (res.next()) {
 
@@ -460,21 +452,46 @@ public class Etat {
 
 			for (String nomTable : Etat.LST_NOM_TABLES) {
 
-				ResultSet resultSet = Etat.connec.getMetaData().getTables(null, null, nomTable, null);
-
+				ResultSet resultSet = Etat.connec.getMetaData().getTables(null, null, nomTable+Etat.nom, new String[] {"TABLE"});
 
 				if (!resultSet.next())
 				{
 					Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
 				}
 
-				System.out.println();
 				resultSet.close();
 			}
 
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+	}
+
+
+	private static void recupererNomEtat()
+	{
+		try {
+			//On regarde si la table Etat existe 
+
+			Statement st = connec.createStatement();
+
+			//Si elle existe pas on la crée
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS Etat (etat  VARCHAR(25) PRIMARY KEY,dateCrea DATE DEFAULT CURRENT_DATE)");
+
+
+			ResultSet rs = st.executeQuery("SELECT * FROM Etat ORDER BY dateCrea DESC");
+
+			if (rs.next()) {
+				Etat.nom = rs.getString("etat");
+			} else {
+				st.executeUpdate("INSERT INTO Etat (etat) VALUES ('Etat1')");
+				Etat.nom = "Etat1";
+			}
+
+		}catch (Exception e) {
+			System.out.println("Methode marche pas");
+		}
+
 	}
 	
 	private static void lireFichierSQL(String fic) {
@@ -492,6 +509,7 @@ public class Etat {
 					commande += " " +l;
 
 				if (l.endsWith(";")) {
+					commande = commande.replaceAll("ETAT", Etat.nom);
 					statement.execute(commande);
 					commande = "";
 				}

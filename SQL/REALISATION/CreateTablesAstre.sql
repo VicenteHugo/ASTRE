@@ -22,132 +22,105 @@
 
 
 -- Suppressions des tables
-DROP TABLE IF EXISTS Affectation;
-DROP TABLE IF EXISTS ModulesCatHeures;
-DROP TABLE IF EXISTS Modules;
-DROP TABLE IF EXISTS Intervenants;
-DROP TABLE IF EXISTS Semestres;
-DROP TABLE IF EXISTS CategorieHeures;
-DROP TABLE IF EXISTS CategorieIntervenants;
-DROP TABLE IF EXISTS Etat;
-
-
-
-
--- Création des tables ayant un niveau de liaison 0
-CREATE TABLE Etat 
-(
-	etat  VARCHAR(25) PRIMARY KEY,
-	dateCrea DATE DEFAULT CURRENT_DATE
-);
-
-
-
+-- DROP TABLE IF EXISTS AffectationETAT;
+-- DROP TABLE IF EXISTS ModulesCatHeuresETAT;
+-- DROP TABLE IF EXISTS ModulesETAT;
+-- DROP TABLE IF EXISTS IntervenantsETAT;
+-- DROP TABLE IF EXISTS SemestresETAT;
+-- DROP TABLE IF EXISTS CategorieHeuresETAT;
+-- DROP TABLE IF EXISTS CategorieIntervenantsETAT;
 
 -- Création des tables ayant un niveau de liaison 1
-CREATE TABLE CategorieIntervenants
+CREATE TABLE IF NOT EXISTS CategorieIntervenantsETAT
 (
-	codeCatInt     VARCHAR(10), 
-	libCatInt      VARCHAR(10), 
-	coefCatInt     FLOAT DEFAULT 1 CHECK (coefCatInt > 0) ,
-	heureMinCatInt INTEGER NOT NULL CHECK (heureMinCatInt > 0)               ,
-	heureMaxCatInt INTEGER NOT NULL CHECK (heureMaxCatInt >= heureMinCatInt) ,
-	etat           VARCHAR(25) REFERENCES Etat(libEtat),
-	PRIMARY KEY(codeCatInt, etat)
+    codeCatInt     VARCHAR(10) PRIMARY KEY, 
+    libCatInt      VARCHAR(10), 
+    coefCatInt     FLOAT DEFAULT 1 CHECK (coefCatInt > 0) ,
+    heureMinCatInt INTEGER NOT NULL CHECK (heureMinCatInt > 0),
+    heureMaxCatInt INTEGER NOT NULL CHECK (heureMaxCatInt >= heureMinCatInt)
 );
 
-CREATE TABLE CategorieHeures
+CREATE TABLE IF NOT EXISTS CategorieHeuresETAT
 (
-	libCatHeur  VARCHAR(10), 
-	coefCatHeur FLOAT DEFAULT 1.0 CHECK (coefCatHeur > 0),
-	etat        VARCHAR(25) REFERENCES Etat(libEtat),
-	PRIMARY KEY(libCatHeur, etat)
+    libCatHeur  VARCHAR(10) PRIMARY KEY, 
+    coefCatHeur FLOAT DEFAULT 1.0 CHECK (coefCatHeur > 0)
 );
 
-CREATE TABLE Semestres
+-- Création de la table Semestres
+CREATE TABLE IF NOT EXISTS SemestresETAT
 (
-	numSem    INTEGER NOT NULL,
-	nbGpTdSem INTEGER DEFAULT 0 CHECK (nbGpTdSem >= 0),
-	nbGpTpSem INTEGER DEFAULT 0 CHECK (nbGpTpSem >= 0),
-	nbEtdSem  INTEGER DEFAULT 0 CHECK (nbEtdSem >= 0) ,
-	nbSemSem  INTEGER DEFAULT 0 CHECK (nbSemSem >= 0) ,
-	etat      VARCHAR(25) REFERENCES Etat(libEtat),
-	PRIMARY KEY(numSem, etat)
+    numSem    INTEGER NOT NULL PRIMARY KEY,
+    nbGpTdSem INTEGER DEFAULT 0 CHECK (nbGpTdSem >= 0),
+    nbGpTpSem INTEGER DEFAULT 0 CHECK (nbGpTpSem >= 0),
+    nbEtdSem  INTEGER DEFAULT 0 CHECK (nbEtdSem >= 0),
+    nbSemSem  INTEGER DEFAULT 0 CHECK (nbSemSem >= 0)
 );
 
 
 
 -- Création des tables ayant un niveau de liaison 2
-CREATE TABLE Modules
+CREATE TABLE IF NOT EXISTS ModulesETAT
 (
-	codeMod     VARCHAR(10) , 
-	semMod      INTEGER NOT NULL REFERENCES Semestres(numSem),
-	typeMod     VARCHAR(11) NOT NULL CHECK (typeMod IN ('Ressource', 'Sae', 'Stage', 'PPP')),
-	libCourtMod VARCHAR(20) NOT NULL,
-	libLongMod  VARCHAR(50) NOT NULL,
-	validMod    BOOLEAN NOT NULL DEFAULT false,
-	nbHeurPonc  INTEGER DEFAULT 0    NOT NULL,
-	etat        VARCHAR(25) REFERENCES Etat(libEtat),
-	PRIMARY KEY(codeMod, etat)
+    codeMod     VARCHAR(10) PRIMARY KEY, 
+    semMod      INTEGER,
+    typeMod     VARCHAR(11) NOT NULL CHECK (typeMod IN ('Ressource', 'Sae', 'Stage', 'PPP')),
+    libCourtMod VARCHAR(20) NOT NULL,
+    libLongMod  VARCHAR(50) NOT NULL,
+    validMod    BOOLEAN NOT NULL DEFAULT false,
+    nbHeurPonc  INTEGER DEFAULT 0 NOT NULL
 );
 
-CREATE TABLE Intervenants
+CREATE TABLE IF NOT EXISTS IntervenantsETAT
 (
-	nomInt      VARCHAR(20) NOT NULL,
-	prenomInt   VARCHAR(20) NOT NULL,
-	heureMinInt INTEGER NOT NULL CHECK (heureMinInt > 0) ,
-	heureMaxInt INTEGER NOT NULL CHECK (heureMaxInt >= heureMinInt),
-	categInt    VARCHAR(10) NOT NULL REFERENCES CategorieIntervenants(codeCatInt),
-	etat        VARCHAR(25) REFERENCES Etat(libEtat),
-	PRIMARY KEY(nomInt, prenomInt, etat)
+    nomInt      VARCHAR(20) NOT NULL,
+    prenomInt   VARCHAR(20) NOT NULL,
+    heureMinInt INTEGER NOT NULL CHECK (heureMinInt > 0),
+    heureMaxInt INTEGER NOT NULL CHECK (heureMaxInt >= heureMinInt),
+    categInt    VARCHAR(10) REFERENCES CategorieIntervenantsETAT(codeCatInt),
+	PRIMARY KEY (nomInt, prenomInt)
 );
-
 
 
 -- Création des tables ayant un niveau de liaison 3
-CREATE TABLE ModulesCatHeures
+CREATE TABLE IF NOT EXISTS ModulesCatHeuresETAT
 (
-	codeMod    VARCHAR(10) NOT NULL REFERENCES Modules(codeMod),
-	libCatHeur VARCHAR(10) NOT NULL REFERENCES CategorieHeures(libCatHeur),
+	codeMod    VARCHAR(10) NOT NULL REFERENCES ModulesETAT(codeMod),
+	libCatHeur VARCHAR(10) NOT NULL REFERENCES CategorieHeuresETAT(libCatHeur),
 	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN > 0),
 	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem > 0),
 	nbSemaine  INTEGER NOT NULL CHECK (nbSemaine > 0),
-	etat       VARCHAR(25) REFERENCES Etat(libEtat),
-	PRIMARY KEY(codeMod, libCatHeur, etat)
+	PRIMARY KEY(codeMod, libCatHeur)
 );
 
-CREATE TABLE Affectation
+CREATE TABLE IF NOT EXISTS AffectationETAT
 (
-	intNom      VARCHAR(20) NOT NULL REFERENCES Intervenants(nomInt),
-	intPrenom   VARCHAR(20) NOT NULL REFERENCES Intervenants(prenomInt),
-	codeMod     VARCHAR(10) NOT NULL REFERENCES Modules(codeMod),
-	libCatHeur  VARCHAR(10) NOT NULL REFERENCES CategorieHeures(libCatHeur),
+	nomInt      VARCHAR(20) NOT NULL,
+	prenomInt   VARCHAR(20) NOT NULL,
+	codeMod     VARCHAR(10) NOT NULL REFERENCES ModulesETAT(codeMod),
+	libCatHeur  VARCHAR(10) NOT NULL REFERENCES CategorieHeuresETAT(libCatHeur),
 	nbSem       INTEGER NOT NULL CHECK (nbSem > 0),
 	nbGroupe    INTEGER NOT NULL CHECK (nbGroupe > 0),
 	commentaire VARCHAR(255),
-	etat        VARCHAR(25) REFERENCES Etat(libEtat),
-	PRIMARY KEY(intNom, intPreNom, codeMod, libCatHeur, etat)
+	PRIMARY KEY(nomInt, prenomInt, codeMod, libCatHeur),
+	FOREIGN KEY(nomInt, prenomInt) REFERENCES IntervenantsETAT(nomInt, prenomInt)
 );
+
 
 
 
 
 -- Création de la fonctions pour les semestres
 
-DELIMITER //
+-- CREATE TRIGGER InsertSixSemestres
+-- AFTER INSERT ON Etat
+-- FOR EACH ROW
+-- BEGIN
+--     DECLARE i INT DEFAULT 1;
 
-CREATE TRIGGER InsertSixSemestres
-AFTER INSERT ON Etat
-FOR EACH ROW
-BEGIN
-    DECLARE i INT DEFAULT 1;
-
-    WHILE i <= 6 DO
-        INSERT INTO Semestres (numSem, etat) VALUES (i, NEW.etat);
-        SET i = i + 1;
-    END WHILE;
-END //
-
-DELIMITER ;
+--     WHILE i <= 6 DO
+--         INSERT INTO Semestres (numSem, etat) VALUES (i, NEW.etat);
+--         SET i = i + 1;
+--     END WHILE;
+-- END ;
 
 
