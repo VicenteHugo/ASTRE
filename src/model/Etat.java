@@ -1,10 +1,12 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import model.action.Action;
 import model.modules.Module;
@@ -12,6 +14,7 @@ import model.modules.Ressource;
 import model.modules.Sae;
 import model.modules.Stage;
 import model.modules.PPP;
+import java.io.InputStream;
 
 public class Etat {
 
@@ -427,12 +430,24 @@ public class Etat {
 	private static void verifierTablesPresence() {
 
 		try {
+
+			for (String nom : Etat.LST_NOM_TABLES)
+				System.out.println(nom);
+
 			for (String nomTable : Etat.LST_NOM_TABLES) {
 
 				ResultSet resultSet = Etat.connec.getMetaData().getTables(null, null, nomTable, null);
+				System.out.print("Table : " + nomTable + " est présent ");
+
 
 				if (!resultSet.next())
+				{
+					System.out.println("faux");
 					Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
+				}
+
+				System.out.println();
+				resultSet.close();
 			}
 
 		} catch (Exception e) {
@@ -441,30 +456,29 @@ public class Etat {
 	}
 	
 	private static void lireFichierSQL(String fic) {
+		try {
 
-		try (BufferedReader reader = new BufferedReader(new FileReader(fic))) {
-
+			String commande = "";
+			Scanner scan = new Scanner(new FileInputStream(fic));
 			Statement statement = Etat.connec.createStatement();
-            String line;
-            StringBuilder sql = new StringBuilder();
 
-			while ((line = reader.readLine()) != null) {
-				
-				// Ignorer les lignes de commentaires
-				if (!line.trim().startsWith("--") && !line.trim().startsWith("/*") && !line.trim().startsWith("*")) {
-					
-					sql.append(line).append(" ");
+			while (scan.hasNextLine()) {
 
-					// Si une ligne se termine par ;, alors exécute la requête
-					if (line.trim().endsWith(";")) {
-						statement.execute(sql.toString());
-						sql = new StringBuilder();
-					}
+				String l = scan.nextLine();
+
+				if (!(l.contains("/*") ||l.contains("*/") || l.contains("*") || l.contains("--")))
+					commande += " " +l;
+
+				if (l.endsWith(";")) {
+					statement.execute(commande);
+					commande = "";
 				}
+
 			}
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
