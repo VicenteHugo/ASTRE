@@ -10,62 +10,45 @@ import model.Intervenants;
 import model.modules.Module;
 
 public class Modification extends Action {
-	private String requetes;
-	private List<Object> info;
 
-	public Modification(Affectations a) {
-		// Intervenants inter, Module mode, CategorieHeures categorie, int nbSemaine,
-		// int nbGroupe, String commentaire
-
-		// intNom intPrenom codeMod libCatHeur nbSem nbGroupe commentaire
-		this.requetes = "UPDATE Affectation SET nbSem = ?, nbGroupe = ?, commentaire = ? WHERE intNom = ? AND intPrenom = ? AND codeMod = ? AND libCatHeur = ?";
+	public Modification(Affectations aOld, Affectations aNew) {
+		
+		this.requetes = "UPDATE Affectation SET intNom, intPrenom = ?, codeMod = ?, libCatHeur = ?,nbSem = ?, nbGroupe = ?, commentaire = ? WHERE intNom = ? AND intPrenom = ? AND codeMod = ? AND libCatHeur = ?";
+		
 		this.info = new ArrayList<>(
-				List.of(a.getNbSemaine(), a.getNbGroupe(), a.getCommentaire(),
-						a.getIntervenant().getNomIntervenant(), a.getIntervenant().getPrenomIntervenant(),
-						a.getModule().getCode(), a.getCategorieHeures()));
+				List.of(aNew.getIntervenant().getNomIntervenant(), aNew.getIntervenant().getPrenomIntervenant(),
+						aNew.getModule().getCode(), aNew.getCategorieHeures().getlibCatHeur(), aNew.getNbSemaine(),
+						aNew.getNbGroupe(), aNew.getCommentaire(), aOld.getIntervenant().getNomIntervenant(),
+						aOld.getModule().getCode(), aOld.getCategorieHeures().getlibCatHeur() ));
 	}
 
-	public Modification(Module m) {
-		this.requetes = "UPDATE Modules SET semMod = ?, libCourtMod = ?, libLongMod = ?, validMod = ?, nbHeurPonc = ? WHERE codeMod = ?";
-		String code = m.getCode();
-		this.info = new ArrayList<>(
-				List.of(m.getSemestres(), m.getLibCourt(), m.getLibLong(), m.isValide(), m.getHeurePonctuel(), code));
-	}
+	public Modification(Module mOld, Module mNew) {
 
-	public Modification(Intervenants inter) {
-		this.requetes = "UPDATE Intervenant SET heureMinInt = ?, heureMaxInt = ?, categInt = ? WHERE intNom = ? AND intPrenom = ?;";
-
-		String nom = inter.getNomIntervenant();
-		String prenom = inter.getPrenomIntervenant();
+		this.requetes = "UPDATE Modules SET codeMod = ?, semMod = ?, libCourtMod = ?, libLongMod = ?, validMod = ?, nbHeurPonc = ? WHERE codeMod = ?";
 
 		this.info = new ArrayList<>(
-				List.of(inter.getServices(), inter.getMaxHeures(), inter.getCategorieIntervenant(), nom, prenom));
+				List.of(mNew.getCode(), mNew.getSemestres(), mNew.getLibCourt(), mNew.getLibLong(), mNew.isValide(), mNew.getHeurePonctuel(), mOld.getCode()));
 	}
 
-	public Modification(CategorieHeures cat) {
-		this.requetes = "UPDATE CategorieHeures SET coefCatHeur = ? WHERE libCatHeur = ? ;";
+	public Modification(Intervenants iOld, Intervenants iNew) {
 
-		String code = cat.getlibCatHeur();
+		this.requetes = "UPDATE Intervenant SET intNom = ?, intPrenom = ?, heureMinInt = ?, heureMaxInt = ?, categInt = ? WHERE intNom = ? AND intPrenom = ?;";
 
-		this.info = new ArrayList<>(List.of(cat.getcoefCatHeur(), code));
+		this.info = new ArrayList<>(
+				List.of(iNew.getNomIntervenant(), iNew.getPrenomIntervenant(), iNew.getServices(), iNew.getMaxHeures(),
+						iNew.getCategorieIntervenant(),	iOld.getNomIntervenant(), iOld.getPrenomIntervenant()));
 	}
 
-	public Modification(CategorieIntervenant cat) {
+	public Modification(CategorieHeures cOld, CategorieHeures cNew) {
+		this.requetes = "UPDATE CategorieHeures SET libCatHeur = ?, coefCatHeur = ? WHERE libCatHeur = ? ;";
 
-		this.requetes = "UPDATE CategorieIntervenants SET libCatInt = ?, coefCatInt = ?, heureMinCatInt = ?, heureMaxCatInt = ? WHERE codeCatInt = ?;";
-
-		String code = cat.getCodeCatInt();
-
-		this.info.addAll(List.of(cat.getLibCatInt(), cat.getCoefCatInt(), cat.getHeureMinCatInt(),
-				cat.getHeureMaxCatInt(), code));
+		this.info = new ArrayList<>(List.of(cNew.getlibCatHeur(), cNew.getcoefCatHeur(), cOld.getlibCatHeur()));
 	}
 
-	public String getRequeteSQL() {
-		return this.requetes;
-	}
+	public Modification(CategorieIntervenant cOld, CategorieIntervenant cNew) {
 
-	public List<Object> getInfo() {
-		return this.info;
-	}
+		this.requetes = "UPDATE CategorieIntervenants SET codeCatInt = ?, libCatInt = ?, coefCatInt = ?, heureMinCatInt = ?, heureMaxCatInt = ? WHERE codeCatInt = ?;";
 
+		this.info.addAll(List.of(cNew.getCodeCatInt(), cNew.getLibCatInt(), cNew.getCoefCatInt(), cNew.getHeureMinCatInt(), cNew.getHeureMaxCatInt(), cOld.getCodeCatInt()));
+	}
 }
