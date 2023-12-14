@@ -143,9 +143,10 @@ public class Controleur {
 	}
 
 	public void supprimerCategorieIntervenants(int i) {
-		if (i >= 0 && i < Etat.getCategoriesHeures().size()) {
+		if (i >= 0 && i < Etat.getCategoriesIntervenants().size()) {
 			CategorieIntervenant cat = Etat.getCategoriesIntervenants().remove(i);
 			Etat.ajouterAction(new Suppression(cat));
+			System.out.println("Suppresion : " + cat);
 		}
 	}
 
