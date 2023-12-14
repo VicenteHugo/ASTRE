@@ -79,7 +79,7 @@ public class PanelIntervenants extends JPanel {
         this.btnAnnuler.addActionListener((e) -> this.annuler());
         this.btnAjout.addActionListener((e) -> {
             JFrame f = new JFrame();
-            f.add(new PanelAddIntervenant(this.frame, f));
+            f.add(new PanelAddIntervenant(this,this.frame, f));
             f.setTitle("Ajout d'un Intervenant");
             f.pack();
             f.setResizable(false);
