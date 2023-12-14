@@ -12,6 +12,9 @@ import javax.swing.JTable;
 
 import controleur.Controleur;
 import view.accueil.FrameAccueil;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 
 public class PanelHeurePara extends JPanel {

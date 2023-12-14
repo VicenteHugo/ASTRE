@@ -474,8 +474,8 @@ public class Etat {
 			Statement st = connec.createStatement();
 
 			//Si elle existe pas on la crée
-			st.executeUpdate("CREATE TABLE IF NOT EXISTS Etat (etat  VARCHAR(25) PRIMARY KEY,dateCrea DATE DEFAULT CURRENT_DATE)");
-
+			st.executeUpdate(
+					"CREATE TABLE IF NOT EXISTS Etat (etat  VARCHAR(25) PRIMARY KEY,dateCrea DATE DEFAULT CURRENT_DATE)");
 
 			ResultSet rs = st.executeQuery("SELECT * FROM Etat ORDER BY dateCrea DESC");
 
@@ -486,10 +486,28 @@ public class Etat {
 				Etat.nom = "Etat1";
 			}
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println("Methode marche pas");
 		}
+	}
+	
+	public static String[] getEtats() {
 
+		List<String> etatsList = new ArrayList<>();
+		try {
+
+			Statement st = Etat.connec.createStatement();
+			ResultSet res = st.executeQuery("SELECT * FROM Etat");
+
+			while (res.next())
+				etatsList.add(res.getString("etat"));
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		String[] etatsArray = new String[etatsList.size()];
+		return etatsList.toArray(etatsArray);
 	}
 	
 	private static void lireFichierSQL(String fic) {
