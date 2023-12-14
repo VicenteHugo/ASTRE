@@ -20,12 +20,12 @@ public class FrameAccueil extends JFrame {
 
     public void changePanel (JPanel panel){
         this.setContentPane(panel);
+        this.setLocationRelativeTo(null);
         this.revalidate();
     }
 
     public static void main(String[] args){
-        FrameAccueil f = new FrameAccueil();
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        new FrameAccueil();
     }
 
 }

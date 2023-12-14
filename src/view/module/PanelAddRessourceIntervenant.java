@@ -1,4 +1,4 @@
-package view.Intervenant;
+package view.module;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -15,17 +15,17 @@ import javax.swing.JTextField;
 import view.accueil.FrameAccueil;
 
 
-public class PanelAddIntervenant extends JPanel {
+public class PanelAddRessourceIntervenant extends JPanel {
 	private JLabel lblErrCoef;
 	private JLabel lblErrHeurMax;
 	private JLabel lblErrHeurMin;
 	
-	private JTextField txtCategorie;
-	private JTextField txtNom;
-	private JTextField txtPrenom;
-	private JTextField txtHServ;
-    private JTextField txtHMax;
-    private JTextField txtCoefTP;
+	private JTextField txtIntervenant;
+	private JTextField txtType;
+	private JTextField txtNbSemaine;
+	private JTextField txtNbGroupe;
+    private JTextField txtTotal;
+    private JTextField txtCommentaire;
 
 	private JButton btnValider;
 	private JButton btnAnnuler;
@@ -34,18 +34,18 @@ public class PanelAddIntervenant extends JPanel {
 	private FrameAccueil frame;
 	private Frame frameM;
 
-	public PanelAddIntervenant (FrameAccueil frame, Frame frameM) {
+	public PanelAddRessourceIntervenant (FrameAccueil frame, Frame frameM) {
 		this.frame  = frame;
 		this.frameM = frameM;
 
 
 		//Création
-		this.txtCategorie  = new JTextField(10);
-		this.txtNom        = new JTextField(10);
-		this.txtPrenom     = new JTextField(10);
-		this.txtHServ      = new JTextField(5);
-        this.txtHMax       = new JTextField(5);
-		this.txtCoefTP     = new JTextField(3);
+		this.txtIntervenant  = new JTextField(10);
+		this.txtType         = new JTextField(10);
+		this.txtNbSemaine    = new JTextField(3);
+		this.txtNbGroupe     = new JTextField(3);
+        this.txtTotal        = new JTextField(5);
+		this.txtCommentaire  = new JTextField(15);
 
 		this.btnAnnuler = new JButton("Annuler");
 		this.btnValider = new JButton("Valider");
@@ -65,39 +65,39 @@ public class PanelAddIntervenant extends JPanel {
 		gbc.gridy = 0;
 		gbc.insets = new Insets(5, 10, 5, 10);
 		
-		panelCentre.add(new JLabel("Catégorie de l'intervenant : "), gbc);
+		panelCentre.add(new JLabel("Nom de l'intervenant : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtCategorie, gbc);
+		panelCentre.add(this.txtIntervenant, gbc);
 		
 		gbc.gridx = 0;
 		gbc.gridy++;
-		panelCentre.add(new JLabel("Nom : "), gbc);
+		panelCentre.add(new JLabel("Type : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtNom, gbc);
+		panelCentre.add(this.txtType, gbc);
 		
 		gbc.gridx = 0;
 		gbc.gridy++;
-		panelCentre.add(new JLabel("Prénom : "), gbc);
+		panelCentre.add(new JLabel("Nombre de semaine : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtPrenom, gbc);
+		panelCentre.add(this.txtNbSemaine, gbc);
 		
 		gbc.gridx = 0;
 		gbc.gridy++;
-		panelCentre.add(new JLabel("Heure de service : "), gbc);
+		panelCentre.add(new JLabel("Nombre de groupe : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtHServ, gbc);
+		panelCentre.add(this.txtNbGroupe, gbc);
 
         gbc.gridx = 0;
 		gbc.gridy++;
-		panelCentre.add(new JLabel("Heure maximum : "), gbc);
+		panelCentre.add(new JLabel("Total eqtd : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtHMax, gbc);
+		panelCentre.add(this.txtTotal, gbc);
 
         gbc.gridx = 0;
 		gbc.gridy++;
-		panelCentre.add(new JLabel("Coefficient heure TP : "), gbc);
+		panelCentre.add(new JLabel("Commentaire : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtCoefTP, gbc);
+		panelCentre.add(this.txtCommentaire, gbc);
 
 
 

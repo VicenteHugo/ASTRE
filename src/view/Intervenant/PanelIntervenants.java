@@ -14,7 +14,6 @@ import javax.swing.JTable;
 
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
-import view.parametrage.PanelAddCatHeures;
 
 public class PanelIntervenants extends JPanel {
     private JLabel lblListe;
@@ -81,6 +80,7 @@ public class PanelIntervenants extends JPanel {
 			f.add(new PanelAddIntervenant(this.frame, f));
 			f.setTitle("Ajout d'un Intervenant");
 			f.pack();
+            f.setResizable(false);
 			f.setLocationRelativeTo(null);
 			f.setAlwaysOnTop(true);
 			f.setVisible(true);
