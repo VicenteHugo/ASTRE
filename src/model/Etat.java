@@ -88,6 +88,8 @@ public class Etat {
 
 		// Générer les deuxièmes tables
 		Etat.genererIntervenants();
+		System.out.println(Etat.lstIntervenants);
+
 		Etat.genererModules();
 
 		// Générer les troisièmes tables
