@@ -12,8 +12,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import controleur.Controleur;
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
+import view.parametrage.PanelParametre;
 
 public class PanelIntervenants extends JPanel {
     private JLabel lblListe;
@@ -74,7 +76,7 @@ public class PanelIntervenants extends JPanel {
         this.setVisible(true);
 
         //Action
-        this.btnAnnuler.addActionListener((e) -> this.frame.changePanel(new PanelAccueil(this.frame)));
+        this.btnAnnuler.addActionListener((e) -> this.annuler());
         this.btnAjout.addActionListener((e) -> {
             JFrame f = new JFrame();
             f.add(new PanelAddIntervenant(this.frame, f));
@@ -85,8 +87,31 @@ public class PanelIntervenants extends JPanel {
             f.setAlwaysOnTop(true);
             f.setVisible(true);
         });
+        this.btnSupr.addActionListener((e)-> this.supprimer());
+        this.btnEnregistr.addActionListener((e)->this.valider());
 
     }
+
+    private void valider() {
+		this.frame.changePanel(new PanelAccueil(this.frame));
+		Controleur.getControleur().enregistrer();
+	}
+
+    private void annuler() {
+		this.frame.changePanel(new PanelAccueil(this.frame));
+		Controleur.getControleur().annuler();
+	}
+
+    private void supprimer() {
+
+		int ind = this.tblGrilleDonnees.getSelectedRow();
+		System.out.println(ind);
+		Controleur.getControleur().supprimerCategorieHeure(ind);
+		if (ind >= 0)
+			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
+		
+		this.maj();
+	}
 
     public void maj() {
 		    this.tblGrilleDonnees.setModel(new GrilleInt()); 
