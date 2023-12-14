@@ -199,6 +199,10 @@ public class Controleur {
 		Etat.ajouterIntervenant(inter);
 	}
 
+	public void supprimerIntervenant(Intervenants inter) {
+
+	}
+
 	/*-------------------------------------------------------------*/
 	/* MAIN */
 	/*-------------------------------------------------------------*/
