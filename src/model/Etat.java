@@ -17,7 +17,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 public class Etat {
-	
+
 	/**Liste des Tables.Utile pour la verification de leurs présences. */
 	public static final String[] LST_NOM_TABLES = new String[] 
 	{ "Etat", "CategorieIntervenants", "CategorieHeures", "Semestres", "Intervenants", "Modules","ModulesCatHeures","Affectation"};
@@ -58,6 +58,7 @@ public class Etat {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			// Connection
 			Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre", "root", "");
+			Etat.verifierTablesPresence();
 
 			Statement st = connec.createStatement();
 			ResultSet rs = st.executeQuery("SELECT * FROM Etat ORDER BY dateCrea DESC");
@@ -87,6 +88,8 @@ public class Etat {
 
 		// Générer les deuxièmes tables
 		Etat.genererIntervenants();
+		System.out.println(Etat.lstIntervenants);
+
 		Etat.genererModules();
 
 		// Générer les troisièmes tables
@@ -124,7 +127,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants WHERE etat = '" + Etat.nom + "'");
+			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants WHERE etat = '" + Etat.nom + "' ORDER BY codeCatInt DESC");
 
 			while (res.next()) {
 				String code = res.getString("codeCatInt");
@@ -133,7 +136,7 @@ public class Etat {
 				int hmin = res.getInt("heureMinCatInt");
 				int hmax = res.getInt("heureMaxCatInt");
 
-				Etat.lstCategorieIntervenants.add(new CategorieIntervenant(code, lib, coef, hmax, hmin));
+				Etat.lstCategorieIntervenants.add(new CategorieIntervenant(code, lib, coef, hmin, hmax));
 			}
 
 			res.close();
@@ -385,6 +388,7 @@ public class Etat {
 				// On prépare la requêtes.
 				PreparedStatement st = connec.prepareStatement(a.getRequeteSQL());
 
+
 				// On met les info dans la requêtes
 				List<Object> lstInfos = a.getInfo();
 
@@ -403,6 +407,8 @@ public class Etat {
 					if (info instanceof Boolean)
 						st.setBoolean(i, (Boolean) info);
 				}
+
+				System.out.println(st.toString());
 
 				// On l'execute
 				st.executeUpdate();
@@ -440,6 +446,7 @@ public class Etat {
 		System.out.println();
 	}
 	
+
 	
 
 	/*--------------------------------------------------------------*/
@@ -451,18 +458,13 @@ public class Etat {
 
 		try {
 
-			for (String nom : Etat.LST_NOM_TABLES)
-				System.out.println(nom);
-
 			for (String nomTable : Etat.LST_NOM_TABLES) {
 
 				ResultSet resultSet = Etat.connec.getMetaData().getTables(null, null, nomTable, null);
-				System.out.print("Table : " + nomTable + " est présent ");
 
 
 				if (!resultSet.next())
 				{
-					System.out.println("faux");
 					Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
 				}
 

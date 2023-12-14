@@ -9,7 +9,6 @@ public class FrameAccueil extends JFrame {
         this.setTitle("Accueil");
         this.setSize(400, 300);
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
 
         this.add ( new PanelAccueil(this));
 

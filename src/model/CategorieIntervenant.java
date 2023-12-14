@@ -28,7 +28,7 @@ public class CategorieIntervenant {
 	/*-------------------------------------------------------------*/
 
 	/**Constructeur prenant tous les paramètres.*/
-	public CategorieIntervenant (String code, String lib, float coef, int heurMax, int heurMin) {
+	public CategorieIntervenant (String code, String lib, float coef, int heurMin, int heurMax) {
 		this.codeCatInt     = code;
 		this.libCatInt      = lib;
 		this.coefCatInt     = coef;
