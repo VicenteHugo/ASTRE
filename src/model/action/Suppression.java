@@ -14,14 +14,14 @@ public class Suppression extends Action
 {
 	public Suppression (Affectations a) 
 	{ 
-		this.requetes = "DELETE FROM Affectation" + Etat.nom + " SET WHERE intNom = ? AND intPrenom = ? AND codeMod = ? AND libCatHeur = ?";
+		this.requetes = "DELETE FROM Affectation" + Etat.nom + " WHERE intNom = ? AND intPrenom = ? AND codeMod = ? AND libCatHeur = ?";
 		this.info = new ArrayList<>(List.of(a.getIntervenant().getNomIntervenant(), a.getIntervenant    ().getPrenomIntervenant(),
 		                                    a.getModule     ().getCode()          , a.getCategorieHeures().getlibCatHeur       () ));
 	}
 
 	public Suppression (Module m) 
 	{ 
-		this.requetes = "DELETE FROM Modules" + Etat.nom + " SET WHERE codeMod = ?" ;
+		this.requetes = "DELETE FROM Modules" + Etat.nom + " WHERE codeMod = ?" ;
 
 		String code = m.getCode();
 		this.info = new ArrayList<>(List.of(code));
@@ -29,7 +29,7 @@ public class Suppression extends Action
 
 	public Suppression (Intervenants inter) 
 	{ 
-		this.requetes = "DELETE FROM Intervenants" + Etat.nom + " SET WHERE intNom = ? AND intPrenom = ?";
+		this.requetes = "DELETE FROM Intervenants" + Etat.nom + " WHERE intNom = ? AND intPrenom = ?";
 
 		String nom    = inter.getNomIntervenant();
 		String prenom = inter.getPrenomIntervenant();
@@ -39,7 +39,7 @@ public class Suppression extends Action
 
 	public Suppression (CategorieHeures cat) 
 	{
-		this.requetes = "DELETE FROM CategorieHeures" + Etat.nom + " SET WHERE libCatHeur = ?";
+		this.requetes = "DELETE FROM CategorieHeures" + Etat.nom + " WHERE libCatHeur = ?";
 
 		String code = cat.getlibCatHeur();
 
@@ -51,7 +51,7 @@ public class Suppression extends Action
 	//On doit supprimer tous les Intervenants et donc leur Affectations.....
 	public Suppression(CategorieIntervenant cat) {
 		
-		this.requetes = "DELETE FROM CategorieIntervenants" + Etat.nom + " SET WHERE codeCatInt = ?" ;
+		this.requetes = "DELETE FROM CategorieIntervenants" + Etat.nom + " WHERE codeCatInt = ?" ;
 
 		String code    = cat.getCodeCatInt();
 
