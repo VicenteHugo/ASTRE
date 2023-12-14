@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import controleur.Controleur;
 import model.Affectations;
 import model.CategorieHeures;
 import model.modules.Ressource;
@@ -15,7 +16,7 @@ public class GrilleRessources extends AbstractTableModel {
 	private Object[][] tabDonnees;
 
 	public GrilleRessources() {
-		List<Affectations> listAffectations = new ArrayList<>();
+		List<Affectations> listAffectations = Controleur.getControleur().getAffectations();
 		this.tabDonnees = new Object[listAffectations.size()][6];
 
 		for (int lig = 0; lig < listAffectations.size(); lig++) {

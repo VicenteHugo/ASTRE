@@ -230,6 +230,10 @@ public class Etat {
 
 	}
 
+	public static void ajouterIntervenant(Intervenants inter) {
+		Etat.lstIntervenants.add(inter);
+	}
+
 	public static void genererModules() {
 
 		Etat.lstModule = new ArrayList<>();
@@ -249,7 +253,6 @@ public class Etat {
 				int heurePonctuel = res.getInt("nbHeurPonc");
 
 				Semestres sem = Etat.lstSemestres.get(res.getInt("semMod") - 1);
-
 
 				if (type.equals("Ressource"))
 					m = new Ressource(sem, code, libLong, libCourt, heurePonctuel);
@@ -380,7 +383,6 @@ public class Etat {
 				// On prépare la requêtes.
 				PreparedStatement st = connec.prepareStatement(a.getRequeteSQL());
 
-
 				// On met les info dans la requêtes
 				List<Object> lstInfos = a.getInfo();
 
@@ -437,14 +439,10 @@ public class Etat {
 
 		System.out.println();
 	}
-	
-
-	
 
 	/*--------------------------------------------------------------*/
 	/* CREATION ET VERIFICATIONS DES TABLES */
 	/*--------------------------------------------------------------*/
-
 
 	private static void verifierTablesPresence() {
 
@@ -505,8 +503,8 @@ public class Etat {
 
 				String l = scan.nextLine();
 
-				if (!(l.contains("/*") ||l.contains("*/") || l.contains("*") || l.contains("--")))
-					commande += " " +l;
+				if (!(l.contains("/*") || l.contains("*/") || l.contains("*") || l.contains("--")))
+					commande += " " + l;
 
 				if (l.endsWith(";")) {
 					commande = commande.replaceAll("ETAT", Etat.nom);
