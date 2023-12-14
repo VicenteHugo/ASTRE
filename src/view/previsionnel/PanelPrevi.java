@@ -76,5 +76,9 @@ public class PanelPrevi extends JPanel {
         this.btnCreerSae.addActionListener((e)->{ this.frame.changePanel(new PanelSAE(this.frame));} );
         this.btnCreerStage.addActionListener((e)->{ this.frame.changePanel(new PanelStage(this.frame));} );
         this.btnAccueil.addActionListener((e)->{ this.frame.changePanel(new PanelAccueil(this.frame));} );
+        this.btnModifier.addActionListener((e)->{ 
+
+        });
+        this.btnSupprimer.addActionListener(e)->Controleur.getControleur;
     }
 }
