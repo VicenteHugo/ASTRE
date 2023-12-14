@@ -16,13 +16,38 @@ h2 {
     color: #0097B2;
 }
 
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ressource {
+    display: inline-block;
+    margin-right: 10px;
+    width: 200px; /* Remplacez 100px par la largeur souhaitée */
+    overflow: hidden; /* Pour s'assurer que le contenu ne dépasse pas la largeur spécifiée */
+    white-space: nowrap; /* Empêche le texte de passer à la ligne */
+}
+    
 /**
  * liste des informations
 */
+
 li {
     color: black;
     font-weight: bold;
     font-size: 12px;
+}
+
+/**
+ * Placer un point ou autre avant la liste (compensation li sur la même ligne)
+*/
+li::before {
+    content: '\2022'; /**unicode**/
+    font-size: 1.2em;
+    margin-right: 5px;
 }
 
 /**
