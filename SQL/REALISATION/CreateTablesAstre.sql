@@ -32,12 +32,17 @@ DROP TABLE IF EXISTS CategorieIntervenants;
 DROP TABLE IF EXISTS Etat;
 
 
+
+
 -- Création des tables ayant un niveau de liaison 0
 CREATE TABLE Etat 
 (
 	etat  VARCHAR(25) PRIMARY KEY,
 	dateCrea DATE DEFAULT CURRENT_DATE
 );
+
+
+
 
 -- Création des tables ayant un niveau de liaison 1
 CREATE TABLE CategorieIntervenants
@@ -70,6 +75,8 @@ CREATE TABLE Semestres
 	PRIMARY KEY(numSem, etat)
 );
 
+
+
 -- Création des tables ayant un niveau de liaison 2
 CREATE TABLE Modules
 (
@@ -94,6 +101,8 @@ CREATE TABLE Intervenants
 	etat        VARCHAR(25) REFERENCES Etat(libEtat),
 	PRIMARY KEY(nomInt, prenomInt, etat)
 );
+
+
 
 -- Création des tables ayant un niveau de liaison 3
 CREATE TABLE ModulesCatHeures
@@ -124,5 +133,21 @@ CREATE TABLE Affectation
 
 
 -- Création de la fonctions pour les semestres
+
+DELIMITER //
+
+CREATE TRIGGER InsertSixSemestres
+AFTER INSERT ON Etat
+FOR EACH ROW
+BEGIN
+    DECLARE i INT DEFAULT 1;
+
+    WHILE i <= 6 DO
+        INSERT INTO Semestres (numSem, etat) VALUES (i, NEW.etat);
+        SET i = i + 1;
+    END WHILE;
+END //
+
+DELIMITER ;
 
 

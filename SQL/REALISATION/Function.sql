@@ -10,15 +10,6 @@ VALUES ('C1', 'Catégorie 1', 1.5, 10, 20, 'En cours');
 INSERT INTO CategorieHeures (libCatHeur, coefCatHeur, etat)
 VALUES ('CM', 1.2, 'En cours');
 
--- Insérer des données dans la table Semestres
-INSERT INTO Semestres (numSem, nbGpTdSem, nbGpTpSem, nbEtdSem, nbSemSem, etat)
-VALUES (1, 2, 1, 50, 15, 'En cours'),
-       (2, 2, 1, 50, 15, 'En cours'),
-       (3, 2, 1, 50, 15, 'En cours'),
-       (4, 2, 1, 50, 15, 'En cours'),
-       (5, 2, 1, 50, 15, 'En cours'),
-       (6, 2, 1, 50, 15, 'En cours');
-
 -- Insérer des données dans la table Modules
 INSERT INTO Modules (codeMod, semMod, typeMod, libCourtMod, libLongMod, validMod, nbHeurPonc, etat)
 VALUES ('M1', 1, 'Ressource', 'Mod1', 'Module 1', true, 10, 'En cours');
