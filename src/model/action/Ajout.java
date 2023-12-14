@@ -59,6 +59,6 @@ public class Ajout extends Action {
 		
 		this.requetes = "INSERT INTO CategorieIntervenants(codeCatInt, libCatInt, coefCatInt, heureMinCatInt, heureMaxCatInt,etat) VALUES (?,?,?,?,?,?)";
 
-		this.info = new ArrayList<>(List.of(cat.getCodeCatInt(), cat.getLibCatInt(), cat.getCoefCatInt(), cat.getHeureMaxCatInt(), cat.getHeureMinCatInt(), Etat.nom));
+		this.info = new ArrayList<>(List.of(cat.getCodeCatInt(), cat.getLibCatInt(), cat.getCoefCatInt(), cat.getHeureMinCatInt(), cat.getHeureMaxCatInt(), Etat.nom));
 	}
 }

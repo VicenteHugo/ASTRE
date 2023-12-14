@@ -44,7 +44,6 @@ public class GrilleInt extends AbstractTableModel {
 				listeSemaine.add(nbHeure);
 			}
 
-			System.out.println("LAAAAAAAAAAAAAAAAAAA =====>" + listeSemaine.size());
 
 			tabDonnees[lig][0] = intervenants.getCategorieIntervenant().getLibCatInt();
 			tabDonnees[lig][1] = intervenants.getNomIntervenant();

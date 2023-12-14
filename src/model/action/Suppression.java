@@ -50,11 +50,11 @@ public class Suppression extends Action
 	//On doit supprimer tous les Intervenants et donc leur Affectations.....
 	public Suppression(CategorieIntervenant cat) {
 		
-		this.requetes = "DELETE FROM CategorieHeures WHERE libCatHeur = ?" ;
+		this.requetes = "DELETE FROM CategorieIntervenants WHERE codeCatInt = ?" ;
 
 		String code    = cat.getCodeCatInt();
 
-		this.info.addAll(List.of(code, code, code));
+		this.info = new ArrayList<>(List.of(code));
 	}
 	
 }

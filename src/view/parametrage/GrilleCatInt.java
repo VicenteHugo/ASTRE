@@ -2,10 +2,13 @@ package view.parametrage;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
 import model.CategorieIntervenant;
+import javax.swing.JOptionPane;
+
 
 public class GrilleCatInt extends AbstractTableModel {
 
@@ -23,7 +26,8 @@ public class GrilleCatInt extends AbstractTableModel {
 
 		tabDonnees = new Object[lstCatInt.size()][this.tabEntetes.length];
 
-		for (int lig = 0; lig < lstCatInt.size(); lig++) {
+		for (int lig = 0; lig < lstCatInt.size(); lig++) 
+		{
 			cat = lstCatInt.get(lig);
 
 			tabDonnees[lig][0] = cat.getCodeCatInt();
@@ -61,7 +65,51 @@ public class GrilleCatInt extends AbstractTableModel {
 
 	public void setValueAt(Object value, int row, int col) {
 
-		this.tabDonnees[row][col] = value;
+		if (value == this.tabDonnees[row][col])
+			return;
+
+		String code = (String)  this.tabDonnees[row][0];
+		String lib  = (String)  this.tabDonnees[row][1];
+		float  coef = (Float)   this.tabDonnees[row][2];
+		int    hMin = (Integer) this.tabDonnees[row][3];
+		int    hMax = (Integer) this.tabDonnees[row][4];
+
+		switch (col) {
+			case 0:
+				code = (String) value;
+				break;
+
+			case 1:
+				lib = (String) value;
+				break;
+
+			case 2:
+				coef = (Float) value;
+				break;
+
+			case 3:
+				hMin = (Integer) value;
+				break;
+
+			case 4:
+				hMax = (Integer) value;
+				break;
+
+			default:
+				break;
+		}
+
+		if (hMax < hMin || hMax < 0 || hMin < 0 || coef < 0)
+			return;
+
+		if (Controleur.getControleur().modifCategorieIntervenants(row, code, lib, coef, hMin, hMax))
+			this.tabDonnees[row][col] = value;
 
 	}
+	
+	
+
+	// private void showMessageDialog(String message) {
+	// 	JOptionPane.showMessageDialog(this., message, "Erreur", JOptionPane.ERROR_MESSAGE);
+	// }
 }
