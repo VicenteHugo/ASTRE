@@ -6,7 +6,6 @@ import java.util.List;
 import model.Affectations;
 import model.CategorieHeures;
 import model.CategorieIntervenant;
-import model.Etat;
 import model.Intervenants;
 import model.modules.Module;
 
@@ -57,11 +56,5 @@ public class Suppression extends Action
 
 		this.info.addAll(List.of(code, code, code));
 	}
-
-
-
-
-	public String       getRequeteSQL() {return this.requetes;}
-	public List<Object> getInfo      () {return this.info;}
 	
 }

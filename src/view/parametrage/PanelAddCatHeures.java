@@ -12,11 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import view.accueil.FrameAccueil;
+import controleur.Controleur;
 
 
 public class PanelAddCatHeures extends JPanel {
-	private JLabel lblErrCoef;
 	
 	private JTextField txtLib;
 	private JTextField txtCoef;
@@ -25,12 +24,12 @@ public class PanelAddCatHeures extends JPanel {
 	private JButton btnAnnuler;
 
 
-	private FrameAccueil frame;
+	private PanelHeurePara panel;
 	private Frame frameM;
 
-	public PanelAddCatHeures (FrameAccueil frame, Frame frameM)
+	public PanelAddCatHeures (PanelHeurePara panel, Frame frameM)
 	{
-		this.frame  = frame;
+		this.panel  = panel;
 		this.frameM = frameM;
 
 
@@ -76,7 +75,23 @@ public class PanelAddCatHeures extends JPanel {
 		this.add(panelBas, BorderLayout.SOUTH);
 
 		//Activation
-		this.btnValider.addActionListener((e)->/*On ajoute */System.out.println());
+		this.btnValider.addActionListener((e)->this.ajouterCatHeures());
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
+	}
+	
+	private void ajouterCatHeures ()
+	{
+		String coef = this.txtCoef.getText();
+		String lib  = this.txtLib .getText();
+
+		if (coef.isEmpty() || lib.isEmpty()) return;
+		
+		try 
+		{
+			Controleur.getControleur().ajouterCategorieHeure(lib, Float.parseFloat(coef));
+			this.panel.maj();
+			this.frameM.dispose();
+		} catch (Exception e) {
+		}
 	}
 }

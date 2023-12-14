@@ -12,15 +12,21 @@ import model.modules.Ressource;
 import model.modules.Sae;
 import model.modules.Stage;
 import model.modules.PPP;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class Etat {
+	
+	/**Liste des Tables.Utile pour la verification de leurs présences. */
+	public static final String[] LST_NOM_TABLES = new String[] 
+	{ "Etat", "CategorieIntervenants", "CategorieHeures", "Semestres", "Intervenants", "Modules","ModulesCatHeures","Affectation"};
 
-	//Connection/SQL
-	/**Connection vers la bado.*/
+	// Connection/SQL
+	/** Connection vers la bado. */
 	private static Connection connec;
-	/**Nom de l'état.*/
+	/** Nom de l'état. */
 	public static String nom;
-
 
 	// Liste de liaison 0
 	/** Liste des catégories d'heures (CM, TP, TD, etc...). */
@@ -40,8 +46,8 @@ public class Etat {
 	/** Liste des association. */
 	private static ArrayList<Affectations> lstAffectations;
 
-	//Action
-	/** Liste des actions.*/
+	// Action
+	/** Liste des actions. */
 	private static List<Action> lstActions;
 
 	public Etat() {
@@ -63,7 +69,6 @@ public class Etat {
 				Etat.nom = "Etat1";
 			}
 
-			System.out.println(Etat.nom);
 
 			Etat.genererInfos();
 
@@ -74,9 +79,7 @@ public class Etat {
 		}
 	}
 
-
-	private static void genererInfos ()
-	{
+	private static void genererInfos() {
 		// Générer les premières tables
 		Etat.genererCategorieHeures();
 		Etat.genererCategorieIntervenants();
@@ -88,14 +91,10 @@ public class Etat {
 
 		// Générer les troisièmes tables
 		Etat.genererAffections();
-	} 
-
-
-
-
+	}
 
 	/*--------------------------------------------------------------*/
-	/*                            LIAISON 1                         */
+	/* LIAISON 1 */
 	/*--------------------------------------------------------------*/
 
 	// CREATE
@@ -185,7 +184,6 @@ public class Etat {
 
 	public static CategorieIntervenant getCatInt(String nom) {
 
-		System.out.println(nom);
 		for (CategorieIntervenant c : Etat.lstCategorieIntervenants)
 			if (c.getCodeCatInt().equals(nom))
 				return c;
@@ -201,14 +199,12 @@ public class Etat {
 		return null;
 	}
 
-
-
-
-
-
+	public static void ajouterCategorieHeure(CategorieHeures categorieHeures) {
+		Etat.lstCategorieHeures.add(categorieHeures);
+	}
 
 	/*--------------------------------------------------------------*/
-	/*                            LIAISON 2                         */
+	/* LIAISON 2 */
 	/*--------------------------------------------------------------*/
 
 	// Méthode CREATE
@@ -259,7 +255,6 @@ public class Etat {
 
 				Semestres sem = Etat.lstSemestres.get(res.getInt("semMod") - 1);
 
-				System.out.println(type);
 
 				if (type.equals("Ressource"))
 					m = new Ressource(sem, code, libLong, libCourt, heurePonctuel);
@@ -329,14 +324,12 @@ public class Etat {
 		return null;
 	}
 
-
-
-
-
-
+	public static void ajouterCategorieIntervenant(CategorieIntervenant categorieIntervenant) {
+		Etat.lstCategorieIntervenants.add(categorieIntervenant);
+	}
 
 	/*--------------------------------------------------------------*/
-	/*                            LIAISON 3                         */
+	/* LIAISON 3 */
 	/*--------------------------------------------------------------*/
 
 	// Méthode CREATE
@@ -366,34 +359,34 @@ public class Etat {
 			e.printStackTrace();
 		}
 	}
-	
-	public static ArrayList<Affectations> getAffectations() {return Etat.lstAffectations;}
 
-
-
-
-
-
+	public static ArrayList<Affectations> getAffectations() {
+		return Etat.lstAffectations;
+	}
 
 	/*--------------------------------------------------------------*/
-	/*                            ACTIONS                           */
+	/* ACTIONS */
 	/*--------------------------------------------------------------*/
 
-	public static void ajouterAction(Action a) {Etat.lstActions.add(a); }
-	
-	public static void anuller    () {Etat.lstActions.clear(); }
+	public static void ajouterAction(Action a) {
+		Etat.lstActions.add(a);
+	}
+
+	public static void anuller() {
+		Etat.lstActions.clear();
+		Etat.genererInfos();
+	}
 
 	public static void enregistrer() {
 
 		try {
 
 			for (Action a : Etat.lstActions) {
-				//On prépare la requêtes.
+				// On prépare la requêtes.
 				PreparedStatement st = connec.prepareStatement(a.getRequeteSQL());
 
-				//On met les info dans la requêtes
+				// On met les info dans la requêtes
 				List<Object> lstInfos = a.getInfo();
-				System.out.println(lstInfos.size());
 
 				for (int i = 1; i < lstInfos.size() + 1; i++) {
 
@@ -411,7 +404,7 @@ public class Etat {
 						st.setBoolean(i, (Boolean) info);
 				}
 
-				//On l'execute
+				// On l'execute
 				st.executeUpdate();
 			}
 		} catch (Exception e) {
@@ -421,9 +414,6 @@ public class Etat {
 		Etat.genererInfos();
 		Etat.lstActions.clear();
 	}
-
-
-
 
 	public static void main(String[] args) {
 		new Etat();
@@ -447,7 +437,68 @@ public class Etat {
 		Etat.ajouterAction(a);
 		Etat.enregistrer();
 
-
 		System.out.println();
+	}
+	
+	
+
+	/*--------------------------------------------------------------*/
+	/* CREATION ET VERIFICATIONS DES TABLES */
+	/*--------------------------------------------------------------*/
+
+
+	private static void verifierTablesPresence() {
+
+		try {
+
+			for (String nom : Etat.LST_NOM_TABLES)
+				System.out.println(nom);
+
+			for (String nomTable : Etat.LST_NOM_TABLES) {
+
+				ResultSet resultSet = Etat.connec.getMetaData().getTables(null, null, nomTable, null);
+				System.out.print("Table : " + nomTable + " est présent ");
+
+
+				if (!resultSet.next())
+				{
+					System.out.println("faux");
+					Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
+				}
+
+				System.out.println();
+				resultSet.close();
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+	
+	private static void lireFichierSQL(String fic) {
+		try {
+
+			String commande = "";
+			Scanner scan = new Scanner(new FileInputStream(fic));
+			Statement statement = Etat.connec.createStatement();
+
+			while (scan.hasNextLine()) {
+
+				String l = scan.nextLine();
+
+				if (!(l.contains("/*") ||l.contains("*/") || l.contains("*") || l.contains("--")))
+					commande += " " +l;
+
+				if (l.endsWith(";")) {
+					statement.execute(commande);
+					commande = "";
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 }

@@ -4,21 +4,27 @@ import view.accueil.FrameAccueil;
 
 import java.util.ArrayList;
 
+import model.Affectations;
 import model.CategorieHeures;
 import model.CategorieIntervenant;
 import model.Etat;
 import model.Intervenants;
 import model.Semestres;
+import model.action.Action;
+import model.action.Ajout;
+import model.action.Modification;
+import model.action.Suppression;
 import model.modules.Module;
 
 public class Controleur {
+
 	private static Controleur controleur;
 	private FrameAccueil frameAccueil;
 	private Etat etat;
 
 	public Controleur() {
 		this.frameAccueil = new FrameAccueil();
-		this.etat = new Etat(null);
+		this.etat = new Etat();
 	}
 
 	public static Controleur creerControleur() {
@@ -53,9 +59,21 @@ public class Controleur {
 	}
 
 	public ArrayList<Module> getModules(int i) {
+
 		ArrayList<Module> retour = new ArrayList<>();
 		for (Module m : Etat.getModules()) {
 			if (m.getSemestres().getNumSem() == i) {
+				retour.add(m);
+			}
+		}
+
+		return retour;
+	}
+
+	public ArrayList<Module> getModules(Semestres semestres) {
+		ArrayList<Module> retour = new ArrayList<>();
+		for (Module m : Etat.getModules()) {
+			if (m.getSemestres().equals(semestres)) {
 				retour.add(m);
 			}
 		}
@@ -66,12 +84,86 @@ public class Controleur {
 		return Etat.getSemestres();
 	}
 
+	public ArrayList<Affectations> getAffectations() {
+		return Etat.getAffectations();
+	}
+
 	/*-------------------------------------------------------------*/
 	/* SET-TEURS */
 	/*-------------------------------------------------------------*/
 
 	public void setEtat(Etat etat) {
 		this.etat = etat;
+	}
+
+	/*-------------------------------------------------------------*/
+	/* AUTRE */
+	/*-------------------------------------------------------------*/
+
+	public void ajouterCategorieHeure(String lib, float coeff) {
+		Etat.ajouterAction(new Ajout(new CategorieHeures(lib, coeff)));
+		Etat.ajouterCategorieHeure(new CategorieHeures(lib, coeff));
+	}
+
+	public void ajouterCategorieIntervenant(String code, String libCat, float coeff, int heureMinCatInt,
+			int heureMaxCatInt) {
+		Etat.ajouterAction(new Ajout(new CategorieIntervenant(code, libCat, coeff, heureMinCatInt, heureMaxCatInt)));
+		Etat.ajouterCategorieIntervenant(new CategorieIntervenant(code, libCat, coeff, heureMinCatInt, heureMaxCatInt));
+	}
+
+	public void enregistrer() {
+		Etat.enregistrer();
+	}
+
+	public void annuler() {
+		Etat.anuller();
+	}
+
+	public void supprimerCategorieHeure(int i) {
+		if (i >= 0 && i < Etat.getCategoriesHeures().size()) {
+			Etat.getCategoriesHeures().remove(i);
+			Etat.ajouterAction(new Suppression(Etat.getCategoriesHeures().get(i)));
+		}
+	}
+
+	public boolean modifCategorieHeures(int i, String lib, float coef) {
+
+		CategorieHeures cOld = Etat.getCategoriesHeures().get(i);
+		
+		//Si la clé est pris par autre chose que l'objet actuelle               et que l'indice est bon
+		if ((Etat.getCatHeure(lib) == null || Etat.getCatHeure(lib) == cOld) && i >= 0 && i < Etat.getCategoriesHeures().size()) {
+			
+			//On remplace l'objet
+			CategorieHeures cNew = new CategorieHeures(lib, coef);
+			System.out.println(cNew);
+			Etat.getCategoriesHeures().add(i, cNew);
+
+			//On ajouter l'action
+			Etat.ajouterAction(new Modification(cOld, cNew));
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean modifCategorieIntervenants(int i, String lib, float coef) {
+
+		CategorieHeures cOld = Etat.getCategoriesHeures().get(i);
+		
+		//Si la clé est pris par autre chose que l'objet actuelle               et que l'indice est bon
+		if ((Etat.getCatHeure(lib) == null || Etat.getCatHeure(lib) == cOld) && i >= 0 && i < Etat.getCategoriesHeures().size()) {
+			
+			//On remplace l'objet
+			CategorieHeures cNew = new CategorieHeures(lib, coef);
+			System.out.println(cNew);
+			Etat.getCategoriesHeures().add(i, cNew);
+
+			//On ajouter l'action
+			Etat.ajouterAction(new Modification(cOld, cNew));
+			return true;
+		}
+
+		return false;
 	}
 
 	/*-------------------------------------------------------------*/
