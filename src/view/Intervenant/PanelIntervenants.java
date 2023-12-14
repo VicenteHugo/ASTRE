@@ -29,7 +29,7 @@ public class PanelIntervenants extends JPanel {
 
         this.frame = frame;
         frame.setTitle("Astre - Intervenants (Accueil)");
-		frame.setMinimumSize(new Dimension(600, 400));
+        frame.setMinimumSize(new Dimension(600, 400));
 
         // Création des composants
         this.lblListe = new JLabel("Liste Intervenant");
@@ -43,7 +43,7 @@ public class PanelIntervenants extends JPanel {
 
         JScrollPane spGrilleDonnees = new JScrollPane(this.tblGrilleDonnees);
         JPanel panelTable = new JPanel();
-        JPanel panelBtn   = new JPanel();
+        JPanel panelBtn = new JPanel();
         JPanel panelModif = new JPanel();
         JPanel panelBas = new JPanel();
 
@@ -52,13 +52,13 @@ public class PanelIntervenants extends JPanel {
         panelTable.setLayout(new BorderLayout());
         panelBtn.setLayout(new FlowLayout(FlowLayout.LEFT));
         panelModif.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        panelBas.setLayout(new GridLayout(2,2));
+        panelBas.setLayout(new GridLayout(2, 2));
 
         // Positionnement des composants
 
         panelTable.add(this.lblListe, BorderLayout.NORTH);
         panelTable.add(spGrilleDonnees, BorderLayout.CENTER);
-        
+
         panelModif.add(this.btnAjout);
         panelModif.add(this.btnSupr);
         panelBtn.add(this.btnEnregistr);
@@ -74,16 +74,21 @@ public class PanelIntervenants extends JPanel {
         this.setVisible(true);
 
         //Action
-		this.btnAnnuler.addActionListener((e)->this.frame.changePanel(new PanelAccueil(this.frame)));
-        this.btnAjout.addActionListener((e)->{
-			JFrame f = new JFrame();
-			f.add(new PanelAddIntervenant(this.frame, f));
-			f.setTitle("Ajout d'un Intervenant");
-			f.pack();
+        this.btnAnnuler.addActionListener((e) -> this.frame.changePanel(new PanelAccueil(this.frame)));
+        this.btnAjout.addActionListener((e) -> {
+            JFrame f = new JFrame();
+            f.add(new PanelAddIntervenant(this.frame, f));
+            f.setTitle("Ajout d'un Intervenant");
+            f.pack();
             f.setResizable(false);
-			f.setLocationRelativeTo(null);
-			f.setAlwaysOnTop(true);
-			f.setVisible(true);
-		});
+            f.setLocationRelativeTo(null);
+            f.setAlwaysOnTop(true);
+            f.setVisible(true);
+        });
+
     }
+
+    public void maj() {
+		    this.tblGrilleDonnees.setModel(new GrilleInt()); 
+	    }
 }

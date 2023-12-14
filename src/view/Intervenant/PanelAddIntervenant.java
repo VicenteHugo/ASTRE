@@ -7,9 +7,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import controleur.Controleur;
@@ -22,6 +27,10 @@ public class PanelAddIntervenant extends JPanel {
 	private JLabel lblErrCoef;
 	private JLabel lblErrHeurMax;
 	private JLabel lblErrHeurMin;
+
+	private DefaultListModel<CategorieIntervenant> choixCategorie;
+	private JComboBox<CategorieIntervenant> comboCategorie;
+
 
 	private JTextField txtCategorie;
 	private JTextField txtNom;
@@ -43,7 +52,11 @@ public class PanelAddIntervenant extends JPanel {
 		this.frameM = frameM;
 
 		// Création
+		//this.choixCategorie = new DefaultListModel<>();
+		//this.choixCategorie.addAll(Controleur.getControleur().getCategorieIntervenants());
+		// this.comboCategorie = new JComboBox<>(this.choixCategorie.toArray());
 		this.txtCategorie = new JTextField(10);
+
 		this.txtNom = new JTextField(10);
 		this.txtPrenom = new JTextField(10);
 		this.txtHServ = new JTextField(5);
@@ -110,22 +123,32 @@ public class PanelAddIntervenant extends JPanel {
 		this.add(panelBas, BorderLayout.SOUTH);
 
 		// Activation
-
+		
 		this.btnValider.addActionListener((e) -> {
+			CategorieIntervenant categ = null;
 			for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
 				if (ch.getCodeCatInt().equals(this.txtCategorie.getText())) {
-
 					categ = ch;
 					break;
 				}
 			}
-			Intervenants inter = new Intervenants(categ, this.txtNom.getText(), this.txtPrenom.getText(),
-					Integer.parseInt(this.txtHServ.getText()), Integer.parseInt(this.txtHMax.getText()));
-			Controleur.getControleur().ajouterIntervenant(inter);
+			if (categ != null) {
+				try {
+					int heuresService = Integer.parseInt(this.txtHServ.getText());
+					int heuresMax = Integer.parseInt(this.txtHMax.getText());
+
+					Intervenants inter = new Intervenants(categ, this.txtNom.getText(), this.txtPrenom.getText(),
+							heuresService, heuresMax);
+
+					Controleur.getControleur().ajouterIntervenant(inter);
+					this.frameM.dispose();
+				} catch (NumberFormatException ex) {
+					JOptionPane.showMessageDialog(this, "Veuillez entrer des valeurs valides pour les heures de service et les heures maximales.");
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "Catégorie introuvable.");
+			}
 		});
-		Intervenants inter = new Intervenants(categ, this.txtNom.getText(), this.txtPrenom.getText(),
-				Integer.parseInt(this.txtHServ.getText()), Integer.parseInt(this.txtHMax.getText()));
-		Controleur.getControleur().ajouterIntervenant(inter);
 		this.btnAnnuler.addActionListener((e) -> this.frameM.dispose());
 	}
 }

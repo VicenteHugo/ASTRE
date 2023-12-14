@@ -10,7 +10,6 @@ import model.CategorieIntervenant;
 import model.Etat;
 import model.Intervenants;
 import model.Semestres;
-import model.action.Action;
 import model.action.Ajout;
 import model.action.Modification;
 import model.action.Suppression;
