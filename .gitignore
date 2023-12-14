@@ -24,3 +24,4 @@ replay_pid*
 
 # diagramms
 *.bkp
+.vscode/settings.json

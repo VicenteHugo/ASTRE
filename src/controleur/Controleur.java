@@ -2,11 +2,6 @@ package controleur;
 
 import view.accueil.FrameAccueil;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import model.Affectations;
@@ -23,12 +18,10 @@ import model.modules.Module;
 public class Controleur {
 
 	private static Controleur controleur;
-	private FrameAccueil frameAccueil;
-	private Etat etat;
 
 	public Controleur() {
-		this.frameAccueil = new FrameAccueil();
-		this.etat = new Etat();
+		new FrameAccueil();
+		new Etat();
 	}
 
 	public static Controleur creerControleur() {
@@ -90,14 +83,6 @@ public class Controleur {
 
 	public ArrayList<Affectations> getAffectations() {
 		return Etat.getAffectations();
-	}
-
-	/*-------------------------------------------------------------*/
-	/* SET-TEURS */
-	/*-------------------------------------------------------------*/
-
-	public void setEtat(Etat etat) {
-		this.etat = etat;
 	}
 
 	/*-------------------------------------------------------------*/
