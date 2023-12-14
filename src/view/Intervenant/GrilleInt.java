@@ -44,7 +44,7 @@ public class GrilleInt extends AbstractTableModel {
 
 			System.out.println("LAAAAAAAAAAAAAAAAAAA =====>" + listeSemaine.size());
 
-			tabDonnees[lig][0] = intervenants.getCategorieIntervenant().getLibCatInt();
+			tabDonnees[lig][0] = intervenants.getCategorieIntervenant().getCodeCatInt();
 			tabDonnees[lig][1] = intervenants.getNomIntervenant();
 			tabDonnees[lig][2] = intervenants.getPrenomIntervenant();
 			tabDonnees[lig][3] = intervenants.getServices();
