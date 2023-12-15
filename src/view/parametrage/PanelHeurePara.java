@@ -38,11 +38,6 @@ public class PanelHeurePara extends JPanel {
 	/** Boutton permettant d'annuler les modifications. Renvoie à l'acceuil. */
 	private JButton btnRetour;
 
-	/** Boutton permettant d'ajouter des catégories d'heures. Créer un panelAddCatHeure. */
-	private JButton btnAjouter;
-	/** Boutton permettant de supprimer des catégories d'heures.*/
-	private JButton btnSupprimer;
-
 
 
 	/**
@@ -76,8 +71,6 @@ public class PanelHeurePara extends JPanel {
 		//Bouton
 		this.btnValider = new JButton("Valider");
 		this.btnRetour = new JButton("Annuler");
-		this.btnAjouter = new JButton("Ajouter");
-		this.btnSupprimer = new JButton("Supprimer");
 
 
 
@@ -94,8 +87,6 @@ public class PanelHeurePara extends JPanel {
 
 		JPanel panelBtn = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		panelBtn.add(this.btnRetour);
-		panelBtn.add(this.btnAjouter);
-		panelBtn.add(this.btnSupprimer);
 		panelBtn.add(this.btnValider);
 
 		this.add(panelBtn, BorderLayout.SOUTH);
@@ -111,19 +102,13 @@ public class PanelHeurePara extends JPanel {
         Dimension buttonSize = new Dimension(120, 20);
         this.btnValider  .setMinimumSize(buttonSize);
         this.btnRetour   .setMinimumSize(buttonSize);
-        this.btnAjouter  .setMinimumSize(buttonSize);
-        this.btnSupprimer.setMinimumSize(buttonSize);
 
         this.btnValider  .setPreferredSize(buttonSize);
         this.btnRetour   .setPreferredSize(buttonSize);
-        this.btnAjouter  .setPreferredSize(buttonSize);
-        this.btnSupprimer.setPreferredSize(buttonSize);
 
         Color coul = Color.decode("0xD0D0D0");
         this.btnValider  .setBackground(coul);
         this.btnRetour   .setBackground(coul);
-        this.btnAjouter  .setBackground(coul);
-        this.btnSupprimer.setBackground(coul);
 
 		// JTable
 		DefaultTableCellRenderer centre = new DefaultTableCellRenderer();
@@ -138,8 +123,6 @@ public class PanelHeurePara extends JPanel {
 
 		this.btnValider.addActionListener  ((e) -> this.valider  ());
 		this.btnRetour.addActionListener   ((e) -> this.annuler  ());
-		this.btnSupprimer.addActionListener((e) -> this.supprimer());
-		this.btnAjouter.addActionListener  ((e) -> this.ajouter  ());
 	}
 	
 
@@ -158,40 +141,6 @@ public class PanelHeurePara extends JPanel {
 	private void valider() {
 		this.frame.changePanel(new PanelParametre(this.frame));
 		Controleur.getControleur().enregistrer();
-	}
-
-	/**
-	 * Ouvre une fenêtre pour ajouter une catégorie d'heure.
-	 */
-	private void ajouter() {
-		JFrame f = new JFrame();
-		f.add(new PanelAddCatHeures(this, f));
-		f.setTitle("Ajout d'une catégorie");
-		f.pack();
-		f.setLocationRelativeTo(null);
-		f.setAlwaysOnTop(true);
-		f.setVisible(true);
-	}
-
-
-	/**
-	 * Supprime une catégorie d'heure.
-	 */
-	private void supprimer() {
-
-		int ind = this.tblGrilleDonnees.getSelectedRow();
-		Controleur.getControleur().supprimerCategorieHeure(ind);
-
-
-		this.maj();
-
-		int max = this.tblGrilleDonnees.getRowCount();
-
-		if (ind >= 0 && ind < max)
-			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
-
-		if (ind >= max && max != 0)
-			this.tblGrilleDonnees.setRowSelectionInterval(max - 1, max - 1);
 	}
 
 

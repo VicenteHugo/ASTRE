@@ -24,6 +24,8 @@ import javax.swing.border.Border;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import controleur.*;
+import model.Semestres;
+import model.modules.Module;
 
 public class PanelRessources extends JPanel {
 
@@ -385,6 +387,29 @@ public class PanelRessources extends JPanel {
 
 
 	}
+
+
+	public PanelRessources (FrameAccueil frame, Module m) {
+
+		this(frame);
+
+		//Code
+		this.code.setText(m.getCode());
+		this.libLong.setText(m.getLibLong());
+		this.libCourt.setText(m.getLibCourt());
+		
+		//Semestres info
+		Semestres s = m.getSemestres();
+		this.nbEtd.setText("" + s.getNbEtdSem());
+		this.nbGpTD.setText("" + s.getNbGpTdSem());
+		this.nbGpTP.setText("" + s.getNbGpTpSem());
+
+		//
+
+	}
+
+
+
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();

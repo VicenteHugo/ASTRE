@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS SemestresETAT
 CREATE TABLE IF NOT EXISTS ModulesETAT
 (
     codeMod     VARCHAR(255) PRIMARY KEY, 
-    semMod      INTEGER,
+    semMod      INTEGER      REFERENCES numSem(SemestresETAT),
     typeMod     VARCHAR(255) NOT NULL CHECK (typeMod IN ('Ressource', 'Sae', 'Stage', 'PPP')),
     libCourtMod VARCHAR(255) NOT NULL,
     libLongMod  VARCHAR(50) NOT NULL,
@@ -109,3 +109,15 @@ CREATE TABLE IF NOT EXISTS AffectationETAT
 INSERT INTO SemestresETAT (numSem)
 SELECT numSem FROM generate_series(1, 6) numSem
 ON CONFLICT (numSem) DO NOTHING;
+
+
+--Générer les catégories d'heures si il y a rien
+INSERT INTO CategorieHeuresETAT (libCatHeur, coefCatHeur)
+VALUES      ('CM'   , 1.5),
+            ('TD'   , 1.0),
+            ('TP'   , 1.0),
+            ('H tut', 1.0),
+            ('REH'  , 1.0),
+            ('SAE'  , 1.0),
+            ('HP'   , 1.0);
+ON CONFLICT (libCatHeur) DO NOTHING;

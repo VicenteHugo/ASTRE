@@ -7,6 +7,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -116,8 +117,17 @@ public class PanelIntPara extends JPanel {
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
-		System.out.println("hey " + ind);
-		Controleur.getControleur().supprimerCategorieIntervenants(ind);
+
+		if (ind < 0){
+			this.showMessageDialog("Selectionner une catégorie");
+			return;
+		}
+
+
+		if (!Controleur.getControleur().supprimerCategorieIntervenants(ind)) {
+			this.showMessageDialog("Catégorie utilisé. Veillez supprimer toute dépendance avant");
+			return ;
+		}
 
 		System.out.println("Indice : " + ind);
 		
@@ -137,6 +147,9 @@ public class PanelIntPara extends JPanel {
 
 	public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleCatInt()); 
+	}
+	private void showMessageDialog(String message) {
+		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
 }

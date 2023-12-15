@@ -191,6 +191,22 @@ public class Etat {
 		return null;
 	}
 
+	public static boolean pasUtiliser (CategorieIntervenant cat) {
+		for (Intervenants i : Etat.lstIntervenants) 
+			if (i.getCategorieIntervenant() == cat)
+				return false;
+
+		return true;
+	}
+
+	public static boolean pasUtiliser (CategorieHeures cat) {
+		for (Affectations a : Etat.lstAffectations) 
+			if (a.getCategorieHeures() == cat)
+				return false;
+
+		return true;
+	}
+
 	public static CategorieHeures getCatHeure(String nom) {
 		for (CategorieHeures c : Etat.lstCategorieHeures)
 			if (c.getlibCatHeur().equals(nom))
