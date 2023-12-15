@@ -6,19 +6,17 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import controleur.Controleur;
-import model.CategorieHeures;
 import model.CategorieIntervenant;
 import model.Intervenants;
 import view.accueil.FrameAccueil;
@@ -29,10 +27,8 @@ public class PanelAddIntervenant extends JPanel {
 	private JLabel lblErrHeurMin;
 
 	private DefaultListModel<CategorieIntervenant> choixCategorie;
-	private JComboBox<CategorieIntervenant> comboCategorie;
 
-
-	private JTextField txtCategorie;
+	private JComboBox boxCategorie;
 	private JTextField txtNom;
 	private JTextField txtPrenom;
 	private JTextField txtHServ;
@@ -47,6 +43,7 @@ public class PanelAddIntervenant extends JPanel {
 
 	private CategorieIntervenant categ = null;
 	private PanelIntervenants panelIntervenants;
+	private boolean isValid = true;
 
 	public PanelAddIntervenant(PanelIntervenants p,FrameAccueil frame, Frame frameM) {
 		this.panelIntervenants = p;
@@ -57,7 +54,12 @@ public class PanelAddIntervenant extends JPanel {
 		//this.choixCategorie = new DefaultListModel<>();
 		//this.choixCategorie.addAll(Controleur.getControleur().getCategorieIntervenants());
 		// this.comboCategorie = new JComboBox<>(this.choixCategorie.toArray());
-		this.txtCategorie = new JTextField(10);
+		ArrayList<CategorieIntervenant> l = Controleur.getControleur().getCategorieIntervenants();
+		this.boxCategorie = new JComboBox();
+		for(int i=0; i < l.size(); i++){
+			this.boxCategorie.addItem(l.get(i).getCodeCatInt());
+		}
+
 
 		this.txtNom = new JTextField(10);
 		this.txtPrenom = new JTextField(10);
@@ -85,7 +87,7 @@ public class PanelAddIntervenant extends JPanel {
 
 		panelCentre.add(new JLabel("Catégorie de l'intervenant : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtCategorie, gbc);
+		panelCentre.add(this.boxCategorie, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy++;
@@ -127,28 +129,40 @@ public class PanelAddIntervenant extends JPanel {
 		// Activation
 		
 		this.btnValider.addActionListener((e) -> {
+			this.isValid = true;
 			CategorieIntervenant categ = null;
 			for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
-				if (ch.getCodeCatInt().equals(this.txtCategorie.getText())) {
+				if (ch.getCodeCatInt().equals(this.boxCategorie.getSelectedItem())) {
 					categ = ch;
 					break;
 				}
 			}
-			if (categ != null) {
+			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
+				if(inter.getNomIntervenant().equals(this.txtNom.getText()) && inter.getPrenomIntervenant().equals(this.txtPrenom.getText())){
+					JOptionPane.showMessageDialog(this, "Utilisateur déja crée, changer de nom ou de prénom");
+					isValid = false;
+					break;
+				}
+
+			}
+			if (categ != null && isValid) {
 				try {
 					int heuresService = Integer.parseInt(this.txtHServ.getText());
 					int heuresMax = Integer.parseInt(this.txtHMax.getText());
 					float coef = (float) Integer.parseInt(this.txtCoefTP.getText());
-
-					Intervenants inter = new Intervenants(categ, this.txtNom.getText(), this.txtPrenom.getText(),
-							heuresService, heuresMax,coef);
-
-					Controleur.getControleur().ajouterIntervenant(inter);
-					this.frameM.dispose();
+					if(heuresMax > heuresService){
+						Intervenants inter = new Intervenants(categ, this.txtNom.getText(), this.txtPrenom.getText(),
+							heuresService,heuresMax,coef);
+						Controleur.getControleur().ajouterIntervenant(inter);
+						this.frameM.dispose();
+					}else{
+						JOptionPane.showMessageDialog(this,"Le nombre d'heure de services doit être inferieur à son nombre maximal");
+					}
+					
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(this, "Veuillez entrer des valeurs valides pour les heures de service et les heures maximales.");
 				}
-			} else {
+			} else if(isValid){
 				JOptionPane.showMessageDialog(this, "Catégorie introuvable.");
 			}
 			this.panelIntervenants.maj();

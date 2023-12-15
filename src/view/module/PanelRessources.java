@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import controleur.Controleur;
 import view.Intervenant.PanelAddIntervenant;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
@@ -195,12 +196,31 @@ public class PanelRessources extends JPanel {
 		this.btnAnnuler.addActionListener((e) -> this.frame.changePanel(new PanelPrevi(this.frame)));
         this.btnAjouter.addActionListener((e)->{
 			JFrame f = new JFrame();
-			f.add(new PanelAddRessourceIntervenant(this.frame, f));
+			f.add(new PanelAddRessourceIntervenant(this,this.frame, f));
 			f.setTitle("Affecter un Intervenant");
 			f.pack();
 			f.setLocationRelativeTo(null);
 			f.setAlwaysOnTop(true);
 			f.setVisible(true);
 		});
+
+		this.btnEnregistrer.addActionListener((e) ->this.maj()       );
+		this.btnSupprimer.addActionListener(  (e) ->this.supprimer());
+
+
+	}
+	private void supprimer() {
+
+		int ind = this.tblGrilleDonnees.getSelectedRow();
+		System.out.println(ind);
+		Controleur.getControleur().supprimerIntervenant(ind);
+		if (ind >= 0)
+			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
+		
+		this.maj();
+	}
+
+    public void maj() {
+		this.tblGrilleDonnees.setModel(new GrilleRessources()); 
 	}
 }
