@@ -12,16 +12,12 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import controleur.Controleur;
-import model.CategorieHeures;
 import model.CategorieIntervenant;
-import model.Etat;
 import model.Intervenants;
 import view.accueil.FrameAccueil;
 
@@ -31,8 +27,6 @@ public class PanelAddIntervenant extends JPanel {
 	private JLabel lblErrHeurMin;
 
 	private DefaultListModel<CategorieIntervenant> choixCategorie;
-	private JComboBox<CategorieIntervenant> comboCategorie;
-
 
 	private JComboBox boxCategorie;
 	private JTextField txtNom;
