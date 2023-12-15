@@ -55,15 +55,14 @@ public class Etat {
 
 		try {
 			Class.forName("org.postgresql.Driver"); //Postgress
-			//Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
+			// Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
 
 
 			// Connection
 			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
-			//Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre","root", ""); //MySQL
+			// Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre","root", ""); //MySQL
 			
 			Etat.recupererNomEtat();
-			System.out.println(Etat.nom);
 
 			//Lancer le scripts en cas de Table détruite
 			Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
@@ -86,8 +85,6 @@ public class Etat {
 
 		// Générer les deuxièmes tables
 		Etat.genererIntervenants();
-		System.out.println(Etat.lstIntervenants);
-
 		Etat.genererModules();
 
 		// Générer les troisièmes tables
@@ -409,7 +406,6 @@ public class Etat {
 						st.setBoolean(i, (Boolean) info);
 				}
 
-				System.out.println(st.toString());
 
 				// On l'execute
 				st.executeUpdate();
@@ -422,30 +418,7 @@ public class Etat {
 		Etat.lstActions.clear();
 	}
 
-	public static void main(String[] args) {
-		new Etat();
 
-		for (Intervenants i : Etat.getIntervenants())
-			System.out.println(i);
-
-		for (Affectations a : Etat.getAffectations())
-			System.out.println(a);
-
-		for (Module m : Etat.getModules())
-			System.out.println(m.getClass().getSimpleName());
-
-		CategorieHeures cat = new CategorieHeures("Heeeeey", 1.0f);
-
-		Action a = new Ajout(cat);
-		Etat.ajouterAction(a);
-		Etat.enregistrer();
-
-		a = new Suppression(cat);
-		Etat.ajouterAction(a);
-		Etat.enregistrer();
-
-		System.out.println();
-	}
 
 	/*--------------------------------------------------------------*/
 	/* CREATION ET VERIFICATIONS DES TABLES */
@@ -510,7 +483,6 @@ public class Etat {
 					commande += " " + l;
 					if (l.endsWith(";")) {
 						commande = commande.replaceAll("ETAT", Etat.nom);
-						System.out.println(commande + "\n\n\n\n\n");
 						statement.execute(commande);
 						commande = "";
 					}
