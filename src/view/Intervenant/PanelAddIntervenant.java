@@ -149,12 +149,15 @@ public class PanelAddIntervenant extends JPanel {
 					int heuresService = Integer.parseInt(this.txtHServ.getText());
 					int heuresMax = Integer.parseInt(this.txtHMax.getText());
 					float coef = (float) Integer.parseInt(this.txtCoefTP.getText());
-
-					Intervenants inter = new Intervenants(categ, this.txtNom.getText(), this.txtPrenom.getText(),
+					if(heuresMax > heuresService){
+						Intervenants inter = new Intervenants(categ, this.txtNom.getText(), this.txtPrenom.getText(),
 							heuresService, heuresMax,coef);
-
-					Controleur.getControleur().ajouterIntervenant(inter);
-					this.frameM.dispose();
+						Controleur.getControleur().ajouterIntervenant(inter);
+						this.frameM.dispose();
+					}else{
+						JOptionPane.showMessageDialog(this,"Le nombre d'heure de services doit être inferieur à son nombre maximal");
+					}
+					
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(this, "Veuillez entrer des valeurs valides pour les heures de service et les heures maximales.");
 				}
