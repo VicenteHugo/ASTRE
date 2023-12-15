@@ -46,7 +46,7 @@ public class PanelParametre extends JPanel {
         this.btnAccueil     .setPreferredSize(buttonSize);
         this.btnHeures      .setPreferredSize(buttonSize);
 
-        Color coul = Color.decode("0xE6E6EF");
+        Color coul = Color.decode("0xD5D5D5");
         this.btnIntervenants.setBackground(coul);
         this.btnAccueil     .setBackground(coul);
         this.btnHeures      .setBackground(coul);
