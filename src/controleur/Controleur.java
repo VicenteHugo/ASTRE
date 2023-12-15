@@ -195,7 +195,7 @@ public class Controleur {
 	}
 
 	public boolean modifIntervenant(int i, CategorieIntervenant categ, String nomIntervenant, String prenomIntervenant,
-			int services, int mexHeure) {
+			int services, int mexHeure, float coef) {
 
 		Intervenants cOld = Etat.getIntervenant(nomIntervenant, prenomIntervenant);
 
@@ -211,7 +211,7 @@ public class Controleur {
 				&& i < Etat.getCategoriesIntervenants().size()) {
 
 			// On remplace l'objet
-			Intervenants cNew = new Intervenants(categ, nomIntervenant, prenomIntervenant, services, mexHeure);
+			Intervenants cNew = new Intervenants(categ, nomIntervenant, prenomIntervenant, services, mexHeure,coef);
 			System.out.println(cNew);
 			Etat.getIntervenants().add(i, cNew);
 			Etat.getIntervenants().remove(cOld);

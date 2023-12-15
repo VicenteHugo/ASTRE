@@ -219,10 +219,11 @@ public class Etat {
 				String prenom = res.getString("prenomInt");
 				int hmin = res.getInt("heureMinInt");
 				int hmax = res.getInt("heureMaxInt");
+				float coef = res.getFloat("coefInt");
 
 				CategorieIntervenant cat = Etat.getCatInt(res.getString("categInt"));
 
-				Etat.lstIntervenants.add(new Intervenants(cat, nom, prenom, hmin, hmax));
+				Etat.lstIntervenants.add(new Intervenants(cat, nom, prenom, hmin, hmax,coef));
 			}
 
 			res.close();
