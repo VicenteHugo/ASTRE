@@ -417,6 +417,7 @@ public class Etat {
 						st.setBoolean(i, (Boolean) info);
 				}
 
+				System.out.println(st);
 
 				// On l'execute
 				st.executeUpdate();
@@ -564,13 +565,16 @@ public class Etat {
 		try {
 			Statement st = Etat.connec.createStatement();
 
-			st.executeUpdate("DROP TABLE CategorieIntervenants" + nom + " CASCADE");
-			st.executeUpdate("DROP TABLE CategorieHeures" + nom + " CASCADE");
-			st.executeUpdate("DELETE FROM Etat WHERE etat = '" + nom + "'");
+
+			for (String s : Etat.LST_NOM_TABLES)
+				st.executeUpdate("DROP TABLE " + s + nom.toLowerCase() + " CASCADE");
+
+			st.executeUpdate("DELETE FROM Etat WHERE etat = '" + nom.toLowerCase() + "'");
 
 			return true;
 
 		} catch (Exception e) {
+			System.out.println(e);
 			return false;
 		}
 	}

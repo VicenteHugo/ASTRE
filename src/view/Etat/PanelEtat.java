@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
@@ -35,8 +36,8 @@ public class PanelEtat extends JPanel {
         /* Frame */
         this.frame = frame;
         this.frame.setTitle("Etat");
-        this.frame.setMinimumSize(new Dimension(620, 175));
-        this.frame.setSize(new Dimension(620, 175));
+        this.frame.setMinimumSize(new Dimension(620, 250));
+        this.frame.setSize(new Dimension(620, 250));
 
 
         /* Création des composants */
@@ -105,14 +106,12 @@ public class PanelEtat extends JPanel {
         this.add(new JLabel("Changer d'état :"), gbc);
         gbc.gridx++;
         this.add(this.lstEtat, gbc);
-
-        gbc.gridy++;
-        gbc.gridx= 0;
-        this.add(this.btnNouveau, gbc);
         gbc.gridx++;
-        this.add(this.btnSupprimer, gbc);
-        gbc.gridx++;
-        this.add(this.btnSelection, gbc);
+        JPanel panelButton = new JPanel(new GridLayout(3,1,5,5));
+        panelButton.add(this.btnNouveau, gbc);
+        panelButton.add(this.btnSupprimer, gbc);
+        panelButton.add(this.btnSelection, gbc);
+        this.add(panelButton, gbc);
 
         gbc.gridx = 0;
         gbc.gridy++;
@@ -138,7 +137,6 @@ public class PanelEtat extends JPanel {
         System.out.println("Etat changer pour : " + nomEtat);
 
         Controleur.getControleur().changerEtat(nomEtat);
-        this.quitter();
     }
 
     private void suppEtat () {
