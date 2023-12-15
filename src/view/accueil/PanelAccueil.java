@@ -31,7 +31,7 @@ public class PanelAccueil extends JPanel {
         /* STYLE */
 
         // Button
-        Dimension buttonSize = new Dimension(120, 30); // Vous pouvez ajuster la taille selon vos besoins
+        Dimension buttonSize = new Dimension(150, 30); // Vous pouvez ajuster la taille selon vos besoins
         this.btnParametre   .setMinimumSize(buttonSize);
         this.btnPrevisionnel.setMinimumSize(buttonSize);
         this.btnIntervenant .setMinimumSize(buttonSize);
@@ -42,7 +42,7 @@ public class PanelAccueil extends JPanel {
         this.btnIntervenant .setPreferredSize(buttonSize);
         this.btnEtat.setPreferredSize(buttonSize);
         
-        Color coul = Color.decode("0xE6E6EF");
+        Color coul = Color.decode("0xD0D0D0");
         this.btnParametre   .setBackground(coul);
         this.btnPrevisionnel.setBackground(coul);
         this.btnIntervenant .setBackground(coul);

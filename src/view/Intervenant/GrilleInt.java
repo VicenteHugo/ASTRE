@@ -10,6 +10,7 @@ import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
 import model.Affectations;
+import model.CategorieIntervenant;
 
 public class GrilleInt extends AbstractTableModel {
 
@@ -94,8 +95,53 @@ public class GrilleInt extends AbstractTableModel {
 	}
 
 	public void setValueAt(Object value, int row, int col) {
+
+		
 		if(isCellEditable(row, col)){
-		this.tabDonnees[row][col] = value;
+
+			CategorieIntervenant categorieIntervenant  = (CategorieIntervenant) this.tabDonnees[row][0];
+			String  nom = (String) this.tabDonnees[row][1];
+			String  prenom = (String) this.tabDonnees[row][2];
+			int  services = (int) this.tabDonnees[row][3];
+			int  nbHeureMax = (int) this.tabDonnees[row][4];
+			Float  coef = (Float) this.tabDonnees[row][5];
+
+			switch (col) {
+				case 0:
+					categorieIntervenant = (CategorieIntervenant) value;
+					break;
+
+				case 1:
+					
+					nom = (String) value;
+					break;
+				case 2:
+					prenom = (String) value;
+					break;
+
+				case 3:
+					
+					services = (int) value;
+					break;
+				case 4:
+
+					nbHeureMax = (int) value;
+					break;
+
+				case 5:
+					
+					coef = (Float) value;
+					break;
+				
+				default:
+					break;
+		}
+
+			if (coef < 0) return;
+			if(nbHeureMax <= services) return;
+			if(nbHeureMax < 0 || services < 0) return; 
+
+			if(Controleur.getControleur().modifIntervenant(col, categorieIntervenant, nom, prenom, services, nbHeureMax,coef)){this.tabDonnees[row][col] = value;}		
 		}
 	}
 }

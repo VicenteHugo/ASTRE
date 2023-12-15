@@ -1,11 +1,15 @@
 package view.accueil;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+
 import javax.swing.*;
 
 public class FrameAccueil extends JFrame {
     
     public FrameAccueil() {
-        this.add ( new PanelAccueil(this));
+        this.changePanel( new PanelAccueil(this));
         this.setLocationRelativeTo(null);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
