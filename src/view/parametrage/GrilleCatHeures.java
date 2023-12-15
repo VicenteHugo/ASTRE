@@ -30,8 +30,6 @@ public class GrilleCatHeures extends AbstractTableModel {
 			tabDonnees[lig][1] = cat.getcoefCatHeur();
 		}
 
-		// Taille
-
 	}
 
 	public int getRowCount() {
