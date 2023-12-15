@@ -485,7 +485,7 @@ public class Etat {
 				etatsList.add(res.getString("etat"));
 
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println(e);
 		}
 
 		String[] etatsArray = new String[etatsList.size()];
@@ -530,6 +530,8 @@ public class Etat {
 				st.executeUpdate("CREATE TABLE " + tables + etatDest + " AS TABLE " + tables + etatDep );
 			}
 			
+			st.executeUpdate("INSERT INTO Etat (etat) VALUES ('"+nom+"')");
+
 			Etat.verifEtat();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -582,7 +584,7 @@ public class Etat {
 			for (String s : Etat.LST_NOM_TABLES)
 				st.executeUpdate("DROP TABLE " + s + nom.toLowerCase() + " CASCADE");
 
-			st.executeUpdate("DELETE FROM Etat WHERE etat = '" + nom.toLowerCase() + "'");
+			st.executeUpdate("DELETE FROM Etat WHERE etat = '" + nom + "'");
 
 			return true;
 
