@@ -16,6 +16,8 @@ import java.util.Scanner;
 import java.io.FileInputStream;
 
 public class Etat {
+	/**Chemin vers le scripts sql.*/
+	public static final String FICHIER = "./SQL/REALISATION/CreateTablesAstre.sql";
 
 	/**Liste des Tables.Utile pour la verification de leurs présences. */
 	public static final String[] LST_NOM_TABLES = new String[] 
@@ -65,7 +67,7 @@ public class Etat {
 			Etat.recupererNomEtat();
 
 			//Lancer le scripts en cas de Table détruite
-			Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
+			Etat.lireFichierSQL(Etat.FICHIER);
 
 
 			Etat.genererInfos();
@@ -74,6 +76,33 @@ public class Etat {
 			System.out.println("Driver not found: " + e.getMessage());
 		} catch (SQLException e) {
 			System.out.println("SQL Error: " + e.getMessage());
+		}
+	}
+
+	public static void changerEtat (String nom) {
+		Etat.nom = nom;
+		Etat.lireFichierSQL(Etat.FICHIER);
+		Etat.genererInfos();
+	}
+
+	public static boolean creerEtat (String nom) {
+
+		for (String etatsNom : Etat.getEtats())
+			if (etatsNom.equals(nom)) return false;
+
+
+		try {
+			Statement st = Etat.connec.createStatement();
+			st.executeUpdate("INSERT INTO Etat (etat) VALUES ('"+nom+"')");
+
+			Etat.nom = nom;
+			Etat.lireFichierSQL(Etat.FICHIER);
+			Etat.genererInfos();
+			return true;
+
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
 		}
 	}
 

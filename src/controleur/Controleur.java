@@ -228,6 +228,14 @@ public class Controleur {
 		return Etat.getEtats();
 	}
 
+	public void changerEtat (String nom) {
+		Etat.changerEtat(nom);
+	}
+
+	public boolean creerEtat (String nom) {
+		return Etat.creerEtat(nom);
+	}
+
 	/*-------------------------------------------------------------*/
 	/* MAIN */
 	/*-------------------------------------------------------------*/
