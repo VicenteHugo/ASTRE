@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS ModulesCatHeuresETAT
 
 CREATE TABLE IF NOT EXISTS AffectationETAT
 (
+    cle         SERIAL       PRIMARY KEY,
 	nomInt      VARCHAR(255) NOT NULL,
 	prenomInt   VARCHAR(255) NOT NULL,
 	codeMod     VARCHAR(255) NOT NULL REFERENCES ModulesETAT(codeMod),
@@ -101,7 +102,6 @@ CREATE TABLE IF NOT EXISTS AffectationETAT
 	nbSem       INTEGER NOT NULL CHECK (nbSem > 0),
 	nbGroupe    INTEGER NOT NULL CHECK (nbGroupe > 0),
 	commentaire VARCHAR(255),
-	PRIMARY KEY(nomInt, prenomInt, codeMod, libCatHeur),
 	FOREIGN KEY(nomInt, prenomInt) REFERENCES IntervenantsETAT(nomInt, prenomInt)
 );
 
