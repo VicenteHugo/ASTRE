@@ -54,13 +54,13 @@ public class Etat {
 		Etat.lstActions = new ArrayList<>();
 
 		try {
-			//Class.forName("org.postgresql.Driver"); //Postgress
-			Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
+			Class.forName("org.postgresql.Driver"); //Postgress
+			//Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
 
 
 			// Connection
-			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
-			Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre","root", ""); //MySQL
+			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			//Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre","root", ""); //MySQL
 			
 			Etat.recupererNomEtat();
 			System.out.println(Etat.nom);
@@ -222,10 +222,11 @@ public class Etat {
 				String prenom = res.getString("prenomInt");
 				int hmin = res.getInt("heureMinInt");
 				int hmax = res.getInt("heureMaxInt");
+				float coef = res.getFloat("coefInt");
 
 				CategorieIntervenant cat = Etat.getCatInt(res.getString("categInt"));
 
-				Etat.lstIntervenants.add(new Intervenants(cat, nom, prenom, hmin, hmax));
+				Etat.lstIntervenants.add(new Intervenants(cat, nom, prenom, hmin, hmax,coef));
 			}
 
 			res.close();

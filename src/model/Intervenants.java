@@ -48,7 +48,7 @@ public class Intervenants {
 	 * autres par default.
 	 */
 	public Intervenants(CategorieIntervenant categorieIntervenant, String nomIntervenant, String prenomIntervenant,
-			int services, int maxHeures) {
+			int services, int maxHeures, float coef) {
 
 		this.categorieIntervenant = categorieIntervenant;
 		this.nomIntervenant = nomIntervenant;
@@ -56,7 +56,7 @@ public class Intervenants {
 		this.services = services;
 		this.maxHeures = maxHeures;
 
-		this.coefficient = this.categorieIntervenant.getCoefCatInt();
+		this.coefficient = coef;
 		this.listeHeuresSemestre = new ArrayList<Integer>();
 	}
 

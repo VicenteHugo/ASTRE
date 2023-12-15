@@ -79,6 +79,6 @@ public class PanelPrevi extends JPanel {
         this.btnModifier.addActionListener((e)->{ 
 
         });
-        this.btnSupprimer.addActionListener(e)->Controleur.getControleur;
+        //this.btnSupprimer.addActionListener(e)->Controleur.getControleur;
     }
 }
