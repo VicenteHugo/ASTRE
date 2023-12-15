@@ -21,13 +21,9 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
 
-<<<<<<< HEAD
-=======
-import controleur.Controleur;
-import view.Intervenant.PanelAddIntervenant;
->>>>>>> 0ece04fa9aeea128c4a10c7baf11bbaa15d9fd1a
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
+import controleur.*;
 
 public class PanelRessources extends JPanel {
 
@@ -396,7 +392,6 @@ public class PanelRessources extends JPanel {
 		Controleur.getControleur().supprimerIntervenant(ind);
 		if (ind >= 0)
 			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
-		
 		this.maj();
 	}
 

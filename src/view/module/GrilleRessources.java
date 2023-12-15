@@ -62,6 +62,11 @@ public class GrilleRessources extends AbstractTableModel {
 	}
 
 	public boolean isCellEditable(int row, int col) {
+		if(col == 2){
+			if(getValueAt(row, col-1).equals("HP")){
+				return false;
+			}
+		}
 		return true;
 	}
 
@@ -70,47 +75,48 @@ public class GrilleRessources extends AbstractTableModel {
 		if (value == this.tabDonnees[row][col])
 			return;
 
-		String nomInter  = (String)  this.tabDonnees[row][0];
-		String type      = (String)  this.tabDonnees[row][1];
-		int    nbSem     = (Integer) this.tabDonnees[row][2];
-		int    nbGp      = (Integer) this.tabDonnees[row][3];
-		int    hTot      = (Integer) this.tabDonnees[row][4];
-		String com       = (String)  this.tabDonnees[row][5];
+		if(isCellEditable(row, col)){
+			String nomInter  = (String)  this.tabDonnees[row][0];
+			String type      = (String)  this.tabDonnees[row][1];
+			int    nbSem     = (Integer) this.tabDonnees[row][2];
+			int    nbGp      = (Integer) this.tabDonnees[row][3];
+			int    hTot      = (Integer) this.tabDonnees[row][4];
+			String com       = (String)  this.tabDonnees[row][5];
 
-		switch (col) {
-			case 0:
-				nomInter = (String) value;
-				break;
+			switch (col) {
+				case 0:
+					nomInter = (String) value;
+					break;
 
-			case 1:
-				type = (String) value;
-				break;
+				case 1:
+					type = (String) value;
+					break;
 
-			case 2:
-				nbSem = (Integer) value;
-				break;
+				case 2:
+					nbSem = (Integer) value;
+					break;
 
-			case 3:
-				nbGp = (Integer) value;
-				break;
+				case 3:
+					nbGp = (Integer) value;
+					break;
 
-			case 4:
-				hTot = (Integer) value;
-				break;
+				case 4:
+					hTot = (Integer) value;
+					break;
 
-			case 5:
-				com = (String) value;
-				break;
+				case 5:
+					com = (String) value;
+					break;
 
-			default:
-				break;
-		}
+				default:
+					break;
+			}
 
-		if (nbSem < 0 || nbGp < 0 || nomInter.isEmpty() || type.isEmpty())
-			return;
-		
-		if(Controleur.getControleur().modifIntervenantRessources(row, nomInter, type, nbSem, nbGp, hTot, com))
-			this.tabDonnees[row][col] = value;
-
+			if (nbSem < 0 || nbGp < 0 || nomInter.isEmpty() || type.isEmpty())
+				return;
+			
+			if(Controleur.getControleur().modifAffectation(row, nomInter, type, nbSem, nbGp, hTot, com))
+				this.tabDonnees[row][col] = value;
+			}
 	}
 }

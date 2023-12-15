@@ -20,6 +20,8 @@ import model.Affectations;
 import model.CategorieHeures;
 import model.CategorieIntervenant;
 import model.Intervenants;
+import model.modules.*;
+import model.modules.Module;
 import view.accueil.FrameAccueil;
 
 
@@ -128,12 +130,14 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		this.btnValider.addActionListener((e)->{
 			Intervenants i = null;
 			CategorieHeures categ = null;
+			Module module = null;
 			int nbSemaine = Integer.parseInt(this.txtNbSemaine.getText());
-			int nb;
+			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
 			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
 				if(inter.getNomIntervenant().equals(this.txtNomIntervenant.getText()) && 
 				inter.getPrenomIntervenant().equals(this.txtPrenomIntervenant.getText())){
 					i = inter;
+					break;
 				}
 			}
 			for(CategorieHeures ch : Controleur.getControleur().getCategorieHeures()){
@@ -141,7 +145,21 @@ public class PanelAddRessourceIntervenant extends JPanel {
 					categ =ch;
 				}
 			}
-			Affectations affectations = new Affectations(i, null, categ, ABORT, TOOL_TIP_TEXT_KEY);
+			for(Module m : Controleur.getControleur().getModules()){
+					
+			}
+			if(i != null){
+				if(nbGroupe < 0 || nbSemaine < 0){
+					JOptionPane.showMessageDialog(this,"Le nombre de groupe et le nombre de semaine doivent être supérieur à 0");
+				}else{
+					Affectations affectations = new Affectations(i, categ, nbSemaine, nbGroupe,this.txtCommentaire.getText());
+					Controleur.getControleur().ajouterAffectation(affectations);
+					this.frameM.dispose();
+				}
+			}else{
+				JOptionPane.showMessageDialog(this,"L'intervenant rentré n'existe pas");
+			}
+			
 			this.panel.maj();	
 		});
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
