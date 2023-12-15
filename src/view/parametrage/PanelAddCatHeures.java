@@ -1,6 +1,8 @@
 package view.parametrage;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -32,6 +34,8 @@ public class PanelAddCatHeures extends JPanel {
 	{
 		this.panel  = panel;
 		this.frameM = frameM;
+		this.frameM.setSize(350, 150);
+		this.frameM.setResizable(false);
 
 
 		//Création
@@ -40,6 +44,22 @@ public class PanelAddCatHeures extends JPanel {
 
 		this.btnAnnuler = new JButton("Annuler");
 		this.btnValider = new JButton("Valider");
+
+
+        /* STYLE */
+
+        // Button
+        Dimension buttonSize = new Dimension(120, 20); // Vous pouvez ajuster la taille selon vos besoins
+        this.btnAnnuler.setMinimumSize(buttonSize);
+        this.btnValider.setMinimumSize(buttonSize);
+
+        this.btnAnnuler.setPreferredSize(buttonSize);
+        this.btnValider.setPreferredSize(buttonSize);
+
+        Color coul = Color.decode("0xD0D0D0");
+        this.btnAnnuler.setBackground(coul);
+        this.btnValider.setBackground(coul);
+
 
 		//Layout
 		JPanel panelCentre = new JPanel();

@@ -26,8 +26,8 @@ public class PanelParametre extends JPanel {
         // Frame
         this.frame = frame;
         this.frame.setTitle("Astre - Paramètres (Accueil)");
-        this.frame.setMinimumSize(new Dimension(400, 230));
-        this.frame.setSize(400, 230);
+        this.frame.setMinimumSize(new Dimension(300, 230));
+        this.frame.setSize(300, 230);
 
         // Création des composants
         this.btnIntervenants = new JButton("Catégorie Intervenants");
@@ -39,17 +39,17 @@ public class PanelParametre extends JPanel {
         // Button
         Dimension buttonSize = new Dimension(200, 30); // Vous pouvez ajuster la taille selon vos besoins
         this.btnIntervenants.setMinimumSize(buttonSize);
-        this.btnAccueil     .setMinimumSize(buttonSize);
-        this.btnHeures      .setMinimumSize(buttonSize);
+        this.btnAccueil.setMinimumSize(buttonSize);
+        this.btnHeures.setMinimumSize(buttonSize);
 
         this.btnIntervenants.setPreferredSize(buttonSize);
-        this.btnAccueil     .setPreferredSize(buttonSize);
-        this.btnHeures      .setPreferredSize(buttonSize);
+        this.btnAccueil.setPreferredSize(buttonSize);
+        this.btnHeures.setPreferredSize(buttonSize);
 
-        Color coul = Color.decode("0xD5D5D5");
+        Color coul = Color.decode("0xD0D0D0");
         this.btnIntervenants.setBackground(coul);
-        this.btnAccueil     .setBackground(coul);
-        this.btnHeures      .setBackground(coul);
+        this.btnAccueil.setBackground(coul);
+        this.btnHeures.setBackground(coul);
 
         // Layout
         this.setLayout(new GridBagLayout());
@@ -69,8 +69,8 @@ public class PanelParametre extends JPanel {
         this.add(this.btnAccueil, gbc);
 
         // Action
-        this.btnIntervenants.addActionListener((e)->this.frame.changePanel(new PanelIntPara(this.frame)));
-        this.btnHeures.addActionListener((e)->this.frame.changePanel(new PanelHeurePara(this.frame)));
-        this.btnAccueil.addActionListener((e)->this.frame.changePanel(new PanelAccueil(this.frame)));
+        this.btnIntervenants.addActionListener((e) -> this.frame.changePanel(new PanelIntPara(this.frame)));
+        this.btnHeures.addActionListener((e) -> this.frame.changePanel(new PanelHeurePara(this.frame)));
+        this.btnAccueil.addActionListener((e) -> this.frame.changePanel(new PanelAccueil(this.frame)));
     }
 }
