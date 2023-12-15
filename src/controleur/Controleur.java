@@ -198,8 +198,12 @@ public class Controleur {
 		Etat.ajouterIntervenant(inter);
 	}
 
-	public void supprimerIntervenant(Intervenants inter) {
-
+	public void supprimerIntervenant(int ind) {
+		if (ind >= 0 && ind < Etat.getIntervenants().size()) {
+			Intervenants inter = Etat.getIntervenants().remove(ind);
+			Etat.ajouterAction(new Suppression(inter));
+			System.out.println("Suppresion : " + inter);
+		}
 	}
 
 	public boolean modifIntervenant(int i, CategorieIntervenant categ, String nomIntervenant, String prenomIntervenant,
@@ -228,25 +232,8 @@ public class Controleur {
 		return false;
 	}
 
-<<<<<<< HEAD
-	public void ajouterIntervenantRessources(Intervenants inter) {
-		Etat.ajouterAction(new Ajout(inter));
-	}
-
-	public void supprimerIntervenantRessources(Intervenants inter) {
-
-	}
-	
-	public boolean modifIntervenantRessources(int i, String nomIntervenant, String type, int nbSem, int nbGp, int totH , String com) {
-
-		
-		
-		
-		return false;
-=======
 	public void setIntervenant(Object values){
 		return;
->>>>>>> b8d3b9ee0ef322b68dde0ff8f044297d5731f47b
 	}
 
 	public String[] getEtats() {

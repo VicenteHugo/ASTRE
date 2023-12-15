@@ -47,6 +47,7 @@ public class PanelAddIntervenant extends JPanel {
 
 	private CategorieIntervenant categ = null;
 	private PanelIntervenants panelIntervenants;
+	private boolean isValid = true;
 
 	public PanelAddIntervenant(PanelIntervenants p,FrameAccueil frame, Frame frameM) {
 		this.panelIntervenants = p;
@@ -127,6 +128,7 @@ public class PanelAddIntervenant extends JPanel {
 		// Activation
 		
 		this.btnValider.addActionListener((e) -> {
+			this.isValid = true;
 			CategorieIntervenant categ = null;
 			for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
 				if (ch.getCodeCatInt().equals(this.txtCategorie.getText())) {
@@ -134,7 +136,15 @@ public class PanelAddIntervenant extends JPanel {
 					break;
 				}
 			}
-			if (categ != null) {
+			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
+				if(inter.getNomIntervenant().equals(this.txtNom.getText()) && inter.getPrenomIntervenant().equals(this.txtPrenom.getText())){
+					JOptionPane.showMessageDialog(this, "Utilisateur déja crée, changer de nom ou de prénom");
+					isValid = false;
+					break;
+				}
+
+			}
+			if (categ != null && isValid) {
 				try {
 					int heuresService = Integer.parseInt(this.txtHServ.getText());
 					int heuresMax = Integer.parseInt(this.txtHMax.getText());
@@ -148,7 +158,7 @@ public class PanelAddIntervenant extends JPanel {
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(this, "Veuillez entrer des valeurs valides pour les heures de service et les heures maximales.");
 				}
-			} else {
+			} else if(isValid){
 				JOptionPane.showMessageDialog(this, "Catégorie introuvable.");
 			}
 			this.panelIntervenants.maj();
