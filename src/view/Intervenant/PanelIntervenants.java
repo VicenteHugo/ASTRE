@@ -15,7 +15,6 @@ import javax.swing.JTable;
 import controleur.Controleur;
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
-import view.parametrage.PanelParametre;
 
 public class PanelIntervenants extends JPanel {
     private JLabel lblListe;
@@ -93,14 +92,14 @@ public class PanelIntervenants extends JPanel {
     }
 
     private void valider() {
-		this.frame.changePanel(new PanelAccueil(this.frame));
-		Controleur.getControleur().enregistrer();
-	}
+      this.frame.changePanel(new PanelAccueil(this.frame));
+      Controleur.getControleur().enregistrer();
+    }
 
     private void annuler() {
-		this.frame.changePanel(new PanelAccueil(this.frame));
-		Controleur.getControleur().annuler();
-	}
+      this.frame.changePanel(new PanelAccueil(this.frame));
+      Controleur.getControleur().annuler();
+    }
 
     private void supprimer() {
 

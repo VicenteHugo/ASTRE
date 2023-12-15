@@ -37,7 +37,7 @@ public class Modification extends Action {
 
 		this.info = new ArrayList<>(
 				List.of(iNew.getNomIntervenant(), iNew.getPrenomIntervenant(), iNew.getServices(), iNew.getMaxHeures(),
-						iNew.getCategorieIntervenant(),iNew.getCoefficient(),iOld.getNomIntervenant(), iOld.getPrenomIntervenant()));
+						iNew.getCategorieIntervenant().getCodeCatInt(),iNew.getCoefficient(),iOld.getNomIntervenant(), iOld.getPrenomIntervenant()));
 	}
 
 	public Modification(CategorieHeures cOld, CategorieHeures cNew) {
