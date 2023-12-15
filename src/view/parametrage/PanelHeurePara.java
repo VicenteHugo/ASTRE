@@ -1,54 +1,107 @@
 package view.parametrage;
 
+// AWT
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+// SWING
+import javax.swing.*;
 
+// ASTRE
 import controleur.Controleur;
 import view.accueil.FrameAccueil;
-import java.util.Scanner;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 
+/**
+ * Panel permettant la visualisation des Catégorie d'heures. (Paramètres -> Catégories Heures)
+ */
 public class PanelHeurePara extends JPanel {
 
+
+
+	/** Frame principale. */
 	private FrameAccueil frame;
+	/** Tables des données. */
 	private JTable tblGrilleDonnees;
 
+	/** Boutton permettant de valider les modifications. Renvoie à l'acceuil. */
 	private JButton btnValider;
+	/** Boutton permettant d'annuler les modifications. Renvoie à l'acceuil. */
 	private JButton btnRetour;
 
+	/** Boutton permettant d'ajouter des catégories d'heures. Créer un panelAddCatHeure. */
 	private JButton btnAjouter;
+	/** Boutton permettant de supprimer des catégories d'heures.*/
 	private JButton btnSupprimer;
+
+
+
+	/**
+	 * Constructeur prenant en paramètre la FrameAcceuil pour changer de pannel.
+	 * @param frame
+	 */
 
 	public PanelHeurePara(FrameAccueil frame) {
 
-		// Frame
-		frame.setTitle("Astre - Paramètre (Heures)");
-		frame.setMinimumSize(new Dimension(520, 150));
+		/*       */
+		/* Frame */
+		/*       */
+
 		this.frame = frame;
 
-		// Création des composants
-		JScrollPane spGrilleDonnees;
+		//Taille
+		this.frame.setTitle("Astre - Paramètre (Heures)");
+		this.frame.setMinimumSize(new Dimension(520, 150));
 
+
+
+		/*                         */
+		/* Création des composants */
+		/*                         */
+
+		//Table des données
+		JScrollPane spGrilleDonnees;
 		this.tblGrilleDonnees = new JTable(new GrilleCatHeures());
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
+		//Bouton
 		this.btnValider = new JButton("Valider");
 		this.btnRetour = new JButton("Annuler");
 		this.btnAjouter = new JButton("Ajouter");
 		this.btnSupprimer = new JButton("Supprimer");
 
+
+
+		/*                               */
+		/* Positionnement des composants */
+		/*                               */
+
+		// Layout
+		this.setLayout(new BorderLayout());
+
+		// Positionnement
+		spGrilleDonnees = new JScrollPane(this.tblGrilleDonnees);
+		spGrilleDonnees.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+		JPanel panelBtn = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		panelBtn.add(this.btnRetour);
+		panelBtn.add(this.btnAjouter);
+		panelBtn.add(this.btnSupprimer);
+		panelBtn.add(this.btnValider);
+
+		this.add(panelBtn, BorderLayout.SOUTH);
+		this.add(spGrilleDonnees, BorderLayout.CENTER);
+
+
+
+		/*                      */
+		/* Style des composants */
+		/*                      */
+
 		// Button
-        Dimension buttonSize = new Dimension(120, 20); // Vous pouvez ajuster la taille selon vos besoins
+        Dimension buttonSize = new Dimension(120, 20);
         this.btnValider  .setMinimumSize(buttonSize);
         this.btnRetour   .setMinimumSize(buttonSize);
         this.btnAjouter  .setMinimumSize(buttonSize);
@@ -65,32 +118,26 @@ public class PanelHeurePara extends JPanel {
         this.btnAjouter  .setBackground(coul);
         this.btnSupprimer.setBackground(coul);
 
-		// Layout
-		this.setLayout(new BorderLayout());
+		// JTable
+		Dimension tableSize = this.tblGrilleDonnees.getPreferredSize();
+        this.tblGrilleDonnees.getColumn(0).setPreferredWidth(Math.round((tableSize.width - 250)* 0.70f));
+        this.tblGrilleDonnees.getColumn(1).setPreferredWidth(Math.round((tableSize.width - 250)* 0.30f));
 
-		// Positionnement
 
-		spGrilleDonnees = new JScrollPane(this.tblGrilleDonnees);
-		spGrilleDonnees.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-		JPanel panelBtn = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		panelBtn.add(this.btnRetour);
-		panelBtn.add(this.btnAjouter);
-		panelBtn.add(this.btnSupprimer);
-		panelBtn.add(this.btnValider);
+		this.tblGrilleDonnees.getColumnModel().getColumn(0).setMaxWidth((int) (tailleTbl*0.75));
+		this.tblGrilleDonnees.getColumnModel().getColumn(1).setMaxWidth((int) (tailleTbl*0.25));
 
-		this.add(panelBtn, BorderLayout.SOUTH);
-		this.add(spGrilleDonnees, BorderLayout.CENTER);
 
-		// Taille colomne JTable
-		this.tblGrilleDonnees.getColumnModel().getColumn(0).setMinWidth(80);
-		this.tblGrilleDonnees.getColumnModel().getColumn(1).setMinWidth(30);
 
-		// Actionnement
-		this.btnValider.addActionListener((e) -> this.valider());
-		this.btnRetour.addActionListener((e) -> this.annuler());
+		/*                           */
+		/* Activation des composants */
+		/*                           */
+
+		this.btnValider.addActionListener  ((e) -> this.valider  ());
+		this.btnRetour.addActionListener   ((e) -> this.annuler  ());
 		this.btnSupprimer.addActionListener((e) -> this.supprimer());
-		this.btnAjouter.addActionListener((e) -> this.ajouter());
+		this.btnAjouter.addActionListener  ((e) -> this.ajouter  ());
 	}
 	
 	private void annuler() {

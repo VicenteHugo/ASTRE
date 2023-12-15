@@ -23,6 +23,7 @@ import javax.swing.border.Border;
 
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
+import controleur.*;
 
 public class PanelRessources extends JPanel {
 
