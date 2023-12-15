@@ -6,8 +6,10 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,6 +17,7 @@ import javax.swing.JTextField;
 
 import controleur.Controleur;
 import model.Affectations;
+import model.CategorieHeures;
 import model.CategorieIntervenant;
 import model.Intervenants;
 import view.accueil.FrameAccueil;
@@ -27,7 +30,7 @@ public class PanelAddRessourceIntervenant extends JPanel {
 	
 	private JTextField txtNomIntervenant;
 	private JTextField txtPrenomIntervenant;
-	private JTextField txtType;
+	private JComboBox boxCategorie;	
 	private JTextField txtNbSemaine;
 	private JTextField txtNbGroupe;
     private JTextField txtTotal;
@@ -48,9 +51,13 @@ public class PanelAddRessourceIntervenant extends JPanel {
 
 
 		//Création
+		ArrayList<CategorieHeures> l = Controleur.getControleur().getCategorieHeures();
+		this.boxCategorie = new JComboBox();
+		for(int i=0; i < l.size(); i++){
+			this.boxCategorie.addItem(l.get(i).getlibCatHeur());
+		}
 		this.txtNomIntervenant    = new JTextField(10);
 		this.txtPrenomIntervenant = new JTextField(10);
-		this.txtType              = new JTextField(10);
 		this.txtNbSemaine         = new JTextField(3);
 		this.txtNbGroupe          = new JTextField(3);
 		this.txtCommentaire       = new JTextField(15);
@@ -88,7 +95,7 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		gbc.gridy++;
 		panelCentre.add(new JLabel("Type : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtType, gbc);
+		panelCentre.add(this.boxCategorie, gbc);
 		
 		gbc.gridx = 0;
 		gbc.gridy++;
@@ -120,13 +127,21 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		//Activation
 		this.btnValider.addActionListener((e)->{
 			Intervenants i = null;
+			CategorieHeures categ = null;
+			int nbSemaine = Integer.parseInt(this.txtNbSemaine.getText());
+			int nb;
 			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
 				if(inter.getNomIntervenant().equals(this.txtNomIntervenant.getText()) && 
 				inter.getPrenomIntervenant().equals(this.txtPrenomIntervenant.getText())){
 					i = inter;
 				}
 			}
-			Affectations affectations = new Affectations(i, null, null, ABORT, TOOL_TIP_TEXT_KEY);
+			for(CategorieHeures ch : Controleur.getControleur().getCategorieHeures()){
+				if(ch.getlibCatHeur().equals(this.boxCategorie.getSelectedItem())){
+					categ =ch;
+				}
+			}
+			Affectations affectations = new Affectations(i, null, categ, ABORT, TOOL_TIP_TEXT_KEY);
 			this.panel.maj();	
 		});
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());

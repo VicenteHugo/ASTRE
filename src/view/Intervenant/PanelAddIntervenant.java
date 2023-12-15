@@ -152,7 +152,7 @@ public class PanelAddIntervenant extends JPanel {
 					float coef = (float) Integer.parseInt(this.txtCoefTP.getText());
 					if(heuresMax > heuresService){
 						Intervenants inter = new Intervenants(categ, this.txtNom.getText(), this.txtPrenom.getText(),
-							heuresService, heuresMax,coef);
+							heuresService,heuresMax,coef);
 						Controleur.getControleur().ajouterIntervenant(inter);
 						this.frameM.dispose();
 					}else{

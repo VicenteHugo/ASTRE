@@ -44,10 +44,10 @@ public class Ajout extends Action {
 	public Ajout(Intervenants inter) {
 
 		this.requetes = "INSERT INTO Intervenants" + Etat.nom
-				+ " (nomInt, prenomInt, heureMinInt, heureMaxInt, categInt) VALUES (?,?,?,?,?)";
+				+ " (nomInt, prenomInt, heureMinInt, heureMaxInt, categInt,coefInt) VALUES (?,?,?,?,?,?)";
 
 		this.info = new ArrayList<>(List.of(inter.getNomIntervenant(), inter.getPrenomIntervenant(),
-				inter.getServices(), inter.getMaxHeures(), inter.getCategorieIntervenant().getCodeCatInt()));
+				inter.getServices(), inter.getMaxHeures(), inter.getCategorieIntervenant().getCodeCatInt(),inter.getCoefficient()));
 	}
 
 	public Ajout(CategorieHeures cat) {
