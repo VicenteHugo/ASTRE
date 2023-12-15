@@ -52,6 +52,10 @@ public class Controleur {
 		return Etat.getIntervenants();
 	}
 
+	public Intervenants getIntervenants(int i){
+		return Etat.getIntervenants(i);
+	}
+
 	public ArrayList<Module> getModules() {
 		return Etat.getModules();
 	}
@@ -84,6 +88,10 @@ public class Controleur {
 
 	public ArrayList<Affectations> getAffectations() {
 		return Etat.getAffectations();
+	}
+
+	public CategorieIntervenant getCategorieIntervenant(String nom){
+		return Etat.getCatInt(nom);
 	}
 
 	/*-------------------------------------------------------------*/
@@ -196,9 +204,7 @@ public class Controleur {
 
 	public boolean modifIntervenant(int i, CategorieIntervenant categ, String nomIntervenant, String prenomIntervenant,
 			int services, int mexHeure, float coef) {
-
-		Intervenants cOld = Etat.getIntervenant(nomIntervenant, prenomIntervenant);
-
+		Intervenants cOld = Etat.getIntervenants(i);
 		/*
 		 * System.out.println("Meme objet ? : " + (Etat.getCatInt(code) == cOld));
 		 * System.out.println("Objet null ? : " + (Etat.getCatInt(code) == null));
@@ -208,11 +214,9 @@ public class Controleur {
 		// bon
 		if ((Etat.getIntervenant(nomIntervenant, prenomIntervenant) == null
 				|| Etat.getIntervenant(nomIntervenant, prenomIntervenant) == cOld) && i >= 0
-				&& i < Etat.getCategoriesIntervenants().size()) {
-
+				&& i < Etat.getIntervenants().size()) {
 			// On remplace l'objet
 			Intervenants cNew = new Intervenants(categ, nomIntervenant, prenomIntervenant, services, mexHeure,coef);
-			System.out.println(cNew);
 			Etat.getIntervenants().add(i, cNew);
 			Etat.getIntervenants().remove(cOld);
 
@@ -224,6 +228,7 @@ public class Controleur {
 		return false;
 	}
 
+<<<<<<< HEAD
 	public void ajouterIntervenantRessources(Intervenants inter) {
 		Etat.ajouterAction(new Ajout(inter));
 	}
@@ -238,6 +243,10 @@ public class Controleur {
 		
 		
 		return false;
+=======
+	public void setIntervenant(Object values){
+		return;
+>>>>>>> b8d3b9ee0ef322b68dde0ff8f044297d5731f47b
 	}
 
 	public String[] getEtats() {

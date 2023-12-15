@@ -295,6 +295,7 @@ public class Etat {
 		return Etat.lstIntervenants;
 	}
 
+
 	public static ArrayList<Module> getModules() {
 		return Etat.lstModule;
 	}
@@ -305,6 +306,10 @@ public class Etat {
 				return i;
 
 		return null;
+	}
+
+	public static Intervenants getIntervenants(int i){
+		return Etat.lstIntervenants.get(i);
 	}
 
 	public static List<Intervenants> getIntervenants(CategorieIntervenant cat) {
