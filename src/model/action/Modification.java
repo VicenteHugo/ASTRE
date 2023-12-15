@@ -33,7 +33,7 @@ public class Modification extends Action {
 
 	public Modification(Intervenants iOld, Intervenants iNew) {
 
-		this.requetes = "UPDATE Intervenant" + Etat.nom + " SET intNom = ?, intPrenom = ?, heureMinInt = ?, heureMaxInt = ?, categInt = ?, coefInt = ? WHERE intNom = ? AND intPrenom = ?;";
+		this.requetes = "UPDATE Intervenants" + Etat.nom + " SET nomInt = ?, prenomInt = ?, heureMinInt = ?, heureMaxInt = ?, categInt = ?, coefInt = ? WHERE nomInt = ? AND prenomInt = ?;";
 
 		this.info = new ArrayList<>(
 				List.of(iNew.getNomIntervenant(), iNew.getPrenomIntervenant(), iNew.getServices(), iNew.getMaxHeures(),
