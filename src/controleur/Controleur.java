@@ -228,12 +228,12 @@ public class Controleur {
 		return false;
 	}
 
-<<<<<<< HEAD
-	public void ajouterIntervenantRessources(Intervenants inter) {
-		Etat.ajouterAction(new Ajout(inter));
+	public void ajouterIntervenantRessources(Affectations affect) {
+		Etat.ajouterAction(new Ajout(affect));
+		Etat.ajouterAffectation(affect);
 	}
 
-	public void supprimerIntervenantRessources(Intervenants inter) {
+	public void supprimerIntervenantRessources(Affectations affect) {
 
 	}
 	
@@ -243,10 +243,6 @@ public class Controleur {
 		
 		
 		return false;
-=======
-	public void setIntervenant(Object values){
-		return;
->>>>>>> b8d3b9ee0ef322b68dde0ff8f044297d5731f47b
 	}
 
 	public String[] getEtats() {

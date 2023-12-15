@@ -70,16 +70,16 @@ public class GrilleRessources extends AbstractTableModel {
 		if (value == this.tabDonnees[row][col])
 			return;
 
-		String intervenant = (String)  this.tabDonnees[row][0];
-		String type        = (String)  this.tabDonnees[row][1];
-		int    nbSem       = (Integer) this.tabDonnees[row][2];
-		int    nbGp        = (Integer) this.tabDonnees[row][3];
-		int    hTot        = (Integer) this.tabDonnees[row][4];
-		String com         = (String)  this.tabDonnees[row][5];
+		String nomInter  = (String)  this.tabDonnees[row][0];
+		String type      = (String)  this.tabDonnees[row][1];
+		int    nbSem     = (Integer) this.tabDonnees[row][2];
+		int    nbGp      = (Integer) this.tabDonnees[row][3];
+		int    hTot      = (Integer) this.tabDonnees[row][4];
+		String com       = (String)  this.tabDonnees[row][5];
 
 		switch (col) {
 			case 0:
-				intervenant = (String) value;
+				nomInter = (String) value;
 				break;
 
 			case 1:
@@ -106,10 +106,10 @@ public class GrilleRessources extends AbstractTableModel {
 				break;
 		}
 
-		if (nbSem < 0 || nbGp < 0 || intervenant.isEmpty() || type.isEmpty())
+		if (nbSem < 0 || nbGp < 0 || nomInter.isEmpty() || type.isEmpty())
 			return;
 		
-		if(Controleur.getControleur().modifIntervenantRessources(row, intervenant, type, nbSem, nbGp, hTot, com))
+		if(Controleur.getControleur().modifIntervenantRessources(row, nomInter, type, nbSem, nbGp, hTot, com))
 			this.tabDonnees[row][col] = value;
 
 	}

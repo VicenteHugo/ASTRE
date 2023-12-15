@@ -366,6 +366,10 @@ public class Etat {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void ajouterAffectation(Affectations affect) {
+		Etat.lstAffectations.add(affect);
+	}
 
 	public static ArrayList<Affectations> getAffectations() {
 		return Etat.lstAffectations;
