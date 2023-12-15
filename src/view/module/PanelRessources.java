@@ -27,8 +27,7 @@ public class PanelRessources extends JPanel {
     private JButton    btnAjouter,btnSupprimer,btnEnregistrer,btnAnnuler;
     private JLabel     typeModuleT,semestreT,codeT,libLongT,libCourtT;
     private JTextField typeModule,semestre,code,libLong,libCourt, nbEtd,nbGpTD,nbGpTP;
-    private JPanel panelGauche;
-    private JPanel panelDroit;
+    private JPanel panelGauche, panelDroit;
 
     private JTable tblGrilleDonnees;
     
@@ -93,24 +92,66 @@ public class PanelRessources extends JPanel {
 
         JPanel panelInfo = new JPanel();
         panelInfo.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 4; // Étendre sur deux colonnes
-        gbc.anchor = GridBagConstraints.CENTER; // Aligner au centre
-        gbc.insets = new Insets(20, 10, 20, 10); // Marges
+        GridBagConstraints c = new GridBagConstraints();
+        //c.anchor = GridBagConstraints.FIRST_LINE_START; // Aligner au centre
+        c.insets = new Insets(0, 0, 0, 0); // Marges
 
-        panelInfo.add(this.typeModuleT);
-        panelInfo.add(this.semestreT);
-        panelInfo.add(this.codeT);
-        panelInfo.add(this.libLongT);
-        panelInfo.add(this.libCourtT);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth=5;
+        panelInfo.add(this.typeModuleT,c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 5;
+		c.gridy = 0;
+		c.gridwidth=3;
+        panelInfo.add(this.semestreT,c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 8;
+		c.gridy = 0;
+		c.gridwidth=3;
+        panelInfo.add(this.codeT,c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 11;
+		c.gridy = 0;
+		c.gridwidth=13;
+        panelInfo.add(this.libLongT,c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 24;
+		c.gridy = 0;
+		c.gridwidth=10;
+        panelInfo.add(this.libCourtT,c);
+		
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 1;
+        panelInfo.add(this.typeModule,c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 1;
+        panelInfo.add(this.semestre,c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 1;
+        panelInfo.add(this.code,c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 3;
+		c.gridy = 1;
+        panelInfo.add(this.libLong,c);
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 4;
+		c.gridy = 1;
+        panelInfo.add(this.libCourt,c);
 
-        panelInfo.add(this.typeModule);
-        panelInfo.add(this.semestre);
-        panelInfo.add(this.code);
-        panelInfo.add(this.libLong);
-        panelInfo.add(this.libCourt);
         this.panelGauche.add(panelInfo);
 
 		JPanel panelNombre = new JPanel();
