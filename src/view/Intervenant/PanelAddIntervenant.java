@@ -6,6 +6,7 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -20,6 +21,7 @@ import javax.swing.JTextField;
 import controleur.Controleur;
 import model.CategorieHeures;
 import model.CategorieIntervenant;
+import model.Etat;
 import model.Intervenants;
 import view.accueil.FrameAccueil;
 
@@ -32,7 +34,7 @@ public class PanelAddIntervenant extends JPanel {
 	private JComboBox<CategorieIntervenant> comboCategorie;
 
 
-	private JTextField txtCategorie;
+	private JComboBox boxCategorie;
 	private JTextField txtNom;
 	private JTextField txtPrenom;
 	private JTextField txtHServ;
@@ -57,7 +59,12 @@ public class PanelAddIntervenant extends JPanel {
 		//this.choixCategorie = new DefaultListModel<>();
 		//this.choixCategorie.addAll(Controleur.getControleur().getCategorieIntervenants());
 		// this.comboCategorie = new JComboBox<>(this.choixCategorie.toArray());
-		this.txtCategorie = new JTextField(10);
+		ArrayList<CategorieIntervenant> l = Controleur.getControleur().getCategorieIntervenants();
+		this.boxCategorie = new JComboBox();
+		for(int i=0; i < l.size(); i++){
+			this.boxCategorie.addItem(l.get(i).getCodeCatInt());
+		}
+
 
 		this.txtNom = new JTextField(10);
 		this.txtPrenom = new JTextField(10);
@@ -85,7 +92,7 @@ public class PanelAddIntervenant extends JPanel {
 
 		panelCentre.add(new JLabel("Catégorie de l'intervenant : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtCategorie, gbc);
+		panelCentre.add(this.boxCategorie, gbc);
 
 		gbc.gridx = 0;
 		gbc.gridy++;
@@ -129,7 +136,7 @@ public class PanelAddIntervenant extends JPanel {
 		this.btnValider.addActionListener((e) -> {
 			CategorieIntervenant categ = null;
 			for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
-				if (ch.getCodeCatInt().equals(this.txtCategorie.getText())) {
+				if (ch.getCodeCatInt().equals(this.boxCategorie.getSelectedItem())) {
 					categ = ch;
 					break;
 				}
