@@ -337,6 +337,8 @@ public class Etat {
 		Etat.lstCategorieIntervenants.add(categorieIntervenant);
 	}
 
+	
+
 	/*--------------------------------------------------------------*/
 	/* LIAISON 3 */
 	/*--------------------------------------------------------------*/
@@ -377,6 +379,17 @@ public class Etat {
 		return Etat.lstAffectations;
 	}
 
+	public static Affectations getAffectations(int i){
+		return Etat.lstAffectations.get(i);
+	}
+
+	public static Affectations getAffectations(String nomInter) {
+		for (Affectations i : Etat.lstAffectations)
+			if (i.getIntervenant().getNomIntervenant().equals(nomInter))
+				return i;
+
+		return null;
+	}
 	/*--------------------------------------------------------------*/
 	/* ACTIONS */
 	/*--------------------------------------------------------------*/
