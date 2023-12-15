@@ -26,6 +26,7 @@ import view.previsionnel.PanelPrevi;
 import controleur.*;
 import model.Semestres;
 import model.modules.Module;
+import model.modules.Ressource;
 
 public class PanelRessources extends JPanel {
 
@@ -38,6 +39,8 @@ public class PanelRessources extends JPanel {
     private JPanel panelHaut, panelBas;
 
     private JTable tblGrilleDonnees;
+
+	private Module mod;
     
     public PanelRessources(FrameAccueil frame){
         
@@ -388,7 +391,7 @@ public class PanelRessources extends JPanel {
 		this.btnEnregistrer.addActionListener((e) ->this.maj()       );
 		this.btnSupprimer.addActionListener(  (e) ->this.supprimer());
 
-
+		this.mod = new Ressource(null, null, "null", "null", 0);
 	}
 
 
@@ -408,6 +411,7 @@ public class PanelRessources extends JPanel {
 		this.nbGpTP.setText("" + s.getNbGpTpSem());
 
 		//
+		this.mod = m;
 
 	}
 
