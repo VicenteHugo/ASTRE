@@ -42,6 +42,8 @@ public class PanelRessources extends JPanel {
         //Création style
         Font styleLib = new Font("Arial", Font.PLAIN,11 );// Taille et style de police
         UIManager.put("Label.font", styleLib); //Pour tout les labels
+
+		Border outline = BorderFactory.createLineBorder(Color.GRAY);
         
         
         // Frame
@@ -92,8 +94,6 @@ public class PanelRessources extends JPanel {
 		this.panelBas.setLayout(new BorderLayout());
 
 		// Positionnement
-
-		Border outline = BorderFactory.createLineBorder(Color.black);
 
 
 		JPanel panelInfo    = new JPanel();
