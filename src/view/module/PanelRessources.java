@@ -1,8 +1,15 @@
 package view.module;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -11,9 +18,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
 
+<<<<<<< HEAD
+=======
 import controleur.Controleur;
 import view.Intervenant.PanelAddIntervenant;
+>>>>>>> 0ece04fa9aeea128c4a10c7baf11bbaa15d9fd1a
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 
@@ -21,177 +33,345 @@ public class PanelRessources extends JPanel {
 
 	private FrameAccueil frame;
 
-	private JButton btnAjouter;
-	private JButton btnSupprimer;
-	private JButton btnEnregistrer;
-	private JButton btnAnnuler;
+    private JButton    btnAjouter,btnSupprimer,btnEnregistrer,btnAnnuler;
+    private JLabel     typeModuleT,semestreT,codeT,libLongT,libCourtT;
+    private JTextField typeModule,semestre,code,libLong,libCourt, nbEtd,nbGpTD,nbGpTP;
+	private JCheckBox  checkBoxValid;
+    private JPanel panelHaut, panelBas;
 
-	private JPanel panelGauche;
-	private JPanel panelDroit;
+    private JTable tblGrilleDonnees;
+    
+    public PanelRessources(FrameAccueil frame){
+        
+        //Création style
+        Font styleLib = new Font("Arial", Font.PLAIN,11 );// Taille et style de police
+        UIManager.put("Label.font", styleLib); //Pour tout les labels
+        
+        
+        // Frame
+        this.frame = frame;
+        this.frame.setTitle("Astre - Prévisionnel - Module");
+		this.frame.setMinimumSize(new Dimension(1200, 700));
+		this.frame.setResizable(true);
 
-	private JTable tblGrilleDonnees;
+        // Creation Composants
+        this.btnAjouter     = new JButton("Ajouter");
+        this.btnSupprimer   = new JButton("Supprimer");
+        this.btnEnregistrer = new JButton("Enregistrer");
+        this.btnAnnuler     = new JButton("Annuler");
+        
+        this.typeModuleT = new JLabel("type module");
+        this.semestreT   = new JLabel("semestre");
+        this.codeT       = new JLabel("code");
+        this.libLongT    = new JLabel("libellé long");
+        this.libCourtT   = new JLabel("libellé court");
+        
+        this.typeModule = new JTextField("Ressource",9);
+        this.semestre   = new JTextField("S1",8);
+        this.code       = new JTextField("R1.01",6);
+        this.libLong    = new JTextField("Initiation au développement",30);
+        this.libCourt   = new JTextField("Init dev",10);
 
-	public PanelRessources(FrameAccueil frame) {
+        this.nbEtd    = new JTextField("85",3);
+        this.nbGpTD   = new JTextField("4",3);
+        this.nbGpTP   = new JTextField("7",3);
 
-		// Frame
-		this.frame = frame;
-		frame.setTitle("Astre - Prévisionnel - Module");
-		frame.setMinimumSize(new Dimension(900, 500));
+		this.checkBoxValid = new JCheckBox("Validation");
 
-		// Composants
-		this.btnAjouter = new JButton("Ajouter");
-		this.btnSupprimer = new JButton("Supprimer");
-		this.btnEnregistrer = new JButton("Enregistrer");
-		this.btnAnnuler = new JButton("Annuler");
+        this.panelHaut = new JPanel();
+        this.panelBas  = new JPanel();        
 
-		this.panelGauche = new JPanel();
-		this.panelDroit = new JPanel();
-
-		// Layout
-		this.setLayout(new GridLayout(1, 2, 10, 10));
-		this.panelGauche.setLayout(new GridLayout(8, 1));
-		this.panelDroit.setLayout(new GridLayout(2, 1));
+        this.typeModule.setEditable(false);// non editable
+        this.semestre  .setEditable(false);
+        this.nbEtd     .setEditable(false);
+        this.nbGpTD    .setEditable(false);
+        this.nbGpTP    .setEditable(false);
+		
+		this.nbEtd     .setHorizontalAlignment(JTextField.CENTER);//centrer le texte
+        this.nbGpTD    .setHorizontalAlignment(JTextField.CENTER);
+        this.nbGpTP    .setHorizontalAlignment(JTextField.CENTER);
+        // Layout
+        this.setLayout(new GridLayout(2, 1, 0, 0));
+		this.panelHaut.setLayout(new GridBagLayout());
+		this.panelBas.setLayout(new BorderLayout());
 
 		// Positionnement
 
-		JPanel panelInfo = new JPanel();
-		panelInfo.setLayout(new GridLayout(2, 5));
-		panelInfo.add(new JLabel("type module"));
-		panelInfo.add(new JLabel("semestre"));
-		panelInfo.add(new JLabel("code"));
-		panelInfo.add(new JLabel("libellé long"));
-		panelInfo.add(new JLabel("libellé court"));
+		Border outline = BorderFactory.createLineBorder(Color.black);
 
-		panelInfo.add(new JTextField("Ressources"));
-		panelInfo.add(new JTextField("S1"));
-		panelInfo.add(new JTextField("R1.01"));
-		panelInfo.add(new JTextField("Initiation au développement"));
-		panelInfo.add(new JTextField("Init dev"));
-		this.panelGauche.add(panelInfo);
 
-		JPanel panelNombre = new JPanel();
-		panelNombre.setLayout(new GridLayout(2, 3));
-		panelNombre.add(new JLabel("nb Etd"));
-		panelNombre.add(new JLabel("nb gp TD"));
-		panelNombre.add(new JLabel("nb gp TP"));
+		JPanel panelInfo    = new JPanel();
+        JPanel panelInfoTab = new JPanel();
+		panelInfo.setLayout(new FlowLayout(FlowLayout.LEFT,10,0));
+        panelInfoTab.setLayout(new GridBagLayout());
+        GridBagConstraints cGeneral = new GridBagConstraints();//constraintsGeneraux modifiable
+        cGeneral.anchor = GridBagConstraints.LINE_START;
+		cGeneral.gridx = 0;
+		cGeneral.gridy = 0;
+		cGeneral.insets = new java.awt.Insets(5, 0, 5, 5);
 
-		panelNombre.add(new JTextField("85"));
-		panelNombre.add(new JTextField("4"));
-		panelNombre.add(new JTextField("7"));
-		this.panelGauche.add(panelNombre);
+		
+        panelInfoTab.add(this.typeModuleT,cGeneral);
+		cGeneral.gridx ++;
+        panelInfoTab.add(this.semestreT,cGeneral);
+		cGeneral.gridx ++;
+        panelInfoTab.add(this.codeT,cGeneral);
+		cGeneral.gridx ++;
+        panelInfoTab.add(this.libLongT,cGeneral);
+		cGeneral.gridx ++;
+        panelInfoTab.add(this.libCourtT,cGeneral);
+		
+		cGeneral.gridx = 0;
+		cGeneral.gridy ++;
+        panelInfoTab.add(this.typeModule,cGeneral);
+		
+		cGeneral.gridx ++;
+        panelInfoTab.add(this.semestre,cGeneral);
+		
+		cGeneral.gridx ++;
+        panelInfoTab.add(this.code,cGeneral);
+		
+		cGeneral.gridx ++;
+        panelInfoTab.add(this.libLong,cGeneral);
+		
+		cGeneral.gridx ++;
+        panelInfoTab.add(this.libCourt,cGeneral);
 
-		this.panelGauche.add(new JLabel("PN local(nb h tot/etd)"));
+        cGeneral.gridy++;
+        cGeneral.gridx = 0;
+        panelInfoTab.add(new JLabel("nb Etd"), cGeneral);
+        cGeneral.gridx++;
+		panelInfoTab.add(new JLabel("nb gp TD"), cGeneral);
+        cGeneral.gridx++;
+		panelInfoTab.add(new JLabel("nb gp TP"), cGeneral);
 
-		JPanel panelPnLocal = new JPanel();
-		panelPnLocal.setLayout(new GridLayout(3, 5));
-		panelPnLocal.add(new JLabel());
-		panelPnLocal.add(new JLabel("CM"));
-		panelPnLocal.add(new JLabel("TD"));
-		panelPnLocal.add(new JLabel("TP"));
-		panelPnLocal.add(new JLabel("∑"));
+		cGeneral.gridy++;
+        cGeneral.gridx = 0;
+        panelInfoTab.add(this.nbEtd, cGeneral);
+        cGeneral.gridx++;
+		panelInfoTab.add(this.nbGpTD, cGeneral);
+        cGeneral.gridx++;
+		panelInfoTab.add(this.nbGpTP, cGeneral);
+		panelInfo.add(panelInfoTab);
 
-		panelPnLocal.add(new JLabel());
-		panelPnLocal.add(new JTextField("6"));
-		panelPnLocal.add(new JTextField("65"));
-		panelPnLocal.add(new JTextField("28"));
-		panelPnLocal.add(new JTextField("99"));
+		cGeneral.gridx = 0;
+		cGeneral.gridy = 0;
+        this.panelHaut.add(panelInfo,cGeneral);
 
-		panelPnLocal.add(new JLabel("Total (eqtd) promo"));
-		panelPnLocal.add(new JTextField("9"));
-		panelPnLocal.add(new JTextField("260"));
-		panelPnLocal.add(new JTextField("196"));
-		panelPnLocal.add(new JTextField("465"));
+		//PN local
+        JPanel panelInfo2 = new JPanel();
+        panelInfo2.setLayout(new GridBagLayout());
+        JPanel panelPnLocal = new JPanel();
+		JPanel panelPnLocalTab = new JPanel();
+		panelPnLocal.setLayout(new GridBagLayout());
+		panelPnLocalTab.setLayout(new GridBagLayout());
+        panelPnLocalTab.setBorder(outline);
+		GridBagConstraints gbcTab   = new GridBagConstraints();
+		cGeneral.anchor = GridBagConstraints.CENTER;
+		cGeneral.gridx  = 0;
+		cGeneral.gridy  = 0;
+		gbcTab.gridx    = 1;
+		gbcTab.gridy    = 0;
 
-		this.panelGauche.add(panelPnLocal);
-		this.panelGauche.add(new JLabel("Répartition"));
+		gbcTab.insets = new java.awt.Insets(5, 5, 5, 5);
+		
+		//Première Ligne (entetes)
+		panelPnLocalTab.add(new JLabel("CM"), gbcTab);
+        gbcTab.gridx++;
+		panelPnLocalTab.add(new JLabel("TD"), gbcTab);
+        gbcTab.gridx++;
+		panelPnLocalTab.add(new JLabel("TP"), gbcTab);
+        gbcTab.gridx++;
+		panelPnLocalTab.add(new JLabel("∑"), gbcTab);
 
-		JPanel panelRépartition = new JPanel();
-		panelRépartition.setLayout(new GridLayout(3, 5));
-		panelRépartition.add(new JLabel());
-		panelRépartition.add(new JLabel("CM"));
-		panelRépartition.add(new JLabel());
-		panelRépartition.add(new JLabel("TD"));
-		panelRépartition.add(new JLabel());
-		panelRépartition.add(new JLabel("TP"));
+		//Deuxième ligne
+        gbcTab.gridx = 1;
+		gbcTab.gridy++;
+		panelPnLocalTab.add(new JTextField("6",3), gbcTab);
+        gbcTab.gridx++;
+		panelPnLocalTab.add(new JTextField("65",3), gbcTab);
+        gbcTab.gridx++;
+		panelPnLocalTab.add(new JTextField("28",3), gbcTab);
+        gbcTab.gridx++;
+		panelPnLocalTab.add(new JTextField("99",3), gbcTab);
 
-		panelRépartition.add(new JLabel("nb Sem"));
-		panelRépartition.add(new JLabel("nb h/sem"));
-		panelRépartition.add(new JLabel("nb Sem"));
-		panelRépartition.add(new JLabel("nb h/sem"));
-		panelRépartition.add(new JLabel("nb Sem"));
-		panelRépartition.add(new JLabel("nb h/sem"));
+        //Troisième ligne
+		gbcTab.gridx = 0;
+		gbcTab.gridy++;
+		panelPnLocalTab.add(new JLabel("Total (eqtd) promo"), gbcTab);
+        gbcTab.gridx++;
+		panelPnLocalTab.add(new JTextField("9",3), gbcTab);
+        gbcTab.gridx++;
+		panelPnLocalTab.add(new JTextField("260",3), gbcTab);
+        gbcTab.gridx++;
+		panelPnLocalTab.add(new JTextField("196",3), gbcTab);
+        gbcTab.gridx++;
+		panelPnLocalTab.add(new JTextField("465",3), gbcTab);
 
-		panelRépartition.add(new JTextField("6"));
-		panelRépartition.add(new JTextField("1"));
-		panelRépartition.add(new JTextField("14"));
-		panelRépartition.add(new JTextField("4"));
-		panelRépartition.add(new JTextField("14"));
-		panelRépartition.add(new JTextField("2"));
+		panelPnLocal.add(new JLabel("PN local(nb h tot/etd)"), cGeneral);
+		cGeneral.gridy++;
+		panelPnLocal.add(panelPnLocalTab, cGeneral);
+		
 
-		this.panelGauche.add(panelRépartition);
+		//PanelRepartition
+        JPanel PanelRepartition = new JPanel();
+		JPanel PanelRepartitionTab = new JPanel();
+        PanelRepartition.setLayout(new GridBagLayout());
+		PanelRepartitionTab.setLayout(new GridBagLayout());
+        PanelRepartitionTab.setBorder(outline);
+		JPanel panelSemaine = new JPanel();
+		panelSemaine.setLayout(new GridBagLayout());
+		cGeneral.gridx   = 0;
+		cGeneral.gridy   = 0;
+		cGeneral.insets = new java.awt.Insets(5, 5, 0, 5);
 
-		JPanel panelRépartition2 = new JPanel();
-		panelRépartition2.setLayout(new GridLayout(4, 6));
-		panelRépartition2.add(new JLabel());
-		panelRépartition2.add(new JLabel("CM"));
-		panelRépartition2.add(new JLabel("TD"));
-		panelRépartition2.add(new JLabel("TP"));
-		panelRépartition2.add(new JLabel("heure ponctuelle"));
-		panelRépartition2.add(new JLabel("∑"));
+		cGeneral.gridwidth = 2;
+		panelSemaine.add(new JLabel("CM"), cGeneral);
+        cGeneral.gridx +=2;
+		panelSemaine.add(new JLabel("TD"), cGeneral);
+		cGeneral.gridx +=2;
+		panelSemaine.add(new JLabel("TP"), cGeneral);
 
-		panelRépartition2.add(new JLabel());
-		panelRépartition2.add(new JTextField("6"));
-		panelRépartition2.add(new JTextField("56"));
-		panelRépartition2.add(new JTextField("28"));
-		panelRépartition2.add(new JTextField("9"));
-		panelRépartition2.add(new JTextField("99"));
+		cGeneral.gridwidth = 1;
+		cGeneral.gridx = 0;
+		cGeneral.gridy = 1;
+        panelSemaine.add(new JLabel("nb Sem"), cGeneral);
+        cGeneral.gridx ++;
+		panelSemaine.add(new JLabel("nb h/sem"), cGeneral);
+        cGeneral.gridx ++;
+		panelSemaine.add(new JLabel("nb Sem"), cGeneral);
+        cGeneral.gridx ++;
+		panelSemaine.add(new JLabel("nb h/sem"), cGeneral);
+        cGeneral.gridx ++;
+		panelSemaine.add(new JLabel("nb Sem"), cGeneral);
+        cGeneral.gridx ++;
+		panelSemaine.add(new JLabel("nb h/sem"), cGeneral);
 
-		panelRépartition2.add(new JLabel("Total promo(eqtd)"));
-		panelRépartition2.add(new JTextField("9"));
-		panelRépartition2.add(new JTextField("224"));
-		panelRépartition2.add(new JTextField("196"));
-		panelRépartition2.add(new JTextField("36"));
-		panelRépartition2.add(new JTextField("465"));
+		cGeneral.gridx = 0;
+		cGeneral.gridy = 2;
+        panelSemaine.add(new JTextField("6",3), cGeneral);
+        cGeneral.gridx++;
+		panelSemaine.add(new JTextField("1",3), cGeneral);
+        cGeneral.gridx++;
+		panelSemaine.add(new JTextField("14",3), cGeneral);
+        cGeneral.gridx++;
+		panelSemaine.add(new JTextField("4",3), cGeneral);
+        cGeneral.gridx++;
+		panelSemaine.add(new JTextField("14",3), cGeneral);
+        cGeneral.gridx++;
+		panelSemaine.add(new JTextField("2",3), cGeneral);
+		
+		cGeneral.gridx = 0;
+		cGeneral.gridy = 0;
+		cGeneral.gridwidth =7;
+		cGeneral.gridheight=2;
 
-		panelRépartition2.add(new JLabel("Total affecté(eqtd)"));
-		panelRépartition2.add(new JTextField("9"));
-		panelRépartition2.add(new JTextField("224"));
-		panelRépartition2.add(new JTextField("168"));
-		panelRépartition2.add(new JTextField("36"));
-		panelRépartition2.add(new JTextField("437"));
+		PanelRepartitionTab.add(panelSemaine,cGeneral);
+		cGeneral.gridheight=1;
+		cGeneral.gridwidth =1;
+        
+		
+		cGeneral.gridx = 8;
+		PanelRepartitionTab.add(new JLabel("CM"), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JLabel("TD"), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JLabel("TP"), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JLabel("heure ponctuelle"), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JLabel("∑"), cGeneral);
 
-		this.panelGauche.add(panelRépartition2);
+		cGeneral.gridy++;
+		cGeneral.gridx = 8;
+		PanelRepartitionTab.add(new JTextField("6",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("56",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("28",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("9",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("99",3), cGeneral);
 
-		this.tblGrilleDonnees = new JTable(new GrilleRessources());
+        cGeneral.gridy++;
+		cGeneral.gridx = 7;
+		PanelRepartitionTab.add(new JLabel("Total promo(eqtd)"), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("9",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("224",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("196",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("36",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("465",3), cGeneral);
+
+        cGeneral.gridy++;
+		cGeneral.gridx = 7;
+		PanelRepartitionTab.add(new JLabel("Total affecté(eqtd)"), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("9",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("224",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("168",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("36",3), cGeneral);
+        cGeneral.gridx++;
+		PanelRepartitionTab.add(new JTextField("437",3), cGeneral);
+		
+		cGeneral.gridx = 0;
+		cGeneral.gridy = 0;
+		PanelRepartition.add(new JLabel("Répartition"), cGeneral);
+		cGeneral.gridy ++;
+		PanelRepartition.add(PanelRepartitionTab, cGeneral);
+		
+		cGeneral.gridx = 0;
+		cGeneral.gridy = 0;
+		cGeneral.gridheight = 5;
+		panelInfo2.add(panelPnLocal,cGeneral);
+		cGeneral.gridx ++;
+		cGeneral.gridheight = 6;
+        panelInfo2.add(PanelRepartition,cGeneral);
+		cGeneral.gridx = 0;
+		cGeneral.gridy = 5;
+		cGeneral.gridheight = 1;
+		panelInfo2.add(this.checkBoxValid,cGeneral);
+		
+		cGeneral.gridx = 0;
+		cGeneral.gridy = 1;
+        
+		this.panelHaut.add(panelInfo2,cGeneral);
+
+
+        JPanel panelTable = new JPanel();
+        panelTable.setLayout(new BorderLayout());
+        panelTable.add(new JLabel("Affectation"), BorderLayout.NORTH);
+
+        this.tblGrilleDonnees = new JTable(new GrilleRessources());
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JScrollPane spGrilleDonnees = new JScrollPane(this.tblGrilleDonnees);
-		this.panelDroit.add(spGrilleDonnees);
+		panelTable.add(spGrilleDonnees, BorderLayout.CENTER);
 
-		JPanel panelBouton = new JPanel();
-		panelBouton.setLayout(new GridLayout(2, 2));
-		JPanel panelBouton1 = new JPanel();
-		JPanel panelBouton2 = new JPanel();
-		JPanel panelCheckBox = new JPanel();
+        JPanel panelBouton = new JPanel();
+        panelBouton.add(this.btnAjouter);
+        panelBouton.add(this.btnSupprimer);
 
-		panelBouton1.add(btnAjouter);
-		panelBouton1.add(btnSupprimer);
+        panelTable.add(panelBouton,BorderLayout.SOUTH);
 
-		panelBouton2.add(btnEnregistrer);
-		panelBouton2.add(btnAnnuler);
+        this.panelBas.add(panelTable, BorderLayout.CENTER);
 
-		JCheckBox chValidation = new JCheckBox("Validation");
-		panelCheckBox.add(chValidation);
+        JPanel panelBouton2 = new JPanel();
+        panelBouton.add(this.btnAnnuler);
+        panelBouton.add(this.btnEnregistrer);
 
-		panelBouton.add(panelBouton1);
-		panelBouton.add(panelCheckBox);
-		panelBouton.add(new JPanel());
-		panelBouton.add(panelBouton2);
+        this.panelBas.add(panelBouton2,BorderLayout.SOUTH);
 
-		this.panelDroit.add(panelBouton);
-
-		this.add(panelGauche);
-		this.add(panelDroit);
+		this.add(panelHaut);
+		this.add(panelBas);
 
 		this.btnAnnuler.addActionListener((e) -> this.frame.changePanel(new PanelPrevi(this.frame)));
         this.btnAjouter.addActionListener((e)->{
