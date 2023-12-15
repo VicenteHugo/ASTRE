@@ -249,12 +249,28 @@ public class Controleur {
 		return Etat.getEtats();
 	}
 
+	public boolean nomEtatLibre (String nom) {
+		for (String nomEtat : Etat.getEtats())
+			if (nomEtat.equals(nom))
+				return false;
+		
+		return true;
+	}
+
 	public void changerEtat (String nom) {
 		Etat.changerEtat(nom);
 	}
 
 	public boolean creerEtat (String nom) {
 		return Etat.creerEtat(nom);
+	}
+
+	public void dupliquerEtat (String etatDest,String etatDep) {
+		Etat.dupliquerEtat(etatDest, etatDep);
+	}
+
+	public boolean suppEtat (String etat) {
+		return Etat.suppEtat(etat);
 	}
 
 	/*-------------------------------------------------------------*/

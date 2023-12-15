@@ -8,6 +8,8 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -119,13 +121,20 @@ public class PanelAddEtat extends JPanel {
 			return;
 		}
 
+		if (PanelAddEtat.containsSpecialCharacter(sNom)) {
+			showMessageDialog("Merci de ne pas entrez de caractère spéciale.");
+			return;
+		}
+
 		// Si la clé est déjà prise
-		if (!Controleur.getControleur().creerEtat(sNom)) {
+		if (!Controleur.getControleur().nomEtatLibre(sNom)) {
 			showMessageDialog("Le nom entré est déjà utilisé");
 		} else {
 
 			if (!this.lstEtat.getSelectedItem().equals("Aucune"))
-				System.out.println("On duplique pas");
+				Controleur.getControleur().dupliquerEtat(sNom, (String) this.lstEtat.getSelectedItem());
+			else
+				Controleur.creerControleur().creerEtat(sNom);
 			this.panel.quitter();
 			this.frameM.dispose();
 		}
@@ -134,5 +143,11 @@ public class PanelAddEtat extends JPanel {
 	private void showMessageDialog(String message) {
 		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
+
+	private static boolean containsSpecialCharacter(String s) {
+        Pattern pattern = Pattern.compile("[^a-zA-Z0-9]");
+        Matcher matcher = pattern.matcher(s);
+        return matcher.find();
+    }
 
 }

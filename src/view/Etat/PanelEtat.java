@@ -2,23 +2,20 @@ package view.Etat;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
 import model.Etat;
 import view.accueil.*;
-import view.parametrage.PanelAddCatHeures;
 
 public class PanelEtat extends JPanel {
 
@@ -27,6 +24,7 @@ public class PanelEtat extends JPanel {
     private JComboBox<String> lstEtat;
     private JButton           btnSelection;
     private JButton           btnNouveau;
+    private JButton           btnSupprimer;
 
     private JComboBox<String> lstGeneration;
     private JButton           btnGenerer;
@@ -44,9 +42,10 @@ public class PanelEtat extends JPanel {
         /* Création des composants */
         //Changement et création d'état
         this.lstEtat = new JComboBox<>(Controleur.getControleur().getEtats());
-        this.lstEtat.setSelectedIndex(0);
+        this.lstEtat.setSelectedItem(Etat.nom);
         this.btnSelection = new JButton("Sélectionner");
         this.btnNouveau   = new JButton("Nouveau");
+        this.btnSupprimer = new JButton("Supprimer");
 
         //Génerer les pages
         this.lstGeneration = new JComboBox<>(new String[] {"Par intervenants", "Par modules", "Recap intervenants"});
@@ -65,17 +64,20 @@ public class PanelEtat extends JPanel {
         this.btnNouveau  .setMinimumSize(buttonSize);
         this.btnRetour   .setMinimumSize(buttonSize);
         this.btnSelection.setMinimumSize(buttonSize);
+        this.btnSupprimer.setMinimumSize(buttonSize);
 
         this.btnGenerer  .setPreferredSize(buttonSize);
         this.btnNouveau  .setPreferredSize(buttonSize);
         this.btnRetour   .setPreferredSize(buttonSize);
         this.btnSelection.setPreferredSize(buttonSize);
+        this.btnSupprimer.setPreferredSize(buttonSize);
 
         Color coul = Color.decode("0xD0D0D0");
         this.btnGenerer  .setBackground(coul);
         this.btnNouveau  .setBackground(coul);
         this.btnRetour   .setBackground(coul);
         this.btnSelection.setBackground(coul);
+        this.btnSupprimer.setBackground(coul);
 
 
         //List
@@ -103,10 +105,14 @@ public class PanelEtat extends JPanel {
         this.add(new JLabel("Changer d'état :"), gbc);
         gbc.gridx++;
         this.add(this.lstEtat, gbc);
+
+        gbc.gridy++;
+        gbc.gridx= 0;
+        this.add(this.btnNouveau, gbc);
+        gbc.gridx++;
+        this.add(this.btnSupprimer, gbc);
         gbc.gridx++;
         this.add(this.btnSelection, gbc);
-        gbc.gridx++;
-        this.add(this.btnNouveau, gbc);
 
         gbc.gridx = 0;
         gbc.gridy++;
@@ -124,6 +130,7 @@ public class PanelEtat extends JPanel {
         this.btnRetour   .addActionListener((e)->this.quitter());
         this.btnNouveau  .addActionListener((e)->this.ajouterEtat());
         this.btnSelection.addActionListener((e)->this.changerEtat());
+        this.btnSupprimer.addActionListener((e)->this.suppEtat());
     }
 
     private void changerEtat () {
@@ -132,6 +139,15 @@ public class PanelEtat extends JPanel {
 
         Controleur.getControleur().changerEtat(nomEtat);
         this.quitter();
+    }
+
+    private void suppEtat () {
+        String nomEtat = (String) this.lstEtat.getSelectedItem();
+        if (Controleur.getControleur().suppEtat(nomEtat)) {
+            this.quitter();
+        } else {
+            JOptionPane.showMessageDialog(this, "Vous pouvez pas supprimer l'Etat sur lequel vous êtes connecté", "Erreur", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public void quitter () {this.frame.changePanel(new PanelAccueil(this.frame));}

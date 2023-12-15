@@ -79,33 +79,6 @@ public class Etat {
 		}
 	}
 
-	public static void changerEtat (String nom) {
-		Etat.nom = nom;
-		Etat.lireFichierSQL(Etat.FICHIER);
-		Etat.genererInfos();
-	}
-
-	public static boolean creerEtat (String nom) {
-
-		for (String etatsNom : Etat.getEtats())
-			if (etatsNom.equals(nom)) return false;
-
-
-		try {
-			Statement st = Etat.connec.createStatement();
-			st.executeUpdate("INSERT INTO Etat (etat) VALUES ('"+nom+"')");
-
-			Etat.nom = nom;
-			Etat.lireFichierSQL(Etat.FICHIER);
-			Etat.genererInfos();
-			return true;
-
-		} catch (Exception e) {
-			System.out.println(e);
-			return false;
-		}
-	}
-
 	private static void genererInfos() {
 		// Générer les premières tables
 		Etat.genererCategorieHeures();
@@ -492,7 +465,7 @@ public class Etat {
 		try {
 
 			Statement st = Etat.connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Etat");
+			ResultSet res = st.executeQuery("SELECT * FROM Etat ORDER BY datecrea DESC");
 
 			while (res.next())
 				etatsList.add(res.getString("etat"));
@@ -531,5 +504,74 @@ public class Etat {
 			e.printStackTrace();
 		}
 
+	}
+
+	public static void dupliquerEtat (String etatDest, String etatDep)
+	{
+		try {
+			Statement st = Etat.connec.createStatement();
+
+			for(String tables : Etat.LST_NOM_TABLES) {
+				System.out.println("CREATE TABLE " + tables + etatDest + " AS TABLE " + tables + etatDep);
+				st.executeUpdate("CREATE TABLE " + tables + etatDest + " AS TABLE " + tables + etatDep );
+			}
+			
+			Etat.verifEtat();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	}
+
+	public static void changerEtat (String nom) {
+		Etat.nom = nom;
+		System.out.println(Etat.nom);
+		Etat.lireFichierSQL(Etat.FICHIER);
+		Etat.genererInfos();
+	}
+
+	public static boolean creerEtat (String nom) {
+
+		for (String etatsNom : Etat.getEtats())
+			if (etatsNom.equals(nom)) return false;
+
+
+		try {
+			Statement st = Etat.connec.createStatement();
+			st.executeUpdate("INSERT INTO Etat (etat) VALUES ('"+nom+"')");
+
+			Etat.nom = nom;
+			Etat.lireFichierSQL(Etat.FICHIER);
+			Etat.verifEtat();
+			Etat.genererInfos();
+			return true;
+
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+
+	private static void verifEtat () {
+		if (Etat.getEtats().length > 5) {
+			Etat.suppEtat(Etat.getEtats()[5]);
+		}
+	}
+
+	public static boolean suppEtat (String nom) {
+
+		if (Etat.nom.equals(nom)) return false;
+
+		try {
+			Statement st = Etat.connec.createStatement();
+
+			st.executeUpdate("DROP TABLE CategorieIntervenants" + nom + " CASCADE");
+			st.executeUpdate("DROP TABLE CategorieHeures" + nom + " CASCADE");
+			st.executeUpdate("DELETE FROM Etat WHERE etat = '" + nom + "'");
+
+			return true;
+
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

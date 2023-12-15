@@ -41,14 +41,14 @@ public class Modification extends Action {
 	}
 
 	public Modification(CategorieHeures cOld, CategorieHeures cNew) {
-		this.requetes = "UPDATE CategorieHeures" + Etat.nom + "SET libCatHeur = ?, coefCatHeur = ? WHERE libCatHeur = ? ;";
+		this.requetes = "UPDATE CategorieHeures" + Etat.nom + " SET libCatHeur = ?, coefCatHeur = ? WHERE libCatHeur = ? ;";
 
 		this.info = new ArrayList<>(List.of(cNew.getlibCatHeur(), cNew.getcoefCatHeur(), cOld.getlibCatHeur()));
 	}
 
 	public Modification(CategorieIntervenant cOld, CategorieIntervenant cNew) {
 
-		this.requetes = "UPDATE CategorieIntervenants" + Etat.nom + "SET codeCatInt = ?, libCatInt = ?, coefCatInt = ?, heureMinCatInt = ?, heureMaxCatInt = ? WHERE codeCatInt = ?;";
+		this.requetes = "UPDATE CategorieIntervenants" + Etat.nom + " SET codeCatInt = ?, libCatInt = ?, coefCatInt = ?, heureMinCatInt = ?, heureMaxCatInt = ? WHERE codeCatInt = ?;";
 
 		this.info = new ArrayList<>(List.of(cNew.getCodeCatInt(), cNew.getLibCatInt(), cNew.getCoefCatInt(), cNew.getHeureMinCatInt(), cNew.getHeureMaxCatInt(), cOld.getCodeCatInt()));
 	}
