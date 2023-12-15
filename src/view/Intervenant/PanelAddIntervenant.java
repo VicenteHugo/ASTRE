@@ -46,8 +46,10 @@ public class PanelAddIntervenant extends JPanel {
 	private Frame frameM;
 
 	private CategorieIntervenant categ = null;
+	private PanelIntervenants panelIntervenants;
 
-	public PanelAddIntervenant(FrameAccueil frame, Frame frameM) {
+	public PanelAddIntervenant(PanelIntervenants p,FrameAccueil frame, Frame frameM) {
+		this.panelIntervenants = p;
 		this.frame = frame;
 		this.frameM = frameM;
 
@@ -148,6 +150,7 @@ public class PanelAddIntervenant extends JPanel {
 			} else {
 				JOptionPane.showMessageDialog(this, "Catégorie introuvable.");
 			}
+			this.panelIntervenants.maj();
 		});
 		this.btnAnnuler.addActionListener((e) -> this.frameM.dispose());
 	}

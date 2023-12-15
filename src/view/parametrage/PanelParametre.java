@@ -1,5 +1,6 @@
 package view.parametrage;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -23,26 +24,32 @@ public class PanelParametre extends JPanel {
     public PanelParametre(FrameAccueil frame) {
 
         // Frame
-        frame.setTitle("Astre - Paramètres (Accueil)");
-        frame.setMinimumSize(new Dimension(400, 400));
         this.frame = frame;
+        this.frame.setTitle("Astre - Paramètres (Accueil)");
+        this.frame.setMinimumSize(new Dimension(400, 230));
+        this.frame.setSize(400, 230);
 
         // Création des composants
         this.btnIntervenants = new JButton("Catégorie Intervenants");
         this.btnHeures = new JButton("Catégorie Heures");
         this.btnAccueil = new JButton("Accueil");
 
-        // Ajustement de la taille des boutons
-        Dimension buttonSize = new Dimension(200, 50);
-        this.btnIntervenants.setPreferredSize(buttonSize);
-        this.btnHeures.setPreferredSize(buttonSize);
-        this.btnAccueil.setPreferredSize(buttonSize);
+        /* STYLE */
 
-        // Ajustement de la police des boutons
-        Font buttonFont = new Font("Arial", Font.PLAIN, 16);
-        this.btnIntervenants.setFont(buttonFont);
-        this.btnHeures.setFont(buttonFont);
-        this.btnAccueil.setFont(buttonFont);
+        // Button
+        Dimension buttonSize = new Dimension(200, 30); // Vous pouvez ajuster la taille selon vos besoins
+        this.btnIntervenants.setMinimumSize(buttonSize);
+        this.btnAccueil     .setMinimumSize(buttonSize);
+        this.btnHeures      .setMinimumSize(buttonSize);
+
+        this.btnIntervenants.setPreferredSize(buttonSize);
+        this.btnAccueil     .setPreferredSize(buttonSize);
+        this.btnHeures      .setPreferredSize(buttonSize);
+
+        Color coul = Color.decode("0xE6E6EF");
+        this.btnIntervenants.setBackground(coul);
+        this.btnAccueil     .setBackground(coul);
+        this.btnHeures      .setBackground(coul);
 
         // Layout
         this.setLayout(new GridBagLayout());
@@ -51,7 +58,7 @@ public class PanelParametre extends JPanel {
         // Positionnement
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(20, 20, 20, 20);
+        gbc.insets = new Insets(10, 20, 10, 20);
 
         this.add(this.btnIntervenants, gbc);
 

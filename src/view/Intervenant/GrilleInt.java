@@ -87,12 +87,15 @@ public class GrilleInt extends AbstractTableModel {
 	}
 
 	public boolean isCellEditable(int row, int col) {
+		if(col > 5){
+			return false;
+		}
 		return true;
 	}
 
 	public void setValueAt(Object value, int row, int col) {
-
+		if(isCellEditable(row, col)){
 		this.tabDonnees[row][col] = value;
-
+		}
 	}
 }
