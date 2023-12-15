@@ -9,9 +9,14 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controleur.Controleur;
+import model.Affectations;
+import model.CategorieIntervenant;
+import model.Intervenants;
 import view.accueil.FrameAccueil;
 
 
@@ -20,7 +25,8 @@ public class PanelAddRessourceIntervenant extends JPanel {
 	private JLabel lblErrHeurMax;
 	private JLabel lblErrHeurMin;
 	
-	private JTextField txtIntervenant;
+	private JTextField txtNomIntervenant;
+	private JTextField txtPrenomIntervenant;
 	private JTextField txtType;
 	private JTextField txtNbSemaine;
 	private JTextField txtNbGroupe;
@@ -33,19 +39,21 @@ public class PanelAddRessourceIntervenant extends JPanel {
 
 	private FrameAccueil frame;
 	private Frame frameM;
+	private PanelRessources panel; 
 
-	public PanelAddRessourceIntervenant (FrameAccueil frame, Frame frameM) {
+	public PanelAddRessourceIntervenant (PanelRessources panel,FrameAccueil frame, Frame frameM) {
+		this.panel = panel;
 		this.frame  = frame;
 		this.frameM = frameM;
 
 
 		//Création
-		this.txtIntervenant  = new JTextField(10);
-		this.txtType         = new JTextField(10);
-		this.txtNbSemaine    = new JTextField(3);
-		this.txtNbGroupe     = new JTextField(3);
-        this.txtTotal        = new JTextField(5);
-		this.txtCommentaire  = new JTextField(15);
+		this.txtNomIntervenant    = new JTextField(10);
+		this.txtPrenomIntervenant = new JTextField(10);
+		this.txtType              = new JTextField(10);
+		this.txtNbSemaine         = new JTextField(3);
+		this.txtNbGroupe          = new JTextField(3);
+		this.txtCommentaire       = new JTextField(15);
 
 		this.btnAnnuler = new JButton("Annuler");
 		this.btnValider = new JButton("Valider");
@@ -67,7 +75,14 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		
 		panelCentre.add(new JLabel("Nom de l'intervenant : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtIntervenant, gbc);
+		panelCentre.add(this.txtNomIntervenant, gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy++;
+		panelCentre.add(new JLabel("Prénom de l'intervenant : "), gbc);
+		gbc.gridx++;
+		panelCentre.add(this.txtPrenomIntervenant, gbc);
+
 		
 		gbc.gridx = 0;
 		gbc.gridy++;
@@ -89,12 +104,6 @@ public class PanelAddRessourceIntervenant extends JPanel {
 
         gbc.gridx = 0;
 		gbc.gridy++;
-		panelCentre.add(new JLabel("Total eqtd : "), gbc);
-		gbc.gridx++;
-		panelCentre.add(this.txtTotal, gbc);
-
-        gbc.gridx = 0;
-		gbc.gridy++;
 		panelCentre.add(new JLabel("Commentaire : "), gbc);
 		gbc.gridx++;
 		panelCentre.add(this.txtCommentaire, gbc);
@@ -109,7 +118,17 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		this.add(panelBas, BorderLayout.SOUTH);
 
 		//Activation
-		this.btnValider.addActionListener((e)->/* On ajoute */System.out.println());
+		this.btnValider.addActionListener((e)->{
+			Intervenants i = null;
+			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
+				if(inter.getNomIntervenant().equals(this.txtNomIntervenant.getText()) && 
+				inter.getPrenomIntervenant().equals(this.txtPrenomIntervenant.getText())){
+					i = inter;
+				}
+			}
+			Affectations affectations = new Affectations(i, null, null, ABORT, TOOL_TIP_TEXT_KEY);
+			this.panel.maj();	
+		});
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
 	}
 }
