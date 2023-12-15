@@ -22,7 +22,7 @@ import view.Intervenant.PanelAddIntervenant;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 
-public class LouisPanelTest extends JPanel {
+public class PanelRessourcesLouis extends JPanel {
 
 	private FrameAccueil frame;
 
@@ -36,7 +36,7 @@ public class LouisPanelTest extends JPanel {
 
 	private JTable tblGrilleDonnees;
 
-	public LouisPanelTest(FrameAccueil frame) {
+	public PanelRessourcesLouis(FrameAccueil frame) {
 
 		// Frame
 		this.frame = frame;
@@ -44,10 +44,10 @@ public class LouisPanelTest extends JPanel {
 		frame.setMinimumSize(new Dimension(1000, 600));
 
 		// Composants
-		this.btnAjouter = new JButton("Ajouter");
-		this.btnSupprimer = new JButton("Supprimer");
+		this.btnAjouter     = new JButton("Ajouter");
+		this.btnSupprimer   = new JButton("Supprimer");
 		this.btnEnregistrer = new JButton("Enregistrer");
-		this.btnAnnuler = new JButton("Annuler");
+		this.btnAnnuler     = new JButton("Annuler");
 
 		this.panelHaut = new JPanel();
 		this.panelBas = new JPanel();
