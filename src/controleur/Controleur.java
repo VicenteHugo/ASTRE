@@ -2,6 +2,7 @@ package controleur;
 
 import view.accueil.FrameAccueil;
 
+import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 
 import model.Affectations;
@@ -193,16 +194,20 @@ public class Controleur {
 
 	}
 
-	public boolean modifIntervenant(int i, CategorieIntervenant categ, String nomIntervenant, String prenomIntervenant,int services, int mexHeure) {
+	public boolean modifIntervenant(int i, CategorieIntervenant categ, String nomIntervenant, String prenomIntervenant,
+			int services, int mexHeure) {
 
 		Intervenants cOld = Etat.getIntervenant(nomIntervenant, prenomIntervenant);
 
-		/*System.out.println("Meme objet ? : " + (Etat.getCatInt(code) == cOld));
-		System.out.println("Objet null ? : " + (Etat.getCatInt(code) == null));*/
+		/*
+		 * System.out.println("Meme objet ? : " + (Etat.getCatInt(code) == cOld));
+		 * System.out.println("Objet null ? : " + (Etat.getCatInt(code) == null));
+		 */
 
 		// Si la clé est pris par autre chose que l'objet actuelle et que l'indice est
 		// bon
-		if ((Etat.getIntervenant(nomIntervenant,prenomIntervenant) == null || Etat.getIntervenant(nomIntervenant, prenomIntervenant) == cOld) && i >= 0
+		if ((Etat.getIntervenant(nomIntervenant, prenomIntervenant) == null
+				|| Etat.getIntervenant(nomIntervenant, prenomIntervenant) == cOld) && i >= 0
 				&& i < Etat.getCategoriesIntervenants().size()) {
 
 			// On remplace l'objet
@@ -219,11 +224,23 @@ public class Controleur {
 		return false;
 	}
 
+	public String[] getEtats() {
+		return Etat.getEtats();
+	}
+
 	/*-------------------------------------------------------------*/
 	/* MAIN */
 	/*-------------------------------------------------------------*/
 	public static void main(String[] args) {
 		Controleur.creerControleur();
+
+		// GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		// String[] policesDisponibles = ge.getAvailableFontFamilyNames();
+
+		// System.out.println("Polices disponibles sur ce système :");
+		// for (String police : policesDisponibles) {
+		// 	System.out.println(police);
+		// }
 	}
 
 }

@@ -13,13 +13,13 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controleur.Controleur;
 import view.accueil.*;
 
 public class PanelEtat extends JPanel implements ActionListener {
 
     private FrameAccueil frame;
     private JLabel lblTitre;
-    private String[] etatEnsemble = { "", "2020-2021", "2021-2022", "2022-2023", "2023-2024", "2024-2025" };
     private JComboBox<String> lstEtat;
     private JButton btnSelection, btnRetour;
 
@@ -32,7 +32,9 @@ public class PanelEtat extends JPanel implements ActionListener {
         this.lblTitre = new JLabel("Choisissez votre État");
         this.lblTitre.setFont(new Font("Arial", Font.BOLD, 18)); // Taille et style de police
 
-        this.lstEtat = new JComboBox<>(etatEnsemble);
+
+
+        this.lstEtat = new JComboBox<>(Controleur.getControleur().getEtats());
         this.lstEtat.setSelectedIndex(0);
         
         this.btnSelection = new JButton("Sélectionner");
