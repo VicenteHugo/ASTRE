@@ -18,7 +18,7 @@ public class PanelAccueil extends JPanel {
 
         this.frame = frame;
         this.frame.setTitle("Accueil");
-		this.frame.setMinimumSize(new Dimension(400, 230));
+        this.frame.setMinimumSize(new Dimension(400, 230));
         this.frame.setSize(400, 230);
 
         // création des composants
@@ -32,22 +32,21 @@ public class PanelAccueil extends JPanel {
 
         // Button
         Dimension buttonSize = new Dimension(150, 30); // Vous pouvez ajuster la taille selon vos besoins
-        this.btnParametre   .setMinimumSize(buttonSize);
+        this.btnParametre.setMinimumSize(buttonSize);
         this.btnPrevisionnel.setMinimumSize(buttonSize);
-        this.btnIntervenant .setMinimumSize(buttonSize);
-        this.btnEtat        .setMinimumSize(buttonSize);
-        
-        this.btnParametre   .setPreferredSize(buttonSize);
-        this.btnPrevisionnel.setPreferredSize(buttonSize);
-        this.btnIntervenant .setPreferredSize(buttonSize);
-        this.btnEtat.setPreferredSize(buttonSize);
-        
-        Color coul = Color.decode("0xD0D0D0");
-        this.btnParametre   .setBackground(coul);
-        this.btnPrevisionnel.setBackground(coul);
-        this.btnIntervenant .setBackground(coul);
-        this.btnEtat        .setBackground(coul);
+        this.btnIntervenant.setMinimumSize(buttonSize);
+        this.btnEtat.setMinimumSize(buttonSize);
 
+        this.btnParametre.setPreferredSize(buttonSize);
+        this.btnPrevisionnel.setPreferredSize(buttonSize);
+        this.btnIntervenant.setPreferredSize(buttonSize);
+        this.btnEtat.setPreferredSize(buttonSize);
+
+        Color coul = Color.decode("0xD0D0D0");
+        this.btnParametre.setBackground(coul);
+        this.btnPrevisionnel.setBackground(coul);
+        this.btnIntervenant.setBackground(coul);
+        this.btnEtat.setBackground(coul);
 
         // Texte
         JLabel lblLogo = new JLabel("Astre");

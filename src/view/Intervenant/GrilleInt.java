@@ -98,21 +98,21 @@ public class GrilleInt extends AbstractTableModel {
 
 		
 		if(isCellEditable(row, col)){
-
-			CategorieIntervenant categorieIntervenant  = (CategorieIntervenant) this.tabDonnees[row][0];
+			System.out.println("je peut modifier hihi ahaha MOnstre TrIplE mOnstRe");
+			CategorieIntervenant categorieIntervenant  = Controleur.getControleur().getCategorieIntervenant((String)this.tabDonnees[row][0]);
 			String  nom = (String) this.tabDonnees[row][1];
 			String  prenom = (String) this.tabDonnees[row][2];
 			int  services = (int) this.tabDonnees[row][3];
 			int  nbHeureMax = (int) this.tabDonnees[row][4];
 			Float  coef = (Float) this.tabDonnees[row][5];
+			System.out.println(categorieIntervenant + " : " + nom + " : " + prenom + " : " + services + " : " + nbHeureMax + " : " + coef);
 
 			switch (col) {
 				case 0:
-					categorieIntervenant = (CategorieIntervenant) value;
+					categorieIntervenant = Controleur.getControleur().getCategorieIntervenant((String) value);
 					break;
 
 				case 1:
-					
 					nom = (String) value;
 					break;
 				case 2:
@@ -136,12 +136,13 @@ public class GrilleInt extends AbstractTableModel {
 				default:
 					break;
 		}
+			System.out.println(categorieIntervenant + " : " + nom + " : " + prenom + " : " + services + " : " + nbHeureMax + " : " + coef);
 
 			if (coef < 0) return;
 			if(nbHeureMax <= services) return;
-			if(nbHeureMax < 0 || services < 0) return; 
-
-			if(Controleur.getControleur().modifIntervenant(col, categorieIntervenant, nom, prenom, services, nbHeureMax,coef)){this.tabDonnees[row][col] = value;}		
+			if(nbHeureMax < 0 || services < 0) return;
+			if(categorieIntervenant == null)return;
+			if(Controleur.getControleur().modifIntervenant(row, categorieIntervenant, nom, prenom, services, nbHeureMax,coef)){this.tabDonnees[row][col] = value;}		
 		}
 	}
 }

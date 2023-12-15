@@ -117,7 +117,7 @@ public class Etat {
 		Etat.genererModules();
 
 		// Générer les troisièmes tables
-		Etat.genererAffections();
+		Etat.genererAffectations();
 	}
 
 	/*--------------------------------------------------------------*/
@@ -324,6 +324,7 @@ public class Etat {
 		return Etat.lstIntervenants;
 	}
 
+
 	public static ArrayList<Module> getModules() {
 		return Etat.lstModule;
 	}
@@ -334,6 +335,10 @@ public class Etat {
 				return i;
 
 		return null;
+	}
+
+	public static Intervenants getIntervenants(int i){
+		return Etat.lstIntervenants.get(i);
 	}
 
 	public static List<Intervenants> getIntervenants(CategorieIntervenant cat) {
@@ -364,7 +369,7 @@ public class Etat {
 	/*--------------------------------------------------------------*/
 
 	// Méthode CREATE
-	public static void genererAffections() {
+	public static void genererAffectations() {
 
 		Etat.lstAffectations = new ArrayList<>();
 
@@ -389,6 +394,10 @@ public class Etat {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void ajouterAffectation(Affectations affect) {
+		Etat.lstAffectations.add(affect);
 	}
 
 	public static ArrayList<Affectations> getAffectations() {
@@ -461,8 +470,7 @@ public class Etat {
 			Statement st = connec.createStatement();
 
 			//Si elle existe pas on la crée
-			st.executeUpdate(
-					"CREATE TABLE IF NOT EXISTS Etat (etat  VARCHAR(25) PRIMARY KEY,dateCrea DATE DEFAULT CURRENT_DATE)");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS Etat (etat  VARCHAR(25) PRIMARY KEY,dateCrea DATE DEFAULT CURRENT_DATE)");
 
 			ResultSet rs = st.executeQuery("SELECT * FROM Etat ORDER BY dateCrea DESC");
 
