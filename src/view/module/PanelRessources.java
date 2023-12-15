@@ -50,7 +50,7 @@ public class PanelRessources extends JPanel {
         this.frame = frame;
         this.frame.setTitle("Astre - Prévisionnel - Module");
 		this.frame.setMinimumSize(new Dimension(1200, 700));
-		this.frame.setResizable(true);
+		this.frame.setResizable(false);
 
         // Creation Composants
         this.btnAjouter     = new JButton("Ajouter");

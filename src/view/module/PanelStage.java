@@ -30,9 +30,10 @@ public class PanelStage extends JPanel {
 	private FrameAccueil frame;
 
     private JButton    btnAjouter,btnSupprimer,btnEnregistrer,btnAnnuler;
-    private JLabel     typeModuleT,semestreT,codeT,libLongT,libCourtT;
-    private JTextField typeModule,semestre,code,libLong,libCourt, nbEtd,nbGpTD,nbGpTP;
+    private JLabel     lblTypeModuleT,lblSemestreT,lblCodeT,lblLongT,lblCourtT;
+    private JTextField txtTypeModule,txtSemestre,txtCode,txtLong,txtCourt, nbEtd,nbGpTD,nbGpTP;
 	private JCheckBox  checkBoxValid;
+    
     private JPanel panelHaut, panelBas;
 
     private JTable tblGrilleDonnees;
@@ -58,17 +59,17 @@ public class PanelStage extends JPanel {
         this.btnEnregistrer = new JButton("Enregistrer");
         this.btnAnnuler     = new JButton("Annuler");
         
-        this.typeModuleT = new JLabel("type module");
-        this.semestreT   = new JLabel("semestre");
-        this.codeT       = new JLabel("code");
-        this.libLongT    = new JLabel("libellé long");
-        this.libCourtT   = new JLabel("libellé court");
+        this.lblTypeModuleT = new JLabel("type module");
+        this.lblSemestreT   = new JLabel("semestre");
+        this.lblCodeT       = new JLabel("code");
+        this.lblLongT       = new JLabel("libellé long");
+        this.lblCourtT      = new JLabel("libellé court");
         
-        this.typeModule = new JTextField("Stage/Suivi",9);
-        this.semestre   = new JTextField("S4",8);
-        this.code       = new JTextField("S4.ST",6);
-        this.libLong    = new JTextField("Stage",30);
-        this.libCourt   = new JTextField("Stage",10);
+        this.txtTypeModule = new JTextField("Stage/Suivi",9);
+        this.txtSemestre   = new JTextField("S4",8);
+        this.txtCode       = new JTextField("S4.ST",6);
+        this.txtLong       = new JTextField("Stage",30);
+        this.txtCourt      = new JTextField("Stage",10);
 
         this.nbEtd    = new JTextField("52",3);
         this.nbGpTD   = new JTextField("2",3);
@@ -79,18 +80,18 @@ public class PanelStage extends JPanel {
         this.panelHaut = new JPanel();
         this.panelBas  = new JPanel();        
 
-        this.typeModule.setEditable(false);// non editable
-        this.semestre  .setEditable(false);
-        this.nbEtd     .setEditable(false);
-        this.nbGpTD    .setEditable(false);
-        this.nbGpTP    .setEditable(false);
+        this.txtTypeModule.setEditable(false);// non editable
+        this.txtSemestre  .setEditable(false);
+        this.nbEtd        .setEditable(false);
+        this.nbGpTD       .setEditable(false);
+        this.nbGpTP       .setEditable(false);
 		
 		this.nbEtd     .setHorizontalAlignment(JTextField.CENTER);//centrer le texte
         this.nbGpTD    .setHorizontalAlignment(JTextField.CENTER);
         this.nbGpTP    .setHorizontalAlignment(JTextField.CENTER);
         // Layout
         this.setLayout(new GridLayout(2, 1, 0, 0));
-		this.panelHaut.setLayout(new GridBagLayout());
+		this.panelHaut.setLayout(new FlowLayout(FlowLayout.LEFT,10,0));
 		this.panelBas.setLayout(new BorderLayout());
 
 		// Positionnement
@@ -98,7 +99,7 @@ public class PanelStage extends JPanel {
 
 		JPanel panelInfo    = new JPanel();
         JPanel panelInfoTab = new JPanel();
-		panelInfo.setLayout(new FlowLayout(FlowLayout.LEFT,10,0));
+		panelInfo.setLayout(new GridBagLayout());
         panelInfoTab.setLayout(new GridBagLayout());
         GridBagConstraints cGeneral = new GridBagConstraints();//constraintsGeneraux modifiable
         cGeneral.anchor = GridBagConstraints.LINE_START;
@@ -107,31 +108,31 @@ public class PanelStage extends JPanel {
 		cGeneral.insets = new java.awt.Insets(5, 0, 5, 5);
 
 		
-        panelInfoTab.add(this.typeModuleT,cGeneral);
+        panelInfoTab.add(this.lblTypeModuleT,cGeneral);
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.semestreT,cGeneral);
+        panelInfoTab.add(this.lblSemestreT,cGeneral);
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.codeT,cGeneral);
+        panelInfoTab.add(this.lblCodeT,cGeneral);
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.libLongT,cGeneral);
+        panelInfoTab.add(this.lblLongT,cGeneral);
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.libCourtT,cGeneral);
+        panelInfoTab.add(this.lblCourtT,cGeneral);
 		
 		cGeneral.gridx = 0;
 		cGeneral.gridy ++;
-        panelInfoTab.add(this.typeModule,cGeneral);
+        panelInfoTab.add(this.txtTypeModule,cGeneral);
 		
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.semestre,cGeneral);
+        panelInfoTab.add(this.txtSemestre,cGeneral);
 		
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.code,cGeneral);
+        panelInfoTab.add(this.txtCode,cGeneral);
 		
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.libLong,cGeneral);
+        panelInfoTab.add(this.txtLong,cGeneral);
 		
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.libCourt,cGeneral);
+        panelInfoTab.add(this.txtCourt,cGeneral);
 
         cGeneral.gridy++;
         cGeneral.gridx = 0;
@@ -152,11 +153,12 @@ public class PanelStage extends JPanel {
 
 		cGeneral.gridx = 0;
 		cGeneral.gridy = 0;
-        this.panelHaut.add(panelInfo,cGeneral);
+        cGeneral.anchor = GridBagConstraints.WEST;
+        panelInfo.add(panelInfoTab,cGeneral);
 
 		//PN local
-        JPanel panelInfo2 = new JPanel();
-        panelInfo2.setLayout(new GridBagLayout());
+        JPanel panelInfoTab2 = new JPanel();
+        panelInfoTab2.setLayout(new GridBagLayout());
         JPanel panelPnLocal = new JPanel();
 		JPanel panelPnLocalTab = new JPanel();
 		panelPnLocal.setLayout(new GridBagLayout());
@@ -200,45 +202,45 @@ public class PanelStage extends JPanel {
         PanelRepartition.setLayout(new GridBagLayout());
 		PanelRepartitionTab.setLayout(new GridBagLayout());
         PanelRepartitionTab.setBorder(outline);
-		JPanel panelSemaine = new JPanel();
-		panelSemaine.setLayout(new GridBagLayout());
+		JPanel panelHeure = new JPanel();
+		panelHeure.setLayout(new GridBagLayout());
 		cGeneral.gridx   = 1;
 		cGeneral.gridy   = 0;
 		cGeneral.insets = new java.awt.Insets(5, 5, 0, 5);
 
-		panelSemaine.add(new JLabel("REH"), cGeneral);
+		panelHeure.add(new JLabel("REH"), cGeneral);
         cGeneral.gridx ++;
-		panelSemaine.add(new JLabel("h Tut"), cGeneral);
+		panelHeure.add(new JLabel("h Tut"), cGeneral);
 		cGeneral.gridx ++;
-		panelSemaine.add(new JLabel("∑"), cGeneral);
+		panelHeure.add(new JLabel("∑"), cGeneral);
 
 		cGeneral.gridx = 0;
 		cGeneral.gridy = 1;
-        panelSemaine.add(new JLabel("Total promo (eqtd)"), cGeneral);
+        panelHeure.add(new JLabel("Total promo (eqtd)"), cGeneral);
         cGeneral.gridx ++;
-		panelSemaine.add(new JTextField("52",3), cGeneral);
+		panelHeure.add(new JTextField("52",3), cGeneral);
         cGeneral.gridx ++;
-		panelSemaine.add(new JTextField("",3), cGeneral);
+		panelHeure.add(new JTextField("",3), cGeneral);
         cGeneral.gridx ++;
-		panelSemaine.add(new JTextField("52",3), cGeneral);
+		panelHeure.add(new JTextField("52",3), cGeneral);
         cGeneral.gridx ++;
 
 		cGeneral.gridx = 0;
 		cGeneral.gridy = 2;
-        panelSemaine.add(new JLabel("Total affecté (eqtd)"), cGeneral);
+        panelHeure.add(new JLabel("Total affecté (eqtd)"), cGeneral);
         cGeneral.gridx++;
-		panelSemaine.add(new JTextField("3",3), cGeneral);
+		panelHeure.add(new JTextField("3",3), cGeneral);
         cGeneral.gridx++;
-		panelSemaine.add(new JTextField("0",3), cGeneral);
+		panelHeure.add(new JTextField("0",3), cGeneral);
         cGeneral.gridx++;
-		panelSemaine.add(new JTextField("3",3), cGeneral);
+		panelHeure.add(new JTextField("3",3), cGeneral);
 		
 		cGeneral.gridx = 0;
 		cGeneral.gridy = 0;
 		cGeneral.gridwidth =7;
 		cGeneral.gridheight=2;
 
-		PanelRepartitionTab.add(panelSemaine,cGeneral);
+		PanelRepartitionTab.add(panelHeure,cGeneral);
 		cGeneral.gridheight=1;
 		cGeneral.gridwidth =1;
         
@@ -250,20 +252,22 @@ public class PanelStage extends JPanel {
 		
 		cGeneral.gridx = 0;
 		cGeneral.gridy = 0;
-		cGeneral.gridheight = 5;
-		panelInfo2.add(panelPnLocal,cGeneral);
+		cGeneral.gridheight = 2;
+		panelInfoTab2.add(panelPnLocal,cGeneral);
 		cGeneral.gridx ++;
-		cGeneral.gridheight = 6;
-        panelInfo2.add(PanelRepartition,cGeneral);
+		cGeneral.gridheight = 4;
+        panelInfoTab2.add(PanelRepartition,cGeneral);
 		cGeneral.gridx = 0;
-		cGeneral.gridy = 5;
+		cGeneral.gridy = 6;
 		cGeneral.gridheight = 1;
-		panelInfo2.add(this.checkBoxValid,cGeneral);
+		panelInfoTab2.add(this.checkBoxValid,cGeneral);
 		
 		cGeneral.gridx = 0;
 		cGeneral.gridy = 1;
-        
-		this.panelHaut.add(panelInfo2,cGeneral);
+        cGeneral.anchor = GridBagConstraints.WEST;
+		
+        panelInfo.add(panelInfoTab2,cGeneral);
+        this.panelHaut.add(panelInfo);
 
 
         JPanel panelTable = new JPanel();
