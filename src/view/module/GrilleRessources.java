@@ -74,6 +74,8 @@ public class GrilleRessources extends AbstractTableModel {
 		String type        = (String)  this.tabDonnees[row][1];
 		int    nbSem       = (Integer) this.tabDonnees[row][2];
 		int    nbGp        = (Integer) this.tabDonnees[row][3];
+		int    hTot        = (Integer) this.tabDonnees[row][4];
+		String com         = (String)  this.tabDonnees[row][5];
 
 		switch (col) {
 			case 0:
@@ -92,12 +94,23 @@ public class GrilleRessources extends AbstractTableModel {
 				nbGp = (Integer) value;
 				break;
 
+			case 4:
+				hTot = (Integer) value;
+				break;
+
+			case 5:
+				com = (String) value;
+				break;
+
 			default:
 				break;
 		}
 
 		if (nbSem < 0 || nbGp < 0 || intervenant.isEmpty() || type.isEmpty())
 			return;
+		
+		if(Controleur.getControleur().modifIntervenantRessources(row, intervenant, type, nbSem, nbGp, hTot, com))
+			this.tabDonnees[row][col] = value;
 
 	}
 }

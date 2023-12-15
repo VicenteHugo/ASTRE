@@ -88,7 +88,7 @@ public class Etat {
 		Etat.genererModules();
 
 		// Générer les troisièmes tables
-		Etat.genererAffections();
+		Etat.genererAffectations();
 	}
 
 	/*--------------------------------------------------------------*/
@@ -335,7 +335,7 @@ public class Etat {
 	/*--------------------------------------------------------------*/
 
 	// Méthode CREATE
-	public static void genererAffections() {
+	public static void genererAffectations() {
 
 		Etat.lstAffectations = new ArrayList<>();
 

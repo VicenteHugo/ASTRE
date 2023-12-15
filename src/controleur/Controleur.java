@@ -224,6 +224,22 @@ public class Controleur {
 		return false;
 	}
 
+	public void ajouterIntervenantRessources(Intervenants inter) {
+		Etat.ajouterAction(new Ajout(inter));
+	}
+
+	public void supprimerIntervenantRessources(Intervenants inter) {
+
+	}
+	
+	public boolean modifIntervenantRessources(int i, String nomIntervenant, String type, int nbSem, int nbGp, int totH , String com) {
+
+		
+		
+		
+		return false;
+	}
+
 	public String[] getEtats() {
 		return Etat.getEtats();
 	}
