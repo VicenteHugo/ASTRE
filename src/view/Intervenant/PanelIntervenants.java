@@ -30,7 +30,7 @@ public class PanelIntervenants extends JPanel {
 
         this.frame = frame;
         frame.setTitle("Astre - Intervenants (Accueil)");
-        frame.setMinimumSize(new Dimension(600, 400));
+        frame.setMinimumSize(new Dimension(900, 400));
 
         // Création des composants
         this.lblListe = new JLabel("Liste Intervenant");
