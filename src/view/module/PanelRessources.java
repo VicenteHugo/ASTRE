@@ -373,13 +373,16 @@ public class PanelRessources extends JPanel {
 
 		this.btnAnnuler.addActionListener((e) -> this.frame.changePanel(new PanelPrevi(this.frame)));
         this.btnAjouter.addActionListener((e)->{
-			JFrame f = new JFrame();
-			f.add(new PanelAddRessourceIntervenant(this,this.frame, f));
-			f.setTitle("Affecter un Intervenant");
-			f.pack();
-			f.setLocationRelativeTo(null);
-			f.setAlwaysOnTop(true);
-			f.setVisible(true);
+			if(code.getText() != null){
+				JFrame f = new JFrame();
+				f.add(new PanelAddRessourceIntervenant(this,this.frame, f));
+				f.setTitle("Affecter un Intervenant");
+				f.pack();
+				f.setLocationRelativeTo(null);
+				f.setAlwaysOnTop(true);
+				f.setVisible(true);
+			}
+			
 		});
 
 		this.btnEnregistrer.addActionListener((e) ->this.maj()       );
@@ -422,5 +425,10 @@ public class PanelRessources extends JPanel {
 
     public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleRessources()); 
+	}
+
+	public String getCode(){
+		System.out.println(this.code.getText());
+		return this.code.getText();
 	}
 }
