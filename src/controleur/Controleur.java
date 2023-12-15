@@ -232,12 +232,33 @@ public class Controleur {
 		return false;
 	}
 
-	public void setIntervenant(Object values){
-		return;
+	public void ajouterIntervenantRessources(Affectations affect) {
+		Etat.ajouterAction(new Ajout(affect));
+		Etat.ajouterAffectation(affect);
+	}
+
+	public void supprimerIntervenantRessources(Affectations affect) {
+
+	}
+	
+	public boolean modifIntervenantRessources(int i, String nomIntervenant, String type, int nbSem, int nbGp, int totH , String com) {
+
+		
+		
+		
+		return false;
 	}
 
 	public String[] getEtats() {
 		return Etat.getEtats();
+	}
+
+	public void changerEtat (String nom) {
+		Etat.changerEtat(nom);
+	}
+
+	public boolean creerEtat (String nom) {
+		return Etat.creerEtat(nom);
 	}
 
 	/*-------------------------------------------------------------*/
