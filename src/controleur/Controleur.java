@@ -232,20 +232,52 @@ public class Controleur {
 		return false;
 	}
 
-	public void ajouterIntervenantRessources(Affectations affect) {
+	public void ajouterAffectation(Affectations affect) {
 		Etat.ajouterAction(new Ajout(affect));
 		Etat.ajouterAffectation(affect);
 	}
 
-	public void supprimerIntervenantRessources(Affectations affect) {
-
+	public void supprimerAffectation(int ind) {
+		if (ind >= 0 && ind < Etat.getAffectations().size()) {
+			Affectations inter = Etat.getAffectations().remove(ind);
+			Etat.ajouterAction(new Suppression(inter));
+		}
 	}
 	
-	public boolean modifIntervenantRessources(int i, String nomIntervenant, String type, int nbSem, int nbGp, int totH , String com) {
+	public boolean modifAffectation(int i, String nomIntervenant,String prenom, Module m,String type, int nbSem, int nbGp, String com) {
+		Affectations aOld = Etat.getAffectations(i);
+		Intervenants intervenants = null;
+		CategorieHeures categ = null;
+		/*
+		 * System.out.println("Meme objet ? : " + (Etat.getCatInt(code) == cOld));
+		 * System.out.println("Objet null ? : " + (Etat.getCatInt(code) == null));
+		 */
 
-		
-		
-		
+		// Si la clé est pris par autre chose que l'objet actuelle et que l'indice est
+		// bon
+		if ((Etat.getAffectations(nomIntervenant) == null
+				|| Etat.getAffectations(nomIntervenant) == aOld) && i >= 0
+				&& i < Etat.getIntervenants().size()) {
+			// On remplace l'objet
+			for(Intervenants inter : Etat.getIntervenants()){
+				if(inter.getNomIntervenant().equals(nomIntervenant) && inter.getPrenomIntervenant().equals(prenom)){
+					intervenants = inter;
+				}
+			}
+			for(CategorieHeures ch : Etat.getCategoriesHeures()) {
+				if(ch.getlibCatHeur().equals(type)){
+					categ = ch;
+				}
+			}
+			Affectations aNew = new Affectations(intervenants, m, categ, nbSem, nbGp,com);
+			Etat.getAffectations().add(i, aNew);
+			Etat.getAffectations().remove(aOld);
+
+			// On ajouter l'action
+			Etat.ajouterAction(new Modification(aOld, aNew));
+			return true;
+		}
+
 		return false;
 	}
 

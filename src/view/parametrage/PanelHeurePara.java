@@ -1,3 +1,9 @@
+/*
+* Auteur : Équipe 2
+* Date   : Decembre 2023
+* */
+
+
 package view.parametrage;
 
 // AWT
@@ -8,6 +14,7 @@ import java.awt.FlowLayout;
 
 // SWING
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 
 // ASTRE
 import controleur.Controleur;
@@ -119,14 +126,9 @@ public class PanelHeurePara extends JPanel {
         this.btnSupprimer.setBackground(coul);
 
 		// JTable
-		Dimension tableSize = this.tblGrilleDonnees.getPreferredSize();
-        this.tblGrilleDonnees.getColumn(0).setPreferredWidth(Math.round((tableSize.width - 250)* 0.70f));
-        this.tblGrilleDonnees.getColumn(1).setPreferredWidth(Math.round((tableSize.width - 250)* 0.30f));
-
-
-
-		this.tblGrilleDonnees.getColumnModel().getColumn(0).setMaxWidth((int) (tailleTbl*0.75));
-		this.tblGrilleDonnees.getColumnModel().getColumn(1).setMaxWidth((int) (tailleTbl*0.25));
+		DefaultTableCellRenderer centre = new DefaultTableCellRenderer();
+		centre.setHorizontalAlignment(JLabel.CENTER);
+		this.tblGrilleDonnees.getColumnModel().getColumn(1).setCellRenderer(centre);
 
 
 
@@ -140,16 +142,27 @@ public class PanelHeurePara extends JPanel {
 		this.btnAjouter.addActionListener  ((e) -> this.ajouter  ());
 	}
 	
+
+
+	/**
+	 * Annule les modifications et retourne à l'acceuil paramétrage.
+	 */
 	private void annuler() {
 		this.frame.changePanel(new PanelParametre(this.frame));
 		Controleur.getControleur().annuler();
 	}
 	
+	/**
+	 * Valide les modifications et retourne à l'acceuil paramétrage.
+	 */
 	private void valider() {
 		this.frame.changePanel(new PanelParametre(this.frame));
 		Controleur.getControleur().enregistrer();
 	}
 
+	/**
+	 * Ouvre une fenêtre pour ajouter une catégorie d'heure.
+	 */
 	private void ajouter() {
 		JFrame f = new JFrame();
 		f.add(new PanelAddCatHeures(this, f));
@@ -160,6 +173,10 @@ public class PanelHeurePara extends JPanel {
 		f.setVisible(true);
 	}
 
+
+	/**
+	 * Supprime une catégorie d'heure.
+	 */
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
@@ -179,6 +196,9 @@ public class PanelHeurePara extends JPanel {
 
 
 
+	/**
+	 * Remet à jour les donnée.
+	 */
 	public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleCatHeures()); 
 	}
