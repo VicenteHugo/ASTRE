@@ -9,6 +9,7 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -81,17 +82,36 @@ public class PanelAddCatHeures extends JPanel {
 	
 	private void ajouterCatHeures ()
 	{
-		String coef = this.txtCoef.getText();
-		String lib  = this.txtLib .getText();
+		String sCoef = this.txtCoef.getText();
+		String sLib  = this.txtLib .getText().toUpperCase();
 
-		if (coef.isEmpty() || lib.isEmpty()) return;
+		if (sCoef.isEmpty() || sLib.isEmpty()) {
+			showMessageDialog("Veuillez remplir toutes les données");
+			return;
+		}
 		
 		try 
 		{
-			Controleur.getControleur().ajouterCategorieHeure(lib, Float.parseFloat(coef));
-			this.panel.maj();
-			this.frameM.dispose();
+			float coef = Float.parseFloat(sCoef);
+
+			if (coef < 0) {
+				showMessageDialog("Pas de chiffre négatifs");
+				return;
+			}
+
+			if(!Controleur.getControleur().ajouterCategorieHeure(sLib,coef))
+				showMessageDialog("Le libellé entré est déjà utilisé");
+			else {
+				this.panel.maj();
+				this.frameM.dispose();
+			}
+
 		} catch (Exception e) {
+			showMessageDialog("Entrez des valeurs numériques pour le coefficient.");
 		}
+	}
+
+	private void showMessageDialog(String message) {
+		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 }

@@ -5,12 +5,8 @@ import javax.swing.*;
 public class FrameAccueil extends JFrame {
     
     public FrameAccueil() {
-
-        this.setTitle("Accueil");
-        this.setSize(400, 300);
-        this.setLocationRelativeTo(null);
-
         this.add ( new PanelAccueil(this));
+        this.setLocationRelativeTo(null);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

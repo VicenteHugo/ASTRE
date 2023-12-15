@@ -26,12 +26,12 @@ public class GrilleInt extends AbstractTableModel {
 
 			Intervenants intervenants = lstIntervenant.get(lig);
 			List<Integer> listeSemaine = new ArrayList<>();
-			int nbHeure = 0;
+			int nbHeure;
 
 			for (Semestres semestres : Controleur.getControleur().getSemestres()) {
+				nbHeure = 0;
 				for (Module module : Controleur.getControleur().getModules(semestres)) {
 					for (Affectations affectations : Controleur.getControleur().getAffectations()) {
-						nbHeure = 0;
 						if (affectations.getModule().equals(module)
 								&& intervenants.equals(affectations.getIntervenant())) {
 							nbHeure += affectations.getNbSemaine() * affectations.getNbGroupe();
@@ -87,12 +87,15 @@ public class GrilleInt extends AbstractTableModel {
 	}
 
 	public boolean isCellEditable(int row, int col) {
+		if(col > 5){
+			return false;
+		}
 		return true;
 	}
 
 	public void setValueAt(Object value, int row, int col) {
-
+		if(isCellEditable(row, col)){
 		this.tabDonnees[row][col] = value;
-
+		}
 	}
 }

@@ -104,22 +104,7 @@ CREATE TABLE IF NOT EXISTS AffectationETAT
 	FOREIGN KEY(nomInt, prenomInt) REFERENCES IntervenantsETAT(nomInt, prenomInt)
 );
 
-
-
-
-
--- Création de la fonctions pour les semestres
-
--- CREATE TRIGGER InsertSixSemestres
--- AFTER INSERT ON Etat
--- FOR EACH ROW
--- BEGIN
---     DECLARE i INT DEFAULT 1;
-
---     WHILE i <= 6 DO
---         INSERT INTO Semestres (numSem, etat) VALUES (i, NEW.etat);
---         SET i = i + 1;
---     END WHILE;
--- END ;
-
-
+--Générer 6 semestres si il y a rien
+-- INSERT INTO SemestresETAT (numSem)
+-- SELECT numSem FROM generate_series(1, 6) numSem
+-- ON CONFLICT (numSem) DO NOTHING;
