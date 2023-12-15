@@ -24,6 +24,9 @@ import javax.swing.border.Border;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import controleur.*;
+import model.Semestres;
+import model.modules.Module;
+import model.modules.Ressource;
 
 public class PanelRessources extends JPanel {
 
@@ -36,6 +39,8 @@ public class PanelRessources extends JPanel {
     private JPanel panelHaut, panelBas;
 
     private JTable tblGrilleDonnees;
+
+	private Module mod;
     
     public PanelRessources(FrameAccueil frame){
         
@@ -371,20 +376,47 @@ public class PanelRessources extends JPanel {
 
 		this.btnAnnuler.addActionListener((e) -> this.frame.changePanel(new PanelPrevi(this.frame)));
         this.btnAjouter.addActionListener((e)->{
-			JFrame f = new JFrame();
-			f.add(new PanelAddRessourceIntervenant(this,this.frame, f));
-			f.setTitle("Affecter un Intervenant");
-			f.pack();
-			f.setLocationRelativeTo(null);
-			f.setAlwaysOnTop(true);
-			f.setVisible(true);
+			if(code.getText() != null){
+				JFrame f = new JFrame();
+				f.add(new PanelAddRessourceIntervenant(this,this.frame, f));
+				f.setTitle("Affecter un Intervenant");
+				f.pack();
+				f.setLocationRelativeTo(null);
+				f.setAlwaysOnTop(true);
+				f.setVisible(true);
+			}
+			
 		});
 
 		this.btnEnregistrer.addActionListener((e) ->this.maj()       );
 		this.btnSupprimer.addActionListener(  (e) ->this.supprimer());
 
+		this.mod = new Ressource(null, null, "null", "null", 0);
+	}
+
+
+	public PanelRessources (FrameAccueil frame, Module m) {
+
+		this(frame);
+
+		//Code
+		this.code.setText(m.getCode());
+		this.libLong.setText(m.getLibLong());
+		this.libCourt.setText(m.getLibCourt());
+		
+		//Semestres info
+		Semestres s = m.getSemestres();
+		this.nbEtd.setText("" + s.getNbEtdSem());
+		this.nbGpTD.setText("" + s.getNbGpTdSem());
+		this.nbGpTP.setText("" + s.getNbGpTpSem());
+
+		//
+		this.mod = m;
 
 	}
+
+
+
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
@@ -397,5 +429,10 @@ public class PanelRessources extends JPanel {
 
     public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleRessources()); 
+	}
+
+	public String getCode(){
+		System.out.println(this.code.getText());
+		return this.code.getText();
 	}
 }

@@ -8,15 +8,20 @@ import javax.swing.table.AbstractTableModel;
 import controleur.Controleur;
 import model.Affectations;
 import model.CategorieHeures;
+import model.modules.Module;
 import model.modules.Ressource;
 
 public class GrilleRessources extends AbstractTableModel {
 
 	private String[] tabEntetes;
 	private Object[][] tabDonnees;
+	private List<String> prenomIntervenant;
+	private List<Module> moduleIntervenant;
 
 	public GrilleRessources() {
 		List<Affectations> listAffectations = Controleur.getControleur().getAffectations();
+		prenomIntervenant = new ArrayList<>();
+		moduleIntervenant = new ArrayList<>();
 		this.tabDonnees = new Object[listAffectations.size()][6];
 
 		for (int lig = 0; lig < listAffectations.size(); lig++) {
@@ -25,6 +30,7 @@ public class GrilleRessources extends AbstractTableModel {
 				List<Integer> listInfosHeure = affectations.getModule().getHeures()
 						.get(affectations.getCategorieHeures());
 				this.tabDonnees[0][lig] = affectations.getIntervenant().getNomIntervenant();
+				
 				this.tabDonnees[1][lig] = affectations.getCategorieHeures().getlibCatHeur();
 				this.tabDonnees[2][lig] = affectations.getNbSemaine();
 				this.tabDonnees[3][lig] = affectations.getNbGroupe() + "|"
@@ -34,6 +40,8 @@ public class GrilleRessources extends AbstractTableModel {
 						* listInfosHeure.get(2)
 						* affectations.getCategorieHeures().getcoefCatHeur();
 				this.tabDonnees[5][lig] = affectations.getCommentaire();
+				prenomIntervenant.add(affectations.getIntervenant().getPrenomIntervenant());
+				moduleIntervenant.add(affectations.getModule());
 			}
 		}
 
@@ -115,8 +123,8 @@ public class GrilleRessources extends AbstractTableModel {
 			if (nbSem < 0 || nbGp < 0 || nomInter.isEmpty() || type.isEmpty())
 				return;
 			
-			if(Controleur.getControleur().modifAffectation(row, nomInter, type, nbSem, nbGp, hTot, com))
+			if(Controleur.getControleur().modifAffectation(row, nomInter,prenomIntervenant.get(row),moduleIntervenant.get(row),type, nbSem, nbGp, com))
 				this.tabDonnees[row][col] = value;
-			}
+		}
 	}
 }

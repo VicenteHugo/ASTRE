@@ -44,7 +44,8 @@ public class PanelAddRessourceIntervenant extends JPanel {
 
 	private FrameAccueil frame;
 	private Frame frameM;
-	private PanelRessources panel; 
+	private PanelRessources panel;
+	private String code;
 
 	public PanelAddRessourceIntervenant (PanelRessources panel,FrameAccueil frame, Frame frameM) {
 		this.panel = panel;
@@ -133,6 +134,7 @@ public class PanelAddRessourceIntervenant extends JPanel {
 			Module module = null;
 			int nbSemaine = Integer.parseInt(this.txtNbSemaine.getText());
 			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
+			String code = panel.getCode();
 			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
 				if(inter.getNomIntervenant().equals(this.txtNomIntervenant.getText()) && 
 				inter.getPrenomIntervenant().equals(this.txtPrenomIntervenant.getText())){
@@ -146,13 +148,17 @@ public class PanelAddRessourceIntervenant extends JPanel {
 				}
 			}
 			for(Module m : Controleur.getControleur().getModules()){
-					
+				if(m.getCode() == code){
+					module = m;
+					break;
+				}
 			}
 			if(i != null){
 				if(nbGroupe < 0 || nbSemaine < 0){
 					JOptionPane.showMessageDialog(this,"Le nombre de groupe et le nombre de semaine doivent être supérieur à 0");
 				}else{
-					Affectations affectations = new Affectations(i, categ, nbSemaine, nbGroupe,this.txtCommentaire.getText());
+					Affectations affectations = new Affectations(i, module,categ,nbSemaine, nbGroupe,this.txtCommentaire.getText());
+					System.out.println(affectations);
 					Controleur.getControleur().ajouterAffectation(affectations);
 					this.frameM.dispose();
 				}

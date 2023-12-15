@@ -5,9 +5,17 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import controleur.Controleur;
+
+import model.modules.Module;
+import model.modules.PPP;
+import model.modules.Ressource;
+import model.modules.Sae;
+import model.modules.Stage;
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
 import view.module.PanelRessources;
@@ -76,9 +84,34 @@ public class PanelPrevi extends JPanel {
         this.btnCreerSae.addActionListener((e)->{ this.frame.changePanel(new PanelSAE(this.frame));} );
         this.btnCreerStage.addActionListener((e)->{ this.frame.changePanel(new PanelStage(this.frame));} );
         this.btnAccueil.addActionListener((e)->{ this.frame.changePanel(new PanelAccueil(this.frame));} );
-        this.btnModifier.addActionListener((e)->{ 
-
-        });
+        this.btnModifier.addActionListener((e)->{ this.modifier();});
         //this.btnSupprimer.addActionListener(e)->Controleur.getControleur;
     }
+
+
+    private void modifier () {
+        int ind = this.ongletSemestres.getSelectedIndex();
+
+        if (ind < 0) {
+			this.showMessageDialog("Selectionner un module");
+			return;
+        }
+
+        Module m = Controleur.getControleur().getModule(ind);
+
+        if (m instanceof PPP)
+            System.out.println("Page pas fait pout ppp");
+        if (m instanceof Ressource)
+            this.frame.changePanel(new PanelRessources(this.frame,m));
+        if (m instanceof Sae)
+            this.frame.changePanel(new PanelSAE(this.frame));
+        if (m instanceof Stage)
+            this.frame.changePanel(new PanelStage(this.frame));
+        
+    }
+
+
+	private void showMessageDialog(String message) {
+		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
 }
