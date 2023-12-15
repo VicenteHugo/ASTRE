@@ -392,7 +392,6 @@ public class PanelRessources extends JPanel {
 		Controleur.getControleur().supprimerIntervenant(ind);
 		if (ind >= 0)
 			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
-		
 		this.maj();
 	}
 
