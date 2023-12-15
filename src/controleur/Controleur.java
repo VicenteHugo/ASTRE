@@ -2,7 +2,6 @@ package controleur;
 
 import view.accueil.FrameAccueil;
 
-import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
 
 import model.Affectations;
@@ -72,6 +71,11 @@ public class Controleur {
 		return retour;
 	}
 
+	public Module getModule(int i) {
+
+		return Etat.getModules().get(i);
+	}
+
 	public ArrayList<Module> getModules(Semestres semestres) {
 		ArrayList<Module> retour = new ArrayList<>();
 		for (Module m : Etat.getModules()) {
@@ -136,12 +140,16 @@ public class Controleur {
 		}
 	}
 
-	public void supprimerCategorieIntervenants(int i) {
-		if (i >= 0 && i < Etat.getCategoriesIntervenants().size()) {
-			CategorieIntervenant cat = Etat.getCategoriesIntervenants().remove(i);
+	public boolean supprimerCategorieIntervenants(int i) {
+		CategorieIntervenant cat = Etat.getCategoriesIntervenants().get(i);
+
+		if (Etat.pasUtiliser(cat)) {
 			Etat.ajouterAction(new Suppression(cat));
-			System.out.println("Suppresion : " + cat);
+			Etat.getCategoriesIntervenants().remove(cat);
+			return true;
 		}
+
+		return false;
 	}
 
 	public boolean modifCategorieHeures(int i, String lib, float coef) {

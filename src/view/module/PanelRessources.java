@@ -24,6 +24,8 @@ import javax.swing.border.Border;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import controleur.*;
+import model.Semestres;
+import model.modules.Module;
 
 public class PanelRessources extends JPanel {
 
@@ -42,6 +44,8 @@ public class PanelRessources extends JPanel {
         //Création style
         Font styleLib = new Font("Arial", Font.PLAIN,11 );// Taille et style de police
         UIManager.put("Label.font", styleLib); //Pour tout les labels
+
+		Border outline = BorderFactory.createLineBorder(Color.GRAY);
         
         
         // Frame
@@ -92,8 +96,6 @@ public class PanelRessources extends JPanel {
 		this.panelBas.setLayout(new BorderLayout());
 
 		// Positionnement
-
-		Border outline = BorderFactory.createLineBorder(Color.black);
 
 
 		JPanel panelInfo    = new JPanel();
@@ -388,6 +390,29 @@ public class PanelRessources extends JPanel {
 
 
 	}
+
+
+	public PanelRessources (FrameAccueil frame, Module m) {
+
+		this(frame);
+
+		//Code
+		this.code.setText(m.getCode());
+		this.libLong.setText(m.getLibLong());
+		this.libCourt.setText(m.getLibCourt());
+		
+		//Semestres info
+		Semestres s = m.getSemestres();
+		this.nbEtd.setText("" + s.getNbEtdSem());
+		this.nbGpTD.setText("" + s.getNbGpTdSem());
+		this.nbGpTP.setText("" + s.getNbGpTpSem());
+
+		//
+
+	}
+
+
+
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();

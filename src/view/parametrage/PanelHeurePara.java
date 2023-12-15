@@ -1,3 +1,9 @@
+/*
+* Auteur : Équipe 2
+* Date   : Decembre 2023
+* */
+
+
 package view.parametrage;
 
 // AWT
@@ -8,6 +14,7 @@ import java.awt.FlowLayout;
 
 // SWING
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 
 // ASTRE
 import controleur.Controleur;
@@ -30,11 +37,6 @@ public class PanelHeurePara extends JPanel {
 	private JButton btnValider;
 	/** Boutton permettant d'annuler les modifications. Renvoie à l'acceuil. */
 	private JButton btnRetour;
-
-	/** Boutton permettant d'ajouter des catégories d'heures. Créer un panelAddCatHeure. */
-	private JButton btnAjouter;
-	/** Boutton permettant de supprimer des catégories d'heures.*/
-	private JButton btnSupprimer;
 
 
 
@@ -69,8 +71,6 @@ public class PanelHeurePara extends JPanel {
 		//Bouton
 		this.btnValider = new JButton("Valider");
 		this.btnRetour = new JButton("Annuler");
-		this.btnAjouter = new JButton("Ajouter");
-		this.btnSupprimer = new JButton("Supprimer");
 
 
 
@@ -87,8 +87,6 @@ public class PanelHeurePara extends JPanel {
 
 		JPanel panelBtn = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		panelBtn.add(this.btnRetour);
-		panelBtn.add(this.btnAjouter);
-		panelBtn.add(this.btnSupprimer);
 		panelBtn.add(this.btnValider);
 
 		this.add(panelBtn, BorderLayout.SOUTH);
@@ -104,29 +102,18 @@ public class PanelHeurePara extends JPanel {
         Dimension buttonSize = new Dimension(120, 20);
         this.btnValider  .setMinimumSize(buttonSize);
         this.btnRetour   .setMinimumSize(buttonSize);
-        this.btnAjouter  .setMinimumSize(buttonSize);
-        this.btnSupprimer.setMinimumSize(buttonSize);
 
         this.btnValider  .setPreferredSize(buttonSize);
         this.btnRetour   .setPreferredSize(buttonSize);
-        this.btnAjouter  .setPreferredSize(buttonSize);
-        this.btnSupprimer.setPreferredSize(buttonSize);
 
         Color coul = Color.decode("0xD0D0D0");
         this.btnValider  .setBackground(coul);
         this.btnRetour   .setBackground(coul);
-        this.btnAjouter  .setBackground(coul);
-        this.btnSupprimer.setBackground(coul);
 
 		// JTable
-		Dimension tableSize = this.tblGrilleDonnees.getPreferredSize();
-        this.tblGrilleDonnees.getColumn(0).setPreferredWidth(Math.round((tableSize.width - 250)* 0.70f));
-        this.tblGrilleDonnees.getColumn(1).setPreferredWidth(Math.round((tableSize.width - 250)* 0.30f));
-
-
-
-		this.tblGrilleDonnees.getColumnModel().getColumn(0).setMaxWidth((int) (tailleTbl*0.75));
-		this.tblGrilleDonnees.getColumnModel().getColumn(1).setMaxWidth((int) (tailleTbl*0.25));
+		DefaultTableCellRenderer centre = new DefaultTableCellRenderer();
+		centre.setHorizontalAlignment(JLabel.CENTER);
+		this.tblGrilleDonnees.getColumnModel().getColumn(1).setCellRenderer(centre);
 
 
 
@@ -136,49 +123,31 @@ public class PanelHeurePara extends JPanel {
 
 		this.btnValider.addActionListener  ((e) -> this.valider  ());
 		this.btnRetour.addActionListener   ((e) -> this.annuler  ());
-		this.btnSupprimer.addActionListener((e) -> this.supprimer());
-		this.btnAjouter.addActionListener  ((e) -> this.ajouter  ());
 	}
 	
+
+
+	/**
+	 * Annule les modifications et retourne à l'acceuil paramétrage.
+	 */
 	private void annuler() {
 		this.frame.changePanel(new PanelParametre(this.frame));
 		Controleur.getControleur().annuler();
 	}
 	
+	/**
+	 * Valide les modifications et retourne à l'acceuil paramétrage.
+	 */
 	private void valider() {
 		this.frame.changePanel(new PanelParametre(this.frame));
 		Controleur.getControleur().enregistrer();
 	}
 
-	private void ajouter() {
-		JFrame f = new JFrame();
-		f.add(new PanelAddCatHeures(this, f));
-		f.setTitle("Ajout d'une catégorie");
-		f.pack();
-		f.setLocationRelativeTo(null);
-		f.setAlwaysOnTop(true);
-		f.setVisible(true);
-	}
-
-	private void supprimer() {
-
-		int ind = this.tblGrilleDonnees.getSelectedRow();
-		Controleur.getControleur().supprimerCategorieHeure(ind);
 
 
-		this.maj();
-
-		int max = this.tblGrilleDonnees.getRowCount();
-
-		if (ind >= 0 && ind < max)
-			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
-
-		if (ind >= max && max != 0)
-			this.tblGrilleDonnees.setRowSelectionInterval(max - 1, max - 1);
-	}
-
-
-
+	/**
+	 * Remet à jour les donnée.
+	 */
 	public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleCatHeures()); 
 	}
