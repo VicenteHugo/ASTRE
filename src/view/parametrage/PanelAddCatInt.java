@@ -1,6 +1,8 @@
 package view.parametrage;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -36,6 +38,9 @@ public class PanelAddCatInt extends JPanel {
 		this.panel = panel;
 		this.frameM = frameM;
 
+		this.frameM.setSize(350, 350);
+		this.frameM.setResizable(false);
+
 		//Création
 		this.txtCode = new JTextField(10);
 		this.txtLib  = new JTextField(10);
@@ -45,6 +50,21 @@ public class PanelAddCatInt extends JPanel {
 
 		this.btnAnnuler = new JButton("Annuler");
 		this.btnValider = new JButton("Valider");
+
+
+        /* STYLE */
+
+        // Button
+        Dimension buttonSize = new Dimension(120, 20); // Vous pouvez ajuster la taille selon vos besoins
+        this.btnAnnuler.setMinimumSize(buttonSize);
+        this.btnValider.setMinimumSize(buttonSize);
+
+        this.btnAnnuler.setPreferredSize(buttonSize);
+        this.btnValider.setPreferredSize(buttonSize);
+
+        Color coul = Color.decode("0xD0D0D0");
+        this.btnAnnuler.setBackground(coul);
+        this.btnValider.setBackground(coul);
 
 		//Layout
 		JPanel panelCentre = new JPanel();
@@ -105,7 +125,7 @@ public class PanelAddCatInt extends JPanel {
 	}
 
 	private void ajouterCatInt() {
-		String sCode = this.txtCode.getText();
+		String sCode = this.txtCode.getText().toLowerCase();
 		String sLib = this.txtLib.getText();
 		String sCoef = this.txtCoef.getText();
 		String sHmin = this.txtHMin.getText();

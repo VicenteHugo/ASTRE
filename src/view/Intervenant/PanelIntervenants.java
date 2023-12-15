@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import controleur.Controleur;
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
 
@@ -29,7 +30,7 @@ public class PanelIntervenants extends JPanel {
 
         this.frame = frame;
         frame.setTitle("Astre - Intervenants (Accueil)");
-        frame.setMinimumSize(new Dimension(600, 400));
+        frame.setMinimumSize(new Dimension(900, 400));
 
         // Création des composants
         this.lblListe = new JLabel("Liste Intervenant");
@@ -74,10 +75,10 @@ public class PanelIntervenants extends JPanel {
         this.setVisible(true);
 
         //Action
-        this.btnAnnuler.addActionListener((e) -> this.frame.changePanel(new PanelAccueil(this.frame)));
+        this.btnAnnuler.addActionListener((e) -> this.annuler());
         this.btnAjout.addActionListener((e) -> {
             JFrame f = new JFrame();
-            f.add(new PanelAddIntervenant(this.frame, f));
+            f.add(new PanelAddIntervenant(this,this.frame, f));
             f.setTitle("Ajout d'un Intervenant");
             f.pack();
             f.setResizable(false);
@@ -85,10 +86,33 @@ public class PanelIntervenants extends JPanel {
             f.setAlwaysOnTop(true);
             f.setVisible(true);
         });
+        this.btnSupr.addActionListener((e)-> this.supprimer());
+        this.btnEnregistr.addActionListener((e)->this.valider());
 
     }
 
+    private void valider() {
+      this.frame.changePanel(new PanelAccueil(this.frame));
+      Controleur.getControleur().enregistrer();
+    }
+
+    private void annuler() {
+      this.frame.changePanel(new PanelAccueil(this.frame));
+      Controleur.getControleur().annuler();
+    }
+
+    private void supprimer() {
+
+		int ind = this.tblGrilleDonnees.getSelectedRow();
+		System.out.println(ind);
+		Controleur.getControleur().supprimerIntervenant(ind);
+		if (ind >= 0)
+			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
+		
+		this.maj();
+	}
+
     public void maj() {
-		    this.tblGrilleDonnees.setModel(new GrilleInt()); 
-	    }
+		this.tblGrilleDonnees.setModel(new GrilleInt()); 
+	}
 }

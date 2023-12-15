@@ -1,6 +1,8 @@
 package view.parametrage;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -9,6 +11,7 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -31,6 +34,8 @@ public class PanelAddCatHeures extends JPanel {
 	{
 		this.panel  = panel;
 		this.frameM = frameM;
+		this.frameM.setSize(350, 150);
+		this.frameM.setResizable(false);
 
 
 		//Création
@@ -39,6 +44,22 @@ public class PanelAddCatHeures extends JPanel {
 
 		this.btnAnnuler = new JButton("Annuler");
 		this.btnValider = new JButton("Valider");
+
+
+        /* STYLE */
+
+        // Button
+        Dimension buttonSize = new Dimension(120, 20); // Vous pouvez ajuster la taille selon vos besoins
+        this.btnAnnuler.setMinimumSize(buttonSize);
+        this.btnValider.setMinimumSize(buttonSize);
+
+        this.btnAnnuler.setPreferredSize(buttonSize);
+        this.btnValider.setPreferredSize(buttonSize);
+
+        Color coul = Color.decode("0xD0D0D0");
+        this.btnAnnuler.setBackground(coul);
+        this.btnValider.setBackground(coul);
+
 
 		//Layout
 		JPanel panelCentre = new JPanel();
@@ -81,17 +102,36 @@ public class PanelAddCatHeures extends JPanel {
 	
 	private void ajouterCatHeures ()
 	{
-		String coef = this.txtCoef.getText();
-		String lib  = this.txtLib .getText();
+		String sCoef = this.txtCoef.getText();
+		String sLib  = this.txtLib .getText().toUpperCase();
 
-		if (coef.isEmpty() || lib.isEmpty()) return;
+		if (sCoef.isEmpty() || sLib.isEmpty()) {
+			showMessageDialog("Veuillez remplir toutes les données");
+			return;
+		}
 		
 		try 
 		{
-			Controleur.getControleur().ajouterCategorieHeure(lib, Float.parseFloat(coef));
-			this.panel.maj();
-			this.frameM.dispose();
+			float coef = Float.parseFloat(sCoef);
+
+			if (coef < 0) {
+				showMessageDialog("Pas de chiffre négatifs");
+				return;
+			}
+
+			if(!Controleur.getControleur().ajouterCategorieHeure(sLib,coef))
+				showMessageDialog("Le libellé entré est déjà utilisé");
+			else {
+				this.panel.maj();
+				this.frameM.dispose();
+			}
+
 		} catch (Exception e) {
+			showMessageDialog("Entrez des valeurs numériques pour le coefficient.");
 		}
+	}
+
+	private void showMessageDialog(String message) {
+		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 }

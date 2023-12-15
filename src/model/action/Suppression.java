@@ -14,7 +14,7 @@ public class Suppression extends Action
 {
 	public Suppression (Affectations a) 
 	{ 
-		this.requetes = "DELETE FROM Affectation" + Etat.nom + " WHERE intNom = ? AND intPrenom = ? AND codeMod = ? AND libCatHeur = ?";
+		this.requetes = "DELETE FROM Affectation" + Etat.nom + " WHERE nomInt = ? AND prenomInt = ? AND codeMod = ? AND libCatHeur = ?";
 		this.info = new ArrayList<>(List.of(a.getIntervenant().getNomIntervenant(), a.getIntervenant    ().getPrenomIntervenant(),
 		                                    a.getModule     ().getCode()          , a.getCategorieHeures().getlibCatHeur       () ));
 	}
@@ -29,7 +29,7 @@ public class Suppression extends Action
 
 	public Suppression (Intervenants inter) 
 	{ 
-		this.requetes = "DELETE FROM Intervenants" + Etat.nom + " WHERE intNom = ? AND intPrenom = ?";
+		this.requetes = "DELETE FROM Intervenants" + Etat.nom + " WHERE nomInt = ? AND prenomInt = ?";
 
 		String nom    = inter.getNomIntervenant();
 		String prenom = inter.getPrenomIntervenant();

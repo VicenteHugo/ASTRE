@@ -33,22 +33,22 @@ public class Modification extends Action {
 
 	public Modification(Intervenants iOld, Intervenants iNew) {
 
-		this.requetes = "UPDATE Intervenant" + Etat.nom + " SET intNom = ?, intPrenom = ?, heureMinInt = ?, heureMaxInt = ?, categInt = ? WHERE intNom = ? AND intPrenom = ?;";
+		this.requetes = "UPDATE Intervenants" + Etat.nom + " SET nomInt = ?, prenomInt = ?, heureMinInt = ?, heureMaxInt = ?, categInt = ?, coefInt = ? WHERE nomInt = ? AND prenomInt = ?;";
 
 		this.info = new ArrayList<>(
 				List.of(iNew.getNomIntervenant(), iNew.getPrenomIntervenant(), iNew.getServices(), iNew.getMaxHeures(),
-						iNew.getCategorieIntervenant(),	iOld.getNomIntervenant(), iOld.getPrenomIntervenant()));
+						iNew.getCategorieIntervenant().getCodeCatInt(),iNew.getCoefficient(),iOld.getNomIntervenant(), iOld.getPrenomIntervenant()));
 	}
 
 	public Modification(CategorieHeures cOld, CategorieHeures cNew) {
-		this.requetes = "UPDATE CategorieHeures" + Etat.nom + "SET libCatHeur = ?, coefCatHeur = ? WHERE libCatHeur = ? ;";
+		this.requetes = "UPDATE CategorieHeures" + Etat.nom + " SET libCatHeur = ?, coefCatHeur = ? WHERE libCatHeur = ? ;";
 
 		this.info = new ArrayList<>(List.of(cNew.getlibCatHeur(), cNew.getcoefCatHeur(), cOld.getlibCatHeur()));
 	}
 
 	public Modification(CategorieIntervenant cOld, CategorieIntervenant cNew) {
 
-		this.requetes = "UPDATE CategorieIntervenants" + Etat.nom + "SET codeCatInt = ?, libCatInt = ?, coefCatInt = ?, heureMinCatInt = ?, heureMaxCatInt = ? WHERE codeCatInt = ?;";
+		this.requetes = "UPDATE CategorieIntervenants" + Etat.nom + " SET codeCatInt = ?, libCatInt = ?, coefCatInt = ?, heureMinCatInt = ?, heureMaxCatInt = ? WHERE codeCatInt = ?;";
 
 		this.info = new ArrayList<>(List.of(cNew.getCodeCatInt(), cNew.getLibCatInt(), cNew.getCoefCatInt(), cNew.getHeureMinCatInt(), cNew.getHeureMaxCatInt(), cOld.getCodeCatInt()));
 	}

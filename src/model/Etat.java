@@ -16,6 +16,8 @@ import java.util.Scanner;
 import java.io.FileInputStream;
 
 public class Etat {
+	/**Chemin vers le scripts sql.*/
+	public static final String FICHIER = "./SQL/REALISATION/CreateTablesAstre.sql";
 
 	/**Liste des Tables.Utile pour la verification de leurs présences. */
 	public static final String[] LST_NOM_TABLES = new String[] 
@@ -54,13 +56,18 @@ public class Etat {
 		Etat.lstActions = new ArrayList<>();
 
 		try {
-			Class.forName("org.postgresql.Driver");
+			Class.forName("org.postgresql.Driver"); //Postgress
+			// Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
+
+
 			// Connection
-			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004");
+			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			// Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre","root", ""); //MySQL
 			
 			Etat.recupererNomEtat();
-			System.out.println(Etat.nom);
-			Etat.verifierTablesPresence();
+
+			//Lancer le scripts en cas de Table détruite
+			Etat.lireFichierSQL(Etat.FICHIER);
 
 
 			Etat.genererInfos();
@@ -80,12 +87,10 @@ public class Etat {
 
 		// Générer les deuxièmes tables
 		Etat.genererIntervenants();
-		System.out.println(Etat.lstIntervenants);
-
 		Etat.genererModules();
 
 		// Générer les troisièmes tables
-		Etat.genererAffections();
+		Etat.genererAffectations();
 	}
 
 	/*--------------------------------------------------------------*/
@@ -216,10 +221,11 @@ public class Etat {
 				String prenom = res.getString("prenomInt");
 				int hmin = res.getInt("heureMinInt");
 				int hmax = res.getInt("heureMaxInt");
+				float coef = res.getFloat("coefInt");
 
 				CategorieIntervenant cat = Etat.getCatInt(res.getString("categInt"));
 
-				Etat.lstIntervenants.add(new Intervenants(cat, nom, prenom, hmin, hmax));
+				Etat.lstIntervenants.add(new Intervenants(cat, nom, prenom, hmin, hmax,coef));
 			}
 
 			res.close();
@@ -291,6 +297,7 @@ public class Etat {
 		return Etat.lstIntervenants;
 	}
 
+
 	public static ArrayList<Module> getModules() {
 		return Etat.lstModule;
 	}
@@ -301,6 +308,10 @@ public class Etat {
 				return i;
 
 		return null;
+	}
+
+	public static Intervenants getIntervenants(int i){
+		return Etat.lstIntervenants.get(i);
 	}
 
 	public static List<Intervenants> getIntervenants(CategorieIntervenant cat) {
@@ -331,7 +342,7 @@ public class Etat {
 	/*--------------------------------------------------------------*/
 
 	// Méthode CREATE
-	public static void genererAffections() {
+	public static void genererAffectations() {
 
 		Etat.lstAffectations = new ArrayList<>();
 
@@ -356,6 +367,10 @@ public class Etat {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void ajouterAffectation(Affectations affect) {
+		Etat.lstAffectations.add(affect);
 	}
 
 	public static ArrayList<Affectations> getAffectations() {
@@ -402,7 +417,7 @@ public class Etat {
 						st.setBoolean(i, (Boolean) info);
 				}
 
-				System.out.println(st.toString());
+				System.out.println(st);
 
 				// On l'execute
 				st.executeUpdate();
@@ -415,56 +430,11 @@ public class Etat {
 		Etat.lstActions.clear();
 	}
 
-	public static void main(String[] args) {
-		new Etat();
 
-		for (Intervenants i : Etat.getIntervenants())
-			System.out.println(i);
-
-		for (Affectations a : Etat.getAffectations())
-			System.out.println(a);
-
-		for (Module m : Etat.getModules())
-			System.out.println(m.getClass().getSimpleName());
-
-		CategorieHeures cat = new CategorieHeures("Heeeeey", 1.0f);
-
-		Action a = new Ajout(cat);
-		Etat.ajouterAction(a);
-		Etat.enregistrer();
-
-		a = new Suppression(cat);
-		Etat.ajouterAction(a);
-		Etat.enregistrer();
-
-		System.out.println();
-	}
 
 	/*--------------------------------------------------------------*/
 	/* CREATION ET VERIFICATIONS DES TABLES */
 	/*--------------------------------------------------------------*/
-
-	private static void verifierTablesPresence() {
-
-		try {
-
-			for (String nomTable : Etat.LST_NOM_TABLES) {
-
-				ResultSet resultSet = Etat.connec.getMetaData().getTables(null, null, nomTable+Etat.nom, new String[] {"TABLE"});
-
-				if (!resultSet.next())
-				{
-					Etat.lireFichierSQL("./SQL/REALISATION/CreateTablesAstre.sql");
-				}
-
-				resultSet.close();
-			}
-
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
-
 
 	private static void recupererNomEtat()
 	{
@@ -476,7 +446,6 @@ public class Etat {
 			//Si elle existe pas on la crée
 			st.executeUpdate("CREATE TABLE IF NOT EXISTS Etat (etat  VARCHAR(25) PRIMARY KEY,dateCrea DATE DEFAULT CURRENT_DATE)");
 
-
 			ResultSet rs = st.executeQuery("SELECT * FROM Etat ORDER BY dateCrea DESC");
 
 			if (rs.next()) {
@@ -486,10 +455,28 @@ public class Etat {
 				Etat.nom = "Etat1";
 			}
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println("Methode marche pas");
 		}
+	}
+	
+	public static String[] getEtats() {
 
+		List<String> etatsList = new ArrayList<>();
+		try {
+
+			Statement st = Etat.connec.createStatement();
+			ResultSet res = st.executeQuery("SELECT * FROM Etat ORDER BY datecrea DESC");
+
+			while (res.next())
+				etatsList.add(res.getString("etat"));
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		String[] etatsArray = new String[etatsList.size()];
+		return etatsList.toArray(etatsArray);
 	}
 	
 	private static void lireFichierSQL(String fic) {
@@ -503,13 +490,13 @@ public class Etat {
 
 				String l = scan.nextLine();
 
-				if (!(l.contains("/*") || l.contains("*/") || l.contains("*") || l.contains("--")))
+				if (!(l.contains("/*") || l.contains("*/") || l.contains("*") || l.contains("--"))) {
 					commande += " " + l;
-
-				if (l.endsWith(";")) {
-					commande = commande.replaceAll("ETAT", Etat.nom);
-					statement.execute(commande);
-					commande = "";
+					if (l.endsWith(";")) {
+						commande = commande.replaceAll("ETAT", Etat.nom);
+						statement.execute(commande);
+						commande = "";
+					}
 				}
 
 			}
@@ -518,5 +505,79 @@ public class Etat {
 			e.printStackTrace();
 		}
 
+	}
+
+	public static void dupliquerEtat (String etatDest, String etatDep)
+	{
+		try {
+			Statement st = Etat.connec.createStatement();
+
+			for(String tables : Etat.LST_NOM_TABLES) {
+				System.out.println("CREATE TABLE " + tables + etatDest + " AS TABLE " + tables + etatDep);
+				st.executeUpdate("CREATE TABLE " + tables + etatDest + " AS TABLE " + tables + etatDep );
+			}
+			
+			st.executeUpdate("INSERT INTO Etat (etat) VALUES ('"+nom+"')");
+
+			Etat.verifEtat();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+	}
+
+	public static void changerEtat (String nom) {
+		Etat.nom = nom;
+		System.out.println(Etat.nom);
+		Etat.lireFichierSQL(Etat.FICHIER);
+		Etat.genererInfos();
+	}
+
+	public static boolean creerEtat (String nom) {
+
+		for (String etatsNom : Etat.getEtats())
+			if (etatsNom.equals(nom)) return false;
+
+
+		try {
+			Statement st = Etat.connec.createStatement();
+			st.executeUpdate("INSERT INTO Etat (etat) VALUES ('"+nom+"')");
+
+			Etat.nom = nom;
+			Etat.lireFichierSQL(Etat.FICHIER);
+			Etat.verifEtat();
+			Etat.genererInfos();
+			return true;
+
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
+	}
+
+	private static void verifEtat () {
+		if (Etat.getEtats().length > 5) {
+			Etat.suppEtat(Etat.getEtats()[5]);
+		}
+	}
+
+	public static boolean suppEtat (String nom) {
+
+		if (Etat.nom.equals(nom)) return false;
+
+		try {
+			Statement st = Etat.connec.createStatement();
+
+
+			for (String s : Etat.LST_NOM_TABLES)
+				st.executeUpdate("DROP TABLE " + s + nom.toLowerCase() + " CASCADE");
+
+			st.executeUpdate("DELETE FROM Etat WHERE etat = '" + nom + "'");
+
+			return true;
+
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
 	}
 }

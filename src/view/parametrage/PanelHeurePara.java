@@ -1,6 +1,7 @@
 package view.parametrage;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -12,6 +13,9 @@ import javax.swing.JTable;
 
 import controleur.Controleur;
 import view.accueil.FrameAccueil;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 
 public class PanelHeurePara extends JPanel {
@@ -29,7 +33,7 @@ public class PanelHeurePara extends JPanel {
 
 		// Frame
 		frame.setTitle("Astre - Paramètre (Heures)");
-		frame.setMinimumSize(new Dimension(400, 150));
+		frame.setMinimumSize(new Dimension(520, 150));
 		this.frame = frame;
 
 		// Création des composants
@@ -42,6 +46,24 @@ public class PanelHeurePara extends JPanel {
 		this.btnRetour = new JButton("Annuler");
 		this.btnAjouter = new JButton("Ajouter");
 		this.btnSupprimer = new JButton("Supprimer");
+
+		// Button
+        Dimension buttonSize = new Dimension(120, 20); // Vous pouvez ajuster la taille selon vos besoins
+        this.btnValider  .setMinimumSize(buttonSize);
+        this.btnRetour   .setMinimumSize(buttonSize);
+        this.btnAjouter  .setMinimumSize(buttonSize);
+        this.btnSupprimer.setMinimumSize(buttonSize);
+
+        this.btnValider  .setPreferredSize(buttonSize);
+        this.btnRetour   .setPreferredSize(buttonSize);
+        this.btnAjouter  .setPreferredSize(buttonSize);
+        this.btnSupprimer.setPreferredSize(buttonSize);
+
+        Color coul = Color.decode("0xD0D0D0");
+        this.btnValider  .setBackground(coul);
+        this.btnRetour   .setBackground(coul);
+        this.btnAjouter  .setBackground(coul);
+        this.btnSupprimer.setBackground(coul);
 
 		// Layout
 		this.setLayout(new BorderLayout());
@@ -94,12 +116,18 @@ public class PanelHeurePara extends JPanel {
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
-		System.out.println(ind);
 		Controleur.getControleur().supprimerCategorieHeure(ind);
-		if (ind >= 0)
-			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
-		
+
+
 		this.maj();
+
+		int max = this.tblGrilleDonnees.getRowCount();
+
+		if (ind >= 0 && ind < max)
+			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
+
+		if (ind >= max && max != 0)
+			this.tblGrilleDonnees.setRowSelectionInterval(max - 1, max - 1);
 	}
 
 
