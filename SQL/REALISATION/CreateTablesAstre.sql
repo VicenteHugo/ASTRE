@@ -75,6 +75,7 @@ CREATE TABLE IF NOT EXISTS IntervenantsETAT
     prenomInt   VARCHAR(20) NOT NULL,
     heureMinInt INTEGER NOT NULL CHECK (heureMinInt > 0),
     heureMaxInt INTEGER NOT NULL CHECK (heureMaxInt >= heureMinInt),
+    coefInt     FLOAT DEFAULT 1 CHECK  (coefInt > 0),
     categInt    VARCHAR(10) REFERENCES CategorieIntervenantsETAT(codeCatInt),
 	PRIMARY KEY (nomInt, prenomInt)
 );
@@ -105,6 +106,6 @@ CREATE TABLE IF NOT EXISTS AffectationETAT
 );
 
 --Générer 6 semestres si il y a rien
--- INSERT INTO SemestresETAT (numSem)
--- SELECT numSem FROM generate_series(1, 6) numSem
--- ON CONFLICT (numSem) DO NOTHING;
+INSERT INTO SemestresETAT (numSem)
+SELECT numSem FROM generate_series(1, 6) numSem
+ON CONFLICT (numSem) DO NOTHING;

@@ -1,6 +1,7 @@
 package view.parametrage;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -29,7 +30,7 @@ public class PanelIntPara extends JPanel {
 
 		// Frame
 		frame.setTitle("Astre - Paramètre (Intervenants)");
-		frame.setMinimumSize(new Dimension(400, 150));
+		frame.setMinimumSize(new Dimension(520, 150));
 		this.frame = frame;
 
 		// Création des composants
@@ -42,6 +43,24 @@ public class PanelIntPara extends JPanel {
 		this.btnRetour = new JButton("Annuler");
 		this.btnAjouter = new JButton("Ajouter");
 		this.btnSupprimer = new JButton("Supprimer");
+
+		// Button
+        Dimension buttonSize = new Dimension(120, 20); // Vous pouvez ajuster la taille selon vos besoins
+        this.btnValider  .setMinimumSize(buttonSize);
+        this.btnRetour   .setMinimumSize(buttonSize);
+        this.btnAjouter  .setMinimumSize(buttonSize);
+        this.btnSupprimer.setMinimumSize(buttonSize);
+
+        this.btnValider  .setPreferredSize(buttonSize);
+        this.btnRetour   .setPreferredSize(buttonSize);
+        this.btnAjouter  .setPreferredSize(buttonSize);
+        this.btnSupprimer.setPreferredSize(buttonSize);
+
+        Color coul = Color.decode("0xD0D0D0");
+        this.btnValider  .setBackground(coul);
+        this.btnRetour   .setBackground(coul);
+        this.btnAjouter  .setBackground(coul);
+        this.btnSupprimer.setBackground(coul);
 
 		// Layout
 		this.setLayout(new BorderLayout());
