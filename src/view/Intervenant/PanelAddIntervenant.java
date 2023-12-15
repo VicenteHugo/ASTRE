@@ -49,6 +49,7 @@ public class PanelAddIntervenant extends JPanel {
 
 	private CategorieIntervenant categ = null;
 	private PanelIntervenants panelIntervenants;
+	private boolean isValid = true;
 
 	public PanelAddIntervenant(PanelIntervenants p,FrameAccueil frame, Frame frameM) {
 		this.panelIntervenants = p;
@@ -134,6 +135,7 @@ public class PanelAddIntervenant extends JPanel {
 		// Activation
 		
 		this.btnValider.addActionListener((e) -> {
+			this.isValid = true;
 			CategorieIntervenant categ = null;
 			for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
 				if (ch.getCodeCatInt().equals(this.boxCategorie.getSelectedItem())) {
@@ -141,21 +143,32 @@ public class PanelAddIntervenant extends JPanel {
 					break;
 				}
 			}
-			if (categ != null) {
+			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
+				if(inter.getNomIntervenant().equals(this.txtNom.getText()) && inter.getPrenomIntervenant().equals(this.txtPrenom.getText())){
+					JOptionPane.showMessageDialog(this, "Utilisateur déja crée, changer de nom ou de prénom");
+					isValid = false;
+					break;
+				}
+
+			}
+			if (categ != null && isValid) {
 				try {
 					int heuresService = Integer.parseInt(this.txtHServ.getText());
 					int heuresMax = Integer.parseInt(this.txtHMax.getText());
 					float coef = (float) Integer.parseInt(this.txtCoefTP.getText());
-
-					Intervenants inter = new Intervenants(categ, this.txtNom.getText(), this.txtPrenom.getText(),
+					if(heuresMax > heuresService){
+						Intervenants inter = new Intervenants(categ, this.txtNom.getText(), this.txtPrenom.getText(),
 							heuresService, heuresMax,coef);
-
-					Controleur.getControleur().ajouterIntervenant(inter);
-					this.frameM.dispose();
+						Controleur.getControleur().ajouterIntervenant(inter);
+						this.frameM.dispose();
+					}else{
+						JOptionPane.showMessageDialog(this,"Le nombre d'heure de services doit être inferieur à son nombre maximal");
+					}
+					
 				} catch (NumberFormatException ex) {
 					JOptionPane.showMessageDialog(this, "Veuillez entrer des valeurs valides pour les heures de service et les heures maximales.");
 				}
-			} else {
+			} else if(isValid){
 				JOptionPane.showMessageDialog(this, "Catégorie introuvable.");
 			}
 			this.panelIntervenants.maj();

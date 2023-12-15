@@ -198,8 +198,12 @@ public class Controleur {
 		Etat.ajouterIntervenant(inter);
 	}
 
-	public void supprimerIntervenant(Intervenants inter) {
-
+	public void supprimerIntervenant(int ind) {
+		if (ind >= 0 && ind < Etat.getIntervenants().size()) {
+			Intervenants inter = Etat.getIntervenants().remove(ind);
+			Etat.ajouterAction(new Suppression(inter));
+			System.out.println("Suppresion : " + inter);
+		}
 	}
 
 	public boolean modifIntervenant(int i, CategorieIntervenant categ, String nomIntervenant, String prenomIntervenant,
