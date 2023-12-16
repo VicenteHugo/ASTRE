@@ -33,10 +33,11 @@ public class PanelRessources extends JPanel {
 	private FrameAccueil frame;
 
     private JButton    btnAjouter,btnSupprimer,btnEnregistrer,btnAnnuler;
-    private JLabel     typeModuleT,semestreT,codeT,libLongT,libCourtT;
-    private JTextField typeModule,semestre,code,libLong,libCourt, nbEtd,nbGpTD,nbGpTP;
+	private JLabel     lblTypeModule,lblSemestre,lblCode,lblLong,lblCourt;
+    private JTextField txtTypeModule,txtSemestre,txtCode,txtLong,txtCourt, txtNbEtd,txtNbGpTD,txtNbGpTP;
 	private JCheckBox  checkBoxValid;
-    private JPanel panelHaut, panelBas;
+    
+	private JPanel panelHaut, panelBas;
 
     private JTable tblGrilleDonnees;
 
@@ -63,36 +64,36 @@ public class PanelRessources extends JPanel {
         this.btnEnregistrer = new JButton("Enregistrer");
         this.btnAnnuler     = new JButton("Annuler");
         
-        this.typeModuleT = new JLabel("type module");
-        this.semestreT   = new JLabel("semestre");
-        this.codeT       = new JLabel("code");
-        this.libLongT    = new JLabel("libellé long");
-        this.libCourtT   = new JLabel("libellé court");
+        this.lblTypeModule = new JLabel("type module");
+        this.lblSemestre   = new JLabel("txtSemestre");
+        this.lblCode       = new JLabel("txtCode");
+        this.lblLong    = new JLabel("libellé long");
+        this.lblCourt   = new JLabel("libellé court");
         
-        this.typeModule = new JTextField("Ressource",9);
-        this.semestre   = new JTextField("S1",8);
-        this.code       = new JTextField("R1.01",6);
-        this.libLong    = new JTextField("Initiation au développement",30);
-        this.libCourt   = new JTextField("Init dev",10);
+        this.txtTypeModule = new JTextField("Ressource",9);
+        this.txtSemestre   = new JTextField("S1",8);
+        this.txtCode       = new JTextField("R1.01",6);
+        this.txtLong    = new JTextField("Initiation au développement",30);
+        this.txtCourt   = new JTextField("Init dev",10);
 
-        this.nbEtd    = new JTextField("85",3);
-        this.nbGpTD   = new JTextField("4",3);
-        this.nbGpTP   = new JTextField("7",3);
+        this.txtNbEtd    = new JTextField("85",3);
+        this.txtNbGpTD   = new JTextField("4",3);
+        this.txtNbGpTP   = new JTextField("7",3);
 
 		this.checkBoxValid = new JCheckBox("Validation");
 
         this.panelHaut = new JPanel();
         this.panelBas  = new JPanel();        
 
-        this.typeModule.setEditable(false);// non editable
-        this.semestre  .setEditable(false);
-        this.nbEtd     .setEditable(false);
-        this.nbGpTD    .setEditable(false);
-        this.nbGpTP    .setEditable(false);
+        this.txtTypeModule.setEditable(false);// non editable
+        this.txtSemestre  .setEditable(false);
+        this.txtNbEtd     .setEditable(false);
+        this.txtNbGpTD    .setEditable(false);
+        this.txtNbGpTP    .setEditable(false);
 		
-		this.nbEtd     .setHorizontalAlignment(JTextField.CENTER);//centrer le texte
-        this.nbGpTD    .setHorizontalAlignment(JTextField.CENTER);
-        this.nbGpTP    .setHorizontalAlignment(JTextField.CENTER);
+		this.txtNbEtd     .setHorizontalAlignment(JTextField.CENTER);//centrer le texte
+        this.txtNbGpTD    .setHorizontalAlignment(JTextField.CENTER);
+        this.txtNbGpTP    .setHorizontalAlignment(JTextField.CENTER);
         // Layout
         this.setLayout(new GridLayout(2, 1, 0, 0));
 		this.panelHaut.setLayout(new GridBagLayout());
@@ -112,31 +113,31 @@ public class PanelRessources extends JPanel {
 		cGeneral.insets = new java.awt.Insets(5, 0, 5, 5);
 
 		
-        panelInfoTab.add(this.typeModuleT,cGeneral);
+        panelInfoTab.add(this.lblTypeModule,cGeneral);
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.semestreT,cGeneral);
+        panelInfoTab.add(this.lblSemestre,cGeneral);
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.codeT,cGeneral);
+        panelInfoTab.add(this.lblCode,cGeneral);
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.libLongT,cGeneral);
+        panelInfoTab.add(this.lblLong,cGeneral);
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.libCourtT,cGeneral);
+        panelInfoTab.add(this.lblCourt,cGeneral);
 		
 		cGeneral.gridx = 0;
 		cGeneral.gridy ++;
-        panelInfoTab.add(this.typeModule,cGeneral);
+        panelInfoTab.add(this.txtTypeModule,cGeneral);
 		
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.semestre,cGeneral);
+        panelInfoTab.add(this.txtSemestre,cGeneral);
 		
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.code,cGeneral);
+        panelInfoTab.add(this.txtCode,cGeneral);
 		
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.libLong,cGeneral);
+        panelInfoTab.add(this.txtLong,cGeneral);
 		
 		cGeneral.gridx ++;
-        panelInfoTab.add(this.libCourt,cGeneral);
+        panelInfoTab.add(this.txtCourt,cGeneral);
 
         cGeneral.gridy++;
         cGeneral.gridx = 0;
@@ -148,11 +149,11 @@ public class PanelRessources extends JPanel {
 
 		cGeneral.gridy++;
         cGeneral.gridx = 0;
-        panelInfoTab.add(this.nbEtd, cGeneral);
+        panelInfoTab.add(this.txtNbEtd, cGeneral);
         cGeneral.gridx++;
-		panelInfoTab.add(this.nbGpTD, cGeneral);
+		panelInfoTab.add(this.txtNbGpTD, cGeneral);
         cGeneral.gridx++;
-		panelInfoTab.add(this.nbGpTP, cGeneral);
+		panelInfoTab.add(this.txtNbGpTP, cGeneral);
 		panelInfo.add(panelInfoTab);
 
 		cGeneral.gridx = 0;
@@ -376,7 +377,7 @@ public class PanelRessources extends JPanel {
 
 		this.btnAnnuler.addActionListener((e) -> this.frame.changePanel(new PanelPrevi(this.frame)));
         this.btnAjouter.addActionListener((e)->{
-			if(code.getText() != null){
+			if(txtCode.getText() != null){
 				JFrame f = new JFrame();
 				f.add(new PanelAddRessourceIntervenant(this,this.frame, f));
 				f.setTitle("Affecter un Intervenant");
@@ -399,16 +400,16 @@ public class PanelRessources extends JPanel {
 
 		this(frame);
 
-		//Code
-		this.code.setText(m.getCode());
-		this.libLong.setText(m.getLibLong());
-		this.libCourt.setText(m.getLibCourt());
+		//txtCode
+		this.txtCode.setText(m.getCode());
+		this.txtLong.setText(m.getLibLong());
+		this.txtCourt.setText(m.getLibCourt());
 		
 		//Semestres info
 		Semestres s = m.getSemestres();
-		this.nbEtd.setText("" + s.getNbEtdSem());
-		this.nbGpTD.setText("" + s.getNbGpTdSem());
-		this.nbGpTP.setText("" + s.getNbGpTpSem());
+		this.txtNbEtd.setText("" + s.getNbEtdSem());
+		this.txtNbGpTD.setText("" + s.getNbGpTdSem());
+		this.txtNbGpTP.setText("" + s.getNbGpTpSem());
 
 		//
 		this.mod = m;
@@ -432,7 +433,7 @@ public class PanelRessources extends JPanel {
 	}
 
 	public String getCode(){
-		System.out.println(this.code.getText());
-		return this.code.getText();
+		System.out.println(this.txtCode.getText());
+		return this.txtCode.getText();
 	}
 }
