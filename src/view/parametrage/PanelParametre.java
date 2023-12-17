@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class PanelParametre extends JPanel {
 
