@@ -599,7 +599,7 @@ public class PanelRessources extends JPanel implements ActionListener{
 
 	public PanelRessources (FrameAccueil frame, Module m) {
 
-		this (frame, m.getSemestres(),m.getSemestres());
+		this (frame, m.getSemestres());
 		this.mod = m;
 
 		//txtCode
