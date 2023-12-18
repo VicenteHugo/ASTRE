@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS ModulesETAT
     semMod      INTEGER      REFERENCES SemestresETAT(numSem),
     typeMod     VARCHAR(255) NOT NULL CHECK (typeMod IN ('Ressource', 'Sae', 'Stage', 'PPP')),
     libCourtMod VARCHAR(255) NOT NULL,
-    libLongMod  VARCHAR(50) NOT NULL,
+    libLongMod  VARCHAR(255) NOT NULL,
     validMod    BOOLEAN NOT NULL DEFAULT false,
     nbHeurPonc  INTEGER DEFAULT 0 NOT NULL
 );
