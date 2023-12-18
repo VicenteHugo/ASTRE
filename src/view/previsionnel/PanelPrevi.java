@@ -25,6 +25,7 @@ import model.modules.Sae;
 import model.modules.Stage;
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
+import view.module.PanelPPP;
 import view.module.PanelRessources;
 import view.module.PanelSAE;
 import view.module.PanelStage;
