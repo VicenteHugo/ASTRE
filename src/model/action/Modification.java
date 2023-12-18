@@ -29,6 +29,15 @@ public class Modification extends Action {
 
 		this.info = new ArrayList<>(
 				List.of(mNew.getCode(), mNew.getSemestres(), mNew.getLibCourt(), mNew.getLibLong(), mNew.isValide(), mNew.getHeurePonctuel(), mOld.getCode()));
+
+		
+
+		for (CategorieHeures cat : mNew.getHeures().keySet()) {
+			List<Integer> lst = mNew.getHeures().get(cat);
+			this.requetes += "UPDATE ModulesCatHeures" + Etat.nom+ " SET nbHeurePN = ?, nbHeureSem = ? nbSemaine) WHERE codeMod = ? AND libCatHeur = ?";
+
+			this.info.addAll(List.of(lst.get(0), lst.get(2), lst.get(1), mNew.getCode(), cat.getlibCatHeur()));
+		}
 	}
 
 	public Modification(Intervenants iOld, Intervenants iNew) {

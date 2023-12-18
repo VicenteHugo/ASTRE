@@ -8,8 +8,8 @@ import model.Semestres;
 
 public class Stage extends Module {
 
-	public Stage(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel) {
-		super(semestres, code, libLong, libCourt, heurePonctuel);
+	public Stage(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel, boolean valid) {
+		super(semestres, code, libLong, libCourt, heurePonctuel, valid);
 
 	}
 
