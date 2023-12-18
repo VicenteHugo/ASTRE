@@ -198,7 +198,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
         gbcPanelHaut.weightx = 1;
         gbcPanelHaut.weighty = 1;
         gbcPanelHaut.insets = new Insets(3, 3, 3, 3);
-		gbcPanelHaut.anchor = GridBagConstraints.WEST;
+		gbcPanelHaut.anchor = GridBagConstraints.LINE_START;
 
         // Ajout des libellés première ligne
         panelHaut.add(new JLabel("Type module"), gbcPanelHaut);
@@ -266,7 +266,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 
 
 		//Ajout des JLabel première lignes
-		gbcHeurePN.anchor = GridBagConstraints.WEST;
+		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
 		gbcHeurePN.gridx = 1;
 		panelHeurePN.add(new JLabel("CM"), gbcHeurePN);
 		gbcHeurePN.gridx++;
@@ -276,7 +276,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 		gbcHeurePN.gridx++;
 		gbcHeurePN.anchor = GridBagConstraints.CENTER;
 		panelHeurePN.add(new JLabel("∑"), gbcHeurePN);
-		gbcHeurePN.anchor = GridBagConstraints.WEST;
+		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
 
 		gbcHeurePN.gridx = 1;
 		gbcHeurePN.gridy++;
@@ -290,7 +290,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 
 		gbcHeurePN.gridx = 0;
 		gbcHeurePN.gridy++;
-		panelHeurePN.add(new JLabel("Total (eqtd)"), gbcHeurePN);
+		panelHeurePN.add(new JLabel("Total (eqtd) promo"), gbcHeurePN);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(this.txtHeureEtdCMPN,gbcHeurePN);
 		gbcHeurePN.gridx++;
@@ -305,7 +305,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 		panelHeurePNValid.setLayout(new BorderLayout());
 		panelHeurePNValid.add(panelHeurePN, BorderLayout.CENTER);
 		panelHeurePNValid.add(this.cbValide, BorderLayout.SOUTH);
-		panelHeurePNValid.add(new JLabel("PN Local (nb h tot/etd)",JLabel.CENTER), BorderLayout.NORTH);
+		panelHeurePNValid.add(new JLabel("PN Local (nb h tot/etd)",JLabel.CENTER), BorderLayout.PAGE_START);
 
 
 		//Repartion 
@@ -347,7 +347,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 
         gbcRepar.insets.left = 20;
 		gbcRepar.gridx+= 2;
-		gbcRepar.anchor = GridBagConstraints.WEST;
+		gbcRepar.anchor = GridBagConstraints.LINE_START;
 		panelRepartition.add(new JLabel("CM", JLabel.LEFT), gbcRepar);
         gbcRepar.insets.left = 2;
 		gbcRepar.gridx++;
@@ -374,22 +374,22 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
         gbcRepar.insets = new Insets(2,2,2,2);
 		gbcRepar.gridx = 0;
 		gbcRepar.gridy++;
-		gbcRepar.anchor = GridBagConstraints.EAST;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		panelRepartition.add(this.txtCMNbHeure, gbcRepar);
 		gbcRepar.gridx++;
-		gbcRepar.anchor = GridBagConstraints.WEST;
+		gbcRepar.anchor = GridBagConstraints.LINE_START;
 		panelRepartition.add(this.txtCMNbSem  , gbcRepar);
 		gbcRepar.gridx++;
-		gbcRepar.anchor = GridBagConstraints.EAST;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		panelRepartition.add(this.txtTDNbHeure, gbcRepar);
 		gbcRepar.gridx++;
-		gbcRepar.anchor = GridBagConstraints.WEST;
+		gbcRepar.anchor = GridBagConstraints.LINE_START;
 		panelRepartition.add(this.txtTDNbSem  , gbcRepar);
 		gbcRepar.gridx++;
-		gbcRepar.anchor = GridBagConstraints.EAST;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		panelRepartition.add(this.txtTPNbHeure, gbcRepar);
 		gbcRepar.gridx++;
-		gbcRepar.anchor = GridBagConstraints.WEST;
+		gbcRepar.anchor = GridBagConstraints.LINE_START;
 		panelRepartition.add(this.txtTPNbSem  , gbcRepar);
 		gbcRepar.gridx++;
 
@@ -403,7 +403,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 		panelRepartition.add(this.txtTPTot, gbcRepar);
 
         gbcRepar.insets.left = 20;
-		gbcRepar.anchor = GridBagConstraints.EAST;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		gbcRepar.gridx ++;
 		panelRepartition.add(new JLabel(), gbcRepar);
 		gbcRepar.gridx ++;
@@ -418,7 +418,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 
 
 		// Quatrième ligne
-		gbcRepar.anchor = GridBagConstraints.EAST;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
         gbcRepar.insets = new Insets(2,2,2,2);
 		gbcRepar.gridy++;
 		gbcRepar.gridwidth = 3;
@@ -434,7 +434,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 		panelRepartition.add(this.txtTDTotEtd, gbcRepar);
 
         gbcRepar.insets.left = 20;
-		gbcRepar.anchor = GridBagConstraints.EAST;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		gbcRepar.gridx ++;
 		panelRepartition.add(new JLabel(), gbcRepar);
 		gbcRepar.gridx ++;
@@ -447,7 +447,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
         gbcRepar.insets.left = 2;
 
 		// Ciqnuième ligne
-		gbcRepar.anchor = GridBagConstraints.EAST;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
         gbcRepar.insets = new Insets(2,2,20,2);
 		gbcRepar.gridy++;
 		gbcRepar.gridwidth = 3;
@@ -462,7 +462,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 		panelRepartition.add(this.txtTDTotEtdAffect, gbcRepar);
 
         gbcRepar.insets.left = 20;
-		gbcRepar.anchor = GridBagConstraints.EAST;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		gbcRepar.gridx ++;
 		panelRepartition.add(new JLabel(), gbcRepar);
 		gbcRepar.gridx ++;
