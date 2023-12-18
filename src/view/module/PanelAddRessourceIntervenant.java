@@ -32,7 +32,7 @@ public class PanelAddRessourceIntervenant extends JPanel {
 	
 	private JTextField txtNomIntervenant;
 	private JTextField txtPrenomIntervenant;
-	private JComboBox boxCategorie;	
+	private JComboBox<String> boxCategorie;	
 	private JTextField txtNbSemaine;
 	private JTextField txtNbGroupe;
     private JTextField txtTotal;
@@ -55,7 +55,7 @@ public class PanelAddRessourceIntervenant extends JPanel {
 
 		//Création
 		ArrayList<CategorieHeures> l = Controleur.getControleur().getCategorieHeures();
-		this.boxCategorie = new JComboBox();
+		this.boxCategorie = new JComboBox<String>();
 		for(int i=0; i < l.size(); i++){
 			this.boxCategorie.addItem(l.get(i).getlibCatHeur());
 		}

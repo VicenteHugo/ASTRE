@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import controleur.Controleur;
-
+import model.Etat;
 import model.modules.Module;
 import model.modules.PPP;
 import model.modules.Ressource;
@@ -80,7 +80,7 @@ public class PanelPrevi extends JPanel {
         this.add(panel, BorderLayout.NORTH);
         
         
-        this.btnCreerRessources.addActionListener((e)->{ this.frame.changePanel(new PanelRessources(this.frame));} );
+        this.btnCreerRessources.addActionListener((e)->{ this.frame.changePanel(new PanelRessources(this.frame, Etat.getSemestres().get(this.ongletSemestres.getTabPlacement())));} );
         this.btnCreerSae.addActionListener((e)->{ this.frame.changePanel(new PanelSAE(this.frame));} );
         this.btnCreerStage.addActionListener((e)->{ this.frame.changePanel(new PanelStage(this.frame));} );
         this.btnAccueil.addActionListener((e)->{ this.frame.changePanel(new PanelAccueil(this.frame));} );
