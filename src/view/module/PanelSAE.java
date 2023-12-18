@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -14,12 +13,12 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import view.JLabelModule;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import controleur.*;
 import model.Semestres;
 import model.modules.Module;
-import model.modules.Ressource;
 
 public class PanelSAE extends JPanel implements ActionListener{
 
@@ -37,42 +36,20 @@ public class PanelSAE extends JPanel implements ActionListener{
 	private JTextField txtNbGpTp;
 	
 	//Heures PN
-	private JTextField txtHeureCMPN;
-	private JTextField txtHeureTDPN;
-	private JTextField txtHeureTPPN;
-	private JTextField txtHeureSPN ;
 
-	private JTextField txtHeureEtdCMPN;
-	private JTextField txtHeureEtdTDPN;
-	private JTextField txtHeureEtdTPPN;
-	private JTextField txtHeureEtdSPN ;
+	private JTextField txtHeureEtdSaePN;
+	private JTextField txtHeureEtdTutPN;
+	private JTextField txtHeureEtdTotPN ;
 
 
 	//Repartition
-	private JTextField txtCMNbSem  ;
-	private JTextField txtCMNbHeure;
-	private JTextField txtTDNbSem  ;
-	private JTextField txtTDNbHeure;
-	private JTextField txtTPNbSem  ;
-	private JTextField txtTPNbHeure;
 
-	private JTextField txtCMTot;
-	private JTextField txtCMTotEtd;
-	private JTextField txtCMTotEtdAffect;
-	private JTextField txtTDTot;
-	private JTextField txtTDTotEtd;
-	private JTextField txtTDTotEtdAffect;
-	private JTextField txtTPTot;
-	private JTextField txtTPTotEtd;  
-	private JTextField txtTPTotEtdAffect;
-
-	private JTextField txtHPTot;
-	private JTextField txtHPTotEtd;
-	private JTextField txtHPTotEtdAffect;
-
-	private JTextField txtTot;
-	private JTextField txtTotEtd;
-	private JTextField txtTotEtdAffect;
+	private JTextField txtEtdSaePromRep;
+	private JTextField txtEtdSaeAffectRep;
+	private JTextField txtEtdTotPromRep;
+	private JTextField txtEtdTotAffectRep;
+	private JTextField txtEtdTutPromRep;  
+	private JTextField txtEtdTutAffectRep;
 
 	//Affectation 
 	private JTable tblGrilleDonnees;
@@ -93,9 +70,7 @@ public class PanelSAE extends JPanel implements ActionListener{
 		
 
 		this.frame = frame;
-		this.mod   = new Ressource(null, "", "", "", 0);
-		Font styleLib = new Font("Arial", Font.PLAIN,11);// Taille et style de police
-        UIManager.put("Label.font", styleLib); //Pour tout les labels
+		//this.mod   = new Ressource(null, "", "", "", 0);
 		
         /*                         */
         /* CREATION DES COMPOSANTS */
@@ -116,44 +91,20 @@ public class PanelSAE extends JPanel implements ActionListener{
 
 
 
-		//Informations heure PN
-        this.txtHeureCMPN = new JTextField( 3);
-        this.txtHeureTDPN = new JTextField( 3);
-        this.txtHeureTPPN = new JTextField( 3);
-
 		//Informations calcul heure PN
-        this.txtHeureSPN     = new JTextField("0", 3);
-        this.txtHeureEtdCMPN = new JTextField("0", 3);
-        this.txtHeureEtdTDPN = new JTextField("0", 3);
-        this.txtHeureEtdTPPN = new JTextField("0", 3);
-        this.txtHeureEtdSPN  = new JTextField("0", 3);
+        this.txtHeureEtdSaePN = new JTextField("40", 3);
+        this.txtHeureEtdTutPN = new JTextField("38", 3);
+        this.txtHeureEtdTotPN  = new JTextField("78", 3);
+		
+		//Informations calcul repartitions
+		this.txtEtdSaePromRep       = new JTextField("0", 3); 
+		this.txtEtdTutPromRep       = new JTextField("0", 3);
+		this.txtEtdTotPromRep       = new JTextField("0", 3);
 
-		//Information répartition
-		this.txtCMNbSem   = new JTextField("0",3);
-		this.txtCMNbHeure = new JTextField("0",3);
-		this.txtTDNbSem   = new JTextField("0",3);
-		this.txtTDNbHeure = new JTextField("0",3);
-		this.txtTPNbSem   = new JTextField("0",3);
-		this.txtTPNbHeure = new JTextField("0",3);
+		this.txtEtdSaeAffectRep = new JTextField("0", 3); 
+		this.txtEtdTutAffectRep = new JTextField("0", 3);
+		this.txtEtdTotAffectRep = new JTextField("0", 3);
 
-
-		this.txtCMTot          = new JTextField("0", 3); 
-		this.txtTDTot          = new JTextField("0", 3);
-		this.txtTPTot          = new JTextField("0", 3);
-		this.txtCMTotEtd       = new JTextField("0", 3); 
-		this.txtTDTotEtd       = new JTextField("0", 3);
-		this.txtTPTotEtd       = new JTextField("0", 3);
-		this.txtCMTotEtdAffect = new JTextField("0", 3); 
-		this.txtTDTotEtdAffect = new JTextField("0", 3);
-		this.txtTPTotEtdAffect = new JTextField("0", 3);
-
-		this.txtHPTot          = new JTextField("0",3);
-		this.txtHPTotEtd       = new JTextField("0",3);
-		this.txtHPTotEtdAffect = new JTextField("0",3);
-
-		this.txtTot          = new JTextField("0",3);
-		this.txtTotEtd       = new JTextField("0",3);
-		this.txtTotEtdAffect = new JTextField("0",3);
 
 		this.btnAjouter   = new JButton("Ajouter");
 		this.btnSupprimer = new JButton("Supprimer");
@@ -180,15 +131,15 @@ public class PanelSAE extends JPanel implements ActionListener{
 		gbcPanelHaut.anchor = GridBagConstraints.LINE_START;
 
         // Ajout des libellés première ligne
-        panelHaut.add(new JLabel("Type module"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("Type module"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("Semestres"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("Semestres"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("Code"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("Code"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("Libellé long"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("Libellé long"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("Libellé court"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("Libellé court"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
 
         // Ajout des textfields première ligne
@@ -211,11 +162,11 @@ public class PanelSAE extends JPanel implements ActionListener{
         gbcPanelHaut.gridx = 0;
         gbcPanelHaut.gridy++;
 
-        panelHaut.add(new JLabel("nb Etd"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("nb Etd"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("nb gp TD"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("nb gp TD"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("nbgp TP"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("nbgp TP"), gbcPanelHaut);
 
         // Ajout des textfields deuxième ligne
         gbcPanelHaut.gridx = 0;
@@ -244,34 +195,35 @@ public class PanelSAE extends JPanel implements ActionListener{
         gbcHeurePN.insets = new Insets(3, 3, 3, 3);
 
 
-		//Ajout des JLabel première lignes
-		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
-		gbcHeurePN.gridx = 1;
-		panelHeurePN.add(new JLabel("h Sae"), gbcHeurePN);
-		gbcHeurePN.gridx++;
-		panelHeurePN.add(new JLabel("h Tut"), gbcHeurePN);
-		gbcHeurePN.gridx+=2;
+		//Ajout des JLabelModule première lignes
 		gbcHeurePN.anchor = GridBagConstraints.CENTER;
-		panelHeurePN.add(new JLabel("∑"), gbcHeurePN);
+		gbcHeurePN.gridx = 1;
+		panelHeurePN.add(new JLabelModule("h Sae"), gbcHeurePN);
+		gbcHeurePN.gridx++;
+		panelHeurePN.add(new JLabelModule("h Tut"), gbcHeurePN);
+		gbcHeurePN.insets = new Insets(2,40,10,10);
+		gbcHeurePN.gridx++;
+		panelHeurePN.add(new JLabelModule("∑"), gbcHeurePN);
 		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
 
-		gbcHeurePN.insets = new Insets(2, 3, 47, 3);
+		gbcHeurePN.insets = new Insets(2, 3, 41, 3);
 		gbcHeurePN.gridx  = 0;
 		gbcHeurePN.gridy++;
-		panelHeurePN.add(new JLabel("Total (eqtd) promo"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule("Total (eqtd) promo"), gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureEtdCMPN,gbcHeurePN);
+		panelHeurePN.add(this.txtHeureEtdSaePN,gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureEtdTDPN,gbcHeurePN);
-		gbcHeurePN.gridx+=2;
-		panelHeurePN.add(this.txtHeureEtdSPN,gbcHeurePN);
+		panelHeurePN.add(this.txtHeureEtdTutPN,gbcHeurePN);
+		gbcHeurePN.insets = new Insets(2,40,41,10);
+		gbcHeurePN.gridx++;
+		panelHeurePN.add(this.txtHeureEtdTotPN,gbcHeurePN);
 
 
 		JPanel panelHeurePNValid = new JPanel();
 		panelHeurePNValid.setLayout(new BorderLayout());
 		panelHeurePNValid.add(panelHeurePN, BorderLayout.CENTER);
 		panelHeurePNValid.add(this.cbValide, BorderLayout.SOUTH);
-		panelHeurePNValid.add(new JLabel("PN Local (nb h tot/etd)",JLabel.CENTER), BorderLayout.NORTH);
+		panelHeurePNValid.add(new JLabelModule("PN Local (nb h tot/etd)",JLabel.CENTER), BorderLayout.NORTH);
 
 
 		//Repartion 
@@ -288,14 +240,15 @@ public class PanelSAE extends JPanel implements ActionListener{
         gbcRepar.insets = new Insets(2,5,0,5);
 
 		// Ajout première ligne
+		gbcRepar.anchor = GridBagConstraints.CENTER;
 		gbcRepar.gridx = 3;
-		panelRepartition.add(new JLabel("h Sae"), gbcRepar);
+		panelRepartition.add(new JLabelModule("h Sae"), gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabel("h Tot"), gbcRepar);
+		panelRepartition.add(new JLabelModule("h Tot"), gbcRepar);
 		gbcRepar.gridx ++;
 		gbcRepar.insets = new Insets(2,350,10,10);
 		gbcRepar.anchor = GridBagConstraints.CENTER;
-		panelRepartition.add(new JLabel("∑", JLabel.CENTER), gbcRepar);
+		panelRepartition.add(new JLabelModule("∑", JLabel.CENTER), gbcRepar);
 
 		//Deuxième ligne
 		gbcRepar.insets = new Insets(2,5,10,5);
@@ -303,15 +256,15 @@ public class PanelSAE extends JPanel implements ActionListener{
 		gbcRepar.gridx     = 0;
 		gbcRepar.gridy++;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
-		panelRepartition.add(new JLabel("Total promo (eqtd)"), gbcRepar);
+		panelRepartition.add(new JLabelModule("Total promo (eqtd)"), gbcRepar);
 		gbcRepar.gridx += 3;
 		gbcRepar.gridwidth = 1;
-		panelRepartition.add(this.txtCMTotEtd, gbcRepar);
+		panelRepartition.add(this.txtEtdSaePromRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTPTotEtd, gbcRepar);
+		panelRepartition.add(this.txtEtdTutPromRep, gbcRepar);
 		gbcRepar.insets = new Insets(2,350,10,10);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTDTotEtd, gbcRepar);
+		panelRepartition.add(this.txtEtdTotPromRep, gbcRepar);
 
 		//Troisieme
 		gbcRepar.insets = new Insets(2,5,10,5);
@@ -319,15 +272,15 @@ public class PanelSAE extends JPanel implements ActionListener{
 		gbcRepar.gridy++;
 		gbcRepar.gridwidth = 3;
 		gbcRepar.gridx= 0;
-		panelRepartition.add(new JLabel("Total affecté (eqtd)"), gbcRepar);
+		panelRepartition.add(new JLabelModule("Total affecté (eqtd)"), gbcRepar);
 		gbcRepar.gridx += 3;
 		gbcRepar.gridwidth = 1;
-		panelRepartition.add(this.txtCMTotEtdAffect, gbcRepar);
+		panelRepartition.add(this.txtEtdSaeAffectRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTPTotEtdAffect, gbcRepar);
+		panelRepartition.add(this.txtEtdTutAffectRep, gbcRepar);
 		gbcRepar.insets = new Insets(2,350,10,10);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTDTotEtdAffect, gbcRepar);
+		panelRepartition.add(this.txtEtdTotAffectRep, gbcRepar);
 
 		// Table
 		JPanel panelTable = new JPanel();
@@ -343,11 +296,11 @@ public class PanelSAE extends JPanel implements ActionListener{
 
 		JScrollPane spGrilleDonnees = new JScrollPane(this.tblGrilleDonnees);
 		panelTable.add(spGrilleDonnees, BorderLayout.CENTER);
-		panelTable.add(new JLabel("Affectation"), BorderLayout.NORTH);
+		panelTable.add(new JLabelModule("Affectation"), BorderLayout.NORTH);
 		panelTable.add(panelAjoutSupp, BorderLayout.SOUTH);
 
 		JPanel panelRep = new JPanel(new BorderLayout());
-		panelRep.add(new JLabel("Repartition",JLabel.CENTER), BorderLayout.NORTH);
+		panelRep.add(new JLabelModule("Repartition",JLabel.CENTER), BorderLayout.NORTH);
 		panelRep.add(panelRepartition, BorderLayout.CENTER);
 
 
@@ -361,7 +314,7 @@ public class PanelSAE extends JPanel implements ActionListener{
 		gbcCentre.weighty = 1;
 		gbcCentre.gridx = 0;
 		gbcCentre.gridy = 0;
-		gbcCentre.anchor = GridBagConstraints.NORTHWEST;
+		gbcCentre.anchor = GridBagConstraints.FIRST_LINE_START;
 
 		panelCentre.add(panelHeurePNValid, gbcCentre);
 		gbcCentre.gridx++;
@@ -388,7 +341,7 @@ public class PanelSAE extends JPanel implements ActionListener{
 		gbcMain.weightx = 1;
 		gbcMain.weighty = 0;
 		gbcMain.gridy = 0;
-		gbcMain.anchor = GridBagConstraints.NORTHWEST;
+		gbcMain.anchor = GridBagConstraints.FIRST_LINE_START;
 
 		this.add(panelHaut, gbcMain);
 
@@ -416,28 +369,17 @@ public class PanelSAE extends JPanel implements ActionListener{
         this.txtNbGpTd .setEditable(false);
 		this.txtNbGpTp .setEditable(false);
 
-		this.txtHeureSPN    .setEditable(false);
-        this.txtHeureEtdCMPN.setEditable(false);
-        this.txtHeureEtdTDPN.setEditable(false);
-        this.txtHeureEtdTPPN.setEditable(false);
-		this.txtHeureEtdSPN .setEditable(false);
+        this.txtHeureEtdSaePN.setEditable(false);
+        this.txtHeureEtdTutPN.setEditable(false);
+		this.txtHeureEtdTotPN .setEditable(false);
 
-		this.txtCMTot         .setEditable(false);
-		this.txtTDTot         .setEditable(false);
-		this.txtTPTot         .setEditable(false);
-		this.txtCMTotEtd      .setEditable(false);
-		this.txtTDTotEtd      .setEditable(false);
-		this.txtTPTotEtd      .setEditable(false);
-		this.txtCMTotEtdAffect.setEditable(false);
-		this.txtTDTotEtdAffect.setEditable(false);
-		this.txtTPTotEtdAffect.setEditable(false);
+		this.txtEtdSaePromRep      .setEditable(false);
+		this.txtEtdTotPromRep      .setEditable(false);
+		this.txtEtdTutPromRep      .setEditable(false);
 
-		this.txtHPTotEtd      .setEditable(false);
-		this.txtHPTotEtdAffect.setEditable(false);
-
-		this.txtTot         .setEditable(false);
-		this.txtTotEtd      .setEditable(false);
-		this.txtTotEtdAffect.setEditable(false);
+		this.txtEtdSaeAffectRep.setEditable(false);
+		this.txtEtdTotAffectRep.setEditable(false);
+		this.txtEtdTutAffectRep.setEditable(false);
 
 
 		// Alignement

@@ -86,9 +86,9 @@ CREATE TABLE IF NOT EXISTS ModulesCatHeuresETAT
 (
 	codeMod    VARCHAR(255) NOT NULL REFERENCES ModulesETAT(codeMod),
 	libCatHeur VARCHAR(255) NOT NULL REFERENCES CategorieHeuresETAT(libCatHeur),
-	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN > 0),
-	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem > 0),
-	nbSemaine  INTEGER NOT NULL CHECK (nbSemaine > 0),
+	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN >= 0),
+	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem >= 0),
+	nbSemaine  INTEGER NOT NULL CHECK (nbSemaine >= 0),
 	PRIMARY KEY(codeMod, libCatHeur)
 );
 

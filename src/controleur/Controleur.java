@@ -299,9 +299,16 @@ public class Controleur {
 
 	/* MODULES */
 
-	public void ajouterModule(Module mod) {
+	public boolean ajouterModule(Module mod) {
+
+		System.out.println(Etat.getModule(mod.getCode()));
+		
+		if (Etat.getModule(mod.getCode()) != null)
+			return false;
+
 		Etat.ajouterAction(new Ajout(mod));
 		Etat.ajouterModule(mod);
+		return true;
 	}
 	
 	public boolean modifModules(Module mOld, String code, String libL, String libC, int hp, boolean v, HashMap<CategorieHeures, List<Integer>> heures) {
