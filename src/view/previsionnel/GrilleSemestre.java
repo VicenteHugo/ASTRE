@@ -12,13 +12,10 @@ public class GrilleSemestre extends AbstractTableModel {
 
     public GrilleSemestre(int semestre) {
         Controleur ctrl = Controleur.getControleur();
-        System.out.println(semestre);
         
         List<Module> lst = ctrl.getModules(semestre);
-        System.out.println(lst);
 
         int nbModule = lst.size();
-        System.out.println(nbModule);
 
         this.tabDonnees = new Object[nbModule][4];
 

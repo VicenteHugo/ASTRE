@@ -87,10 +87,7 @@ public class PanelRessources extends JPanel implements ActionListener{
 	private Module       mod;
 
 
-	public PanelRessources(FrameAccueil frame) {
-
-		
-
+	public PanelRessources(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
 		this.mod   = new Ressource(null, "", "", "", 0);
 		Controleur.getControleur();
