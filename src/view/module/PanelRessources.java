@@ -86,14 +86,6 @@ public class PanelRessources extends JPanel implements ActionListener{
 	private FrameAccueil frame;
 	private Module       mod;
 
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.add(new PanelRessources(null));
-		frame.pack();
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
-
 
 	public PanelRessources(FrameAccueil frame) {
 
@@ -578,7 +570,7 @@ public class PanelRessources extends JPanel implements ActionListener{
 		PanelRessources.aligner(panelCentre, JTextField.RIGHT);
 
 		//Bordure et fond
-		PanelRessources.fond(this, Color.decode("0xD0D0D0"), new Dimension(150,30));
+		PanelRessources.fond(this, Color.decode("0xD0D0D0"), new Dimension(120,20));
 		panelHeurePN.setBorder(BorderFactory.createLineBorder(Color.decode("0xD0D0D0")));
 		panelRepartition.setBorder(BorderFactory.createLineBorder(Color.decode("0xD0D0D0")));
 
