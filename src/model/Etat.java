@@ -60,9 +60,8 @@ public class Etat {
 
 			// Connection
 			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
-			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
+			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			
-		
 			Etat.recupererNomEtat();
 
 			//Lancer le scripts en cas de Table détruite
@@ -315,6 +314,10 @@ public class Etat {
 
 	public static ArrayList<Module> getModules() {
 		return Etat.lstModule;
+	}
+
+	public static void ajouterModule(Module mod) {
+		Etat.lstModule.add(mod);
 	}
 
 	public static Intervenants getIntervenant(String nom, String prenom) {
