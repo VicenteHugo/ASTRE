@@ -32,7 +32,7 @@ public class PanelAddRessourceIntervenant extends JPanel {
 	
 	private JTextField txtNomIntervenant;
 	private JTextField txtPrenomIntervenant;
-	private JComboBox boxCategorie;	
+	private JComboBox<String> boxCategorie;	
 	private JTextField txtNbSemaine;
 	private JTextField txtNbGroupe;
     private JTextField txtTotal;
@@ -45,17 +45,18 @@ public class PanelAddRessourceIntervenant extends JPanel {
 	private FrameAccueil frame;
 	private Frame frameM;
 	private PanelRessources panel;
-	private String code;
+	private Module mod;
 
-	public PanelAddRessourceIntervenant (PanelRessources panel,FrameAccueil frame, Frame frameM) {
+	public PanelAddRessourceIntervenant (PanelRessources panel,FrameAccueil frame, Frame frameM,Module mod) {
 		this.panel = panel;
 		this.frame  = frame;
 		this.frameM = frameM;
+		this.mod = mod;
 
 
 		//Création
 		ArrayList<CategorieHeures> l = Controleur.getControleur().getCategorieHeures();
-		this.boxCategorie = new JComboBox();
+		this.boxCategorie = new JComboBox<String>();
 		for(int i=0; i < l.size(); i++){
 			this.boxCategorie.addItem(l.get(i).getlibCatHeur());
 		}
@@ -131,10 +132,9 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		this.btnValider.addActionListener((e)->{
 			Intervenants i = null;
 			CategorieHeures categ = null;
-			Module module = null;
 			int nbSemaine = Integer.parseInt(this.txtNbSemaine.getText());
 			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
-			String code = panel.getCode();
+
 			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
 				if(inter.getNomIntervenant().equals(this.txtNomIntervenant.getText()) && 
 				inter.getPrenomIntervenant().equals(this.txtPrenomIntervenant.getText())){
@@ -142,22 +142,18 @@ public class PanelAddRessourceIntervenant extends JPanel {
 					break;
 				}
 			}
+
 			for(CategorieHeures ch : Controleur.getControleur().getCategorieHeures()){
 				if(ch.getlibCatHeur().equals(this.boxCategorie.getSelectedItem())){
 					categ =ch;
 				}
 			}
-			for(Module m : Controleur.getControleur().getModules()){
-				if(m.getCode() == code){
-					module = m;
-					break;
-				}
-			}
+			
 			if(i != null){
 				if(nbGroupe < 0 || nbSemaine < 0){
 					JOptionPane.showMessageDialog(this,"Le nombre de groupe et le nombre de semaine doivent être supérieur à 0");
 				}else{
-					Affectations affectations = new Affectations(i, module,categ,nbSemaine, nbGroupe,this.txtCommentaire.getText());
+					Affectations affectations = new Affectations(i, this.mod,categ,nbSemaine, nbGroupe,this.txtCommentaire.getText());
 					System.out.println(affectations);
 					Controleur.getControleur().ajouterAffectation(affectations);
 					this.frameM.dispose();

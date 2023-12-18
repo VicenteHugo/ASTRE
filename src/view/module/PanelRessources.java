@@ -13,6 +13,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import view.Intervenant.PanelAddIntervenant;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import controleur.*;
@@ -87,12 +88,10 @@ public class PanelRessources extends JPanel implements ActionListener{
 	private Module       mod;
 
 
-	public PanelRessources(FrameAccueil frame) {
-
-		
-
+	public PanelRessources(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
 		this.mod   = new Ressource(null, "", "", "", 0);
+		Controleur.getControleur();
 
 		
         /*                         */
@@ -583,9 +582,6 @@ public class PanelRessources extends JPanel implements ActionListener{
         /*                      */
 		PanelRessources.activer(this, this);
 
-
-
-
     }
 
 
@@ -682,12 +678,10 @@ public class PanelRessources extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == this.btnAnnuler    ) this.quitter();
-		if (e.getSource() == this.btnSauvegarder) this.quitter();
+		if (e.getSource() == this.btnSauvegarder) this.sauvegarder();
 
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
-
-
 
 	}
 
@@ -697,8 +691,20 @@ public class PanelRessources extends JPanel implements ActionListener{
 	}
 
 
+	private void sauvegarder () {
+		this.frame.changePanel(new PanelPrevi(frame));
+	}
+
+
 	private void ajouter () {
-		System.out.println("Quitter");
+		JFrame f = new JFrame();
+        f.add(new PanelAddRessourceIntervenant(this,this.frame, f,mod));
+        f.setTitle("Ajout d'un Intervenant");
+		f.pack();
+		f.setResizable(false);
+		f.setLocationRelativeTo(null);
+		f.setAlwaysOnTop(true);
+		f.setVisible(true);
 	}
 
 

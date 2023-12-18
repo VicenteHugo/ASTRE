@@ -125,14 +125,20 @@ public class Controleur {
 		return true;
 	}
 
-	public void enregistrer() {
-		Etat.enregistrer();
-	}
 
-	public void annuler() {
-		Etat.anuller();
-	}
 
+
+
+	/*----------------------------------------------------*/
+	/*                        ACTION                      */
+	/*----------------------------------------------------*/
+
+	/* GENERAL */
+	public void enregistrer() { Etat.enregistrer(); }
+	public void annuler    () { Etat.anuller();     }
+
+
+	/* CATEGORIE-HEURE */
 	public void supprimerCategorieHeure(int i) {
 		if (i >= 0 && i < Etat.getCategoriesHeures().size()) {
 			CategorieHeures cat = Etat.getCategoriesHeures().remove(i);
@@ -175,6 +181,8 @@ public class Controleur {
 		return false;
 	}
 
+
+	/* CATEGORIE INTERVENANTS */
 	public boolean modifCategorieIntervenants(int i, String code, String lib, float coef, int hMax, int hMin) {
 
 		CategorieIntervenant cOld = Etat.getCategoriesIntervenants().get(i);
@@ -201,6 +209,8 @@ public class Controleur {
 		return false;
 	}
 
+
+	/* INTERVENANTS */
 	public void ajouterIntervenant(Intervenants inter) {
 		Etat.ajouterAction(new Ajout(inter));
 		Etat.ajouterIntervenant(inter);
@@ -214,16 +224,9 @@ public class Controleur {
 		}
 	}
 
-	public boolean modifIntervenant(int i, CategorieIntervenant categ, String nomIntervenant, String prenomIntervenant,
-			int services, int mexHeure, float coef) {
+	public boolean modifIntervenant(int i, CategorieIntervenant categ, String nomIntervenant, String prenomIntervenant, int services, int mexHeure, float coef) {
 		Intervenants cOld = Etat.getIntervenants(i);
-		/*
-		 * System.out.println("Meme objet ? : " + (Etat.getCatInt(code) == cOld));
-		 * System.out.println("Objet null ? : " + (Etat.getCatInt(code) == null));
-		 */
 
-		// Si la clé est pris par autre chose que l'objet actuelle et que l'indice est
-		// bon
 		if ((Etat.getIntervenant(nomIntervenant, prenomIntervenant) == null
 				|| Etat.getIntervenant(nomIntervenant, prenomIntervenant) == cOld) && i >= 0
 				&& i < Etat.getIntervenants().size()) {
@@ -240,6 +243,8 @@ public class Controleur {
 		return false;
 	}
 
+
+	/* AFFECTATIONS */
 	public void ajouterAffectation(Affectations affect) {
 		Etat.ajouterAction(new Ajout(affect));
 		Etat.ajouterAffectation(affect);
@@ -253,16 +258,10 @@ public class Controleur {
 	}
 	
 	public boolean modifAffectation(int i, String nomIntervenant,String prenom, Module m,String type, int nbSem, int nbGp, String com) {
-		Affectations aOld = Etat.getAffectations(i);
-		Intervenants intervenants = null;
+		Affectations    aOld = Etat.getAffectations(i);
+		Intervenants    intervenants = null;
 		CategorieHeures categ = null;
-		/*
-		 * System.out.println("Meme objet ? : " + (Etat.getCatInt(code) == cOld));
-		 * System.out.println("Objet null ? : " + (Etat.getCatInt(code) == null));
-		 */
 
-		// Si la clé est pris par autre chose que l'objet actuelle et que l'indice est
-		// bon
 		if ((Etat.getAffectations(nomIntervenant) == null
 				|| Etat.getAffectations(nomIntervenant) == aOld) && i >= 0
 				&& i < Etat.getIntervenants().size()) {
@@ -288,6 +287,29 @@ public class Controleur {
 
 		return false;
 	}
+
+
+	/* MODULES */
+
+	public void ajouterModules(Module mod) {
+		Etat.ajouterAction(new Ajout(mod));
+		Etat.ajouterModule(mod);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	/*------------------------------------------------------*/
+	/*                          ETATS                       */
+	/*------------------------------------------------------*/
 
 	public String[] getEtats() {
 		return Etat.getEtats();
