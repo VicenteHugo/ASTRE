@@ -26,8 +26,8 @@ public class Controleur {
 	private static Controleur controleur;
 
 	public Controleur() {
-		new FrameAccueil();
 		new Etat();
+		new FrameAccueil();
 	}
 
 	public static Controleur creerControleur() {
