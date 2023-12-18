@@ -698,7 +698,7 @@ public class PanelRessources extends JPanel implements ActionListener{
 
 	private void ajouter () {
 		JFrame f = new JFrame();
-        f.add(new PanelAddRessourceIntervenant(this,this.frame, f));
+        f.add(new PanelAddRessourceIntervenant(this,this.frame, f,mod));
         f.setTitle("Ajout d'un Intervenant");
 		f.pack();
 		f.setResizable(false);
