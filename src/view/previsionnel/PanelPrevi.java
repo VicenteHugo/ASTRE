@@ -1,16 +1,23 @@
 package view.previsionnel;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 import controleur.Controleur;
-
+import model.Etat;
 import model.modules.Module;
 import model.modules.PPP;
 import model.modules.Ressource;
@@ -18,6 +25,7 @@ import model.modules.Sae;
 import model.modules.Stage;
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
+import view.module.PanelPPP;
 import view.module.PanelRessources;
 import view.module.PanelSAE;
 import view.module.PanelStage;
@@ -27,14 +35,17 @@ public class PanelPrevi extends JPanel {
 
     private JTabbedPane ongletSemestres;
      
-    private JButton btnCreerRessources;
-    private JButton btnCreerSae;
-    private JButton btnCreerStage;
+    private JComboBox<String> cmbChoixCreer;
+
+    private JButton btnCreer;
     private JButton btnModifier;
     private JButton btnSupprimer;
 
     private JButton btnAccueil;
 
+    private Map<PanelSemestre, Integer> mapInfo = new HashMap<>();
+
+    private Object put;
 
     public PanelPrevi(FrameAccueil frame) {
 
@@ -54,14 +65,16 @@ public class PanelPrevi extends JPanel {
 
         JPanel panel = new JPanel(new FlowLayout());
 
-        this.btnCreerRessources = new JButton("Créer ressources");
-        panel.add(this.btnCreerRessources);
+        this.btnCreer = new JButton("Créer Ressource");
+        panel.add(this.btnCreer);
 
-        this.btnCreerSae = new JButton("Créer SAE");
-        panel.add(this.btnCreerSae);
+        this.cmbChoixCreer = new JComboBox<String>();
+        this.cmbChoixCreer.addItem("Créer Ressource");
+        this.cmbChoixCreer.addItem("Créer Saé");
+        this.cmbChoixCreer.addItem("Créer Stage");
+        this.cmbChoixCreer.addItem("Créer PPP");
 
-        this.btnCreerStage = new JButton("Créer stage/suivi");
-        panel.add(this.btnCreerStage);
+        panel.add(this.cmbChoixCreer);
 
         this.btnModifier = new JButton("Modifier");
         panel.add(this.btnModifier);
@@ -80,12 +93,25 @@ public class PanelPrevi extends JPanel {
         this.add(panel, BorderLayout.NORTH);
         
         
-        this.btnCreerRessources.addActionListener((e)->{ this.frame.changePanel(new PanelRessources(this.frame));} );
-        this.btnCreerSae.addActionListener((e)->{ this.frame.changePanel(new PanelSAE(this.frame));} );
-        this.btnCreerStage.addActionListener((e)->{ this.frame.changePanel(new PanelStage(this.frame));} );
+        this.btnCreer.addActionListener((e)->this.creation(this.cmbChoixCreer.getSelectedIndex()) );
         this.btnAccueil.addActionListener((e)->{ this.frame.changePanel(new PanelAccueil(this.frame));} );
         this.btnModifier.addActionListener((e)->{ this.modifier();});
-        //this.btnSupprimer.addActionListener(e)->Controleur.getControleur;
+        this.cmbChoixCreer.addActionListener((e)->this.btnCreer.setText(this.cmbChoixCreer.getSelectedItem().toString()));
+        this.btnSupprimer.addActionListener((e)-> this.supprimer());
+        //this.ongletSemestres.addChangeListener((l)-> this.ongletSemestres.selec);
+    }
+
+    private void creation(int indice) {
+        System.out.println(indice);
+        if(indice < 0) indice = 0;
+
+
+        switch (indice) {
+            case 0 -> this.frame.changePanel(new PanelRessources(frame, Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex())));
+            case 1 -> this.frame.changePanel(new PanelSAE(frame));
+            case 2 -> this.frame.changePanel(new PanelStage(frame));
+            case 3 -> this.frame.changePanel(new PanelPPP(frame));
+        }
     }
 
 
@@ -109,8 +135,20 @@ public class PanelPrevi extends JPanel {
             this.frame.changePanel(new PanelStage(this.frame));
         
     }
-
-
+    
+    public void supprimer(){
+       for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
+         PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+         JTable table = panelSemestre.getTable();
+            if(table.getSelectedRow() != -1){
+               int ind = table.getSelectedRow();
+                Controleur.getControleur().supprimerModule(ind);
+                if (ind >= 0)
+                    table.setRowSelectionInterval(ind, ind);
+                    table.setModel(new GrilleSemestre(ind));
+            }
+        }
+    }
 	private void showMessageDialog(String message) {
 		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}

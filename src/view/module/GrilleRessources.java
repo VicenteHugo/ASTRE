@@ -24,27 +24,24 @@ public class GrilleRessources extends AbstractTableModel {
 
 		for (int lig = 0; lig < listAffectations.size(); lig++) {
 			Affectations affectations = listAffectations.get(lig);
-			if (affectations.getModule().getClass().getName().equals("Ressources")) {
-				List<Integer> listInfosHeure = affectations.getModule().getHeures()
-						.get(affectations.getCategorieHeures());
-				this.tabDonnees[0][lig] = affectations.getIntervenant().getNomIntervenant();
-				
-				this.tabDonnees[1][lig] = affectations.getCategorieHeures().getlibCatHeur();
-				this.tabDonnees[2][lig] = affectations.getNbSemaine();
-				this.tabDonnees[3][lig] = affectations.getNbGroupe() + "|"
-						+ affectations.getNbSemaine();
-				this.tabDonnees[4][lig] = affectations.getNbSemaine()
+			if (affectations.getModule().getClass().getSimpleName().equals("Ressource")) {
+				List<Integer> listInfosHeure = affectations.getModule().getHeures().get(affectations.getCategorieHeures());
+				this.tabDonnees[lig][0] = affectations.getIntervenant().getNomIntervenant();
+				this.tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
+				this.tabDonnees[lig][2] = affectations.getNbSemaine();
+				this.tabDonnees[lig][3] = affectations.getNbGroupe() + " | "
+						+ listInfosHeure.get(3);
+				this.tabDonnees[lig][4] = affectations.getNbSemaine()
 						* affectations.getNbGroupe()
 						* listInfosHeure.get(2)
 						* affectations.getCategorieHeures().getcoefCatHeur();
-				this.tabDonnees[5][lig] = affectations.getCommentaire();
+				this.tabDonnees[lig][5] = affectations.getCommentaire();
 				prenomIntervenant.add(affectations.getIntervenant().getPrenomIntervenant());
 				moduleIntervenant.add(affectations.getModule());
 			}
+
 		}
-
 		this.tabEntetes = new String[] { "Intervenants", "Type", "Nb sem", "nb Gp/nb h", "tot eqtd", "commentaire" };
-
 	}
 
 	public int getRowCount() {
@@ -61,10 +58,6 @@ public class GrilleRessources extends AbstractTableModel {
 
 	public Object getValueAt(int row, int col) {
 		return this.tabDonnees[row][col];
-	}
-
-	public Class getColumnClass(int c) {
-		return getValueAt(0, c).getClass();
 	}
 
 	public boolean isCellEditable(int row, int col) {
@@ -118,7 +111,8 @@ public class GrilleRessources extends AbstractTableModel {
 					break;
 			}
 
-			if (nbSem < 0 || nbGp < 0 || nomInter.isEmpty() || type.isEmpty())
+			if (nbSem < 0 || nbGp < 0 )
+
 				return;
 			
 			if(Controleur.getControleur().modifAffectation(row, nomInter,prenomIntervenant.get(row),moduleIntervenant.get(row),type, nbSem, nbGp, com))

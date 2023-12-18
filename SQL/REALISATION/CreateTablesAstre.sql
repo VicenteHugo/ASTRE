@@ -61,10 +61,10 @@ CREATE TABLE IF NOT EXISTS SemestresETAT
 CREATE TABLE IF NOT EXISTS ModulesETAT
 (
     codeMod     VARCHAR(255) PRIMARY KEY, 
-    semMod      INTEGER      REFERENCES numSem(SemestresETAT),
+    semMod      INTEGER      REFERENCES SemestresETAT(numSem),
     typeMod     VARCHAR(255) NOT NULL CHECK (typeMod IN ('Ressource', 'Sae', 'Stage', 'PPP')),
     libCourtMod VARCHAR(255) NOT NULL,
-    libLongMod  VARCHAR(50) NOT NULL,
+    libLongMod  VARCHAR(255) NOT NULL,
     validMod    BOOLEAN NOT NULL DEFAULT false,
     nbHeurPonc  INTEGER DEFAULT 0 NOT NULL
 );
@@ -86,9 +86,9 @@ CREATE TABLE IF NOT EXISTS ModulesCatHeuresETAT
 (
 	codeMod    VARCHAR(255) NOT NULL REFERENCES ModulesETAT(codeMod),
 	libCatHeur VARCHAR(255) NOT NULL REFERENCES CategorieHeuresETAT(libCatHeur),
-	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN > 0),
-	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem > 0),
-	nbSemaine  INTEGER NOT NULL CHECK (nbSemaine > 0),
+	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN >= 0),
+	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem >= 0),
+	nbSemaine  INTEGER NOT NULL CHECK (nbSemaine >= 0),
 	PRIMARY KEY(codeMod, libCatHeur)
 );
 
@@ -119,5 +119,5 @@ VALUES      ('CM'   , 1.5),
             ('H tut', 1.0),
             ('REH'  , 1.0),
             ('SAE'  , 1.0),
-            ('HP'   , 1.0);
+            ('HP'   , 1.0)
 ON CONFLICT (libCatHeur) DO NOTHING;

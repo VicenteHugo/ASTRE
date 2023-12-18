@@ -53,10 +53,6 @@ public class GrilleCatInt extends AbstractTableModel {
 		return this.tabDonnees[row][col];
 	}
 
-	public Class getColumnClass(int c) {
-		return getValueAt(0, c).getClass();
-	}
-
 	public boolean isCellEditable(int row, int col) {
 		return true;
 	}
