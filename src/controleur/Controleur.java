@@ -344,6 +344,13 @@ public class Controleur {
 		return false;
 	}
 
+	public void supprimerModule(int mod){
+		if (mod >= 0 && mod < Etat.getModules().size()) {
+			Module module = Etat.getModules().remove(mod);
+			Etat.ajouterAction(new Suppression(module));
+		}
+	}
+
 
 
 

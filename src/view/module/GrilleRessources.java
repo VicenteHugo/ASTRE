@@ -113,7 +113,8 @@ public class GrilleRessources extends AbstractTableModel {
 					break;
 			}
 
-			if (nbSem < 0 || nbGp < 0 || nomInter.isEmpty() || type.isEmpty())
+			if (nbSem < 0 || nbGp < 0 )
+
 				return;
 			
 			if(Controleur.getControleur().modifAffectation(row, nomInter,prenomIntervenant.get(row),moduleIntervenant.get(row),type, nbSem, nbGp, com))
