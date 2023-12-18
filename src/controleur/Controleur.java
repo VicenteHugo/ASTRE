@@ -20,6 +20,9 @@ import model.modules.PPP;
 import model.modules.Ressource;
 import model.modules.Sae;
 import model.modules.Stage;
+import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 public class Controleur {
 

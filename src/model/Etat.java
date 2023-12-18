@@ -484,7 +484,7 @@ public class Etat {
 			Statement st = connec.createStatement();
 
 			//Si elle existe pas on la crée
-			st.executeUpdate("CREATE TABLE IF NOT EXISTS Etat (etat  VARCHAR(25) PRIMARY KEY,dateCrea DATE DEFAULT CURRENT_DATE)");
+			st.executeUpdate("CREATE TABLE IF NOT EXISTS Etat (etat VARCHAR(25) PRIMARY KEY,dateCrea TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
 			ResultSet rs = st.executeQuery("SELECT * FROM Etat ORDER BY dateCrea DESC");
 
@@ -508,8 +508,10 @@ public class Etat {
 			Statement st = Etat.connec.createStatement();
 			ResultSet res = st.executeQuery("SELECT * FROM Etat ORDER BY datecrea DESC");
 
-			while (res.next())
+			while (res.next()) {
 				etatsList.add(res.getString("etat"));
+				System.out.println(res.getString("etat"));
+			}
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -557,6 +559,7 @@ public class Etat {
 				st.executeUpdate("CREATE TABLE " + tables + etatDest + " AS TABLE " + tables + etatDep );
 			}
 			
+			Etat.nom = etatDest;
 			st.executeUpdate("INSERT INTO Etat (etat) VALUES ('"+nom+"')");
 
 			Etat.verifEtat();
@@ -602,14 +605,17 @@ public class Etat {
 
 	public static boolean suppEtat (String nom) {
 
+		System.out.println(Etat.nom.equals(nom));
 		if (Etat.nom.equals(nom)) return false;
 
 		try {
 			Statement st = Etat.connec.createStatement();
 
 
-			for (String s : Etat.LST_NOM_TABLES)
+			for (String s : Etat.LST_NOM_TABLES) {
 				st.executeUpdate("DROP TABLE " + s + nom.toLowerCase() + " CASCADE");
+				System.out.println("DROP TABLE " + s + nom.toLowerCase() + " CASCADE");
+			}
 
 			st.executeUpdate("DELETE FROM Etat WHERE etat = '" + nom + "'");
 
