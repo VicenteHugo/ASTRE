@@ -25,7 +25,6 @@ import model.modules.Sae;
 import model.modules.Stage;
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
-import view.module.GrilleRessources;
 import view.module.PanelRessources;
 import view.module.PanelSAE;
 import view.module.PanelStage;
@@ -110,7 +109,7 @@ public class PanelPrevi extends JPanel {
             case 0 -> this.frame.changePanel(new PanelRessources(frame, Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex())));
             case 1 -> this.frame.changePanel(new PanelSAE(frame));
             case 2 -> this.frame.changePanel(new PanelStage(frame));
-            // case 3 -> this.frame.changePanel(new PanelPPP(frame));
+            case 3 -> this.frame.changePanel(new PanelPPP(frame));
         }
     }
 

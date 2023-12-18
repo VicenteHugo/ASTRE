@@ -77,10 +77,10 @@ public class PanelStage extends JPanel implements ActionListener{
 
 	public PanelStage(FrameAccueil frame) {
 
-		
+
 
 		this.frame = frame;
-		this.mod   = new Ressource(null, "", "", "", 0);
+		this.mod   = new Ressource(null, "", "", "", 0, false);
 
 		
         /*                         */
