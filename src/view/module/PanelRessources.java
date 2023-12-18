@@ -26,7 +26,7 @@ import model.Semestres;
 import model.modules.Module;
 import model.modules.Ressource;
 
-public class PanelRessources extends JPanel implements ActionListener, KeyListener{
+public class PanelRessources extends JPanel implements ActionListener, FocusListener{
 
     // Modules
     private JTextField txtCodeMod;
@@ -92,10 +92,13 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 	private FrameAccueil frame;
 	private Module       mod;
 
+	private boolean      estNouveau;
+	private boolean      infoInvalide;
+
 
 	public PanelRessources(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
-		this.mod   = new Ressource(semestres, "R" + semestres.getNumSem() +".XX", "", "", 0, false);
+		this.mod   = new Ressource(semestres, "", "", "", 0, false);
 
 		//Mettre la liste à 0
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
@@ -114,16 +117,14 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 
 
 		this.mod.setHeures(map);
-
-		Controleur.getControleur().ajouterModule(this.mod);
-
+		this.estNouveau = true;
 		
         /*                         */
         /* CREATION DES COMPOSANTS */
         /*                         */
 
 		//Informations Modules
-        this.txtCodeMod     = new JTextField("R" + semestres.getNumSem() +".XX",5);
+        this.txtCodeMod     = new JTextField("",5);
         this.txtLibLongMod  = new JTextField(25);
         this.txtLibCourtMod = new JTextField(10);
 		this.cbValide       = new JCheckBox ("Validation");
@@ -625,6 +626,36 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 		this.txtNbGpTd.setText("" + s.getNbGpTdSem());
 		this.txtNbGpTp.setText("" + s.getNbGpTpSem()); 
 
+
+		//Heure ponctuelle
+		this.txtHPTot.setText(this.mod.getHeurePonctuel() + "");
+
+		//CM
+		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
+
+		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("CM"));
+		this.txtHeureCMPN.setText(lst.get(0) + "");		
+		this.txtCMNbSem  .setText(lst.get(1) + "");		
+		this.txtCMNbHeure.setText(lst.get(2) + "");		
+
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
+		this.txtHeureTPPN.setText(lst.get(0) + "");		
+		this.txtTPNbSem  .setText(lst.get(1) + "");		
+		this.txtTPNbHeure.setText(lst.get(2) + "");		
+
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
+		this.txtHeureTDPN.setText(lst.get(0) + "");		
+		this.txtTDNbSem  .setText(lst.get(1) + "");		
+		this.txtTDNbHeure.setText(lst.get(2) + "");		
+
+		if (this.mod.isValide()) this.cbValide.validate();
+
+		//Juste pour faire les calculs
+		this.focusLost(null);
+
+
+		this.estNouveau = false;
+
 	}
 
 
@@ -681,11 +712,11 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 	 * @param c
 	 * @param d
 	 */
-	private static void activer(Container container, ActionListener a, KeyListener k) {
+	private static void activer(Container container, ActionListener a, FocusListener k) {
 		for (Component component : container.getComponents()) {
 
 			if (component instanceof JTextField && ((JTextField) component).isEditable()) {
-				((JTextField) component).addKeyListener(k);
+				((JTextField) component).addFocusListener(k);
 			}
 
 			if (component instanceof JButton) {
@@ -701,10 +732,15 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 
 	public void actionPerformed(ActionEvent e) {
 		
-		if (e.getSource() == this.btnAnnuler    ) this.quitter();
-		if (e.getSource() == this.btnSauvegarder) this.sauvegarder();
+		this.focusLost(null);
+
+		if (e.getSource() == this.btnAnnuler  ) this.quitter();
+
+		//Le reste on veut de bonne info
+		if (this.infoInvalide) return;
 
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
+		if (e.getSource() == this.btnSauvegarder) this.sauvegarder();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
 
 
@@ -713,10 +749,20 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 
 	private void quitter () {
 		this.frame.changePanel(new PanelPrevi(frame));
+		System.out.println(this.infoInvalide);
 	}
 
 
 	private void sauvegarder () {
+
+		this.focusLost(null);
+
+		System.out.println(infoInvalide);
+
+		if (this.txtCodeMod.getText().isEmpty()) {
+			this.showMessageDialog("Le code est obligatoire");
+			return;
+		}
 
 		boolean   val = this.cbValide.isValid();
 		String    cod = this.txtCodeMod.getText();
@@ -725,6 +771,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 		int       hp  = Integer.parseInt(this.txtHPTot.getText());
 
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
+
 
 		//                                            PN                                             SEMAINE                                      NB HEURE
 		List<Integer> lstCM = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
@@ -738,10 +785,30 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 		map.put(Controleur.getControleur().getCategorieHeure("TD"), lstTD);
 		map.put(Controleur.getControleur().getCategorieHeure("HP"), lstHP);
 
-		if (Controleur.getControleur().modifModules(mod, cod, liL, liC, hp, val, map))
-			this.quitter();
-		else
-			this.showMessageDialog("Le code est déja utiliser");
+		if (this.estNouveau) {
+			this.mod.setCode         (cod);
+			this.mod.setLibLong      (liL);
+			this.mod.setLibCourt     (liC);
+			this.mod.setValide       (val);
+			this.mod.initList        (map);
+			this.mod.setHeurePonctuel(hp );
+
+			if (Controleur.getControleur().ajouterModule(this.mod)) {
+				Controleur.getControleur().enregistrer();
+				this.quitter();
+				return;
+			}
+
+
+		}else{
+			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, hp, val, map)) {
+				Controleur.getControleur().enregistrer();
+				this.quitter();
+				return;
+			}
+		}
+
+		this.showMessageDialog("Le code est déja utiliser");
 	}
 
 
@@ -776,10 +843,7 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 	}
 
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-
-		String chiffreAv = ((JTextField) e.getSource()).getText();
+	public void focusLost(FocusEvent e) {
 
 		try {
 
@@ -855,19 +919,21 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 			this.mod.initList(tpPN, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("TP"));
 			this.mod.initList(tdHeu, 1, tpHeu, Controleur.getControleur().getCategorieHeure("HP"));
 
+			this.infoInvalide = false;
 
-		} catch (NumberFormatException ex) {
+		} catch (Exception ex) {
+
+			this.infoInvalide = true;
+
+			((JTextField) e.getSource()).setText("0");
 			this.showMessageDialog("Le chiffre saisie est inccorect.");
-
-			if (chiffreAv.isEmpty())
-				((JTextField) e.getSource()).setText("0");
-			else
-				((JTextField) e.getSource()).setText(chiffreAv);
-
+			((JTextField) e.getSource()).requestFocus();
+			
 		}
 	}
 
 
-	public void keyPressed (KeyEvent e) {}
-	public void keyReleased(KeyEvent e) {}
+	public void focusGained(FocusEvent e) {
+		this.focusLost(e);
+	}
 }
