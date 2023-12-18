@@ -45,7 +45,7 @@ public abstract class Module implements Comparable<Module> {
 	 * Constructeur du Module prenant en paramètre le semestre, le code, le libellé
 	 * long et court et les heures ponctuels
 	 */
-	public Module(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel) {
+	public Module(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel, boolean valid) {
 		this.semestres = semestres;
 		this.code = code;
 		this.libLong = libLong;
@@ -54,6 +54,7 @@ public abstract class Module implements Comparable<Module> {
 		this.valide = false;
 		this.listCategorieHeure = new ArrayList<CategorieHeures>();
 		this.heures = new HashMap<>();
+		initHashMap();
 	}
 
 	/*-------------------------------------------------------------*/
@@ -143,7 +144,27 @@ public abstract class Module implements Comparable<Module> {
 	abstract public void initList(int heurePN, int nbSemaine, int heureSemaine,
 			CategorieHeures catH);
 
+	public void initList(HashMap<CategorieHeures, List<Integer>> heures) {
+		this.heures = heures;
+	}
+
 	public int compareTo(Module module) {
 		return this.code.compareTo(module.code);
+	}
+
+	@Override
+	public String toString() {
+		return "Module [semestres=" + semestres + ", code=" + code + ", libLong=" + libLong + ", libCourt=" + libCourt
+				+ ", valide=" + valide + ", heurePonctuel=" + heurePonctuel + ", listCategorieHeure="
+				+ listCategorieHeure + ", heures=" + heures + "]";
+	}
+
+	public void initHashMap(){
+		ArrayList<Integer> list = new ArrayList<>();
+		list.add(0);
+		list.add(0);
+		list.add(0);
+		list.add(0);	
+		this.heures.put(null,list);
 	}
 }

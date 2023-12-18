@@ -2,12 +2,10 @@ package view.parametrage;
 
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
 import model.CategorieIntervenant;
-import javax.swing.JOptionPane;
 
 
 public class GrilleCatInt extends AbstractTableModel {
@@ -53,10 +51,6 @@ public class GrilleCatInt extends AbstractTableModel {
 
 	public Object getValueAt(int row, int col) {
 		return this.tabDonnees[row][col];
-	}
-
-	public Class getColumnClass(int c) {
-		return getValueAt(0, c).getClass();
 	}
 
 	public boolean isCellEditable(int row, int col) {

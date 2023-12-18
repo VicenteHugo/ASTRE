@@ -13,14 +13,20 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
+
 import controleur.*;
+import model.CategorieHeures;
 import model.Semestres;
 import model.modules.Module;
 import model.modules.Ressource;
 
-public class PanelRessources extends JPanel implements ActionListener{
+public class PanelRessources extends JPanel implements ActionListener, KeyListener{
 
     // Modules
     private JTextField txtCodeMod;
@@ -87,12 +93,10 @@ public class PanelRessources extends JPanel implements ActionListener{
 	private Module       mod;
 
 
-	public PanelRessources(FrameAccueil frame) {
-
-		
-
+	public PanelRessources(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
-		this.mod   = new Ressource(null, "", "", "", 0);
+		this.mod   = new Ressource(semestres, "R" + semestres.getNumSem() +".XX", "", "", 0, false);
+		Controleur.getControleur().ajouterModule(mod);
 
 		
         /*                         */
@@ -100,13 +104,13 @@ public class PanelRessources extends JPanel implements ActionListener{
         /*                         */
 
 		//Informations Modules
-        this.txtCodeMod     = new JTextField(5);
+        this.txtCodeMod     = new JTextField("R" + semestres.getNumSem() +".XX",5);
         this.txtLibLongMod  = new JTextField(25);
         this.txtLibCourtMod = new JTextField(10);
 		this.cbValide       = new JCheckBox ("Validation");
 
 		//Informations Semestres
-        this.txtTypeMod = new JTextField("Ressources", 8);
+        this.txtTypeMod = new JTextField("Ressource", 8);
         this.txtSem     = new JTextField("S1", 5);
         this.txtNbEtd   = new JTextField("80", 3);
         this.txtNbGpTd  = new JTextField("80", 3);
@@ -115,9 +119,9 @@ public class PanelRessources extends JPanel implements ActionListener{
 
 
 		//Informations heure PN
-        this.txtHeureCMPN = new JTextField( 3);
-        this.txtHeureTDPN = new JTextField( 3);
-        this.txtHeureTPPN = new JTextField( 3);
+        this.txtHeureCMPN = new JTextField( "0", 3);
+        this.txtHeureTDPN = new JTextField( "0", 3);
+        this.txtHeureTPPN = new JTextField( "0", 3);
 
 		//Informations calcul heure PN
         this.txtHeureSPN     = new JTextField("0", 3);
@@ -581,17 +585,14 @@ public class PanelRessources extends JPanel implements ActionListener{
         /*                      */
         /* STYLE DES COMPOSANTS */
         /*                      */
-		PanelRessources.activer(this, this);
-
-
-
+		PanelRessources.activer(this, this, this);
 
     }
 
 
 	public PanelRessources (FrameAccueil frame, Module m) {
 
-		this (frame);
+		this (frame, m.getSemestres());
 		this.mod = m;
 
 		//txtCode
@@ -603,7 +604,7 @@ public class PanelRessources extends JPanel implements ActionListener{
 		Semestres s = this.mod.getSemestres();
 		this.txtNbEtd .setText("" + s.getNbEtdSem());
 		this.txtNbGpTd.setText("" + s.getNbGpTdSem());
-		this.txtNbGpTp.setText("" + s.getNbGpTpSem());
+		this.txtNbGpTp.setText("" + s.getNbGpTpSem()); 
 
 	}
 
@@ -661,11 +662,11 @@ public class PanelRessources extends JPanel implements ActionListener{
 	 * @param c
 	 * @param d
 	 */
-	private static void activer(Container container, ActionListener a) {
+	private static void activer(Container container, ActionListener a, KeyListener k) {
 		for (Component component : container.getComponents()) {
 
 			if (component instanceof JTextField && ((JTextField) component).isEditable()) {
-				((JTextField) component).addActionListener(a);
+				((JTextField) component).addKeyListener(k);
 			}
 
 			if (component instanceof JButton) {
@@ -673,7 +674,7 @@ public class PanelRessources extends JPanel implements ActionListener{
 			}
 
 			if (component instanceof Container) {
-				activer((Container) component, a);
+				activer((Container) component, a,k);
 			}
 		}
 	}
@@ -682,11 +683,10 @@ public class PanelRessources extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == this.btnAnnuler    ) this.quitter();
-		if (e.getSource() == this.btnSauvegarder) this.quitter();
+		if (e.getSource() == this.btnSauvegarder) this.sauvegarder();
 
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
-
 
 
 	}
@@ -697,8 +697,44 @@ public class PanelRessources extends JPanel implements ActionListener{
 	}
 
 
+	private void sauvegarder () {
+
+		boolean   val = this.cbValide.isValid();
+		String    cod = this.txtCodeMod.getText();
+		String    liL = this.txtLibLongMod.getText();
+		String    liC = this.txtLibCourtMod.getText();
+		int       hp  = Integer.parseInt(this.txtHPTot.getText());
+
+		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
+
+		//                                            PN                                             SEMAINE                                      NB HEURE
+		List<Integer> lstCM = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
+		List<Integer> lstTP = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureTPPN.getText()), Integer.parseInt(this.txtTPNbSem.getText()), Integer.parseInt(this.txtTPNbHeure.getText())));
+		List<Integer> lstTD = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureTDPN.getText()), Integer.parseInt(this.txtTDNbSem.getText()), Integer.parseInt(this.txtTDNbHeure.getText())));
+		List<Integer> lstHP = new ArrayList<>(List.of(Integer.parseInt(this.txtHPTot    .getText()), 1                                          , Integer.parseInt(this.txtHPTot    .getText())));
+
+
+		map.put(Controleur.getControleur().getCategorieHeure("CM"), lstCM);
+		map.put(Controleur.getControleur().getCategorieHeure("TP"), lstTP);
+		map.put(Controleur.getControleur().getCategorieHeure("TD"), lstTD);
+		map.put(Controleur.getControleur().getCategorieHeure("HP"), lstHP);
+
+		if (Controleur.getControleur().modifModules(mod, cod, liL, liC, hp, val, map))
+			this.quitter();
+		else
+			this.showMessageDialog("Le code est déja utiliser");
+	}
+
+
 	private void ajouter () {
-		System.out.println("Quitter");
+		JFrame f = new JFrame();
+        f.add(new PanelAddRessourceIntervenant(this,this.frame, f,mod));
+        f.setTitle("Ajout d'un Intervenant");
+		f.pack();
+		f.setResizable(false);
+		f.setLocationRelativeTo(null);
+		f.setAlwaysOnTop(true);
+		f.setVisible(true);
 	}
 
 
@@ -715,4 +751,104 @@ public class PanelRessources extends JPanel implements ActionListener{
     public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleRessources()); 
 	}
+
+	private void showMessageDialog(String message) {
+		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+		String chiffreAv = ((JTextField) e.getSource()).getText();
+
+		try {
+
+			//Récupération des données
+			int cmPN  = Integer.parseInt(this.txtHeureCMPN.getText());
+			int cmSem = Integer.parseInt(this.txtCMNbSem  .getText());
+			int cmHeu = Integer.parseInt(this.txtCMNbHeure.getText());
+			
+			int tdPN  = Integer.parseInt(this.txtHeureTDPN.getText());
+			int tdSem = Integer.parseInt(this.txtTDNbSem  .getText());
+			int tdHeu = Integer.parseInt(this.txtTDNbHeure.getText());
+			
+			int tpPN  = Integer.parseInt(this.txtHeureTPPN.getText());
+			int tpSem = Integer.parseInt(this.txtTPNbSem  .getText());
+			int tpHeu = Integer.parseInt(this.txtTPNbHeure.getText());
+
+			int hpHeu = Integer.parseInt(this.txtHPTot.getText());
+
+			float coefCM = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
+			float coefTD = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
+			float coefTP = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
+			float coefHP = Controleur.getControleur().getCategorieHeure("HP").getcoefCatHeur();
+
+
+
+			/* CALCUL PN */
+
+			// eqtd
+			int cmPNetd = (int) (cmPN * coefCM);
+			int tdPNetd = (int) (tdPN * coefTD);
+			int tpPNetd = (int) (tpPN * coefTP);
+			this.txtHeureEtdCMPN.setText( cmPNetd + "");
+			this.txtHeureEtdTDPN.setText( tdPNetd + "");
+			this.txtHeureEtdTPPN.setText( tpPNetd + "");
+
+			//somme
+			this.txtHeureSPN   .setText((cmPN + tdPN + tpPN) + "");
+			this.txtHeureEtdSPN.setText((cmPNetd + tdPNetd + tpPNetd) + "");
+
+
+
+			/* CALCUL REPARTITION */
+
+			// semaine * heure
+			int cmHTot = (cmHeu * cmSem);
+			int tdHTot = (tpHeu * tpSem);
+			int tpHTot = (tdHeu * tdSem);
+
+			this.txtCMTot.setText( cmHTot + "");
+			this.txtTPTot.setText( tdHTot + "");
+			this.txtTDTot.setText( tpHTot + "");
+
+			this.txtTot.setText((cmHTot + tdHTot + tpHTot + hpHeu) + "");
+
+			//EQTD
+			int cmHTotEtd = (int) ((cmHeu * cmSem) * coefCM);
+			int tdHTotEtd = (int) ((tpHeu * tpSem) * coefTD);
+			int tpHTotEtd = (int) ((tdHeu * tdSem) * coefTP);
+			int hpHTotEtd = (int) ( hpHeu          * coefHP);
+
+			this.txtCMTotEtd.setText( cmHTotEtd + "");
+			this.txtTPTotEtd.setText( tdHTotEtd + "");
+			this.txtTDTotEtd.setText( tpHTotEtd + "");
+			this.txtHPTotEtd.setText( hpHTotEtd + "");
+
+			this.txtTot.setText((cmHTotEtd + tdHTotEtd + tpHTotEtd + hpHTotEtd) + "");
+
+
+
+			//On met tous dans la liste de mod
+			this.mod.initList(tdHeu, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("CM"));
+			this.mod.initList(tdHeu, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("TD"));
+			this.mod.initList(tpPN, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("TP"));
+			this.mod.initList(tdHeu, 1, tpHeu, Controleur.getControleur().getCategorieHeure("HP"));
+
+
+		} catch (NumberFormatException ex) {
+			this.showMessageDialog("Le chiffre saisie est inccorect.");
+
+			if (chiffreAv.isEmpty())
+				((JTextField) e.getSource()).setText("0");
+			else
+				((JTextField) e.getSource()).setText(chiffreAv);
+
+		}
+	}
+
+
+	public void keyPressed (KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {}
 }
