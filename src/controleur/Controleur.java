@@ -3,8 +3,6 @@ package controleur;
 import view.accueil.FrameAccueil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import model.Affectations;
 import model.CategorieHeures;
@@ -16,13 +14,7 @@ import model.action.Ajout;
 import model.action.Modification;
 import model.action.Suppression;
 import model.modules.Module;
-import model.modules.PPP;
-import model.modules.Ressource;
-import model.modules.Sae;
-import model.modules.Stage;
-import java.util.Scanner;
-import java.io.FileInputStream;
-import java.io.InputStream;
+
 
 public class Controleur {
 
