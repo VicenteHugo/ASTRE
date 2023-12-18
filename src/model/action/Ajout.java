@@ -27,6 +27,7 @@ public class Ajout extends Action {
 		this.info = new ArrayList<>(List.of(m.getCode(), m.getSemestres(), m.getClass().getSimpleName(),
 				m.getLibCourt(), m.getLibLong(), m.isValide(), m.getHeurePonctuel()));
 
+			System.out.println(m.getHeures());
 		for (CategorieHeures cat : m.getHeures().keySet()) {
 			List<Integer> lst = m.getHeures().get(cat);
 			this.requetes += "INSERT INTO ModulesCatHeures" + Etat.nom+ " (codeMod, libCatHeur, nbHeurePN, nbHeureSem, nbSemaine) VALUES (?,?,?,?,?)";

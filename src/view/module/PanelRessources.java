@@ -96,7 +96,26 @@ public class PanelRessources extends JPanel implements ActionListener, KeyListen
 	public PanelRessources(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
 		this.mod   = new Ressource(semestres, "R" + semestres.getNumSem() +".XX", "", "", 0, false);
-		Controleur.getControleur().ajouterModule(mod);
+
+		//Mettre la liste à 0
+		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
+
+		//                                            PN                                             SEMAINE                                      NB HEURE
+		List<Integer> lstCM = new ArrayList<>(List.of(0,0,0));
+		List<Integer> lstTP = new ArrayList<>(List.of(0,0,0));
+		List<Integer> lstTD = new ArrayList<>(List.of(0,0,0));
+		List<Integer> lstHP = new ArrayList<>(List.of(0,0,0));
+
+
+		map.put(Controleur.getControleur().getCategorieHeure("CM"), lstCM);
+		map.put(Controleur.getControleur().getCategorieHeure("TP"), lstTP);
+		map.put(Controleur.getControleur().getCategorieHeure("TD"), lstTD);
+		map.put(Controleur.getControleur().getCategorieHeure("HP"), lstHP);
+
+
+		this.mod.setHeures(map);
+
+		Controleur.getControleur().ajouterModule(this.mod);
 
 		
         /*                         */
