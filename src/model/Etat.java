@@ -57,12 +57,10 @@ public class Etat {
 
 		try {
 			Class.forName("org.postgresql.Driver"); //Postgress
-			// Class.forName("com.mysql.cj.jdbc.Driver"); //MySQL
-
 
 			// Connection
-			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
-			// Etat.connec = DriverManager.getConnection("jdbc:mysql://localhost:3306/astre","root", ""); //MySQL
+			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			
 			Etat.recupererNomEtat();
 

@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS SemestresETAT
 CREATE TABLE IF NOT EXISTS ModulesETAT
 (
     codeMod     VARCHAR(255) PRIMARY KEY, 
-    semMod      INTEGER      REFERENCES numSem(SemestresETAT),
+    semMod      INTEGER      REFERENCES SemestresETAT(numSem),
     typeMod     VARCHAR(255) NOT NULL CHECK (typeMod IN ('Ressource', 'Sae', 'Stage', 'PPP')),
     libCourtMod VARCHAR(255) NOT NULL,
     libLongMod  VARCHAR(50) NOT NULL,
@@ -119,5 +119,5 @@ VALUES      ('CM'   , 1.5),
             ('H tut', 1.0),
             ('REH'  , 1.0),
             ('SAE'  , 1.0),
-            ('HP'   , 1.0);
+            ('HP'   , 1.0)
 ON CONFLICT (libCatHeur) DO NOTHING;
