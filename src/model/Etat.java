@@ -316,6 +316,10 @@ public class Etat {
 		return Etat.lstModule;
 	}
 
+	public static void ajouterModule(Module mod) {
+		Etat.lstModule.add(mod);
+	}
+
 	public static Intervenants getIntervenant(String nom, String prenom) {
 		for (Intervenants i : Etat.lstIntervenants)
 			if (i.getNomIntervenant().equals(nom) && i.getPrenomIntervenant().equals(prenom))
