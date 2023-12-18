@@ -32,7 +32,8 @@ public class PanelAddRessourceIntervenant extends JPanel {
 	
 	private JTextField txtNomIntervenant;
 	private JTextField txtPrenomIntervenant;
-	private JComboBox<String> boxCategorie;	
+	private JComboBox<String> boxCategorie;
+	private JComboBox<String> boxIntervenant;
 	private JTextField txtNbSemaine;
 	private JTextField txtNbGroupe;
     private JTextField txtTotal;
@@ -60,8 +61,11 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		for(int i=0; i < l.size(); i++){
 			this.boxCategorie.addItem(l.get(i).getlibCatHeur());
 		}
-		this.txtNomIntervenant    = new JTextField(10);
-		this.txtPrenomIntervenant = new JTextField(10);
+		ArrayList<Intervenants> i = Controleur.getControleur().getIntervenants();
+		this.boxIntervenant = new JComboBox<String>();
+		for(int j= 0;  j < i.size(); j++ ){
+			this.boxIntervenant.addItem(i.get(j).getNomIntervenant() + " " + i.get(j).getPrenomIntervenant());
+		} 
 		this.txtNbSemaine         = new JTextField(3);
 		this.txtNbGroupe          = new JTextField(3);
 		this.txtCommentaire       = new JTextField(15);
@@ -84,17 +88,10 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		gbc.gridy = 0;
 		gbc.insets = new Insets(5, 10, 5, 10);
 		
-		panelCentre.add(new JLabel("Nom de l'intervenant : "), gbc);
+		panelCentre.add(new JLabel("Intervenant : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtNomIntervenant, gbc);
+		panelCentre.add(this.boxIntervenant, gbc);
 
-		gbc.gridx = 0;
-		gbc.gridy++;
-		panelCentre.add(new JLabel("Prénom de l'intervenant : "), gbc);
-		gbc.gridx++;
-		panelCentre.add(this.txtPrenomIntervenant, gbc);
-
-		
 		gbc.gridx = 0;
 		gbc.gridy++;
 		panelCentre.add(new JLabel("Type : "), gbc);
@@ -130,15 +127,19 @@ public class PanelAddRessourceIntervenant extends JPanel {
 
 		//Activation
 		this.btnValider.addActionListener((e)->{
-			Intervenants i = null;
+			Intervenants intervenant = null;
 			CategorieHeures categ = null;
 			int nbSemaine = Integer.parseInt(this.txtNbSemaine.getText());
 			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
+			String[] parties = ((String) this.boxIntervenant.getSelectedItem()).split(" ");
+			String nomIntervenant = parties[0];
+			String prenomIntervenant = parties[1];
+			
 
 			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
-				if(inter.getNomIntervenant().equals(this.txtNomIntervenant.getText()) && 
-				inter.getPrenomIntervenant().equals(this.txtPrenomIntervenant.getText())){
-					i = inter;
+				if(inter.getNomIntervenant().equals(nomIntervenant) && 
+				inter.getPrenomIntervenant().equals(prenomIntervenant)){
+					intervenant = inter;
 					break;
 				}
 			}
@@ -153,7 +154,7 @@ public class PanelAddRessourceIntervenant extends JPanel {
 				if(nbGroupe < 0 || nbSemaine < 0){
 					JOptionPane.showMessageDialog(this,"Le nombre de groupe et le nombre de semaine doivent être supérieur à 0");
 				}else{
-					Affectations affectations = new Affectations(i, this.mod,categ,nbSemaine, nbGroupe,this.txtCommentaire.getText());
+					Affectations affectations = new Affectations(intervenant, this.mod,categ,nbSemaine, nbGroupe,this.txtCommentaire.getText());
 					System.out.println(affectations);
 					Controleur.getControleur().ajouterAffectation(affectations);
 					this.frameM.dispose();
