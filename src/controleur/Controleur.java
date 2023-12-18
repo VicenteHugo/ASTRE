@@ -20,13 +20,13 @@ public class Controleur {
 	private static Controleur controleur;
 
 	public Controleur() {
-		new FrameAccueil();
 		new Etat();
+		new FrameAccueil();
 	}
 
 	public static Controleur creerControleur() {
-		if (controleur == null)
-			controleur = new Controleur();
+		if (Controleur.controleur == null)
+			Controleur.controleur = new Controleur();
 
 		return controleur;
 	}
@@ -59,11 +59,11 @@ public class Controleur {
 		return Etat.getModules();
 	}
 
-	public ArrayList<Module> getModules(int i) {
+	public ArrayList<Module> getModules(int semmestre) {
 
 		ArrayList<Module> retour = new ArrayList<>();
 		for (Module m : Etat.getModules()) {
-			if (m.getSemestres().getNumSem() == i) {
+			if (m.getSemestres().getNumSem() == semmestre) {
 				retour.add(m);
 			}
 		}
@@ -72,7 +72,6 @@ public class Controleur {
 	}
 
 	public Module getModule(int i) {
-
 		return Etat.getModules().get(i);
 	}
 
@@ -96,6 +95,10 @@ public class Controleur {
 
 	public CategorieIntervenant getCategorieIntervenant(String nom){
 		return Etat.getCatInt(nom);
+	}
+
+	public String[] getEtats() {
+		return Etat.getEtats();
 	}
 
 	/*-------------------------------------------------------------*/
@@ -287,10 +290,6 @@ public class Controleur {
 		}
 
 		return false;
-	}
-
-	public String[] getEtats() {
-		return Etat.getEtats();
 	}
 
 	public boolean nomEtatLibre (String nom) {

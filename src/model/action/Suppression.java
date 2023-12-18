@@ -12,6 +12,7 @@ import model.modules.Module;
 
 public class Suppression extends Action
 {
+	//pas de maj pour le nom de la méthode
 	public Suppression (Affectations a) 
 	{ 
 		this.requetes = "DELETE FROM Affectation" + Etat.nom + " WHERE nomInt = ? AND prenomInt = ? AND codeMod = ? AND libCatHeur = ?";

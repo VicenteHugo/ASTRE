@@ -18,20 +18,20 @@ import javax.swing.JTextField;
 import controleur.Controleur;
 import model.Affectations;
 import model.CategorieHeures;
-import model.CategorieIntervenant;
 import model.Intervenants;
-import model.modules.*;
 import model.modules.Module;
 import view.accueil.FrameAccueil;
 
 
 public class PanelAddRessourceIntervenant extends JPanel {
+	//si pas utiliser ne pas créer d'attribut
 	private JLabel lblErrCoef;
 	private JLabel lblErrHeurMax;
 	private JLabel lblErrHeurMin;
 	
 	private JTextField txtNomIntervenant;
 	private JTextField txtPrenomIntervenant;
+	//private JComboBox<CategorieIntervenant> boxCategorie;
 	private JComboBox boxCategorie;	
 	private JTextField txtNbSemaine;
 	private JTextField txtNbGroupe;

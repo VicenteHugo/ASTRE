@@ -2,12 +2,10 @@ package view.parametrage;
 
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
 import model.CategorieIntervenant;
-import javax.swing.JOptionPane;
 
 
 public class GrilleCatInt extends AbstractTableModel {

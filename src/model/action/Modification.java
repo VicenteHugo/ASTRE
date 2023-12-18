@@ -12,6 +12,7 @@ import model.modules.Module;
 
 public class Modification extends Action {
 
+//pas de maj pour le nom de la méthode
 	public Modification(Affectations aOld, Affectations aNew) {
 		
 		this.requetes = "UPDATE Affectation" + Etat.nom + " SET intNom, intPrenom = ?, codeMod = ?, libCatHeur = ?,nbSem = ?, nbGroupe = ?, commentaire = ? WHERE intNom = ? AND intPrenom = ? AND codeMod = ? AND libCatHeur = ?";

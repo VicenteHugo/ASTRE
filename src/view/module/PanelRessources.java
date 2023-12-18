@@ -41,6 +41,7 @@ public class PanelRessources extends JPanel {
 
     private JTable tblGrilleDonnees;
 
+	//si pas utiliser ne pas créer d'attribut
 	private Module mod;
     
     public PanelRessources(FrameAccueil frame){

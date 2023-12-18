@@ -9,9 +9,6 @@ import model.CategorieIntervenant;
 import model.Etat;
 import model.Intervenants;
 import model.modules.Module;
-import java.util.Scanner;
-import java.io.FileInputStream;
-import java.io.InputStream;
 
 public class Ajout extends Action {
 
