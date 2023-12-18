@@ -13,6 +13,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import view.Intervenant.PanelAddIntervenant;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import controleur.*;
@@ -687,8 +688,6 @@ public class PanelRessources extends JPanel implements ActionListener{
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
 
-
-
 	}
 
 
@@ -698,7 +697,14 @@ public class PanelRessources extends JPanel implements ActionListener{
 
 
 	private void ajouter () {
-		System.out.println("Quitter");
+		JFrame f = new JFrame();
+        f.add(new PanelAddRessourceIntervenant(this,this.frame, f));
+        f.setTitle("Ajout d'un Intervenant");
+		f.pack();
+		f.setResizable(false);
+		f.setLocationRelativeTo(null);
+		f.setAlwaysOnTop(true);
+		f.setVisible(true);
 	}
 
 
