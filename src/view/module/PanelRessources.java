@@ -93,6 +93,7 @@ public class PanelRessources extends JPanel implements ActionListener{
 
 		this.frame = frame;
 		this.mod   = new Ressource(null, "", "", "", 0);
+		Controleur.getControleur();
 
 		
         /*                         */
@@ -583,9 +584,6 @@ public class PanelRessources extends JPanel implements ActionListener{
         /*                      */
 		PanelRessources.activer(this, this);
 
-
-
-
     }
 
 
@@ -682,7 +680,7 @@ public class PanelRessources extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == this.btnAnnuler    ) this.quitter();
-		if (e.getSource() == this.btnSauvegarder) this.quitter();
+		if (e.getSource() == this.btnSauvegarder) this.sauvegarder();
 
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
@@ -693,6 +691,11 @@ public class PanelRessources extends JPanel implements ActionListener{
 
 
 	private void quitter () {
+		this.frame.changePanel(new PanelPrevi(frame));
+	}
+
+
+	private void sauvegarder () {
 		this.frame.changePanel(new PanelPrevi(frame));
 	}
 
