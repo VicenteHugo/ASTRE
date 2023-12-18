@@ -8,8 +8,8 @@ import model.Semestres;
 
 public class Sae extends Module {
 
-	public Sae(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel) {
-		super(semestres, code, libLong, libCourt, heurePonctuel);
+	public Sae(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel, boolean valid) {
+		super(semestres, code, libLong, libCourt, heurePonctuel, valid);
 	}
 
 	public void initList(int heurePNCM, int nbSemaineCM, int heureSemaineCM, CategorieHeures catH) {

@@ -3,6 +3,8 @@ package controleur;
 import view.accueil.FrameAccueil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import model.Affectations;
 import model.CategorieHeures;
@@ -14,6 +16,10 @@ import model.action.Ajout;
 import model.action.Modification;
 import model.action.Suppression;
 import model.modules.Module;
+import model.modules.PPP;
+import model.modules.Ressource;
+import model.modules.Sae;
+import model.modules.Stage;
 
 public class Controleur {
 
@@ -97,6 +103,8 @@ public class Controleur {
 	public CategorieIntervenant getCategorieIntervenant(String nom){
 		return Etat.getCatInt(nom);
 	}
+
+	public CategorieHeures getCategorieHeure (String nom) { return Etat.getCatHeure(nom);}
 
 	/*-------------------------------------------------------------*/
 	/* AUTRE */
@@ -291,9 +299,49 @@ public class Controleur {
 
 	/* MODULES */
 
-	public void ajouterModules(Module mod) {
+	public void ajouterModule(Module mod) {
 		Etat.ajouterAction(new Ajout(mod));
 		Etat.ajouterModule(mod);
+	}
+	
+	public boolean modifModules(Module mOld, String code, String libL, String libC, int hp, boolean v, HashMap<CategorieHeures, List<Integer>> heures) {
+
+		if ((Etat.getModule(code) == null || Etat.getModule(code) == mOld)) {
+			// On remplace l'objet
+			Module mNew = null;
+
+			if (mOld instanceof Ressource)
+				mNew = new Ressource(mOld.getSemestres(), code, libL, libC, hp, v);
+			if (mOld instanceof PPP)
+				mNew = new PPP(mOld.getSemestres(), code, libL, libC, hp, v);
+			if (mOld instanceof Sae)
+				mNew = new Sae(mOld.getSemestres(), code, libL, libC, hp, v);
+			if (mOld instanceof Stage)
+				mNew = new Stage(mOld.getSemestres(), code, libL, libC, hp, v);
+
+			mNew.setHeures(heures);
+
+			int i = Etat.getModules().indexOf(mOld);
+			Etat.getModules().remove(mOld);
+			Etat.getModules().add(i, mNew);
+
+			// On ajouter l'action
+			Etat.ajouterAction(new Modification(mOld, mNew));
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean supprimerModule(Module m) {
+
+		if (Etat.pasUtiliser(m)) {
+			Etat.ajouterAction(new Suppression(m));
+			Etat.getModules().remove(m);
+			return true;
+		}
+
+		return false;
 	}
 
 

@@ -8,8 +8,8 @@ import model.Semestres;
 
 public class Ressource extends Module {
 
-	public Ressource(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel) {
-		super(semestres, code, libLong, libCourt, heurePonctuel);
+	public Ressource(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel, boolean valid) {
+		super(semestres, code, libLong, libCourt, heurePonctuel, valid);
 	}
 
 	@Override
