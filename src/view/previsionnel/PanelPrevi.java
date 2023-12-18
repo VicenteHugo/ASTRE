@@ -83,9 +83,9 @@ public class PanelPrevi extends JPanel {
         this.add(panel, BorderLayout.NORTH);
         
         
-        this.btnCreerRessources.addActionListener((e)->{ this.frame.changePanel(new PanelRessources(this.frame, Etat.getSemestres().get(this.ongletSemestres.getTabPlacement() - 1)));} );
-        this.btnCreerSae.addActionListener((e)->{ this.frame.changePanel(new PanelSAE(this.frame));} );
-        this.btnCreerStage.addActionListener((e)->{ this.frame.changePanel(new PanelStage(this.frame));} );
+        // this.btnCreerRessources.addActionListener((e)->{ this.frame.changePanel(new PanelRessources(this.frame, Etat.getSemestres().get(this.ongletSemestres.getTabPlacement() - 1)));} );
+        // this.btnCreerSae.addActionListener((e)->{ this.frame.changePanel(new PanelSAE(this.frame));} );
+        // this.btnCreerStage.addActionListener((e)->{ this.frame.changePanel(new PanelStage(this.frame));} );
         this.btnAccueil.addActionListener((e)->{ this.frame.changePanel(new PanelAccueil(this.frame));} );
         this.btnModifier.addActionListener((e)->{ this.modifier();});
         this.cmbChoixCreer.addActionListener((e)->this.btnCreer.setText(this.cmbChoixCreer.getSelectedItem().toString()));

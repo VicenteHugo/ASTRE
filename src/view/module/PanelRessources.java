@@ -15,15 +15,8 @@ import javax.swing.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-
-import view.Intervenant.PanelAddIntervenant;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 
@@ -33,7 +26,7 @@ import model.Semestres;
 import model.modules.Module;
 import model.modules.Ressource;
 
-public class PanelRessources extends JPanel implements ActionListener{
+public class PanelRessources extends JPanel implements ActionListener, KeyListener{
 
     // Modules
     private JTextField txtCodeMod;
@@ -592,7 +585,7 @@ public class PanelRessources extends JPanel implements ActionListener{
         /*                      */
         /* STYLE DES COMPOSANTS */
         /*                      */
-		PanelRessources.activer(this, this);
+		PanelRessources.activer(this, this, this);
 
     }
 
@@ -611,7 +604,7 @@ public class PanelRessources extends JPanel implements ActionListener{
 		Semestres s = this.mod.getSemestres();
 		this.txtNbEtd .setText("" + s.getNbEtdSem());
 		this.txtNbGpTd.setText("" + s.getNbGpTdSem());
-		this.txtNbGpTp.setText("" + s.getNbGpTpSem());
+		this.txtNbGpTp.setText("" + s.getNbGpTpSem()); 
 
 	}
 
@@ -669,11 +662,11 @@ public class PanelRessources extends JPanel implements ActionListener{
 	 * @param c
 	 * @param d
 	 */
-	private static void activer(Container container, ActionListener a) {
+	private static void activer(Container container, ActionListener a, KeyListener k) {
 		for (Component component : container.getComponents()) {
 
 			if (component instanceof JTextField && ((JTextField) component).isEditable()) {
-				((JTextField) component).addActionListener(a);
+				((JTextField) component).addKeyListener(k);
 			}
 
 			if (component instanceof JButton) {
@@ -681,7 +674,7 @@ public class PanelRessources extends JPanel implements ActionListener{
 			}
 
 			if (component instanceof Container) {
-				activer((Container) component, a);
+				activer((Container) component, a,k);
 			}
 		}
 	}
@@ -695,8 +688,82 @@ public class PanelRessources extends JPanel implements ActionListener{
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
 
+
+	}
+
+
+	private void quitter () {
+		this.frame.changePanel(new PanelPrevi(frame));
+	}
+
+
+	private void sauvegarder () {
+
+		boolean   val = this.cbValide.isValid();
+		String    cod = this.txtCodeMod.getText();
+		String    liL = this.txtLibLongMod.getText();
+		String    liC = this.txtLibCourtMod.getText();
+		int       hp  = Integer.parseInt(this.txtHPTot.getText());
+
+		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
+
+		//                                            PN                                             SEMAINE                                      NB HEURE
+		List<Integer> lstCM = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
+		List<Integer> lstTP = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureTPPN.getText()), Integer.parseInt(this.txtTPNbSem.getText()), Integer.parseInt(this.txtTPNbHeure.getText())));
+		List<Integer> lstTD = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureTDPN.getText()), Integer.parseInt(this.txtTDNbSem.getText()), Integer.parseInt(this.txtTDNbHeure.getText())));
+		List<Integer> lstHP = new ArrayList<>(List.of(Integer.parseInt(this.txtHPTot    .getText()), 1                                          , Integer.parseInt(this.txtHPTot    .getText())));
+
+
+		map.put(Controleur.getControleur().getCategorieHeure("CM"), lstCM);
+		map.put(Controleur.getControleur().getCategorieHeure("TP"), lstTP);
+		map.put(Controleur.getControleur().getCategorieHeure("TD"), lstTD);
+		map.put(Controleur.getControleur().getCategorieHeure("HP"), lstHP);
+
+		if (Controleur.getControleur().modifModules(mod, cod, liL, liC, hp, val, map))
+			this.quitter();
+		else
+			this.showMessageDialog("Le code est déja utiliser");
+	}
+
+
+	private void ajouter () {
+		JFrame f = new JFrame();
+        f.add(new PanelAddRessourceIntervenant(this,this.frame, f,mod));
+        f.setTitle("Ajout d'un Intervenant");
+		f.pack();
+		f.setResizable(false);
+		f.setLocationRelativeTo(null);
+		f.setAlwaysOnTop(true);
+		f.setVisible(true);
+	}
+
+
+	private void supprimer() {
+
+		int ind = this.tblGrilleDonnees.getSelectedRow();
+		System.out.println(ind);
+		Controleur.getControleur().supprimerIntervenant(ind);
+		if (ind >= 0)
+			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
+		this.maj();
+	}
+
+    public void maj() {
+		this.tblGrilleDonnees.setModel(new GrilleRessources()); 
+	}
+
+	private void showMessageDialog(String message) {
+		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+		String chiffreAv = ((JTextField) e.getSource()).getText();
+
 		try {
-			
+
 			//Récupération des données
 			int cmPN  = Integer.parseInt(this.txtHeureCMPN.getText());
 			int cmSem = Integer.parseInt(this.txtCMNbSem  .getText());
@@ -773,76 +840,15 @@ public class PanelRessources extends JPanel implements ActionListener{
 		} catch (NumberFormatException ex) {
 			this.showMessageDialog("Le chiffre saisie est inccorect.");
 
-			if (e.getSource() instanceof JTextField)
+			if (chiffreAv.isEmpty())
 				((JTextField) e.getSource()).setText("0");
+			else
+				((JTextField) e.getSource()).setText(chiffreAv);
 
 		}
-
 	}
 
 
-	private void quitter () {
-		this.frame.changePanel(new PanelPrevi(frame));
-	}
-
-
-	private void sauvegarder () {
-
-		Semestres sem = this.mod.getSemestres();
-		boolean   val = this.cbValide.isValid();
-		String    cod = this.txtCodeMod.getText();
-		String    liL = this.txtLibLongMod.getText();
-		String    liC = this.txtLibCourtMod.getText();
-		int       hp  = Integer.parseInt(this.txtHPTot.getText());
-
-		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
-
-		//                                            PN                                             SEMAINE                                      NB HEURE
-		List<Integer> lstCM = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
-		List<Integer> lstTP = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureTPPN.getText()), Integer.parseInt(this.txtTPNbSem.getText()), Integer.parseInt(this.txtTPNbHeure.getText())));
-		List<Integer> lstTD = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureTDPN.getText()), Integer.parseInt(this.txtTDNbSem.getText()), Integer.parseInt(this.txtTDNbHeure.getText())));
-		List<Integer> lstHP = new ArrayList<>(List.of(Integer.parseInt(this.txtHPTot    .getText()), 1                                          , Integer.parseInt(this.txtHPTot    .getText())));
-
-
-		map.put(Controleur.getControleur().getCategorieHeure("CM"), lstCM);
-		map.put(Controleur.getControleur().getCategorieHeure("TP"), lstTP);
-		map.put(Controleur.getControleur().getCategorieHeure("TD"), lstTD);
-		map.put(Controleur.getControleur().getCategorieHeure("HP"), lstHP);
-
-		if (Controleur.getControleur().modifModules(mod, cod, liL, liC, hp, val, map))
-			this.quitter();
-		else
-			this.showMessageDialog("Le code est déja utiliser");
-	}
-
-
-	private void ajouter () {
-		JFrame f = new JFrame();
-        f.add(new PanelAddRessourceIntervenant(this,this.frame, f,mod));
-        f.setTitle("Ajout d'un Intervenant");
-		f.pack();
-		f.setResizable(false);
-		f.setLocationRelativeTo(null);
-		f.setAlwaysOnTop(true);
-		f.setVisible(true);
-	}
-
-
-	private void supprimer() {
-
-		int ind = this.tblGrilleDonnees.getSelectedRow();
-		System.out.println(ind);
-		Controleur.getControleur().supprimerIntervenant(ind);
-		if (ind >= 0)
-			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
-		this.maj();
-	}
-
-    public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleRessources()); 
-	}
-
-	private void showMessageDialog(String message) {
-		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
-	}
+	public void keyPressed (KeyEvent e) {}
+	public void keyReleased(KeyEvent e) {}
 }
