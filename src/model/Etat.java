@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.action.Action;
-import model.action.Ajout;
-import model.action.Suppression;
 import model.modules.Module;
 import model.modules.Ressource;
 import model.modules.Sae;
@@ -189,6 +187,7 @@ public class Etat {
 		return null;
 	}
 
+	/**????? */
 	public static boolean pasUtiliser (CategorieIntervenant cat) {
 		for (Intervenants i : Etat.lstIntervenants) 
 			if (i.getCategorieIntervenant() == cat)
@@ -197,6 +196,7 @@ public class Etat {
 		return true;
 	}
 
+	/**???? */
 	public static boolean pasUtiliser (CategorieHeures cat) {
 		for (Affectations a : Etat.lstAffectations) 
 			if (a.getCategorieHeures() == cat)

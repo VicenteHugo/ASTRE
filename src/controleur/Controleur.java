@@ -31,8 +31,8 @@ public class Controleur {
 	}
 
 	public static Controleur creerControleur() {
-		if (controleur == null)
-			controleur = new Controleur();
+		if (Controleur.controleur == null)
+			Controleur.controleur = new Controleur();
 
 		return controleur;
 	}
@@ -65,11 +65,11 @@ public class Controleur {
 		return Etat.getModules();
 	}
 
-	public ArrayList<Module> getModules(int i) {
+	public ArrayList<Module> getModules(int semmestre) {
 
 		ArrayList<Module> retour = new ArrayList<>();
 		for (Module m : Etat.getModules()) {
-			if (m.getSemestres().getNumSem() == i) {
+			if (m.getSemestres().getNumSem() == semmestre) {
 				retour.add(m);
 			}
 		}
@@ -78,7 +78,6 @@ public class Controleur {
 	}
 
 	public Module getModule(int i) {
-
 		return Etat.getModules().get(i);
 	}
 
@@ -105,6 +104,10 @@ public class Controleur {
 	}
 
 	public CategorieHeures getCategorieHeure (String nom) { return Etat.getCatHeure(nom);}
+
+	public String[] getEtats() {
+		return Etat.getEtats();
+	}
 
 	/*-------------------------------------------------------------*/
 	/* AUTRE */
@@ -296,86 +299,6 @@ public class Controleur {
 		return false;
 	}
 
-
-	/* MODULES */
-
-	public boolean ajouterModule(Module mod) {
-
-		System.out.println(Etat.getModule(mod.getCode()));
-		
-		if (Etat.getModule(mod.getCode()) != null)
-			return false;
-
-		Etat.ajouterAction(new Ajout(mod));
-		Etat.ajouterModule(mod);
-		return true;
-	}
-	
-	public boolean modifModules(Module mOld, String code, String libL, String libC, int hp, boolean v, HashMap<CategorieHeures, List<Integer>> heures) {
-
-		if ((Etat.getModule(code) == null || Etat.getModule(code) == mOld)) {
-			// On remplace l'objet
-			Module mNew = null;
-
-			if (mOld instanceof Ressource)
-				mNew = new Ressource(mOld.getSemestres(), code, libL, libC, hp, v);
-			if (mOld instanceof PPP)
-				mNew = new PPP(mOld.getSemestres(), code, libL, libC, hp, v);
-			if (mOld instanceof Sae)
-				mNew = new Sae(mOld.getSemestres(), code, libL, libC, hp, v);
-			if (mOld instanceof Stage)
-				mNew = new Stage(mOld.getSemestres(), code, libL, libC, hp, v);
-
-			mNew.setHeures(heures);
-
-			int i = Etat.getModules().indexOf(mOld);
-			Etat.getModules().remove(mOld);
-			Etat.getModules().add(i, mNew);
-
-			// On ajouter l'action
-			Etat.ajouterAction(new Modification(mOld, mNew));
-			return true;
-		}
-
-		return false;
-	}
-
-	public boolean supprimerModule(Module m) {
-
-		if (Etat.pasUtiliser(m)) {
-			Etat.ajouterAction(new Suppression(m));
-			Etat.getModules().remove(m);
-			return true;
-		}
-
-		return false;
-	}
-
-	public void supprimerModule(int mod){
-		if (mod >= 0 && mod < Etat.getModules().size()) {
-			Module module = Etat.getModules().remove(mod);
-			Etat.ajouterAction(new Suppression(module));
-		}
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-	/*------------------------------------------------------*/
-	/*                          ETATS                       */
-	/*------------------------------------------------------*/
-
-	public String[] getEtats() {
-		return Etat.getEtats();
-	}
 
 	public boolean nomEtatLibre (String nom) {
 		for (String nomEtat : Etat.getEtats())

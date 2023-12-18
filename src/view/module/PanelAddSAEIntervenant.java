@@ -16,6 +16,7 @@ import view.accueil.FrameAccueil;
 
 
 public class PanelAddSAEIntervenant extends JPanel {
+	//si pas utiliser ne pas créer d'attribut
 	private JLabel lblErrCoef;
 	private JLabel lblErrHeurMax;
 	private JLabel lblErrHeurMin;
