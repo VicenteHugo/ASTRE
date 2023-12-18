@@ -83,9 +83,7 @@ public class PanelPrevi extends JPanel {
         this.add(panel, BorderLayout.NORTH);
         
         
-        // this.btnCreerRessources.addActionListener((e)->{ this.frame.changePanel(new PanelRessources(this.frame, Etat.getSemestres().get(this.ongletSemestres.getTabPlacement() - 1)));} );
-        // this.btnCreerSae.addActionListener((e)->{ this.frame.changePanel(new PanelSAE(this.frame));} );
-        // this.btnCreerStage.addActionListener((e)->{ this.frame.changePanel(new PanelStage(this.frame));} );
+        this.btnCreer.addActionListener((e)->this.creation(this.cmbChoixCreer.getSelectedIndex()) );
         this.btnAccueil.addActionListener((e)->{ this.frame.changePanel(new PanelAccueil(this.frame));} );
         this.btnModifier.addActionListener((e)->{ this.modifier();});
         this.cmbChoixCreer.addActionListener((e)->this.btnCreer.setText(this.cmbChoixCreer.getSelectedItem().toString()));
@@ -93,8 +91,10 @@ public class PanelPrevi extends JPanel {
     }
 
     private void creation(int indice) {
+        System.out.println(indice);
         if(indice < 0) indice = 0;
-        
+
+
         switch (indice) {
             case 0 -> this.frame.changePanel(new PanelRessources(frame, Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex())));
             case 1 -> this.frame.changePanel(new PanelSAE(frame));
