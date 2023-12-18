@@ -26,7 +26,8 @@ public class GrilleRessources extends AbstractTableModel {
 
 		for (int lig = 0; lig < listAffectations.size(); lig++) {
 			Affectations affectations = listAffectations.get(lig);
-			if (affectations.getModule().getClass().getName().equals("Ressources")) {
+			System.out.println("Je rentre dans les affectations "  + affectations);
+			//if (affectations.getModule().getClass().getName().equals("Ressources")) {
 				List<Integer> listInfosHeure = affectations.getModule().getHeures()
 						.get(affectations.getCategorieHeures());
 				this.tabDonnees[0][lig] = affectations.getIntervenant().getNomIntervenant();
@@ -43,7 +44,7 @@ public class GrilleRessources extends AbstractTableModel {
 				prenomIntervenant.add(affectations.getIntervenant().getPrenomIntervenant());
 				moduleIntervenant.add(affectations.getModule());
 			}
-		}
+		//}
 
 		this.tabEntetes = new String[] { "Intervenants", "Type", "Nb sem", "nb Gp/nb h", "tot eqtd", "commentaire" };
 
@@ -63,10 +64,6 @@ public class GrilleRessources extends AbstractTableModel {
 
 	public Object getValueAt(int row, int col) {
 		return this.tabDonnees[row][col];
-	}
-
-	public Class getColumnClass(int c) {
-		return getValueAt(0, c).getClass();
 	}
 
 	public boolean isCellEditable(int row, int col) {

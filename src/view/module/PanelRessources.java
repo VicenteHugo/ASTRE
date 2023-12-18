@@ -18,6 +18,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+
+import view.Intervenant.PanelAddIntervenant;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 
@@ -811,7 +817,14 @@ public class PanelRessources extends JPanel implements ActionListener{
 
 
 	private void ajouter () {
-		System.out.println("Quitter");
+		JFrame f = new JFrame();
+        f.add(new PanelAddRessourceIntervenant(this,this.frame, f,mod));
+        f.setTitle("Ajout d'un Intervenant");
+		f.pack();
+		f.setResizable(false);
+		f.setLocationRelativeTo(null);
+		f.setAlwaysOnTop(true);
+		f.setVisible(true);
 	}
 
 
