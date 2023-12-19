@@ -48,5 +48,6 @@ public class GrilleSemestre extends AbstractTableModel {
     }
 
     @Override
-    public Class getColumnClass(int col) { return getValueAt(0, col).getClass();}
+    public Class<?> getColumnClass(int col) { return getValueAt(0, col).getClass();}
+
 }

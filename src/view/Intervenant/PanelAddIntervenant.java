@@ -8,7 +8,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -22,15 +21,7 @@ import model.Intervenants;
 import view.accueil.FrameAccueil;
 
 public class PanelAddIntervenant extends JPanel {
-	//si pas utiliser ne pas créer d'attribut
-	private JLabel lblErrCoef;
-	private JLabel lblErrHeurMax;
-	private JLabel lblErrHeurMin;
-
-	private DefaultListModel<CategorieIntervenant> choixCategorie;
-
-	//private JComboBox<CategorieIntervenant> boxCategorie;
-	private JComboBox boxCategorie;
+	private JComboBox<String> boxCategorie;
 	private JTextField txtNom;
 	private JTextField txtPrenom;
 	private JTextField txtHServ;
@@ -40,24 +31,18 @@ public class PanelAddIntervenant extends JPanel {
 	private JButton btnValider;
 	private JButton btnAnnuler;
 
-	private FrameAccueil frame;
 	private Frame frameM;
 
-	private CategorieIntervenant categ = null;
 	private PanelIntervenants panelIntervenants;
 	private boolean isValid = true;
 
 	public PanelAddIntervenant(PanelIntervenants p,FrameAccueil frame, Frame frameM) {
 		this.panelIntervenants = p;
-		this.frame = frame;
 		this.frameM = frameM;
 
 		// Création
-		//this.choixCategorie = new DefaultListModel<>();
-		//this.choixCategorie.addAll(Controleur.getControleur().getCategorieIntervenants());
-		// this.comboCategorie = new JComboBox<>(this.choixCategorie.toArray());
 		ArrayList<CategorieIntervenant> l = Controleur.getControleur().getCategorieIntervenants();
-		this.boxCategorie = new JComboBox();
+		this.boxCategorie = new JComboBox<String>();
 		for(int i=0; i < l.size(); i++){
 			this.boxCategorie.addItem(l.get(i).getCodeCatInt());
 		}
