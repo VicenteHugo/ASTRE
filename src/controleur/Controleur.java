@@ -382,6 +382,8 @@ public class Controleur {
 		return Etat.suppEtat(etat);
 	}
 
+	public void genererCSV () { Etat.genererCSV();}
+	
 	/*-------------------------------------------------------------*/
 	/* MAIN */
 	/*-------------------------------------------------------------*/

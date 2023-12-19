@@ -49,7 +49,7 @@ public class PanelEtat extends JPanel {
         this.btnSupprimer = new JButton("Supprimer");
 
         //Génerer les pages
-        this.lstGeneration = new JComboBox<>(new String[] {"Par intervenants", "Par modules", "Recap intervenants"});
+        this.lstGeneration = new JComboBox<>(new String[] {"Par intervenants (HTML)", "Par modules (HTML)", "Recap intervenants (CSV)"});
         this.lstGeneration.setSelectedIndex(0);
         this.btnGenerer = new JButton("Générer");
 
@@ -130,6 +130,7 @@ public class PanelEtat extends JPanel {
         this.btnNouveau  .addActionListener((e)->this.ajouterEtat());
         this.btnSelection.addActionListener((e)->this.changerEtat());
         this.btnSupprimer.addActionListener((e)->this.suppEtat());
+        this.btnGenerer  .addActionListener((e)->this.generer());
     }
 
     private void changerEtat () {
@@ -158,6 +159,18 @@ public class PanelEtat extends JPanel {
 		f.setLocationRelativeTo(null);
 		f.setAlwaysOnTop(true);
 		f.setVisible(true);
+    }
+
+
+    private void generer() {
+        String option = (String) this.lstGeneration.getSelectedItem();
+
+
+        if (option.equals("Recap intervenants (CSV)")) {
+            System.out.println("Generation go");
+            Controleur.getControleur().genererCSV();
+        }
+
     }
 
 
