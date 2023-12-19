@@ -135,7 +135,6 @@ public class PanelEtat extends JPanel {
 
     private void changerEtat () {
         String nomEtat = (String) this.lstEtat.getSelectedItem();
-        System.out.println("Etat changer pour : " + nomEtat);
 
         Controleur.getControleur().changerEtat(nomEtat);
     }
@@ -167,7 +166,6 @@ public class PanelEtat extends JPanel {
 
 
         if (option.equals("Recap intervenants (CSV)")) {
-            System.out.println("Generation go");
             Controleur.getControleur().genererCSV();
         }
 

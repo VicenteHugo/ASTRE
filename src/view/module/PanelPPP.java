@@ -475,7 +475,7 @@ public class PanelPPP extends JPanel implements ActionListener{
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleRessources());
+		this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -756,7 +756,7 @@ public class PanelPPP extends JPanel implements ActionListener{
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
-		System.out.println(ind);
+		
 		Controleur.getControleur().supprimerIntervenant(ind);
 		if (ind >= 0)
 			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
@@ -764,7 +764,7 @@ public class PanelPPP extends JPanel implements ActionListener{
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleRessources()); 
+		this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
 	}
 
 	private void showMessageDialog(String message) {

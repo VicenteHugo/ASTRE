@@ -88,9 +88,9 @@ public class Etat {
 			Etat.genererInfos();
 
 		} catch (ClassNotFoundException e) {
-			System.out.println("Driver not found: " + e.getMessage());
+			e.printStackTrace();
 		} catch (SQLException e) {
-			System.out.println("SQL Error: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 
@@ -326,7 +326,16 @@ public class Etat {
 
 	public static ArrayList<Affectations> getAffectations() { return Etat.lstAffectations;}
 
+	public static ArrayList<Affectations> getAffectations(Module mod){
+		ArrayList<Affectations> retour = new ArrayList<Affectations>();
+		for(Affectations a : lstAffectations){
+			if(a.getModule() == mod){
+				retour.add(a);
+			}
+		}
 
+		return retour;
+	}
 
 	/* OBJECTS */
 
@@ -485,14 +494,10 @@ public class Etat {
 						st.setBoolean(i, (Boolean) info);
 				}
 
-				System.out.println(st);
-
 				// On l'execute
 				st.executeUpdate();
 			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		} catch (Exception e) { e.printStackTrace(); }
 
 		Etat.genererInfos();
 		Etat.lstActions.clear();
@@ -524,9 +529,7 @@ public class Etat {
 				Etat.nom = "Etat1";
 			}
 
-		} catch (Exception e) {
-			System.out.println("Methode marche pas");
-		}
+		} catch (Exception e) {e.printStackTrace();}
 	}
 	
 	/* RECUPERER NOMS */
@@ -540,12 +543,9 @@ public class Etat {
 
 			while (res.next()) {
 				etatsList.add(res.getString("etat"));
-				System.out.println(res.getString("etat"));
 			}
 
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		} catch (Exception e) {e.printStackTrace();}
 
 		String[] etatsArray = new String[etatsList.size()];
 		return etatsList.toArray(etatsArray);
@@ -554,7 +554,6 @@ public class Etat {
 	/* SET ETATS */
 	public static void changerEtat (String nom) {
 		Etat.nom = nom;
-		System.out.println(Etat.nom);
 		Etat.lireFichierSQL(Etat.FIC_CREATE);
 		Etat.genererInfos();
 	}
@@ -566,7 +565,6 @@ public class Etat {
 			Statement st = Etat.connec.createStatement();
 
 			for(String tables : Etat.LST_NOM_TABLES) {
-				System.out.println("CREATE TABLE " + tables + etatDest + " AS TABLE " + tables + etatDep);
 				st.executeUpdate("CREATE TABLE " + tables + etatDest + " AS TABLE " + tables + etatDep );
 			}
 			
@@ -596,7 +594,7 @@ public class Etat {
 			return true;
 
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -609,8 +607,6 @@ public class Etat {
 	}
 
 	public static boolean suppEtat (String nom) {
-
-		System.out.println(Etat.nom.equals(nom));
 		if (Etat.nom.equals(nom)) return false;
 
 		try {
@@ -619,7 +615,6 @@ public class Etat {
 
 			for (String s : Etat.LST_NOM_TABLES) {
 				st.executeUpdate("DROP TABLE " + s + nom.toLowerCase() + " CASCADE");
-				System.out.println("DROP TABLE " + s + nom.toLowerCase() + " CASCADE");
 			}
 
 			st.executeUpdate("DELETE FROM Etat WHERE etat = '" + nom + "'");
@@ -627,7 +622,7 @@ public class Etat {
 			return true;
 
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			return false;
 		}
 	}
