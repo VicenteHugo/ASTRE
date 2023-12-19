@@ -14,6 +14,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import view.JLabelModule;
+import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import controleur.*;
@@ -30,26 +31,26 @@ public class PanelSAE extends JPanel implements ActionListener{
 	private JCheckBox  cbValide;
 
     // Semestres
-    private JTextField txtSem;
-    private JTextField txtNbEtd;
-    private JTextField txtNbGpTd;
-	private JTextField txtNbGpTp;
+    private JTextFieldNumber txtSem;
+    private JTextFieldNumber txtNbEtd;
+    private JTextFieldNumber txtNbGpTd;
+	private JTextFieldNumber txtNbGpTp;
 	
 	//Heures PN
 
-	private JTextField txtHeureEtdSaePN;
-	private JTextField txtHeureEtdTutPN;
-	private JTextField txtHeureEtdTotPN ;
+	private JTextFieldNumber txtHeureEtdSaePN;
+	private JTextFieldNumber txtHeureEtdTutPN;
+	private JTextFieldNumber txtHeureEtdTotPN ;
 
 
 	//Repartition
 
-	private JTextField txtEtdSaePromRep;
-	private JTextField txtEtdSaeAffectRep;
-	private JTextField txtEtdTotPromRep;
-	private JTextField txtEtdTotAffectRep;
-	private JTextField txtEtdTutPromRep;  
-	private JTextField txtEtdTutAffectRep;
+	private JTextFieldNumber txtEtdSaePromRep;
+	private JTextFieldNumber txtEtdSaeAffectRep;
+	private JTextFieldNumber txtEtdTotPromRep;
+	private JTextFieldNumber txtEtdTotAffectRep;
+	private JTextFieldNumber txtEtdTutPromRep;  
+	private JTextFieldNumber txtEtdTutAffectRep;
 
 	//Affectation 
 	private JTable tblGrilleDonnees;
@@ -84,26 +85,26 @@ public class PanelSAE extends JPanel implements ActionListener{
 
 		//Informations Semestres
         this.txtTypeMod = new JTextField("SAE", 8);
-        this.txtSem     = new JTextField("S1", 5);
-        this.txtNbEtd   = new JTextField("52", 3);
-        this.txtNbGpTd  = new JTextField("2", 3);
-        this.txtNbGpTp  = new JTextField("4", 3);
+        this.txtSem     = new JTextFieldNumber("S1", 5);
+        this.txtNbEtd   = new JTextFieldNumber("52", 3);
+        this.txtNbGpTd  = new JTextFieldNumber("2", 3);
+        this.txtNbGpTp  = new JTextFieldNumber("4", 3);
 
 
 
 		//Informations calcul heure PN
-        this.txtHeureEtdSaePN = new JTextField("40", 3);
-        this.txtHeureEtdTutPN = new JTextField("38", 3);
-        this.txtHeureEtdTotPN  = new JTextField("78", 3);
+        this.txtHeureEtdSaePN = new JTextFieldNumber("40", 3);
+        this.txtHeureEtdTutPN = new JTextFieldNumber("38", 3);
+        this.txtHeureEtdTotPN = new JTextFieldNumber("78", 3);
 		
 		//Informations calcul repartitions
-		this.txtEtdSaePromRep       = new JTextField("0", 3); 
-		this.txtEtdTutPromRep       = new JTextField("0", 3);
-		this.txtEtdTotPromRep       = new JTextField("0", 3);
+		this.txtEtdSaePromRep       = new JTextFieldNumber("0", 3); 
+		this.txtEtdTutPromRep       = new JTextFieldNumber("0", 3);
+		this.txtEtdTotPromRep       = new JTextFieldNumber("0", 3);
 
-		this.txtEtdSaeAffectRep = new JTextField("0", 3); 
-		this.txtEtdTutAffectRep = new JTextField("0", 3);
-		this.txtEtdTotAffectRep = new JTextField("0", 3);
+		this.txtEtdSaeAffectRep = new JTextFieldNumber("0", 3); 
+		this.txtEtdTutAffectRep = new JTextFieldNumber("0", 3);
+		this.txtEtdTotAffectRep = new JTextFieldNumber("0", 3);
 
 
 		this.btnAjouter   = new JButton("Ajouter");

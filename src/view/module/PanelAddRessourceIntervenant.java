@@ -20,36 +20,28 @@ import model.Affectations;
 import model.CategorieHeures;
 import model.Intervenants;
 import model.modules.Module;
+import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 
 
 public class PanelAddRessourceIntervenant extends JPanel {
-	//si pas utiliser ne pas créer d'attribut
-	private JLabel lblErrCoef;
-	private JLabel lblErrHeurMax;
-	private JLabel lblErrHeurMin;
-	
-	private JTextField txtNomIntervenant;
-	private JTextField txtPrenomIntervenant;
+	//certains attribut ne sont pas instancié
 	private JComboBox<String> boxCategorie;
 	private JComboBox<String> boxIntervenant;
-	private JTextField txtNbSemaine;
-	private JTextField txtNbGroupe;
-    private JTextField txtTotal;
+	private JTextFieldNumber txtNbSemaine;
+	private JTextFieldNumber txtNbGroupe;
     private JTextField txtCommentaire;
 
 	private JButton btnValider;
 	private JButton btnAnnuler;
 
 
-	private FrameAccueil frame;
 	private Frame frameM;
 	private PanelRessources panel;
 	private Module mod;
 
 	public PanelAddRessourceIntervenant (PanelRessources panel,FrameAccueil frame, Frame frameM,Module mod) {
 		this.panel = panel;
-		this.frame  = frame;
 		this.frameM = frameM;
 		this.mod = mod;
 
@@ -60,13 +52,12 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		for(int i=0; i < l.size(); i++){
 			this.boxCategorie.addItem(l.get(i).getlibCatHeur());
 		}
-		ArrayList<Intervenants> i = Controleur.getControleur().getIntervenants();
+		ArrayList<Intervenants> lstInter = Controleur.getControleur().getIntervenants();
 		this.boxIntervenant = new JComboBox<String>();
-		for(int j= 0;  j < i.size(); j++ ){
-			this.boxIntervenant.addItem(i.get(j).getNomIntervenant() + " " + i.get(j).getPrenomIntervenant());
+		for(int j= 0;  j < lstInter.size(); j++ ){
+			this.boxIntervenant.addItem(lstInter.get(j).getNomIntervenant() + " " + lstInter.get(j).getPrenomIntervenant());
 		} 
-		this.txtNbSemaine         = new JTextField(3);
-		this.txtNbGroupe          = new JTextField(3);
+
 		this.txtCommentaire       = new JTextField(15);
 
 		this.btnAnnuler = new JButton("Annuler");
@@ -149,20 +140,18 @@ public class PanelAddRessourceIntervenant extends JPanel {
 				}
 			}
 			
-			if(i != null){
-				if(nbGroupe < 0 || nbSemaine < 0){
-					JOptionPane.showMessageDialog(this,"Le nombre de groupe et le nombre de semaine doivent être supérieur à 0");
-				}else{
-					Affectations affectations = new Affectations(intervenant, this.mod,categ,nbSemaine, nbGroupe,this.txtCommentaire.getText());
+			if (lstInter != null) {
+				if (nbGroupe < 0 || nbSemaine < 0) {
+					JOptionPane.showMessageDialog(this, "Le nombre de groupe et le nombre de semaine doivent être supérieur à 0");
+				} else {
+					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbGroupe, this.txtCommentaire.getText());
 					System.out.println(affectations);
 					Controleur.getControleur().ajouterAffectation(affectations);
 					this.frameM.dispose();
 				}
-			}else{
-				JOptionPane.showMessageDialog(this,"L'intervenant rentré n'existe pas");
 			}
-			
-			this.panel.maj();	
+
+			this.panel.maj();
 		});
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
 	}

@@ -6,6 +6,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JTextField;
 
 public class JTextFieldNumber extends JTextField implements KeyListener {
+	private boolean isFloat = false;
+
 	public JTextFieldNumber() {
 		super();
 		this.addKeyListener(this);
@@ -26,9 +28,16 @@ public class JTextFieldNumber extends JTextField implements KeyListener {
 		this.addKeyListener(this);
 	}
 
+	public void setFloat(boolean isFloat) {
+		this.isFloat = isFloat;
+	}
+
 	@Override
 	public void keyTyped(KeyEvent e) {
-		if (!Character.isDigit(e.getKeyChar()))
+		boolean isPoint = false;
+		if(this.isFloat) isPoint = (e.getKeyChar() == '.' || e.getKeyChar() == ',');
+			
+		if (!Character.isDigit(e.getKeyChar()) && !isPoint)
 			e.consume();
 	}
 
