@@ -41,7 +41,8 @@ public class PanelPrevi extends JPanel {
     private JButton btnModifier;
     private JButton btnSupprimer;
 
-    private JButton btnAccueil;
+    private JButton btnSauvegarder;
+    private JButton btnQuitter;
 
     public PanelPrevi(FrameAccueil frame) {
 
@@ -83,17 +84,20 @@ public class PanelPrevi extends JPanel {
         
         panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         
-        this.btnAccueil = new JButton("Accueil");
-        panel.add(this.btnAccueil);
+        this.btnSauvegarder = new JButton("Sauvegarder");
+        this.btnQuitter     = new JButton("Annuler");
+        panel.add(this.btnSauvegarder);
+        panel.add(this.btnQuitter);
         
         this.add(panel, BorderLayout.NORTH);
         
         
-        this.btnCreer.addActionListener((e)->this.creation(this.cmbChoixCreer.getSelectedIndex()) );
-        this.btnAccueil.addActionListener((e)->{ this.frame.changePanel(new PanelAccueil(this.frame));} );
-        this.btnModifier.addActionListener((e)->{ this.modifier();});
-        this.cmbChoixCreer.addActionListener((e)->this.btnCreer.setText(this.cmbChoixCreer.getSelectedItem().toString()));
-        this.btnSupprimer.addActionListener((e)-> this.supprimer());
+        this.btnCreer      .addActionListener((e)->this.creation(this.cmbChoixCreer.getSelectedIndex()) );
+        this.btnSauvegarder.addActionListener((e)->{ Controleur.getControleur().enregistrer();this.frame.changePanel(new PanelAccueil(this.frame));} );
+        this.btnQuitter    .addActionListener((e)->{ Controleur.getControleur().annuler()    ;this.frame.changePanel(new PanelAccueil(this.frame));} );
+        this.btnModifier   .addActionListener((e)->{ this.modifier();});
+        this.cmbChoixCreer .addActionListener((e)->this.btnCreer.setText(this.cmbChoixCreer.getSelectedItem().toString()));
+        this.btnSupprimer  .addActionListener((e)-> this.supprimer());
         //this.ongletSemestres.addChangeListener((l)-> this.ongletSemestres.selec);
     }
 
@@ -148,7 +152,8 @@ public class PanelPrevi extends JPanel {
             val-= i;
             String code = (String) table.getValueAt(val, 0);
             m = Controleur.getControleur().getModule(code);
-            Controleur.getControleur().supprimerModule(m);
+            if (!Controleur.getControleur().supprimerModule(m))
+                this.showMessageDialog("Ce module à encore des affectations");
             panelSemestre.majGrille(ongletSemestres.getSelectedIndex() + 1);
             
         }
