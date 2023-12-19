@@ -324,7 +324,17 @@ public class Etat {
 
 	public static ArrayList<Affectations> getAffectations() { return Etat.lstAffectations;}
 
-
+	public static ArrayList<Affectations> getAffectations(Module mod){
+		ArrayList<Affectations> retour = new ArrayList<Affectations>();
+		for(Affectations a : lstAffectations){
+			if(a.getModule() == mod){
+				//System.out.println("Ajout");
+				retour.add(a);
+			}
+		}
+		//System.out.println(retour);
+		return retour;
+	}
 
 	/* OBJECTS */
 

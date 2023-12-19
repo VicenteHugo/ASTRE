@@ -17,32 +17,32 @@ public class GrilleRessources extends AbstractTableModel {
 	private List<Module> moduleIntervenant;
 
 	public GrilleRessources(Module mod) {
-		List<Affectations> listAffectations = Controleur.getControleur().getAffectations();
-		prenomIntervenant = new ArrayList<>();
-		moduleIntervenant = new ArrayList<>();
-		this.tabDonnees = new Object[listAffectations.size()][6];
+		//System.out.println(mod);
+		List<Affectations> listAffectations = Controleur.getControleur().getAffectations(mod);
 
+		System.out.println();
+		System.out.println(listAffectations);
+
+		prenomIntervenant = new ArrayList<String>();
+		moduleIntervenant = new ArrayList<Module>();
+		tabDonnees = new Object[listAffectations.size()][6];
+		//System.out.println(listAffectations.size());
 		for (int lig = 0; lig < listAffectations.size(); lig++) {
+			System.out.println("test");
 			Affectations affectations = listAffectations.get(lig);
-			System.out.println("Affectation : " + affectations.getModule().getCode());
-			System.out.println(mod);
-			System.out.println("Module : " + mod.getCode() );
-			if (affectations.getModule().getCode().equals(mod.getCode())) {
-				List<Integer> listInfosHeure = affectations.getModule().getHeures().get(affectations.getCategorieHeures());
-				this.tabDonnees[lig][0] = affectations.getIntervenant().getNomIntervenant();
-				this.tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
-				this.tabDonnees[lig][2] = affectations.getNbSemaine();
-				this.tabDonnees[lig][3] = affectations.getNbGroupe() + " | "
-						+ affectations.getNbHeure();
-				this.tabDonnees[lig][4] = affectations.getNbSemaine()
-						* affectations.getNbGroupe()
-						* listInfosHeure.get(2)
-						* affectations.getCategorieHeures().getcoefCatHeur();
-				this.tabDonnees[lig][5] = affectations.getCommentaire();
-				prenomIntervenant.add(affectations.getIntervenant().getPrenomIntervenant());
-				moduleIntervenant.add(affectations.getModule());
-			}
-
+			List<Integer> listInfosHeure = affectations.getModule().getHeures().get(affectations.getCategorieHeures());
+			tabDonnees[lig][0] = affectations.getIntervenant().getNomIntervenant();
+			tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
+			tabDonnees[lig][2] = affectations.getNbSemaine();
+			tabDonnees[lig][3] = affectations.getNbGroupe() + " | "
+					+ affectations.getNbHeure();
+			tabDonnees[lig][4] = affectations.getNbSemaine()
+					* affectations.getNbGroupe()
+					* listInfosHeure.get(2)
+					* affectations.getCategorieHeures().getcoefCatHeur();
+			tabDonnees[lig][5] = affectations.getCommentaire();
+			prenomIntervenant.add(affectations.getIntervenant().getPrenomIntervenant());
+			moduleIntervenant.add(affectations.getModule());
 		}
 		this.tabEntetes = new String[] { "Intervenants", "Type", "Nb sem", "nb Gp/nb h", "tot eqtd", "commentaire" };
 	}

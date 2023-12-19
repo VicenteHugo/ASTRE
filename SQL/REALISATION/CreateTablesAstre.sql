@@ -23,13 +23,13 @@
 
 
 -- Suppressions des tables
-DROP TABLE IF EXISTS AffectationETAT;
-DROP TABLE IF EXISTS ModulesCatHeuresETAT;
-DROP TABLE IF EXISTS ModulesETAT;
-DROP TABLE IF EXISTS IntervenantsETAT;
-DROP TABLE IF EXISTS SemestresETAT;
-DROP TABLE IF EXISTS CategorieHeuresETAT;
-DROP TABLE IF EXISTS CategorieIntervenantsETAT;
+--DROP TABLE IF EXISTS AffectationETAT;
+--DROP TABLE IF EXISTS ModulesCatHeuresETAT;
+--DROP TABLE IF EXISTS ModulesETAT;
+--DROP TABLE IF EXISTS IntervenantsETAT;
+--DROP TABLE IF EXISTS SemestresETAT;
+--DROP TABLE IF EXISTS CategorieHeuresETAT;
+--DROP TABLE IF EXISTS CategorieIntervenantsETAT;
 
 -- Création des tables ayant un niveau de liaison 1
 CREATE TABLE IF NOT EXISTS CategorieIntervenantsETAT

@@ -59,6 +59,8 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		} 
 
 		this.txtCommentaire       = new JTextField(15);
+		this.txtNbSemaine = new JTextFieldNumber(5);
+		this.txtNbGroupe = new JTextFieldNumber(5);
 
 		this.btnAnnuler = new JButton("Annuler");
 		this.btnValider = new JButton("Valider");

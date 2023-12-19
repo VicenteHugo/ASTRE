@@ -50,8 +50,8 @@ public class PanelPrevi extends JPanel {
     public PanelPrevi(FrameAccueil frame) {
 
         this.frame = frame;
-        frame.setTitle("Astre - Previsionnel (Accueil)");
-		frame.setMinimumSize(new Dimension(600, 400));
+        this.frame.setTitle("Astre - Previsionnel (Accueil)");
+		this.frame.setMinimumSize(new Dimension(600, 400));
         this.setLayout(new BorderLayout());
 
         ongletSemestres = new JTabbedPane(JTabbedPane.TOP);
@@ -102,7 +102,7 @@ public class PanelPrevi extends JPanel {
     }
 
     private void creation(int indice) {
-        System.out.println(indice);
+        System.out.println("cjfbutfbytfv" + indice);
         if(indice < 0) indice = 0;
 
 
@@ -134,9 +134,8 @@ public class PanelPrevi extends JPanel {
         }
 
         if (m instanceof PPP)
-            System.out.println("Page pas fait pout ppp");
+            this.frame.changePanel(new PanelPPP(this.frame, m));
         if (m instanceof Ressource)
-        System.out.println("Je suis une ressource");
             this.frame.changePanel(new PanelRessources(this.frame,m));
         if (m instanceof Sae)
             this.frame.changePanel(new PanelSAE(this.frame));

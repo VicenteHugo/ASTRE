@@ -382,6 +382,9 @@ public class Controleur {
 		return Etat.suppEtat(etat);
 	}
 
+	public List<Affectations> getAffectations(Module mod){
+		return Etat.getAffectations(mod);
+	}
 	/*-------------------------------------------------------------*/
 	/* MAIN */
 	/*-------------------------------------------------------------*/
