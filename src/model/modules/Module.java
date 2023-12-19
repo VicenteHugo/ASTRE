@@ -51,7 +51,7 @@ public abstract class Module implements Comparable<Module> {
 		this.libLong = libLong;
 		this.libCourt = libCourt;
 		this.heurePonctuel = heurePonctuel;
-		this.valide = false;
+		this.valide = valid;
 		this.listCategorieHeure = new ArrayList<CategorieHeures>();
 		this.heures = new HashMap<>();
 		initHashMap();

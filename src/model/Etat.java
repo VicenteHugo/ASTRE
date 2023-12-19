@@ -230,7 +230,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Modules"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM Modules"+ Etat.nom + " ORDER BY codeMod");
 
 			while (res.next()) {
 				Module m = null;
