@@ -17,15 +17,16 @@ import javax.swing.JOptionPane;
 
 
 import controleur.Controleur;
+import view.JTextFieldNumber;
 
 
 public class PanelAddCatInt extends JPanel {
 	
 	private JTextField txtCode;
 	private JTextField txtLib;
-	private JTextField txtCoef;
-	private JTextField txtHMax;
-	private JTextField txtHMin;
+	private JTextFieldNumber txtCoef;
+	private JTextFieldNumber txtHMax;
+	private JTextFieldNumber txtHMin;
 
 	private JButton btnValider;
 	private JButton btnAnnuler;
@@ -44,9 +45,10 @@ public class PanelAddCatInt extends JPanel {
 		//Création
 		this.txtCode = new JTextField(10);
 		this.txtLib  = new JTextField(10);
-		this.txtCoef = new JTextField(3);
-		this.txtHMax = new JTextField(5);
-		this.txtHMin = new JTextField(5);
+		this.txtCoef = new JTextFieldNumber(3);
+		this.txtCoef.setFloat(true);
+		this.txtHMax = new JTextFieldNumber(5);
+		this.txtHMin = new JTextFieldNumber(5);
 
 		this.btnAnnuler = new JButton("Annuler");
 		this.btnValider = new JButton("Valider");

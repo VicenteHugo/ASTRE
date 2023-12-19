@@ -106,10 +106,10 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
 
 		//                                            PN                                             SEMAINE                                      NB HEURE
-		List<Integer> lstCM = new ArrayList<>(List.of(0,0,0));
-		List<Integer> lstTP = new ArrayList<>(List.of(0,0,0));
-		List<Integer> lstTD = new ArrayList<>(List.of(0,0,0));
-		List<Integer> lstHP = new ArrayList<>(List.of(0,0,0));
+		List<Integer> lstCM = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstTP = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstTD = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstHP = new ArrayList<Integer>(List.of(0,0,0));
 
 
 		map.put(Controleur.getControleur().getCategorieHeure("CM"), lstCM);
@@ -657,12 +657,6 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		this.estNouveau = false;
 
 	}
-
-
-
-
-
-
 
 
 	/**
