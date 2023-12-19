@@ -36,15 +36,15 @@ CREATE TABLE IF NOT EXISTS CategorieIntervenantsETAT
 (
     codeCatInt     VARCHAR(255) PRIMARY KEY, 
     libCatInt      VARCHAR(255), 
-    coefCatInt     FLOAT DEFAULT 1 CHECK (coefCatInt > 0) ,
-    heureMinCatInt INTEGER NOT NULL CHECK (heureMinCatInt > 0),
+    coefCatInt     FLOAT DEFAULT 1 CHECK (coefCatInt >= 0) ,
+    heureMinCatInt INTEGER NOT NULL CHECK (heureMinCatInt >= 0),
     heureMaxCatInt INTEGER NOT NULL CHECK (heureMaxCatInt >= heureMinCatInt)
 );
 
 CREATE TABLE IF NOT EXISTS CategorieHeuresETAT
 (
     libCatHeur  VARCHAR(255) PRIMARY KEY, 
-    coefCatHeur FLOAT DEFAULT 1.0 CHECK (coefCatHeur > 0)
+    coefCatHeur FLOAT DEFAULT 1.0 CHECK (coefCatHeur >= 0)
 );
 
 -- Création de la table Semestres
@@ -73,9 +73,9 @@ CREATE TABLE IF NOT EXISTS IntervenantsETAT
 (
     nomInt      VARCHAR(255) NOT NULL,
     prenomInt   VARCHAR(255) NOT NULL,
-    heureMinInt INTEGER NOT NULL CHECK (heureMinInt > 0),
+    heureMinInt INTEGER NOT NULL CHECK (heureMinInt >= 0),
     heureMaxInt INTEGER NOT NULL CHECK (heureMaxInt >= heureMinInt),
-    coefInt     FLOAT DEFAULT 1 CHECK  (coefInt > 0),
+    coefInt     FLOAT DEFAULT 1 CHECK  (coefInt >= 0),
     categInt    VARCHAR(255) REFERENCES CategorieIntervenantsETAT(codeCatInt),
 	PRIMARY KEY (nomInt, prenomInt)
 );
@@ -99,8 +99,8 @@ CREATE TABLE IF NOT EXISTS AffectationETAT
 	prenomInt   VARCHAR(255) NOT NULL,
 	codeMod     VARCHAR(255) NOT NULL REFERENCES ModulesETAT(codeMod),
 	libCatHeur  VARCHAR(255) NOT NULL REFERENCES CategorieHeuresETAT(libCatHeur),
-	nbSem       INTEGER NOT NULL CHECK (nbSem > 0),
-	nbGroupe    INTEGER NOT NULL CHECK (nbGroupe > 0),
+	nbSem       INTEGER NOT NULL CHECK (nbSem >= 0),
+	nbGroupe    INTEGER NOT NULL CHECK (nbGroupe >= 0),
 	commentaire VARCHAR(255),
 	FOREIGN KEY(nomInt, prenomInt) REFERENCES IntervenantsETAT(nomInt, prenomInt)
 );
