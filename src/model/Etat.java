@@ -291,7 +291,7 @@ public class Etat {
 
 			while (res.next()) {
 
-				Intervenants inter = Etat.getIntervenant(res.getString("intNom"), res.getString("intPrenom"));
+				Intervenants inter = Etat.getIntervenant(res.getString("NomInt"), res.getString("prenomInt"));
 				Module mode = Etat.getModule(res.getString("codeMod"));
 				CategorieHeures cat = Etat.getCatHeure(res.getString("libCatHeur"));
 				int nbs = res.getInt("nbSem");
