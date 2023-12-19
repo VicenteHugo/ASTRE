@@ -92,6 +92,10 @@ public class Controleur {
 		return retour;
 	}
 
+	public Module getModule(String code){
+		return Etat.getModule(code);
+	}
+
 	public ArrayList<Semestres> getSemestres() {
 		return Etat.getSemestres();
 	}

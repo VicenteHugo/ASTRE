@@ -30,7 +30,7 @@ public class GrilleRessources extends AbstractTableModel {
 				this.tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
 				this.tabDonnees[lig][2] = affectations.getNbSemaine();
 				this.tabDonnees[lig][3] = affectations.getNbGroupe() + " | "
-						+ listInfosHeure.get(3);
+						+ affectations.getNbHeure();
 				this.tabDonnees[lig][4] = affectations.getNbSemaine()
 						* affectations.getNbGroupe()
 						* listInfosHeure.get(2)
