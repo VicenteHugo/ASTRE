@@ -43,10 +43,6 @@ public class PanelPrevi extends JPanel {
 
     private JButton btnAccueil;
 
-    private Map<PanelSemestre, Integer> mapInfo = new HashMap<>();
-
-    private Object put;
-
     public PanelPrevi(FrameAccueil frame) {
 
         this.frame = frame;
