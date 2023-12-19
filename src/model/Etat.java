@@ -12,6 +12,7 @@ import model.modules.Stage;
 import model.modules.PPP;
 import java.util.Scanner;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 
 public class Etat {
 
@@ -652,7 +653,6 @@ public class Etat {
 					commande += " " + l;
 					if (l.endsWith(";")) {
 						commande = commande.replaceAll("ETAT", Etat.nom);
-						System.out.println(commande);
 						statement.execute(commande);
 						commande = "";
 					}
@@ -672,5 +672,174 @@ public class Etat {
 	/*               GENERATION FICHIER                */
 	/*-------------------------------------------------*/
 
-	public static void genererCSV() { Etat.lireFichierSQL(Etat.FIC_CSV); }
+	// JAI PAS ACCES A LA COMMANDE DONC MODE BRUTAL
+	public static void genererCSV() { 
+
+		String sqlInt = "SELECT \n" + //
+				"i.nomInt      AS \"Nom\",\n" + //
+				"i.prenomInt   AS \"Prenom\",\n" + //
+				"ci.libCatInt  AS \"categorie\",\n" + //
+				"ci.coefCatInt AS \"coefficient\",\n" + //
+				"i.heureMinInt AS \"service dû\",\n" + //
+				"i.heureMaxInt AS \"heure maximum autorisés\",\n" + //
+				"SUM(CASE WHEN s.numSem = 1 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END)  AS \"S1 (théo)\",\n" + //
+				"SUM(CASE WHEN s.numSem = 1 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur ELSE 0 END)                                                                                                             AS \"S1 (réel)\",\n" + //
+				"SUM(CASE WHEN s.numSem = 3 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END)  AS \"S3 (théo)\",\n" + //
+				"SUM(CASE WHEN s.numSem = 3 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur ELSE 0 END)                                                                                                             AS \"S3 (réel)\",\n" + //
+				"SUM(CASE WHEN s.numSem = 5 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END)  AS \"S5 (théo)\",\n" + //
+				"SUM(CASE WHEN s.numSem = 5 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur ELSE 0 END)                                                                                                             AS \"S5 (réel)\",\n" + //
+				"SUM(CASE WHEN s.numSem % 2 = 1 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END)  AS \"S Impaires (théo)\",\n" + //
+				"SUM(CASE WHEN s.numSem % 2 = 1 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur ELSE 0 END)                                                                                                             AS \"S Impaires (réel)\",\n" + //
+				"SUM(CASE WHEN s.numSem = 2 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END)  AS \"S2 (théo)\",\n" + //
+				"SUM(CASE WHEN s.numSem = 2 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur ELSE 0 END)                                                                                                             AS \"S2 (réel)\",\n" + //
+				"SUM(CASE WHEN s.numSem = 4 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END)  AS \"S4 (théo)\",\n" + //
+				"SUM(CASE WHEN s.numSem = 4 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur ELSE 0 END)                                                                                                             AS \"S4 (réel)\",\n" + //
+				"SUM(CASE WHEN s.numSem = 6 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END)  AS \"S6 (théo)\",\n" + //
+				"SUM(CASE WHEN s.numSem = 6 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur ELSE 0 END)                                                                                                             AS \"S6 (réel)\",\n" + //
+				"SUM(CASE WHEN s.numSem % 2 = 0 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END) AS \"S Paires (théo)\",\n" + //
+				"SUM(CASE WHEN s.numSem % 2 = 0 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur ELSE 0 END)                                                                                                            AS \"S Paires (réel)\",\n" + //
+				"SUM(CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END) AS \"Semestres (théo)\",\n" + //
+				"SUM(mc.nbHeureSem * ci.coefCatInt * coefCatHeur)                                                                                                     AS \"Semestres (réel)\"\n" + //
+				"\n" + //
+				"FROM IntervenantsETAT i JOIN CategorieIntervenantsETAT ci ON i.categInt = ci.codeCatInt\n" + //
+				"                         JOIN AffectationETAT a ON i.nomInt = a.nomInt AND i.prenomInt = a.prenomInt\n" + //
+				"                         JOIN ModulesETAT m ON a.codeMod = m.codeMod\n" + //
+				"                         JOIN ModulesCatHeuresETAT mc ON m.codeMod = mc.codeMod\n" + //
+				"                         JOIN SemestresETAT s ON m.semMod = s.numSem\n" + //
+				"                         JOIN CategorieHeuresETAT ch ON mc.libCatHeur = ch.libCatHeur\n" + //
+				"GROUP BY\n" + //
+				"    i.nomInt, i.prenomInt, ci.libCatInt, ci.coefCatInt, i.heureMinInt, i.heureMaxInt";
+
+		
+
+		String sqlSem = "SELECT "
+                + "SUM(CASE WHEN s.numSem = 1 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END) AS \"S1 (théo)\", "
+                + "SUM(CASE WHEN s.numSem = 1 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur END) AS \"S1 (réel)\", "
+                + "SUM(CASE WHEN s.numSem = 3 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END) AS \"S3 (théo)\", "
+                + "SUM(CASE WHEN s.numSem = 3 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur END) AS \"S3 (réel)\", "
+                + "SUM(CASE WHEN s.numSem = 5 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END) AS \"S5 (théo)\", "
+                + "SUM(CASE WHEN s.numSem = 5 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur END) AS \"S5 (réel)\", "
+                + "SUM(CASE WHEN s.numSem % 2 = 1 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END) AS \"S Impaires (théo)\", "
+                + "SUM(CASE WHEN s.numSem % 2 = 1 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur END) AS \"S Impaires (réel)\", "
+                + "SUM(CASE WHEN s.numSem = 2 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END) AS \"S2 (théo)\", "
+                + "SUM(CASE WHEN s.numSem = 2 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur END) AS \"S2 (réel)\", "
+                + "SUM(CASE WHEN s.numSem = 4 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END) AS \"S4 (théo)\", "
+                + "SUM(CASE WHEN s.numSem = 4 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur END) AS \"S4 (réel)\", "
+                + "SUM(CASE WHEN s.numSem = 6 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END) AS \"S6 (théo)\", "
+                + "SUM(CASE WHEN s.numSem = 6 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur END) AS \"S6 (réel)\", "
+                + "SUM(CASE WHEN s.numSem % 2 = 0 THEN CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END ELSE 0 END) AS \"S Paires (théo)\", "
+                + "SUM(CASE WHEN s.numSem % 2 = 0 THEN mc.nbHeureSem * ci.coefCatInt * coefCatHeur END) AS \"S Paires (réel)\", "
+                + "SUM(CASE WHEN ci.libCatInt = 'TP' THEN mc.nbHeureSem * i.coefInt * ci.coefCatInt * coefCatHeur ELSE mc.nbHeureSem * ci.coefCatInt * coefCatHeur END) AS \"Semestres (théo)\", "
+                + "SUM(mc.nbHeureSem * ci.coefCatInt * coefCatHeur) AS \"Semestres (réel)\" "
+                + "FROM IntervenantsEtat1 i "
+                + "JOIN CategorieIntervenantsEtat1 ci ON i.categInt = ci.codeCatInt "
+                + "JOIN AffectationEtat1 a ON i.nomInt = a.nomInt AND i.prenomInt = a.prenomInt "
+                + "JOIN ModulesEtat1 m ON a.codeMod = m.codeMod "
+                + "JOIN ModulesCatHeuresEtat1 mc ON m.codeMod = mc.codeMod "
+                + "JOIN SemestresEtat1 s ON m.semMod = s.numSem "
+                + "JOIN CategorieHeuresEtat1 ch ON mc.libCatHeur = ch.libCatHeur;";
+
+
+		sqlInt = sqlInt.replaceAll("ETAT", Etat.nom);
+		sqlSem = sqlSem.replaceAll("ETAT", Etat.nom);
+
+
+		try {
+             PreparedStatement preparedStatement = Etat.connec.prepareStatement(sqlInt);
+             ResultSet resultSet = preparedStatement.executeQuery();
+             try (FileWriter csvWriter = new FileWriter("data_" + Etat.nom + ".csv")) {
+
+				// Write CSV header
+				csvWriter.append("Intervenants,,Categorie,,,,S1,,S3,,S5,,SSTot,,S2,,S4,,S6,,SSTot,,Totaux,,\n");
+				csvWriter.append("nom,prenomn, categorie, coef,hmin, hmax, théo, réel, théo, réel, théo, réel, théo, réel, théo, réel, théo, réel, théo, réel, théo, réel, théo, réel\n");
+
+				// Write data to CSV
+				while (resultSet.next()) {
+					//Intervenants
+					csvWriter.append(resultSet.getString("Nom")).append(",");
+					csvWriter.append(resultSet.getString("Prenom")).append(",");
+
+					//Categorie
+					csvWriter.append(resultSet.getString("categorie")).append(",");
+					csvWriter.append(resultSet.getString("coefficient")).append(",");
+					csvWriter.append(resultSet.getString("service dû")).append(",");
+					csvWriter.append(resultSet.getString("heure maximum autorisés")).append(",");
+
+					//S1
+					csvWriter.append(resultSet.getString("S1 (théo)")).append(",");
+					csvWriter.append(resultSet.getString("S1 (réel)")).append(",");
+					//S3
+					csvWriter.append(resultSet.getString("S3 (théo)")).append(",");
+					csvWriter.append(resultSet.getString("S3 (réel)")).append(",");
+					//S5
+					csvWriter.append(resultSet.getString("S5 (théo)")).append(",");
+					csvWriter.append(resultSet.getString("S5 (réel)")).append(",");
+					//ST Imp
+					csvWriter.append(resultSet.getString("S Impaires (théo)")).append(",");
+					csvWriter.append(resultSet.getString("S Impaires (réel)")).append(",");
+
+					//S2
+					csvWriter.append(resultSet.getString("S1 (théo)")).append(",");
+					csvWriter.append(resultSet.getString("S1 (réel)")).append(",");
+					//S4
+					csvWriter.append(resultSet.getString("S3 (théo)")).append(",");
+					csvWriter.append(resultSet.getString("S3 (réel)")).append(",");
+					//S6
+					csvWriter.append(resultSet.getString("S5 (théo)")).append(",");
+					csvWriter.append(resultSet.getString("S5 (réel)")).append(",");
+					//ST Pai
+					csvWriter.append(resultSet.getString("S Paires (théo)")).append(",");
+					csvWriter.append(resultSet.getString("S Paires (réel)")).append(",");
+
+					//ST Pai
+					csvWriter.append(resultSet.getString("Semestres (théo)")).append(",");
+					csvWriter.append(resultSet.getString("Semestres (réel)")).append("\n");
+				}
+
+				resultSet.close();
+
+				preparedStatement = Etat.connec.prepareStatement(sqlSem);
+				resultSet = preparedStatement.executeQuery();
+				resultSet.next();
+
+				//Intervenants
+				csvWriter.append("Totaux,,,,,,");
+
+				//S1
+				csvWriter.append(resultSet.getString("S1 (théo)")).append(",");
+				csvWriter.append(resultSet.getString("S1 (réel)")).append(",");
+				//S3
+				csvWriter.append(resultSet.getString("S3 (théo)")).append(",");
+				csvWriter.append(resultSet.getString("S3 (réel)")).append(",");
+				//S5
+				csvWriter.append(resultSet.getString("S5 (théo)")).append(",");
+				csvWriter.append(resultSet.getString("S5 (réel)")).append(",");
+				//ST Imp
+				csvWriter.append(resultSet.getString("S Impaires (théo)")).append(",");
+				csvWriter.append(resultSet.getString("S Impaires (réel)")).append(",");
+
+				//S2
+				csvWriter.append(resultSet.getString("S1 (théo)")).append(",");
+				csvWriter.append(resultSet.getString("S1 (réel)")).append(",");
+				//S4
+				csvWriter.append(resultSet.getString("S3 (théo)")).append(",");
+				csvWriter.append(resultSet.getString("S3 (réel)")).append(",");
+				//S6
+				csvWriter.append(resultSet.getString("S5 (théo)")).append(",");
+				csvWriter.append(resultSet.getString("S5 (réel)")).append(",");
+				//ST Pai
+				csvWriter.append(resultSet.getString("S Paires (théo)")).append(",");
+				csvWriter.append(resultSet.getString("S Paires (réel)")).append(",");
+
+				//ST Pai
+				csvWriter.append(resultSet.getString("Semestres (théo)")).append(",");
+				csvWriter.append(resultSet.getString("Semestres (réel)")).append("\n");
+
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		
+	}
 }
