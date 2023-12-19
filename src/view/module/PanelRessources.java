@@ -762,8 +762,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		int       hp  = Integer.parseInt(this.txtHPTot.getText());
 
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
-
-		System.out.println(val);
+		
 
 		//                                            PN                                             SEMAINE                                      NB HEURE
 		List<Integer> lstCM = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
