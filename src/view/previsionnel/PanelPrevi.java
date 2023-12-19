@@ -176,8 +176,7 @@ public class PanelPrevi extends JPanel {
                 if (this.ongletSemestres.getSelectedIndex() == i) {
                     Controleur.getControleur().supprimerModule(m);
                     if (indice >= 0) {
-                        // Supprimer la ligne sélectionnée du modèle de la table
-                        ((GrilleSemestre) table.getModel()).removeRow(indice);
+                       
                     }
                 }
             }
