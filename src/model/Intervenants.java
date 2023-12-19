@@ -27,7 +27,7 @@ public class Intervenants {
 	/** Total des heures dans les semestres impaires. */
 	private int totauxSemestreImpaires;
 
-	/** Total des heures dans les semestres parires. */
+	/** Total des heures dans les semestres paires. */
 	private int totauxSemestrePaire;
 
 	/** Coefficient attitré à l'intervenant en fonction de sa catégorie. */

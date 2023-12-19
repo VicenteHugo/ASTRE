@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import view.JLabelModule;
+import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 
@@ -37,48 +38,48 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	private JCheckBox  cbValide;
 
     // Semestres
-    private JTextField txtSem;
-    private JTextField txtNbEtd;
-    private JTextField txtNbGpTd;
-	private JTextField txtNbGpTp;
+    private JTextField       txtSem;
+    private JTextFieldNumber txtNbEtd;
+    private JTextFieldNumber txtNbGpTd;
+	private JTextFieldNumber txtNbGpTp;
 	
 	//Heures PN
-	private JTextField txtHeureCMPN;
-	private JTextField txtHeureTDPN;
-	private JTextField txtHeureTPPN;
-	private JTextField txtHeureSPN ;
+	private JTextFieldNumber txtHeureCMPN;
+	private JTextFieldNumber txtHeureTDPN;
+	private JTextFieldNumber txtHeureTPPN;
+	private JTextFieldNumber txtHeureSPN ;
 
-	private JTextField txtHeureEtdCMPN;
-	private JTextField txtHeureEtdTDPN;
-	private JTextField txtHeureEtdTPPN;
-	private JTextField txtHeureEtdSPN ;
+	private JTextFieldNumber txtHeureEtdCMPN;
+	private JTextFieldNumber txtHeureEtdTDPN;
+	private JTextFieldNumber txtHeureEtdTPPN;
+	private JTextFieldNumber txtHeureEtdSPN ;
 
 
 	//Repartition
-	private JTextField txtCMNbSem  ;
-	private JTextField txtCMNbHeure;
-	private JTextField txtTDNbSem  ;
-	private JTextField txtTDNbHeure;
-	private JTextField txtTPNbSem  ;
-	private JTextField txtTPNbHeure;
+	private JTextFieldNumber txtCMNbSem  ;
+	private JTextFieldNumber txtCMNbHeure;
+	private JTextFieldNumber txtTDNbSem  ;
+	private JTextFieldNumber txtTDNbHeure;
+	private JTextFieldNumber txtTPNbSem  ;
+	private JTextFieldNumber txtTPNbHeure;
 
-	private JTextField txtCMTot;
-	private JTextField txtCMTotEtd;
-	private JTextField txtCMTotEtdAffect;
-	private JTextField txtTDTot;
-	private JTextField txtTDTotEtd;
-	private JTextField txtTDTotEtdAffect;
-	private JTextField txtTPTot;
-	private JTextField txtTPTotEtd;  
-	private JTextField txtTPTotEtdAffect;
+	private JTextFieldNumber txtCMTot;
+	private JTextFieldNumber txtCMTotEtd;
+	private JTextFieldNumber txtCMTotEtdAffect;
+	private JTextFieldNumber txtTDTot;
+	private JTextFieldNumber txtTDTotEtd;
+	private JTextFieldNumber txtTDTotEtdAffect;
+	private JTextFieldNumber txtTPTot;
+	private JTextFieldNumber txtTPTotEtd;  
+	private JTextFieldNumber txtTPTotEtdAffect;
 
-	private JTextField txtHPTot;
-	private JTextField txtHPTotEtd;
-	private JTextField txtHPTotEtdAffect;
+	private JTextFieldNumber txtHPTot;
+	private JTextFieldNumber txtHPTotEtd;
+	private JTextFieldNumber txtHPTotEtdAffect;
 
-	private JTextField txtTot;
-	private JTextField txtTotEtd;
-	private JTextField txtTotEtdAffect;
+	private JTextFieldNumber txtTot;
+	private JTextFieldNumber txtTotEtd;
+	private JTextFieldNumber txtTotEtdAffect;
 
 	//Affectation 
 	private JTable tblGrilleDonnees;
@@ -132,51 +133,51 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		//Informations Semestres
         this.txtTypeMod = new JTextField("Ressource", 8);
-        this.txtSem     = new JTextField("S1", 5);
-        this.txtNbEtd   = new JTextField("80", 3);
-        this.txtNbGpTd  = new JTextField("80", 3);
-        this.txtNbGpTp  = new JTextField("80", 3);
+        this.txtSem     = new JTextField("S" + semestres.getNumSem(), 5);
+        this.txtNbEtd   = new JTextFieldNumber("80", 3);
+        this.txtNbGpTd  = new JTextFieldNumber("80", 3);
+        this.txtNbGpTp  = new JTextFieldNumber("80", 3);
 
 
 
 		//Informations heure PN
-        this.txtHeureCMPN = new JTextField( "0", 3);
-        this.txtHeureTDPN = new JTextField( "0", 3);
-        this.txtHeureTPPN = new JTextField( "0", 3);
+        this.txtHeureCMPN = new JTextFieldNumber( "0", 3);
+        this.txtHeureTDPN = new JTextFieldNumber( "0", 3);
+        this.txtHeureTPPN = new JTextFieldNumber( "0", 3);
 
 		//Informations calcul heure PN
-        this.txtHeureSPN     = new JTextField("0", 3);
-        this.txtHeureEtdCMPN = new JTextField("0", 3);
-        this.txtHeureEtdTDPN = new JTextField("0", 3);
-        this.txtHeureEtdTPPN = new JTextField("0", 3);
-        this.txtHeureEtdSPN  = new JTextField("0", 3);
+        this.txtHeureSPN     = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdCMPN = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTDPN = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTPPN = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdSPN  = new JTextFieldNumber("0", 3);
 
 		//Information répartition
-		this.txtCMNbSem   = new JTextField("0",3);
-		this.txtCMNbHeure = new JTextField("0",3);
-		this.txtTDNbSem   = new JTextField("0",3);
-		this.txtTDNbHeure = new JTextField("0",3);
-		this.txtTPNbSem   = new JTextField("0",3);
-		this.txtTPNbHeure = new JTextField("0",3);
+		this.txtCMNbSem   = new JTextFieldNumber("0",3);
+		this.txtCMNbHeure = new JTextFieldNumber("0",3);
+		this.txtTDNbSem   = new JTextFieldNumber("0",3);
+		this.txtTDNbHeure = new JTextFieldNumber("0",3);
+		this.txtTPNbSem   = new JTextFieldNumber("0",3);
+		this.txtTPNbHeure = new JTextFieldNumber("0",3);
 
 
-		this.txtCMTot          = new JTextField("0", 3); 
-		this.txtTDTot          = new JTextField("0", 3);
-		this.txtTPTot          = new JTextField("0", 3);
-		this.txtCMTotEtd       = new JTextField("0", 3); 
-		this.txtTDTotEtd       = new JTextField("0", 3);
-		this.txtTPTotEtd       = new JTextField("0", 3);
-		this.txtCMTotEtdAffect = new JTextField("0", 3); 
-		this.txtTDTotEtdAffect = new JTextField("0", 3);
-		this.txtTPTotEtdAffect = new JTextField("0", 3);
+		this.txtCMTot          = new JTextFieldNumber("0", 3); 
+		this.txtTDTot          = new JTextFieldNumber("0", 3);
+		this.txtTPTot          = new JTextFieldNumber("0", 3);
+		this.txtCMTotEtd       = new JTextFieldNumber("0", 3); 
+		this.txtTDTotEtd       = new JTextFieldNumber("0", 3);
+		this.txtTPTotEtd       = new JTextFieldNumber("0", 3);
+		this.txtCMTotEtdAffect = new JTextFieldNumber("0", 3); 
+		this.txtTDTotEtdAffect = new JTextFieldNumber("0", 3);
+		this.txtTPTotEtdAffect = new JTextFieldNumber("0", 3);
 
-		this.txtHPTot          = new JTextField("0",3);
-		this.txtHPTotEtd       = new JTextField("0",3);
-		this.txtHPTotEtdAffect = new JTextField("0",3);
+		this.txtHPTot          = new JTextFieldNumber("0",3);
+		this.txtHPTotEtd       = new JTextFieldNumber("0",3);
+		this.txtHPTotEtdAffect = new JTextFieldNumber("0",3);
 
-		this.txtTot          = new JTextField("0",3);
-		this.txtTotEtd       = new JTextField("0",3);
-		this.txtTotEtdAffect = new JTextField("0",3);
+		this.txtTot          = new JTextFieldNumber("0",3);
+		this.txtTotEtd       = new JTextFieldNumber("0",3);
+		this.txtTotEtdAffect = new JTextFieldNumber("0",3);
 
 		this.btnAjouter   = new JButton("Ajouter");
 		this.btnSupprimer = new JButton("Supprimer");
@@ -730,16 +731,11 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 	public void actionPerformed(ActionEvent e) {
-		
-		this.focusLost(null);
 
-		if (e.getSource() == this.btnAnnuler  ) this.quitter();
-
-		//Le reste on veut de bonne info
-		if (this.infoInvalide) return;
+		if (e.getSource() == this.btnAnnuler    ) this.quitter();
+		if (e.getSource() == this.btnSauvegarder) this.sauvegarder();
 
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
-		if (e.getSource() == this.btnSauvegarder) this.sauvegarder();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
 
 
@@ -844,95 +840,80 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 	public void focusLost(FocusEvent e) {
 
-		try {
+		//Récupération des données
+		int cmPN  = Integer.parseInt(this.txtHeureCMPN.getText());
+		int cmSem = Integer.parseInt(this.txtCMNbSem  .getText());
+		int cmHeu = Integer.parseInt(this.txtCMNbHeure.getText());
+		
+		int tdPN  = Integer.parseInt(this.txtHeureTDPN.getText());
+		int tdSem = Integer.parseInt(this.txtTDNbSem  .getText());
+		int tdHeu = Integer.parseInt(this.txtTDNbHeure.getText());
+		
+		int tpPN  = Integer.parseInt(this.txtHeureTPPN.getText());
+		int tpSem = Integer.parseInt(this.txtTPNbSem  .getText());
+		int tpHeu = Integer.parseInt(this.txtTPNbHeure.getText());
 
-			//Récupération des données
-			int cmPN  = Integer.parseInt(this.txtHeureCMPN.getText());
-			int cmSem = Integer.parseInt(this.txtCMNbSem  .getText());
-			int cmHeu = Integer.parseInt(this.txtCMNbHeure.getText());
-			
-			int tdPN  = Integer.parseInt(this.txtHeureTDPN.getText());
-			int tdSem = Integer.parseInt(this.txtTDNbSem  .getText());
-			int tdHeu = Integer.parseInt(this.txtTDNbHeure.getText());
-			
-			int tpPN  = Integer.parseInt(this.txtHeureTPPN.getText());
-			int tpSem = Integer.parseInt(this.txtTPNbSem  .getText());
-			int tpHeu = Integer.parseInt(this.txtTPNbHeure.getText());
+		int hpHeu = Integer.parseInt(this.txtHPTot.getText());
 
-			int hpHeu = Integer.parseInt(this.txtHPTot.getText());
-
-			float coefCM = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
-			float coefTD = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
-			float coefTP = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
-			float coefHP = Controleur.getControleur().getCategorieHeure("HP").getcoefCatHeur();
+		float coefCM = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
+		float coefTD = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
+		float coefTP = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
+		float coefHP = Controleur.getControleur().getCategorieHeure("HP").getcoefCatHeur();
 
 
 
-			/* CALCUL PN */
+		/* CALCUL PN */
 
-			// eqtd
-			int cmPNetd = (int) (cmPN * coefCM);
-			int tdPNetd = (int) (tdPN * coefTD);
-			int tpPNetd = (int) (tpPN * coefTP);
-			this.txtHeureEtdCMPN.setText( cmPNetd + "");
-			this.txtHeureEtdTDPN.setText( tdPNetd + "");
-			this.txtHeureEtdTPPN.setText( tpPNetd + "");
+		// eqtd
+		int cmPNetd = (int) (cmPN * coefCM);
+		int tdPNetd = (int) (tdPN * coefTD);
+		int tpPNetd = (int) (tpPN * coefTP);
+		this.txtHeureEtdCMPN.setText( cmPNetd + "");
+		this.txtHeureEtdTDPN.setText( tdPNetd + "");
+		this.txtHeureEtdTPPN.setText( tpPNetd + "");
 
-			//somme
-			this.txtHeureSPN   .setText((cmPN + tdPN + tpPN) + "");
-			this.txtHeureEtdSPN.setText((cmPNetd + tdPNetd + tpPNetd) + "");
-
-
-
-			/* CALCUL REPARTITION */
-
-			// semaine * heure
-			int cmHTot = (cmHeu * cmSem);
-			int tdHTot = (tpHeu * tpSem);
-			int tpHTot = (tdHeu * tdSem);
-
-			this.txtCMTot.setText( cmHTot + "");
-			this.txtTPTot.setText( tdHTot + "");
-			this.txtTDTot.setText( tpHTot + "");
-
-			this.txtTot.setText((cmHTot + tdHTot + tpHTot + hpHeu) + "");
-
-			//EQTD
-			int cmHTotEtd = (int) ((cmHeu * cmSem) * coefCM);
-			int tdHTotEtd = (int) ((tpHeu * tpSem) * coefTD);
-			int tpHTotEtd = (int) ((tdHeu * tdSem) * coefTP);
-			int hpHTotEtd = (int) ( hpHeu          * coefHP);
-
-			this.txtCMTotEtd.setText( cmHTotEtd + "");
-			this.txtTPTotEtd.setText( tdHTotEtd + "");
-			this.txtTDTotEtd.setText( tpHTotEtd + "");
-			this.txtHPTotEtd.setText( hpHTotEtd + "");
-
-			this.txtTot.setText((cmHTotEtd + tdHTotEtd + tpHTotEtd + hpHTotEtd) + "");
+		//somme
+		this.txtHeureSPN   .setText((cmPN + tdPN + tpPN) + "");
+		this.txtHeureEtdSPN.setText((cmPNetd + tdPNetd + tpPNetd) + "");
 
 
 
-			//On met tous dans la liste de mod
-			this.mod.initList(tdHeu, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("CM"));
-			this.mod.initList(tdHeu, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("TD"));
-			this.mod.initList(tpPN, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("TP"));
-			this.mod.initList(tdHeu, 1, tpHeu, Controleur.getControleur().getCategorieHeure("HP"));
+		/* CALCUL REPARTITION */
 
-			this.infoInvalide = false;
+		// semaine * heure
+		int cmHTot = (cmHeu * cmSem);
+		int tdHTot = (tpHeu * tpSem);
+		int tpHTot = (tdHeu * tdSem);
 
-		} catch (Exception ex) {
+		this.txtCMTot.setText( cmHTot + "");
+		this.txtTPTot.setText( tdHTot + "");
+		this.txtTDTot.setText( tpHTot + "");
 
-			this.infoInvalide = true;
+		this.txtTot.setText((cmHTot + tdHTot + tpHTot + hpHeu) + "");
 
-			((JTextField) e.getSource()).setText("0");
-			this.showMessageDialog("Le chiffre saisie est inccorect.");
-			((JTextField) e.getSource()).requestFocus();
-			
-		}
+		//EQTD
+		int cmHTotEtd = (int) ((cmHeu * cmSem) * coefCM);
+		int tdHTotEtd = (int) ((tpHeu * tpSem) * coefTD);
+		int tpHTotEtd = (int) ((tdHeu * tdSem) * coefTP);
+		int hpHTotEtd = (int) ( hpHeu          * coefHP);
+
+		this.txtCMTotEtd.setText( cmHTotEtd + "");
+		this.txtTPTotEtd.setText( tdHTotEtd + "");
+		this.txtTDTotEtd.setText( tpHTotEtd + "");
+		this.txtHPTotEtd.setText( hpHTotEtd + "");
+
+		this.txtTot.setText((cmHTotEtd + tdHTotEtd + tpHTotEtd + hpHTotEtd) + "");
+
+
+
+		//On met tous dans la liste de mod
+		this.mod.initList(tdHeu, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("CM"));
+		this.mod.initList(tdHeu, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("TD"));
+		this.mod.initList(tpPN, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("TP"));
+		this.mod.initList(tdHeu, 1, tpHeu, Controleur.getControleur().getCategorieHeure("HP"));
 	}
 
 
 	public void focusGained(FocusEvent e) {
-		this.focusLost(e);
 	}
 }

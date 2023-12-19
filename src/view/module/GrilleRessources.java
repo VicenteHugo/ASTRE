@@ -7,9 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
 import model.Affectations;
-import model.CategorieHeures;
 import model.modules.Module;
-import model.modules.Ressource;
 
 public class GrilleRessources extends AbstractTableModel {
 
@@ -81,7 +79,7 @@ public class GrilleRessources extends AbstractTableModel {
 			String type      = (String)  this.tabDonnees[row][1];
 			int    nbSem     = (Integer) this.tabDonnees[row][2];
 			int    nbGp      = (Integer) this.tabDonnees[row][3];
-			int    hTot      = (Integer) this.tabDonnees[row][4];
+			int    hTot      = (Integer) this.tabDonnees[row][4];//il sert à quoi ?
 			String com       = (String)  this.tabDonnees[row][5];
 
 			switch (col) {
@@ -113,7 +111,8 @@ public class GrilleRessources extends AbstractTableModel {
 					break;
 			}
 
-			if (nbSem < 0 || nbGp < 0 || nomInter.isEmpty() || type.isEmpty())
+			if (nbSem < 0 || nbGp < 0 )
+
 				return;
 			
 			if(Controleur.getControleur().modifAffectation(row, nomInter,prenomIntervenant.get(row),moduleIntervenant.get(row),type, nbSem, nbGp, com))
