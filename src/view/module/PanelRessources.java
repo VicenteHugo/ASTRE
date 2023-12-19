@@ -93,12 +93,12 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	//Object
 	private FrameAccueil frame;
 	private Module       mod;
-
 	private boolean      estNouveau;
 
 
 	public PanelRessources(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
+		
 		this.mod   = new Ressource(semestres, "", "", "", 0, false);
 
 		//Mettre la liste à 0
@@ -478,7 +478,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleRessources());
+		this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -613,6 +613,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		this (frame, m.getSemestres());
 		this.mod = m;
+		if(m.getCode() != null)
+			this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
+
 
 		//txtCode
 		this.txtCodeMod    .setText(this.mod.getCode());
@@ -819,7 +822,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleRessources()); 
+		this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
 	}
 
 	private void showMessageDialog(String message) {
