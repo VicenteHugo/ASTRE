@@ -1,14 +1,20 @@
 package view.previsionnel;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 import controleur.Controleur;
 import model.Etat;
@@ -19,6 +25,7 @@ import model.modules.Sae;
 import model.modules.Stage;
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
+import view.module.PanelPPP;
 import view.module.PanelRessources;
 import view.module.PanelSAE;
 import view.module.PanelStage;
@@ -36,6 +43,9 @@ public class PanelPrevi extends JPanel {
 
     private JButton btnAccueil;
 
+    private Map<PanelSemestre, Integer> mapInfo = new HashMap<>();
+
+    private Object put;
 
     public PanelPrevi(FrameAccueil frame) {
 
@@ -87,7 +97,8 @@ public class PanelPrevi extends JPanel {
         this.btnAccueil.addActionListener((e)->{ this.frame.changePanel(new PanelAccueil(this.frame));} );
         this.btnModifier.addActionListener((e)->{ this.modifier();});
         this.cmbChoixCreer.addActionListener((e)->this.btnCreer.setText(this.cmbChoixCreer.getSelectedItem().toString()));
-        //this.btnSupprimer.addActionListener(e)->Controleur.getControleur;
+        this.btnSupprimer.addActionListener((e)-> this.supprimer());
+        //this.ongletSemestres.addChangeListener((l)-> this.ongletSemestres.selec);
     }
 
     private void creation(int indice) {
@@ -99,7 +110,7 @@ public class PanelPrevi extends JPanel {
             case 0 -> this.frame.changePanel(new PanelRessources(frame, Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex())));
             case 1 -> this.frame.changePanel(new PanelSAE(frame));
             case 2 -> this.frame.changePanel(new PanelStage(frame));
-            // case 3 -> this.frame.changePanel(new PanelPPP(frame));
+            case 3 -> this.frame.changePanel(new PanelPPP(frame));
         }
     }
 
@@ -124,8 +135,20 @@ public class PanelPrevi extends JPanel {
             this.frame.changePanel(new PanelStage(this.frame));
         
     }
-
-
+    
+    public void supprimer(){
+       for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
+         PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+         JTable table = panelSemestre.getTable();
+            if(table.getSelectedRow() != -1){
+               int ind = table.getSelectedRow();
+                Controleur.getControleur().supprimerModule(ind);
+                if (ind >= 0)
+                    table.setRowSelectionInterval(ind, ind);
+                    table.setModel(new GrilleSemestre(ind));
+            }
+        }
+    }
 	private void showMessageDialog(String message) {
 		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}

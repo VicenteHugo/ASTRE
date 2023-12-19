@@ -57,5 +57,9 @@ public class PanelSemestre extends JPanel {
         this.grilleSemestre.setShowVerticalLines(false);
 
         this.add(this.grilleSemestre, BorderLayout.CENTER);
-    }       
+    }
+
+    public JTable getTable(){
+        return this.grilleSemestre;
+    } 
 }

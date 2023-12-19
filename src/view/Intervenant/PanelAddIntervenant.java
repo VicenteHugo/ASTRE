@@ -22,12 +22,14 @@ import model.Intervenants;
 import view.accueil.FrameAccueil;
 
 public class PanelAddIntervenant extends JPanel {
+	//si pas utiliser ne pas créer d'attribut
 	private JLabel lblErrCoef;
 	private JLabel lblErrHeurMax;
 	private JLabel lblErrHeurMin;
 
 	private DefaultListModel<CategorieIntervenant> choixCategorie;
 
+	//private JComboBox<CategorieIntervenant> boxCategorie;
 	private JComboBox boxCategorie;
 	private JTextField txtNom;
 	private JTextField txtPrenom;
