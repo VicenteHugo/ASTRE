@@ -16,7 +16,7 @@ public class GrilleRessources extends AbstractTableModel {
 	private List<String> prenomIntervenant;
 	private List<Module> moduleIntervenant;
 
-	public GrilleRessources() {
+	public GrilleRessources(Module mod) {
 		List<Affectations> listAffectations = Controleur.getControleur().getAffectations();
 		prenomIntervenant = new ArrayList<>();
 		moduleIntervenant = new ArrayList<>();
@@ -24,7 +24,10 @@ public class GrilleRessources extends AbstractTableModel {
 
 		for (int lig = 0; lig < listAffectations.size(); lig++) {
 			Affectations affectations = listAffectations.get(lig);
-			if (affectations.getModule().getClass().getSimpleName().equals("Ressource")) {
+			System.out.println("Affectation : " + affectations.getModule().getCode());
+			System.out.println(mod);
+			System.out.println("Module : " + mod.getCode() );
+			if (affectations.getModule().getCode().equals(mod.getCode())) {
 				List<Integer> listInfosHeure = affectations.getModule().getHeures().get(affectations.getCategorieHeures());
 				this.tabDonnees[lig][0] = affectations.getIntervenant().getNomIntervenant();
 				this.tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
