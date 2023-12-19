@@ -142,7 +142,9 @@ public class PanelPrevi extends JPanel {
          JTable table = panelSemestre.getTable();
             if(table.getSelectedRow() != -1){
                int ind = table.getSelectedRow();
-                Controleur.getControleur().supprimerModule(ind);
+                String code = (String) table.getValueAt(table.getSelectedRow(),0);
+                Module module =  Controleur.getControleur().getModule(code);
+                Controleur.getControleur().supprimerModule(module);
                 if (ind >= 0 && this.ongletSemestres.getSelectedIndex() == i)
                     table.setRowSelectionInterval(ind, ind);
                     table.setModel(new GrilleSemestre(ind));

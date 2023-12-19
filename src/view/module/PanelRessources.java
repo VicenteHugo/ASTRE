@@ -95,7 +95,6 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	private Module       mod;
 
 	private boolean      estNouveau;
-	private boolean      infoInvalide;
 
 
 	public PanelRessources(FrameAccueil frame, Semestres semestres) {
@@ -738,15 +737,10 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 	private void quitter () {
 		this.frame.changePanel(new PanelPrevi(frame));
-		System.out.println(this.infoInvalide);
 	}
 
 
 	private void sauvegarder () {
-
-		this.focusLost(null);
-
-		System.out.println(infoInvalide);
 
 		if (this.txtCodeMod.getText().isEmpty()) {
 			this.showMessageDialog("Le code est obligatoire");
@@ -761,6 +755,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
 
+		System.out.println(val);
 
 		//                                            PN                                             SEMAINE                                      NB HEURE
 		List<Integer> lstCM = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
