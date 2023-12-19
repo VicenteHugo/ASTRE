@@ -81,7 +81,7 @@ public class PanelStage extends JPanel implements ActionListener{
 
 
 		this.frame = frame;
-		this.mod   = new Ressource(null, "", "", "", 0, false);
+		//this.mod   = new Ressource(null, "", "", "", 0, false);
 
 		
         /*                         */

@@ -348,13 +348,13 @@ public class Controleur {
 
     public boolean supprimerModule(Module m) {
 
-        if (Etat.pasUtiliser(m)) {
+        //if (Etat.pasUtiliser(m)) {
             Etat.ajouterAction(new Suppression(m));
             Etat.getModules().remove(m);
             return true;
-        }
+        //}
 
-        return false;
+     //   return false;
     }
 
 

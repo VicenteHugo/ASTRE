@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 
 import view.JTextFieldNumber;
 
@@ -63,5 +62,9 @@ public class PanelSemestre extends JPanel {
 
     public JTable getTable(){
         return this.grilleSemestre;
-    } 
+    }
+
+    public void majGrille(int semestre){
+        this.grilleSemestre.setModel(new GrilleSemestre(semestre));
+    }
 }

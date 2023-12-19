@@ -93,12 +93,12 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	//Object
 	private FrameAccueil frame;
 	private Module       mod;
-
 	private boolean      estNouveau;
 
 
 	public PanelRessources(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
+		
 		this.mod   = new Ressource(semestres, "", "", "", 0, false);
 
 		//Mettre la liste à 0
@@ -264,7 +264,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
         gbcHeurePN.gridy = 0;
         gbcHeurePN.weightx = 1;
         gbcHeurePN.weighty = 1;
-        gbcHeurePN.insets = new Insets(3, 3, 3, 3);
+        gbcHeurePN.insets = new Insets(2, 2, 2, 2);
 
 
 		//Ajout des JLabelModule première lignes
@@ -275,8 +275,11 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		panelHeurePN.add(new JLabelModule("TD"), gbcHeurePN);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(new JLabelModule("TP"), gbcHeurePN);
+		
+		gbcHeurePN.insets.right=10;
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(new JLabelModule("∑"), gbcHeurePN);
+		gbcHeurePN.insets.right=2;
 		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
 
 		gbcHeurePN.gridx = 1;
@@ -286,9 +289,13 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		panelHeurePN.add(this.txtHeureTDPN,gbcHeurePN);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(this.txtHeureTPPN,gbcHeurePN);
+		gbcHeurePN.insets.right=10;
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(this.txtHeureSPN,gbcHeurePN);
+		gbcHeurePN.insets.right=2;
 
+
+		gbcHeurePN.insets.bottom=10;
 		gbcHeurePN.gridx = 0;
 		gbcHeurePN.gridy++;
 		panelHeurePN.add(new JLabelModule("Total (eqtd) promo"), gbcHeurePN);
@@ -298,6 +305,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		panelHeurePN.add(this.txtHeureEtdTDPN,gbcHeurePN);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(this.txtHeureEtdTPPN,gbcHeurePN);
+		gbcHeurePN.insets.right=10;
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(this.txtHeureEtdSPN,gbcHeurePN);
 
@@ -364,7 +372,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		gbcRepar.gridx ++;
 		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
-        gbcRepar.insets.right = 20;
+        gbcRepar.insets.right = 10;
 		panelRepartition.add(new JLabelModule("∑", JLabel.LEFT), gbcRepar);
         gbcRepar.insets.left = 2;
 
@@ -411,7 +419,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		gbcRepar.gridx ++;
 		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
-        gbcRepar.insets.right = 20;
+        gbcRepar.insets.right = 10;
 		panelRepartition.add(this.txtTot, gbcRepar);
         gbcRepar.insets.left = 2;
 
@@ -442,13 +450,13 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		gbcRepar.gridx ++;
 		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
-        gbcRepar.insets.right = 20;
+        gbcRepar.insets.right = 10;
 		panelRepartition.add(this.txtTotEtd, gbcRepar);
         gbcRepar.insets.left = 2;
 
 		// Ciqnuième ligne
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
-        gbcRepar.insets = new Insets(2,2,20,2);
+        gbcRepar.insets = new Insets(2,2,10,2);
 		gbcRepar.gridy++;
 		gbcRepar.gridwidth = 3;
 		gbcRepar.gridx= 4;
@@ -470,7 +478,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		gbcRepar.gridx ++;
 		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
-        gbcRepar.insets.right = 20;
+        gbcRepar.insets.right = 10;
 		panelRepartition.add(this.txtTotEtdAffect, gbcRepar);
 
 
@@ -478,7 +486,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleRessources());
+		this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -613,6 +621,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		this (frame, m.getSemestres());
 		this.mod = m;
+		if(m.getCode() != null)
+			this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
+
 
 		//txtCode
 		this.txtCodeMod    .setText(this.mod.getCode());
@@ -818,7 +829,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleRessources()); 
+		this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
 	}
 
 	private void showMessageDialog(String message) {
