@@ -152,6 +152,10 @@ public class Controleur {
 	public void enregistrer() { Etat.enregistrer(); }
 	public void annuler    () { Etat.anuller();     }
 
+	
+	/* SEMESTRES */
+	public void modifSemestres (Semestres sem) { Etat.ajouterAction(new Modification(sem));}
+
 
 	/* CATEGORIE-HEURE */
 	public void supprimerCategorieHeure(int i) {

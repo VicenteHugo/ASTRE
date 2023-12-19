@@ -18,6 +18,7 @@ import javax.swing.JTable;
 
 import controleur.Controleur;
 import model.Etat;
+import model.Semestres;
 import model.modules.Module;
 import model.modules.PPP;
 import model.modules.Ressource;
@@ -93,7 +94,7 @@ public class PanelPrevi extends JPanel {
         
         
         this.btnCreer      .addActionListener((e)->this.creation(this.cmbChoixCreer.getSelectedIndex()) );
-        this.btnSauvegarder.addActionListener((e)->{ Controleur.getControleur().enregistrer();this.frame.changePanel(new PanelAccueil(this.frame));} );
+        this.btnSauvegarder.addActionListener((e)->{ this.sauvegarde(); });
         this.btnQuitter    .addActionListener((e)->{ Controleur.getControleur().annuler()    ;this.frame.changePanel(new PanelAccueil(this.frame));} );
         this.btnModifier   .addActionListener((e)->{ this.modifier();});
         this.cmbChoixCreer .addActionListener((e)->this.btnCreer.setText(this.cmbChoixCreer.getSelectedItem().toString()));
@@ -118,8 +119,8 @@ public class PanelPrevi extends JPanel {
         int indice = 0;
         Module m = null;
         for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
-        PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
-        JTable table = panelSemestre.getTable();
+            PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+            JTable table = panelSemestre.getTable();
             if(table.getSelectedRow() != -1){
                 indice = table.getSelectedRow();
                 String code = (String) table.getValueAt(table.getSelectedRow(),0);
@@ -157,6 +158,21 @@ public class PanelPrevi extends JPanel {
             panelSemestre.majGrille(ongletSemestres.getSelectedIndex() + 1);
             
         }
+    }
+
+
+    private void sauvegarde () {
+
+        for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
+            PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+            Semestres sem = panelSemestre.getSemNew();
+            Controleur.getControleur().modifSemestres(sem);
+        }
+        
+
+
+        Controleur.getControleur().enregistrer();
+        this.frame.changePanel(new PanelAccueil(this.frame));
     }
 
 	private void showMessageDialog(String message) {
