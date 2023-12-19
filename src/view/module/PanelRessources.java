@@ -98,7 +98,8 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 	public PanelRessources(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
-
+		this.frame.setTitle("Astre - Previsionnel");
+		
 		this.mod   = new Ressource(semestres, "", "", "", 0, false);
 
 		//Mettre la liste à 0
@@ -258,7 +259,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
         gbcPanelHaut.gridy = 0;
         gbcPanelHaut.weightx = 1;
         gbcPanelHaut.weighty = 1;
-        gbcPanelHaut.insets = new Insets(3, 3, 3, 3);
+        gbcPanelHaut.insets = new Insets(2, 2, 2, 2);
 		gbcPanelHaut.anchor = GridBagConstraints.LINE_START;
 
         // Ajout des libellés première ligne

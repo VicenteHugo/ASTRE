@@ -20,7 +20,8 @@ public class Etat {
 	/*-------------------------------------------------*/
 
 	/**Chemin vers le scripts sql.*/
-	public static final String FICHIER = "./SQL/REALISATION/CreateTablesAstre.sql";
+	public static final String FIC_CREATE = "./SQL/REALISATION/CreateTablesAstre.sql";
+	public static final String FIC_CSV    = "./SQL/REALISATION/Function.sql";
 
 	/**Liste des Tables.Utile pour la verification de leurs présences. */
 	public static final String[] LST_NOM_TABLES = new String[] 
@@ -80,7 +81,7 @@ public class Etat {
 			Etat.recupererNomEtat();
 
 			//Lancer le scripts en cas de Table détruite
-			Etat.lireFichierSQL(Etat.FICHIER);
+			Etat.lireFichierSQL(Etat.FIC_CREATE);
 
 
 			Etat.genererInfos();
@@ -563,7 +564,7 @@ public class Etat {
 	public static void changerEtat (String nom) {
 		Etat.nom = nom;
 		System.out.println(Etat.nom);
-		Etat.lireFichierSQL(Etat.FICHIER);
+		Etat.lireFichierSQL(Etat.FIC_CREATE);
 		Etat.genererInfos();
 	}
 
@@ -598,7 +599,7 @@ public class Etat {
 			st.executeUpdate("INSERT INTO Etat (etat) VALUES ('"+nom+"')");
 
 			Etat.nom = nom;
-			Etat.lireFichierSQL(Etat.FICHIER);
+			Etat.lireFichierSQL(Etat.FIC_CREATE);
 			Etat.verifEtat();
 			Etat.genererInfos();
 			return true;
@@ -657,10 +658,11 @@ public class Etat {
 
 				String l = scan.nextLine();
 
-				if (!(l.contains("/*") || l.contains("*/") || l.contains("*") || l.contains("--"))) {
+				if (!(l.startsWith("/*") || l.startsWith("*/") || l.startsWith("*") || l.startsWith("--"))) {
 					commande += " " + l;
 					if (l.endsWith(";")) {
 						commande = commande.replaceAll("ETAT", Etat.nom);
+						System.out.println(commande);
 						statement.execute(commande);
 						commande = "";
 					}
@@ -673,4 +675,12 @@ public class Etat {
 		}
 
 	}
+
+	
+
+	/*-------------------------------------------------*/
+	/*               GENERATION FICHIER                */
+	/*-------------------------------------------------*/
+
+	public static void genererCSV() { Etat.lireFichierSQL(Etat.FIC_CSV); }
 }

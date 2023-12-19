@@ -6,16 +6,16 @@
 *
 *
 * MLD : 
-	* Etat
-	* CategorieIntervenants(libCatInt, coefCatInt, heureMinCatInt, heureMaxCatInt)
-	* CategorieHeures      (libCatHeur, coefCatHeur)
-	* Semestres            (numSem, nbGpTdSem, nbGpTpSem, nbEtdSem, nbSemSem)
+* Etat
+* CategorieIntervenants(libCatInt, coefCatInt, heureMinCatInt, heureMaxCatInt)
+* CategorieHeures      (libCatHeur, coefCatHeur)
+* Semestres            (numSem, nbGpTdSem, nbGpTpSem, nbEtdSem, nbSemSem)
 
-	* Intervenants         (nomInt, prenomInt, heureMinInt, heureMaxInt, #codeCatInt)
-	* Modules              (codeMod, typeMod, libCourtMod, libLongMod, validMod, #numSem)
+* Intervenants         (nomInt, prenomInt, heureMinInt, heureMaxInt, #codeCatInt)
+* Modules              (codeMod, typeMod, libCourtMod, libLongMod, validMod, #numSem)
 
-	* ModulesCatHeures     (#codeMod, #libCatHeur, nbHeurePN, nbHeureSem, nbSemaine)
-	* Affectation          (#(nomInt,prenomInt),#codeMod,#libCatHeur, nbHeureSem, nbGroupe, nbSemaine, commentaire)
+* ModulesCatHeures     (#codeMod, #libCatHeur, nbHeurePN, nbHeureSem, nbSemaine)
+* Affectation          (#(nomInt,prenomInt),#codeMod,#libCatHeur, nbHeureSem, nbGroupe, nbSemaine, commentaire)
 
 */
 

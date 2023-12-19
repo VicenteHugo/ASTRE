@@ -43,10 +43,6 @@ public class PanelPrevi extends JPanel {
 
     private JButton btnAccueil;
 
-    private Map<PanelSemestre, Integer> mapInfo = new HashMap<>();
-
-    private Object put;
-
     public PanelPrevi(FrameAccueil frame) {
 
         this.frame = frame;
@@ -145,41 +141,19 @@ public class PanelPrevi extends JPanel {
     }
     
     public void supprimer(){
-        /*int indice = 0;
         Module m = null;
-        for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
-        PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+        PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getSelectedComponent();
         JTable table = panelSemestre.getTable();
-            if(table.getSelectedRow() != -1){
-                indice = table.getSelectedRow();
-                String code = (String) table.getValueAt(table.getSelectedRow(),0);
-                m =  Controleur.getControleur().getModule(code);
-                if(this.ongletSemestres.getSelectedIndex() == i){
-                    Controleur.getControleur().supprimerModule(m);
-                    if (indice >= 0){
-                        table.setRowSelectionInterval(indice, indice);
-                        table.setModel(new GrilleSemestre(i));
-                    }
-                }
-            }
-        }*/
-        int indice = -1;
-        Module m = null;
-        for (int i = 0; i < this.ongletSemestres.getTabCount(); i++) {
-            PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
-            JTable table = panelSemestre.getTable();
-            if (table.getSelectedRow() != -1) {
-                indice = table.getSelectedRow();
-                String code = (String) table.getValueAt(indice, 0);
-                m = Controleur.getControleur().getModule(code);
-                if (this.ongletSemestres.getSelectedIndex() == i) {
-                    Controleur.getControleur().supprimerModule(m);
-                    if (indice >= 0) {
-                       
-                    }
-                }
-            }
-        }    
+        int[] selectedRow = table.getSelectedRows();
+        for (int i =0; i < selectedRow.length; i++) {
+            int val = selectedRow[i];
+            val-= i;
+            String code = (String) table.getValueAt(val, 0);
+            m = Controleur.getControleur().getModule(code);
+            Controleur.getControleur().supprimerModule(m);
+            panelSemestre.majGrille(ongletSemestres.getSelectedIndex() + 1);
+            
+        }
     }
 
 	private void showMessageDialog(String message) {
