@@ -116,18 +116,27 @@ public class PanelPrevi extends JPanel {
 
 
     private void modifier () {
-        int ind = this.ongletSemestres.getSelectedIndex();
 
-        if (ind < 0) {
+        int indice = 0;
+        Module m = null;
+        for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
+        PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+        JTable table = panelSemestre.getTable();
+            if(table.getSelectedRow() != -1){
+                indice = table.getSelectedRow();
+                String code = (String) table.getValueAt(table.getSelectedRow(),0);
+                m =  Controleur.getControleur().getModule(code);
+            }
+        }
+        if ( indice < 0) {
 			this.showMessageDialog("Selectionner un module");
 			return;
         }
 
-        Module m = Controleur.getControleur().getModule(ind);
-
         if (m instanceof PPP)
             System.out.println("Page pas fait pout ppp");
         if (m instanceof Ressource)
+        System.out.println("Je suis une ressource");
             this.frame.changePanel(new PanelRessources(this.frame,m));
         if (m instanceof Sae)
             this.frame.changePanel(new PanelSAE(this.frame));
@@ -137,20 +146,44 @@ public class PanelPrevi extends JPanel {
     }
     
     public void supprimer(){
-       for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
-         PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
-         JTable table = panelSemestre.getTable();
+        /*int indice = 0;
+        Module m = null;
+        for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
+        PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+        JTable table = panelSemestre.getTable();
             if(table.getSelectedRow() != -1){
-               int ind = table.getSelectedRow();
+                indice = table.getSelectedRow();
                 String code = (String) table.getValueAt(table.getSelectedRow(),0);
-                Module module =  Controleur.getControleur().getModule(code);
-                Controleur.getControleur().supprimerModule(module);
-                if (ind >= 0 && this.ongletSemestres.getSelectedIndex() == i)
-                    table.setRowSelectionInterval(ind, ind);
-                    table.setModel(new GrilleSemestre(ind));
+                m =  Controleur.getControleur().getModule(code);
+                if(this.ongletSemestres.getSelectedIndex() == i){
+                    Controleur.getControleur().supprimerModule(m);
+                    if (indice >= 0){
+                        table.setRowSelectionInterval(indice, indice);
+                        table.setModel(new GrilleSemestre(i));
+                    }
+                }
             }
-        }
+        }*/
+        int indice = -1;
+        Module m = null;
+        for (int i = 0; i < this.ongletSemestres.getTabCount(); i++) {
+            PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+            JTable table = panelSemestre.getTable();
+            if (table.getSelectedRow() != -1) {
+                indice = table.getSelectedRow();
+                String code = (String) table.getValueAt(indice, 0);
+                m = Controleur.getControleur().getModule(code);
+                if (this.ongletSemestres.getSelectedIndex() == i) {
+                    Controleur.getControleur().supprimerModule(m);
+                    if (indice >= 0) {
+                        // Supprimer la ligne sélectionnée du modèle de la table
+                        ((GrilleSemestre) table.getModel()).removeRow(indice);
+                    }
+                }
+            }
+        }    
     }
+
 	private void showMessageDialog(String message) {
 		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
