@@ -133,7 +133,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		//Informations Semestres
         this.txtTypeMod = new JTextField("Ressource", 8);
-        this.txtSem     = new JTextField("S1", 5);
+        this.txtSem     = new JTextField("S" + semestres.getNumSem(), 5);
         this.txtNbEtd   = new JTextFieldNumber("80", 3);
         this.txtNbGpTd  = new JTextFieldNumber("80", 3);
         this.txtNbGpTp  = new JTextFieldNumber("80", 3);
