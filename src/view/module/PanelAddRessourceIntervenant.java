@@ -147,7 +147,7 @@ public class PanelAddRessourceIntervenant extends JPanel {
 					JOptionPane.showMessageDialog(this, "Le nombre de groupe et le nombre de semaine doivent être supérieur à 0");
 				} else {
 					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbGroupe, this.txtCommentaire.getText());
-					System.out.println(affectations);
+					
 					Controleur.getControleur().ajouterAffectation(affectations);
 					this.frameM.dispose();
 				}

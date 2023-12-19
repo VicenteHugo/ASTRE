@@ -68,7 +68,7 @@ public class Controleur {
 
 	public ArrayList<Module> getModules(int semmestre) {
 
-		ArrayList<Module> retour = new ArrayList<>();
+		ArrayList<Module> retour = new ArrayList<Module>();
 		for (Module m : Etat.getModules()) {
 			if (m.getSemestres().getNumSem() == semmestre) {
 				retour.add(m);
@@ -83,7 +83,7 @@ public class Controleur {
 	}
 
 	public ArrayList<Module> getModules(Semestres semestres) {
-		ArrayList<Module> retour = new ArrayList<>();
+		ArrayList<Module> retour = new ArrayList<Module>();
 		for (Module m : Etat.getModules()) {
 			if (m.getSemestres().equals(semestres)) {
 				retour.add(m);
@@ -185,7 +185,6 @@ public class Controleur {
 
 			// On remplace l'objet
 			CategorieHeures cNew = new CategorieHeures(lib, coef);
-			System.out.println(cNew);
 			Etat.getCategoriesHeures().add(i, cNew);
 			Etat.getCategoriesHeures().remove(cOld);
 
@@ -203,9 +202,6 @@ public class Controleur {
 
 		CategorieIntervenant cOld = Etat.getCategoriesIntervenants().get(i);
 
-		System.out.println("Meme objet ? : " + (Etat.getCatInt(code) == cOld));
-		System.out.println("Objet null ? : " + (Etat.getCatInt(code) == null));
-
 		// Si la clé est pris par autre chose que l'objet actuelle et que l'indice est
 		// bon
 		if ((Etat.getCatInt(code) == null || Etat.getCatInt(code) == cOld) && i >= 0
@@ -213,7 +209,6 @@ public class Controleur {
 
 			// On remplace l'objet
 			CategorieIntervenant cNew = new CategorieIntervenant(code, lib, coef, hMax, hMin);
-			System.out.println(cNew);
 			Etat.getCategoriesIntervenants().add(i, cNew);
 			Etat.getCategoriesIntervenants().remove(cOld);
 
@@ -236,7 +231,6 @@ public class Controleur {
 		if (ind >= 0 && ind < Etat.getIntervenants().size()) {
 			Intervenants inter = Etat.getIntervenants().remove(ind);
 			Etat.ajouterAction(new Suppression(inter));
-			System.out.println("Suppresion : " + inter);
 		}
 	}
 
@@ -305,10 +299,7 @@ public class Controleur {
 	}
 
 	/* MODULES */
-    public boolean ajouterModule(Module mod) {
-
-        System.out.println(Etat.getModule(mod.getCode()));
-        
+    public boolean ajouterModule(Module mod) {        
         if (Etat.getModule(mod.getCode()) != null)
             return false;
 
@@ -396,9 +387,7 @@ public class Controleur {
 		// GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		// String[] policesDisponibles = ge.getAvailableFontFamilyNames();
 
-		// System.out.println("Polices disponibles sur ce système :");
 		// for (String police : policesDisponibles) {
-		// 	System.out.println(police);
 		// }
 	}
 

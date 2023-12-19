@@ -98,9 +98,7 @@ public class PanelPrevi extends JPanel {
     }
 
     private void creation(int indice) {
-        System.out.println("cjfbutfbytfv" + indice);
         if(indice < 0) indice = 0;
-
 
         switch (indice) {
             case 0 -> this.frame.changePanel(new PanelRessources(frame, Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex())));
