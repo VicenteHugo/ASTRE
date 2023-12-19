@@ -7,9 +7,7 @@ import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
 import model.Affectations;
-import model.CategorieHeures;
 import model.modules.Module;
-import model.modules.Ressource;
 
 public class GrilleRessources extends AbstractTableModel {
 
@@ -32,7 +30,7 @@ public class GrilleRessources extends AbstractTableModel {
 				this.tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
 				this.tabDonnees[lig][2] = affectations.getNbSemaine();
 				this.tabDonnees[lig][3] = affectations.getNbGroupe() + " | "
-						+ listInfosHeure.get(3);
+						+ affectations.getNbHeure();
 				this.tabDonnees[lig][4] = affectations.getNbSemaine()
 						* affectations.getNbGroupe()
 						* listInfosHeure.get(2)
@@ -81,7 +79,7 @@ public class GrilleRessources extends AbstractTableModel {
 			String type      = (String)  this.tabDonnees[row][1];
 			int    nbSem     = (Integer) this.tabDonnees[row][2];
 			int    nbGp      = (Integer) this.tabDonnees[row][3];
-			int    hTot      = (Integer) this.tabDonnees[row][4];
+			//int    hTot      = (Integer) this.tabDonnees[row][4];//il sert à quoi ?
 			String com       = (String)  this.tabDonnees[row][5];
 
 			switch (col) {
@@ -101,9 +99,9 @@ public class GrilleRessources extends AbstractTableModel {
 					nbGp = (Integer) value;
 					break;
 
-				case 4:
+				/*case 4:
 					hTot = (Integer) value;
-					break;
+					break;*/
 
 				case 5:
 					com = (String) value;
@@ -113,7 +111,8 @@ public class GrilleRessources extends AbstractTableModel {
 					break;
 			}
 
-			if (nbSem < 0 || nbGp < 0 || nomInter.isEmpty() || type.isEmpty())
+			if (nbSem < 0 || nbGp < 0 )
+
 				return;
 			
 			if(Controleur.getControleur().modifAffectation(row, nomInter,prenomIntervenant.get(row),moduleIntervenant.get(row),type, nbSem, nbGp, com))

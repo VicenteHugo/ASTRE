@@ -12,38 +12,32 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 
 
-public class PanelAddSAEIntervenant extends JPanel {
-	private JLabel lblErrCoef;
-	private JLabel lblErrHeurMax;
-	private JLabel lblErrHeurMin;
-	
+public class PanelAddSAEIntervenant extends JPanel {	
 	private JTextField txtIntervenant;
 	private JTextField txtType;
-	private JTextField txtNbSemaine;
-	private JTextField txtNbGroupe;
-    private JTextField txtTotal;
+	private JTextFieldNumber txtNbSemaine;
+    private JTextFieldNumber txtTotal;
     private JTextField txtCommentaire;
 
 	private JButton btnValider;
 	private JButton btnAnnuler;
 
 
-	private FrameAccueil frame;
 	private Frame frameM;
 
 	public PanelAddSAEIntervenant (FrameAccueil frame, Frame frameM) {
-		this.frame  = frame;
 		this.frameM = frameM;
 
 
 		//Création
 		this.txtIntervenant  = new JTextField(10);
 		this.txtType         = new JTextField(10);
-		this.txtNbSemaine    = new JTextField(3);
-        this.txtTotal        = new JTextField(5);
+		this.txtNbSemaine    = new JTextFieldNumber(3);
+        this.txtTotal        = new JTextFieldNumber(5);
 		this.txtCommentaire  = new JTextField(15);
 
 		this.btnAnnuler = new JButton("Annuler");

@@ -19,8 +19,8 @@ public class GrilleStage extends AbstractTableModel {
 		for (int lig = 0; lig < listAffectations.size(); lig++) {
 			Affectations affectations = listAffectations.get(lig);
 			if (affectations.getModule().getClass().getName().equals("Stage")) {
-				List<Integer> listInfosHeure = affectations.getModule().getHeures()
-						.get(affectations.getCategorieHeures());
+				//List<Integer> listInfosHeure = affectations.getModule().getHeures() //il sert à quoi ?
+				//		.get(affectations.getCategorieHeures());
 				this.tabDonnees[0][lig] = affectations.getIntervenant().getNomIntervenant();
 				this.tabDonnees[1][lig] = affectations.getCategorieHeures().getlibCatHeur();
 				this.tabDonnees[2][lig] = affectations.getNbHeure();
@@ -51,7 +51,7 @@ public class GrilleStage extends AbstractTableModel {
 		return this.tabDonnees[row][col];
 	}
 
-	public Class getColumnClass(int c) {
+	public Class<?> getColumnClass(int c) {
 		return getValueAt(0, c).getClass();
 	}
 

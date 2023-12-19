@@ -13,6 +13,7 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
+import view.JTextFieldNumber;
 import view.JLabelModule;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
@@ -30,36 +31,36 @@ public class PanelStage extends JPanel implements ActionListener{
 	private JCheckBox  cbValide;
 
     // Semestres
-    private JTextField txtSem;
-    private JTextField txtNbEtd;
-    private JTextField txtNbGpTd;
-	private JTextField txtNbGpTp;
+    private JTextFieldNumber txtSem;
+    private JTextFieldNumber txtNbEtd;
+    private JTextFieldNumber txtNbGpTd;
+	private JTextFieldNumber txtNbGpTp;
 	
 	//Heures PN
-	private JTextField txtHeureSPN ;
+	private JTextFieldNumber txtHeureSPN ;
 
-	private JTextField txtHeureEtdREHPN;
-	private JTextField txtHeureEtdhTutPN;
-	private JTextField txtHeureEtdSPN ;
+	private JTextFieldNumber txtHeureEtdREHPN;
+	private JTextFieldNumber txtHeureEtdhTutPN;
+	private JTextFieldNumber txtHeureEtdSPN ;
 
 
 	//Repartition
-	private JTextField txtCMTot;
-	private JTextField txtREHTotEtd;
-	private JTextField txtREHTotEtdAffect;
-	private JTextField txtTDTot;
-	private JTextField txtTDTotEtd;
-	private JTextField txtTDTotEtdAffect;
-	private JTextField txtTPTot;
-	private JTextField txthTutTotEtd;  
-	private JTextField txthTutTotEtdAffect;
+	private JTextFieldNumber txtCMTot;
+	private JTextFieldNumber txtREHTotEtd;
+	private JTextFieldNumber txtREHTotEtdAffect;
+	private JTextFieldNumber txtTDTot;
+	private JTextFieldNumber txtTDTotEtd;
+	private JTextFieldNumber txtTDTotEtdAffect;
+	private JTextFieldNumber txtTPTot;
+	private JTextFieldNumber txthTutTotEtd;  
+	private JTextFieldNumber txthTutTotEtdAffect;
 
-	private JTextField txtHPTotEtd;
-	private JTextField txtHPTotEtdAffect;
+	private JTextFieldNumber txtHPTotEtd;
+	private JTextFieldNumber txtHPTotEtdAffect;
 
-	private JTextField txtTot;
-	private JTextField txtTotEtd;
-	private JTextField txtTotEtdAffect;
+	private JTextFieldNumber txtTot;
+	private JTextFieldNumber txtTotEtd;
+	private JTextFieldNumber txtTotEtdAffect;
 
 	//Affectation 
 	private JTable tblGrilleDonnees;
@@ -77,10 +78,10 @@ public class PanelStage extends JPanel implements ActionListener{
 
 	public PanelStage(FrameAccueil frame) {
 
-		
+
 
 		this.frame = frame;
-		//this.mod   = new Ressource(null, "", "", "", 0);
+		this.mod   = new Ressource(null, "", "", "", 0, false);
 
 		
         /*                         */
@@ -95,35 +96,35 @@ public class PanelStage extends JPanel implements ActionListener{
 
 		//Informations Semestres
         this.txtTypeMod = new JTextField("Ressources", 8);
-        this.txtSem     = new JTextField("S1", 5);
-        this.txtNbEtd   = new JTextField("80", 3);
-        this.txtNbGpTd  = new JTextField("80", 3);
-        this.txtNbGpTp  = new JTextField("80", 3);
+        this.txtSem     = new JTextFieldNumber("S1", 5);
+        this.txtNbEtd   = new JTextFieldNumber("80", 3);
+        this.txtNbGpTd  = new JTextFieldNumber("80", 3);
+        this.txtNbGpTp  = new JTextFieldNumber("80", 3);
 
 
 		//Informations calcul heure PN
-        this.txtHeureSPN        = new JTextField("0", 3);
-        this.txtHeureEtdREHPN   = new JTextField("0", 3);
-        this.txtHeureEtdhTutPN  = new JTextField("0", 3);
-        this.txtHeureEtdSPN     = new JTextField("0", 3);
+        this.txtHeureSPN        = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdREHPN   = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdhTutPN  = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdSPN     = new JTextFieldNumber("0", 3);
 
 		//Information répartition
-		this.txtCMTot          = new JTextField("0", 3); 
-		this.txtTDTot          = new JTextField("0", 3);
-		this.txtTPTot          = new JTextField("0", 3);
-		this.txtREHTotEtd      = new JTextField("0", 3); 
-		this.txtTDTotEtd       = new JTextField("0", 3);
-		this.txthTutTotEtd       = new JTextField("0", 3);
-		this.txtREHTotEtdAffect = new JTextField("0", 3); 
-		this.txtTDTotEtdAffect = new JTextField("0", 3);
-		this.txthTutTotEtdAffect = new JTextField("0", 3);
+		this.txtCMTot            = new JTextFieldNumber("0", 3); 
+		this.txtTDTot            = new JTextFieldNumber("0", 3);
+		this.txtTPTot            = new JTextFieldNumber("0", 3);
+		this.txtREHTotEtd        = new JTextFieldNumber("0", 3); 
+		this.txtTDTotEtd         = new JTextFieldNumber("0", 3);
+		this.txthTutTotEtd       = new JTextFieldNumber("0", 3);
+		this.txtREHTotEtdAffect  = new JTextFieldNumber("0", 3); 
+		this.txtTDTotEtdAffect   = new JTextFieldNumber("0", 3);
+		this.txthTutTotEtdAffect = new JTextFieldNumber("0", 3);
 
-		this.txtHPTotEtd       = new JTextField("0",3);
-		this.txtHPTotEtdAffect = new JTextField("0",3);
+		this.txtHPTotEtd       = new JTextFieldNumber("0",3);
+		this.txtHPTotEtdAffect = new JTextFieldNumber("0",3);
 
-		this.txtTot          = new JTextField("0",3);
-		this.txtTotEtd       = new JTextField("0",3);
-		this.txtTotEtdAffect = new JTextField("0",3);
+		this.txtTot          = new JTextFieldNumber("0",3);
+		this.txtTotEtd       = new JTextFieldNumber("0",3);
+		this.txtTotEtdAffect = new JTextFieldNumber("0",3);
 
 		this.btnAjouter   = new JButton("Ajouter");
 		this.btnSupprimer = new JButton("Supprimer");
