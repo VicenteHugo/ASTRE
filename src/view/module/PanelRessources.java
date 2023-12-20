@@ -904,7 +904,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		int cmHTotEtd = Math.round((cmHeu * cmSem) * coefCM);
 		int tpHTotEtd = Math.round((tpHeu * tpSem) * coefTD * gpTp);
 		int tdHTotEtd = Math.round((tdHeu * tdSem) * coefTP * gpTd);
-		int hpHTotEtd = Math.round( hpHeu          * coefHP);
+		int hpHTotEtd = Math.round( hpHeu          * coefHP * gpTd);
 
 		this.txtCMTotEtd.setText( cmHTotEtd + "");
 		this.txtTDTotEtd.setText( tdHTotEtd + "");
@@ -913,8 +913,36 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		this.txtTotEtd.setText((cmHTotEtd + tdHTotEtd + tpHTotEtd + hpHTotEtd) + "");
 
+		// Affecté 
+		int cmAffect = 0;
+		int tdAffect = 0;
+		int tpAffect = 0;
+		int hpAffect = 0;
 
 
+		for (Affectations a : this.mod.getLstAffectations()) {
+
+			System.out.println(a.getCategorieHeures().getlibCatHeur());
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("CM"))
+				cmAffect += (cmHeu * a.getNbSemaine() * a.getNbGroupe() + a.getNbHeure()) * coefCM;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("TD"))
+				tdAffect += (tdHeu * a.getNbSemaine() * a.getNbGroupe() + a.getNbHeure()) * coefTD;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("TP"))
+				tpAffect += (tpHeu * a.getNbSemaine() * a.getNbGroupe() + a.getNbHeure()) * coefTP;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("HP"))
+				hpAffect += (hpHeu * a.getNbSemaine() * a.getNbGroupe() + a.getNbHeure()) * coefHP;
+		}
+
+		this.txtCMTotEtdAffect.setText(cmAffect + "");
+		this.txtTDTotEtdAffect.setText(tdAffect + "");
+		this.txtTPTotEtdAffect.setText(tpAffect + "");
+		this.txtHPTotEtdAffect.setText(hpAffect + "");
+
+		this.txtTotEtdAffect.setText(cmAffect + tdAffect + tpAffect + hpAffect + "");
 	}
 
 
