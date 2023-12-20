@@ -6,7 +6,10 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import view.JButtonStyle;
 import javax.swing.JComboBox;
@@ -24,7 +27,7 @@ import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 
 
-public class PanelAddRessourceIntervenant extends JPanel {
+public class PanelAddRessourceIntervenant extends JPanel{
 	//certains attribut ne sont pas instancié
 	private JComboBox<String> boxCategorie;
 	private JComboBox<String> boxIntervenant;
@@ -34,6 +37,8 @@ public class PanelAddRessourceIntervenant extends JPanel {
 
 	private JButtonStyle btnValider;
 	private JButtonStyle btnAnnuler;
+
+	private JLabel labelHeure;
 
 
 	private Frame frameM;
@@ -50,7 +55,9 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		ArrayList<CategorieHeures> l = Controleur.getControleur().getCategorieHeures();
 		this.boxCategorie = new JComboBox<String>();
 		for(int i=0; i < l.size(); i++){
-			this.boxCategorie.addItem(l.get(i).getlibCatHeur());
+			if(l.get(i).getlibCatHeur().equals("TP") || l.get(i).getlibCatHeur().equals("TD") || l.get(i).getlibCatHeur().equals("CM") ||l.get(i).getlibCatHeur().equals("HP")){
+				this.boxCategorie.addItem(l.get(i).getlibCatHeur());
+			}
 		}
 		ArrayList<Intervenants> lstInter = Controleur.getControleur().getIntervenants();
 		this.boxIntervenant = new JComboBox<String>();
@@ -61,6 +68,8 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		this.txtCommentaire       = new JTextField(15);
 		this.txtNbSemaine = new JTextFieldNumber(5);
 		this.txtNbGroupe = new JTextFieldNumber(5);
+
+		this.labelHeure = new JLabel("Nombre de groupe : ");
 
 		this.btnAnnuler = new JButtonStyle("Annuler");
 		this.btnValider = new JButtonStyle("Valider");
@@ -92,7 +101,7 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		
 		gbc.gridx = 0;
 		gbc.gridy++;
-		panelCentre.add(new JLabel("Nombre de groupe : "), gbc);
+		panelCentre.add(labelHeure, gbc);
 		gbc.gridx++;
 		panelCentre.add(this.txtNbGroupe, gbc);
 
@@ -111,6 +120,19 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		this.add(panelCentre, BorderLayout.CENTER);
 		this.add(panelBas, BorderLayout.SOUTH);
 
+		this.boxCategorie.addActionListener(new ActionListener() {
+           	
+			@Override
+            public void actionPerformed(ActionEvent e) {
+                String categorieSelectionnee = (String) boxCategorie.getSelectedItem();
+                if (categorieSelectionnee.equals("HP")) {
+                    labelHeure.setText("Nombre d'heure : ");
+                }else{
+					labelHeure.setText("Nombre de groupe : ");
+				}
+            }
+        });
+
 		//Activation
 		this.btnValider.addActionListener((e)->{
 			Intervenants intervenant = Controleur.getControleur().getIntervenants(this.boxIntervenant.getSelectedIndex());
@@ -119,7 +141,7 @@ public class PanelAddRessourceIntervenant extends JPanel {
  			int nbSemaine;
 			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
 
-			System.out.println(intervenant);
+			boolean isOk = false;
 			for(CategorieHeures ch : Controleur.getControleur().getCategorieHeures()){
 				if(ch.getlibCatHeur().equals(this.boxCategorie.getSelectedItem())){
 					categ =ch;
@@ -127,18 +149,45 @@ public class PanelAddRessourceIntervenant extends JPanel {
 			}
 
 			ArrayList<Integer> list = (ArrayList<Integer>) mod.getHeures().get(categ);
-			nbSemaine = list.get(0);
+			nbSemaine = list.get(1);
 			
 			if (lstInter != null) {
 				if (nbGroupe < 0 ) {
-					JOptionPane.showMessageDialog(this, "Le nombre de groupe et le nombre de semaine doivent être supérieur à 0");
+					JOptionPane.showMessageDialog(this, "Le nombre de groupe doit être supérieur à 0");
 
 				} else {
-					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbGroupe, this.txtCommentaire.getText());
-					
-					Controleur.getControleur().ajouterAffectation(affectations);
-					this.frameM.dispose();
-					panel.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 		
+					if(categ.getlibCatHeur().equals("TD")){
+						int nbGroupeTd = calculNbGroupe(nbGroupe, categ);
+						if(nbGroupe > mod.getSemestres().getNbGpTdSem() || nbGroupeTd > mod.getSemestres().getNbGpTdSem()){
+							JOptionPane.showMessageDialog(this, "Trop de groupe TD sont assignés");
+						}else{
+							isOk = true;
+						}
+					}
+					if(categ.getlibCatHeur().equals("TP")){
+						int nbGroupeTp = calculNbGroupe(nbGroupe, categ);
+						if(nbGroupe > mod.getSemestres().getNbGpTpSem()|| nbGroupeTp > mod.getSemestres().getNbGpTpSem()){
+							JOptionPane.showMessageDialog(this, "Trop de groupe TP sont assignés");
+						}
+						else{
+							isOk = true;
+						}
+					}
+					if(categ.getlibCatHeur().equals("HP")){
+						if(nbGroupe < 0){
+							nbSemaine = 0;
+							JOptionPane.showMessageDialog(this, "Trop de groupe TP sont assignés");
+						}
+						else{
+							isOk = true;
+						}
+					}
+					if(isOk){
+						Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbGroupe, this.txtCommentaire.getText());
+						Controleur.getControleur().ajouterAffectation(affectations);
+						this.frameM.dispose();
+						panel.tblGrilleDonnees.setModel(new GrilleRessources(this.mod));
+					}
 
 				}
 			}
@@ -147,4 +196,18 @@ public class PanelAddRessourceIntervenant extends JPanel {
 
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
 	}
+
+	private int calculNbGroupe(int nbGroupe,CategorieHeures categ){
+		List<Affectations> listAffectations = Controleur.getControleur().getAffectations(mod);
+		int retour = 0;
+
+		for(Affectations a : listAffectations){
+			if(a.getCategorieHeures().getlibCatHeur().equals(categ.getlibCatHeur())){
+				retour+= a.getNbGroupe();
+			}
+		}
+		retour += nbGroupe;
+		return retour;
+	}
+
 }
