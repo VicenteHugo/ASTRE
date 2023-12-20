@@ -496,6 +496,7 @@ public class Etat {
 				}
 
 				// On l'execute
+				System.out.println(st);
 				st.executeUpdate();
 			}
 		} catch (Exception e) { e.printStackTrace(); }

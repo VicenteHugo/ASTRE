@@ -258,6 +258,7 @@ public class Controleur {
 
 
 	/* AFFECTATIONS */
+	
 	public void ajouterAffectation(Affectations affect) {
 		Etat.ajouterAction(new Ajout(affect));
 		Etat.ajouterAffectation(affect);
