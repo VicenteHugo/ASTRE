@@ -579,7 +579,7 @@ public class PanelStage extends JPanel implements ActionListener{
 		this.txtREHTotEtdAffect.setText( rehAffect + "");
 		this.txthTutTotEtdAffect.setText( tutAffect + "");
 
-		this.txtTotEtd.setText((rehAffect + tutAffect) + "");
+		this.txtTotEtdAffect.setText((rehAffect + tutAffect) + "");
 
 
 
