@@ -21,7 +21,6 @@ import model.modules.Ressource;
 import model.modules.Sae;
 import model.modules.Stage;
 
-
 public class Controleur {
 
 	private static Controleur controleur;
@@ -153,6 +152,10 @@ public class Controleur {
 	public void enregistrer() { Etat.enregistrer(); }
 	public void annuler    () { Etat.anuller();     }
 
+	
+	/* SEMESTRES */
+	public void modifSemestres (Semestres sem) { Etat.ajouterAction(new Modification(sem));}
+
 
 	/* CATEGORIE-HEURE */
 	public void supprimerCategorieHeure(int i) {
@@ -261,6 +264,7 @@ public class Controleur {
 	}
 
 	public void supprimerAffectation(int ind) {
+
 		if (ind >= 0 && ind < Etat.getAffectations().size()) {
 			Affectations inter = Etat.getAffectations().remove(ind);
 			Etat.ajouterAction(new Suppression(inter));
@@ -339,13 +343,13 @@ public class Controleur {
 
     public boolean supprimerModule(Module m) {
 
-        //if (Etat.pasUtiliser(m)) {
+        if (Etat.pasUtiliser(m)) {
             Etat.ajouterAction(new Suppression(m));
             Etat.getModules().remove(m);
             return true;
-        //}
+     	}
 
-     //   return false;
+       return false;
     }
 
 

@@ -765,9 +765,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 			return;
 		}
 
-		boolean   val =this.cbValide.isValid();
-		String    cod = this.txtCodeMod.getText();
-		String    liL = this.txtLibLongMod.getText();
+		boolean   val = this.cbValide      .isValid();
+		String    cod = this.txtCodeMod    .getText();
+		String    liL = this.txtLibLongMod .getText();
 		String    liC = this.txtLibCourtMod.getText();
 		int       hp  = Integer.parseInt(this.txtHPTot.getText());
 
@@ -794,8 +794,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 			this.mod.initList        (map);
 			this.mod.setHeurePonctuel(hp );
 
+			System.out.println(val);
+
 			if (Controleur.getControleur().ajouterModule(this.mod)) {
-				Controleur.getControleur().enregistrer();
 				this.quitter();
 				return;
 			}
@@ -803,7 +804,6 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		}else{
 			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, hp, val, map)) {
-				Controleur.getControleur().enregistrer();
 				this.quitter();
 				return;
 			}

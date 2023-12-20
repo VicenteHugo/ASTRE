@@ -8,46 +8,53 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
+import controleur.Controleur;
+import model.Semestres;
 import view.JTextFieldNumber;
 
 public class PanelSemestre extends JPanel {
-    private JTextFieldNumber nbGpTD;
-    private JTextFieldNumber nbGpTP;
-    private JTextFieldNumber nbEtd;
-    private JTextFieldNumber nbSemaines;
+    private JTextFieldNumber txtNbGpTD;
+    private JTextFieldNumber txtNbGpTP;
+    private JTextFieldNumber txtNbETD;
+    private JTextFieldNumber txtNbSemaines;
 
     private JTable grilleSemestre;
+
+    private Semestres sem;
     
     public PanelSemestre(int semestre) {
+
+        this.sem = Controleur.getControleur().getSemestres().get(semestre-1);
+
         this.setLayout(new BorderLayout());
         JPanel panel = new JPanel(new GridLayout(1, 8));
 
         JPanel panel2 = new JPanel(new FlowLayout());
         panel2.add(new JLabel("nb gp TD"));
-        this.nbGpTD = new JTextFieldNumber("");
-        this.nbGpTD.setColumns(2);
-        panel2.add(this.nbGpTD);
+        this.txtNbGpTD = new JTextFieldNumber(this.sem.getNbGpTdSem() + "");
+        this.txtNbGpTD.setColumns(2);
+        panel2.add(this.txtNbGpTD);
         panel.add(panel2);
 
 
         panel2.add(new JLabel("nb gp TP"));
-        this.nbGpTP = new JTextFieldNumber("  ");
-        this.nbGpTP.setColumns(2);
-        panel2.add(this.nbGpTP);
+        this.txtNbGpTP = new JTextFieldNumber(this.sem.getNbGpTpSem() +  "");
+        this.txtNbGpTP.setColumns(2);
+        panel2.add(this.txtNbGpTP);
         panel.add(panel2);
 
 
         panel2.add(new JLabel("nb Etd"));
-        this.nbEtd = new JTextFieldNumber("  ");
-        this.nbEtd.setColumns(2);
-        panel2.add(this.nbEtd);
+        this.txtNbETD = new JTextFieldNumber(this.sem.getNbEtdSem() + "");
+        this.txtNbETD.setColumns(2);
+        panel2.add(this.txtNbETD);
         panel.add(panel2);
 
 
         panel2.add(new JLabel("nb semaines"));
-        this.nbSemaines = new JTextFieldNumber("  ");
-        this.nbSemaines.setColumns(2);
-        panel2.add(this.nbSemaines);
+        this.txtNbSemaines = new JTextFieldNumber(this.sem.getNbSemSem() + "");
+        this.txtNbSemaines.setColumns(2);
+        panel2.add(this.txtNbSemaines);
         panel.add(panel2);
 
 
@@ -66,5 +73,14 @@ public class PanelSemestre extends JPanel {
 
     public void majGrille(int semestre){
         this.grilleSemestre.setModel(new GrilleSemestre(semestre));
+    }
+
+    public Semestres getSemNew () {
+        this.sem.setNbEtdSem (Integer.parseInt(this.txtNbETD     .getText()));
+        this.sem.setNbGpTdSem(Integer.parseInt(this.txtNbGpTD    .getText()));
+        this.sem.setNbGpTpSem(Integer.parseInt(this.txtNbGpTP    .getText()));
+        this.sem.setNbSemSem (Integer.parseInt(this.txtNbSemaines.getText()));
+
+        return this.sem;
     }
 }

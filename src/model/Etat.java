@@ -432,8 +432,9 @@ public class Etat {
 	}
 
 	public static boolean pasUtiliser (Module m) {
+
 		for (Affectations a : Etat.lstAffectations) 
-			if (a.getModule() == m)
+			if (a.getModule() == m) 
 				return false;
 
 		return true;
