@@ -39,6 +39,10 @@ public class Intervenants {
 	/** Nombre total d'heure */
 	private int totalHeures;
 
+	/** List des affectations qu'ils fait */
+	private List<Affectations> lstAffectations;
+
+
 	/*-------------------------------------------------------------*/
 	/* CONSTRUCTEURS */
 	/*-------------------------------------------------------------*/
@@ -102,6 +106,10 @@ public class Intervenants {
 		return this.getSommeSemPaire() + this.getSommeSemImpaire();
 	}
 
+	public List<Affectations> getLstAffectations() {
+		return lstAffectations;
+	}
+
 	/*-------------------------------------------------------------*/
 	/* SET-TEURS */
 	/*-------------------------------------------------------------*/
@@ -141,5 +149,7 @@ public class Intervenants {
 				+ ", totauxSemestreImpaires=" + totauxSemestreImpaires + ", totauxSemestrePaire=" + totauxSemestrePaire
 				+ ", coefficient=" + coefficient + ", listeHeuresSemestre=" + listeHeuresSemestre + "]";
 	}
+	
+	public void addAffectations (Affectations a) { this.lstAffectations.add(a);}
 
 }

@@ -37,6 +37,7 @@ public class Affectations {
 
 
 		mode.addAffectations(this);
+		inter.addAffectations(this);
 	}
 
 	public Affectations(Intervenants inter, Module mode, CategorieHeures categorie, int nbHeure, String commentaire) {
@@ -60,7 +61,8 @@ public class Affectations {
 	}
 
 	public void setModule(Module module) {
-		this.module = module;
+		this.module = module;		
+		module.addAffectations(this);
 	}
 
 	public CategorieHeures getCategorieHeures() {
