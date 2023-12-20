@@ -34,6 +34,9 @@ public class Affectations {
 		this.nbSemaine = nbSemaine;
 		this.commentaire = commentaire;
 		this.nbGroupe = nbGroupe;
+
+
+		mode.addAffectations(this);
 	}
 
 	public Affectations(Intervenants inter, Module mode, CategorieHeures categorie, int nbHeure, String commentaire) {

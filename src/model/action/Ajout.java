@@ -3,6 +3,7 @@ package model.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import controleur.Controleur;
 import model.Affectations;
 import model.CategorieHeures;
 import model.CategorieIntervenant;
@@ -14,10 +15,10 @@ public class Ajout extends Action {
 
 	public Ajout(Affectations a) {
 
-		this.requetes = "INSERT INTO Affectation" + Etat.nom+ " (intNom, intPrenom, codeMod, libCatHeur, nbSem, nbGroupe, commentaire) VALUES (?,?,?,?,?,?,?)";
+		this.requetes = "INSERT INTO Affectation" + Etat.nom+ " (nomInt, prenomInt, codeMod, libCatHeur, nbSem, nbGroupe, commentaire) VALUES (?,?,?,?,?,?,?)";
 		this.info = new ArrayList<>(List.of(a.getIntervenant().getNomIntervenant(),
 				a.getIntervenant().getPrenomIntervenant(), a.getModule().getCode(),
-				a.getNbSemaine(), a.getNbGroupe(), a.getCommentaire()));
+				a.getCategorieHeures().getlibCatHeur(),a.getNbSemaine(), a.getNbGroupe(), a.getCommentaire()));
 	}
 
 	public Ajout(Module m) {

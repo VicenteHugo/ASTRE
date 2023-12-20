@@ -82,7 +82,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	private JTextFieldNumber txtTotEtdAffect;
 
 	//Affectation 
-	private JTable tblGrilleDonnees;
+	JTable tblGrilleDonnees;
 	private JButton btnAjouter;
 	private JButton btnSupprimer;
 
@@ -130,11 +130,11 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 	public PanelRessources (FrameAccueil frame, Module m) {
 		this.frame = frame;
+		this.frame.setTitle("Astre - Previsionnel");
+
 		this.mod = m;
 
 		loadPage(m.getSemestres());
-
-		this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
 
 		//txtCode
 		this.txtCodeMod    .setText(this.mod.getCode());
@@ -153,23 +153,31 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		//CM
 		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
+		System.out.println(map);
 
 		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("CM"));
-		this.txtHeureCMPN.setText(lst.get(0) + "");		
-		this.txtCMNbSem  .setText(lst.get(1) + "");		
-		this.txtCMNbHeure.setText(lst.get(2) + "");		
+		if (lst != null) {
+			this.txtHeureCMPN.setText(lst.get(0) + "");		
+			this.txtCMNbSem  .setText(lst.get(1) + "");		
+			this.txtCMNbHeure.setText(lst.get(2) + "");		
+		}
+
 
 		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
-		this.txtHeureTPPN.setText(lst.get(0) + "");		
-		this.txtTPNbSem  .setText(lst.get(1) + "");		
-		this.txtTPNbHeure.setText(lst.get(2) + "");		
+		if (lst != null) {
+			this.txtHeureTPPN.setText(lst.get(0) + "");		
+			this.txtTPNbSem  .setText(lst.get(1) + "");		
+			this.txtTPNbHeure.setText(lst.get(2) + "");	
+		}	
 
 		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
-		this.txtHeureTDPN.setText(lst.get(0) + "");		
-		this.txtTDNbSem  .setText(lst.get(1) + "");		
-		this.txtTDNbHeure.setText(lst.get(2) + "");		
+		if (lst != null) { 
+			this.txtHeureTDPN.setText(lst.get(0) + "");		
+			this.txtTDNbSem  .setText(lst.get(1) + "");		
+			this.txtTDNbHeure.setText(lst.get(2) + "");		
+		}
 
-		if (this.mod.isValide()) this.cbValide.validate();
+		this.cbValide.setSelected(this.mod.isValide());
 
 		//Juste pour faire les calculs
 		this.focusLost(null);
@@ -193,9 +201,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		//Informations Semestres
         this.txtTypeMod = new JTextField("Ressource", 8);
         this.txtSem     = new JTextField("S" + semestres.getNumSem(), 5);
-        this.txtNbEtd   = new JTextFieldNumber("80", 3);
-        this.txtNbGpTd  = new JTextFieldNumber("80", 3);
-        this.txtNbGpTp  = new JTextFieldNumber("80", 3);
+        this.txtNbEtd   = new JTextFieldNumber("0", 3);
+        this.txtNbGpTd  = new JTextFieldNumber("0", 3);
+        this.txtNbGpTp  = new JTextFieldNumber("0", 3);
 
 
 
@@ -765,7 +773,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 			return;
 		}
 
-		boolean   val = this.cbValide      .isValid();
+		boolean   val = this.cbValide      .isSelected();
 		String    cod = this.txtCodeMod    .getText();
 		String    liL = this.txtLibLongMod .getText();
 		String    liC = this.txtLibCourtMod.getText();
@@ -774,7 +782,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
 		
 
-		//                                            PN                                             SEMAINE                                      NB HEURE
+		//                                                   PN                                             SEMAINE                                      NB HEURE
 		List<Integer> lstCM = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
 		List<Integer> lstTP = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureTPPN.getText()), Integer.parseInt(this.txtTPNbSem.getText()), Integer.parseInt(this.txtTPNbHeure.getText())));
 		List<Integer> lstTD = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureTDPN.getText()), Integer.parseInt(this.txtTDNbSem.getText()), Integer.parseInt(this.txtTDNbHeure.getText())));
@@ -808,7 +816,6 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 				return;
 			}
 		}
-
 		this.showMessageDialog("Le code est déja utiliser");
 	}
 
@@ -828,15 +835,12 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	private void supprimer() {
 		int ind = this.tblGrilleDonnees.getSelectedRow();
 
-		Controleur.getControleur().supprimerIntervenant(ind);
+		Controleur.getControleur().supprimerAffectation(ind);
 		if (ind >= 0)
 			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
-		this.maj();
-	}
-
-    public void maj() {
-		//this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
-	}
+		
+		this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
+	}	
 
 	private void showMessageDialog(String message) {
 		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);

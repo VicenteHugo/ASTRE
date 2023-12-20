@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import view.JLabelModule;
 import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
@@ -199,19 +200,19 @@ public class PanelPPP extends JPanel implements ActionListener{
         gbcPanelHaut.gridy = 0;
         gbcPanelHaut.weightx = 1;
         gbcPanelHaut.weighty = 1;
-        gbcPanelHaut.insets = new Insets(3, 3, 3, 3);
+        gbcPanelHaut.insets = new Insets(2, 2, 2, 2);
 		gbcPanelHaut.anchor = GridBagConstraints.LINE_START;
 
         // Ajout des libellés première ligne
-        panelHaut.add(new JLabel("Type module"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("Type module"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("Semestres"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("Semestres"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("Code"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("Code"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("Libellé long"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("Libellé long"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("Libellé court"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("Libellé court"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
 
         // Ajout des textfields première ligne
@@ -234,11 +235,11 @@ public class PanelPPP extends JPanel implements ActionListener{
         gbcPanelHaut.gridx = 0;
         gbcPanelHaut.gridy++;
 
-        panelHaut.add(new JLabel("nb Etd"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("nb Etd"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("nb gp TD"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("nb gp TD"), gbcPanelHaut);
         gbcPanelHaut.gridx++;
-        panelHaut.add(new JLabel("nbgp TP"), gbcPanelHaut);
+        panelHaut.add(new JLabelModule("nbgp TP"), gbcPanelHaut);
 
         // Ajout des textfields deuxième ligne
         gbcPanelHaut.gridx = 0;
@@ -267,17 +268,17 @@ public class PanelPPP extends JPanel implements ActionListener{
         gbcHeurePN.insets = new Insets(3, 3, 3, 3);
 
 
-		//Ajout des JLabel première lignes
+		//Ajout des JLabelModule première lignes
 		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
 		gbcHeurePN.gridx = 1;
-		panelHeurePN.add(new JLabel("CM"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule("CM"), gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(new JLabel("TD"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule("TD"), gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(new JLabel("TP"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule("TP"), gbcHeurePN);
 		gbcHeurePN.gridx++;
 		gbcHeurePN.anchor = GridBagConstraints.CENTER;
-		panelHeurePN.add(new JLabel("∑"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule("∑"), gbcHeurePN);
 		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
 
 		gbcHeurePN.gridx = 1;
@@ -292,7 +293,7 @@ public class PanelPPP extends JPanel implements ActionListener{
 
 		gbcHeurePN.gridx = 0;
 		gbcHeurePN.gridy++;
-		panelHeurePN.add(new JLabel("Total (eqtd) promo"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule("Total (eqtd) promo"), gbcHeurePN);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(this.txtHeureEtdCMPN,gbcHeurePN);
 		gbcHeurePN.gridx++;
@@ -307,7 +308,7 @@ public class PanelPPP extends JPanel implements ActionListener{
 		panelHeurePNValid.setLayout(new BorderLayout());
 		panelHeurePNValid.add(panelHeurePN, BorderLayout.CENTER);
 		panelHeurePNValid.add(this.cbValide, BorderLayout.SOUTH);
-		panelHeurePNValid.add(new JLabel("PN Local (nb h tot/etd)",JLabel.CENTER), BorderLayout.PAGE_START);
+		panelHeurePNValid.add(new JLabelModule("PN Local (nb h tot/etd)",JLabelModule.CENTER), BorderLayout.PAGE_START);
 
 
 		//Repartion 
@@ -324,47 +325,47 @@ public class PanelPPP extends JPanel implements ActionListener{
 
 		// Ajout première ligne
 		gbcRepar.gridwidth = 1;
-		panelRepartition.add(new JLabel("CM"), gbcRepar);
+		panelRepartition.add(new JLabelModule("CM"), gbcRepar);
 		gbcRepar.gridx+= 1;
-		panelRepartition.add(new JLabel("TD"), gbcRepar);
+		panelRepartition.add(new JLabelModule("TD"), gbcRepar);
 		gbcRepar.gridx+= 1;
-		panelRepartition.add(new JLabel("TP"), gbcRepar);
+		panelRepartition.add(new JLabelModule("TP"), gbcRepar);
 
 
 		//Deuxième ligne
 		gbcRepar.gridwidth = 1;
 		gbcRepar.gridx     = 0;
 		gbcRepar.gridy+=2;
-		panelRepartition.add(new JLabel("nb heures "), gbcRepar);
+		panelRepartition.add(new JLabelModule("nb heures "), gbcRepar);
 		gbcRepar.gridx+=1;
-		panelRepartition.add(new JLabel("nb heures "), gbcRepar);
+		panelRepartition.add(new JLabelModule("nb heures "), gbcRepar);
 		gbcRepar.gridx+=1;
-		panelRepartition.add(new JLabel("nb heures "), gbcRepar);
+		panelRepartition.add(new JLabelModule("nb heures "), gbcRepar);
 		gbcRepar.gridx+=4;
 
        // gbcRepar.insets.left = 20;
-		panelRepartition.add(new JLabel("CM", JLabel.LEFT), gbcRepar);
+		panelRepartition.add(new JLabelModule("CM", JLabelModule.LEFT), gbcRepar);
 		
        // gbcRepar.insets.left = 2;
 		gbcRepar.gridx+=1;
-		panelRepartition.add(new JLabel("TD", JLabel.LEFT), gbcRepar);
+		panelRepartition.add(new JLabelModule("TD", JLabelModule.LEFT), gbcRepar);
 		gbcRepar.gridx++;
-		panelRepartition.add(new JLabel("TP", JLabel.LEFT), gbcRepar);
+		panelRepartition.add(new JLabelModule("TP", JLabelModule.LEFT), gbcRepar);
 
 		
         gbcRepar.insets.left = 20;
 		gbcRepar.anchor = GridBagConstraints.CENTER;
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabel(), gbcRepar);
+		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabel("HP", JLabel.LEFT), gbcRepar);
+		panelRepartition.add(new JLabelModule("HP", JLabelModule.LEFT), gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabel("HT", JLabel.LEFT), gbcRepar);
+		panelRepartition.add(new JLabelModule("HT", JLabelModule.LEFT), gbcRepar);
 		gbcRepar.gridx++;
-		panelRepartition.add(new JLabel(), gbcRepar);
+		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
         gbcRepar.insets.right = 20;
-		panelRepartition.add(new JLabel("∑", JLabel.LEFT), gbcRepar);
+		panelRepartition.add(new JLabelModule("∑", JLabelModule.LEFT), gbcRepar);
         gbcRepar.insets.left = 2;
 		
 
@@ -396,13 +397,13 @@ public class PanelPPP extends JPanel implements ActionListener{
         gbcRepar.insets.left = 20;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabel(), gbcRepar);
+		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtHPTot, gbcRepar);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtHTTot, gbcRepar);
 		gbcRepar.gridx++;
-		panelRepartition.add(new JLabel(), gbcRepar);
+		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
         gbcRepar.insets.right = 20;
 		panelRepartition.add(this.txtTot, gbcRepar);
@@ -417,7 +418,7 @@ public class PanelPPP extends JPanel implements ActionListener{
 		gbcRepar.gridwidth = 3;
 		gbcRepar.insets.top = 8;
 		gbcRepar.gridx= 3;
-		panelRepartition.add(new JLabel("Total promo (eqtd)"), gbcRepar);
+		panelRepartition.add(new JLabelModule("Total promo (eqtd)"), gbcRepar);
 		gbcRepar.gridx += 3;
 		gbcRepar.gridwidth = 1;
 		panelRepartition.add(this.txtCMTotEtd, gbcRepar);
@@ -429,13 +430,13 @@ public class PanelPPP extends JPanel implements ActionListener{
         gbcRepar.insets.left = 20;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabel(), gbcRepar);
+		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtHPTotEtd, gbcRepar);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtHTTotEtd, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabel(), gbcRepar);
+		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
         gbcRepar.insets.right = 20;
 		panelRepartition.add(this.txtTotEtd, gbcRepar);
@@ -447,7 +448,7 @@ public class PanelPPP extends JPanel implements ActionListener{
 		gbcRepar.gridy++;
 		gbcRepar.gridwidth = 3;
 		gbcRepar.gridx= 3;
-		panelRepartition.add(new JLabel("Total affecté (eqtd)"), gbcRepar);
+		panelRepartition.add(new JLabelModule("Total affecté (eqtd)"), gbcRepar);
 		gbcRepar.gridx += 3;
 		gbcRepar.gridwidth = 1;
 		panelRepartition.add(this.txtCMTotEtdAffect, gbcRepar);
@@ -459,13 +460,13 @@ public class PanelPPP extends JPanel implements ActionListener{
         gbcRepar.insets.left = 20;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabel(), gbcRepar);
+		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtHPTotEtdAffect, gbcRepar);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtHTTotEtdAffect, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabel(), gbcRepar);
+		panelRepartition.add(new JLabelModule(), gbcRepar);
 		gbcRepar.gridx ++;
         gbcRepar.insets.right = 20;
 		panelRepartition.add(this.txtTotEtdAffect, gbcRepar);
@@ -475,7 +476,7 @@ public class PanelPPP extends JPanel implements ActionListener{
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
+		this.tblGrilleDonnees = new JTable(new GrillePPP());
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -486,11 +487,11 @@ public class PanelPPP extends JPanel implements ActionListener{
 
 		JScrollPane spGrilleDonnees = new JScrollPane(this.tblGrilleDonnees);
 		panelTable.add(spGrilleDonnees, BorderLayout.CENTER);
-		panelTable.add(new JLabel("Affectation"), BorderLayout.NORTH);
+		panelTable.add(new JLabelModule("Affectation"), BorderLayout.NORTH);
 		panelTable.add(panelAjoutSupp, BorderLayout.SOUTH);
 
 		JPanel panelRep = new JPanel(new BorderLayout());
-		panelRep.add(new JLabel("Repartition",JLabel.CENTER), BorderLayout.NORTH);
+		panelRep.add(new JLabelModule("Repartition",JLabelModule.CENTER), BorderLayout.NORTH);
 		panelRep.add(panelRepartition, BorderLayout.CENTER);
 
 
