@@ -523,7 +523,7 @@ public class PanelStage extends JPanel implements ActionListener{
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
-		System.out.println(ind);
+		
 		Controleur.getControleur().supprimerIntervenant(ind);
 		if (ind >= 0)
 			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);

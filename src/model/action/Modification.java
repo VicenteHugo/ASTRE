@@ -8,6 +8,7 @@ import model.CategorieHeures;
 import model.CategorieIntervenant;
 import model.Etat;
 import model.Intervenants;
+import model.Semestres;
 import model.modules.Module;
 
 public class Modification extends Action {
@@ -61,5 +62,12 @@ public class Modification extends Action {
 		this.requetes = "UPDATE CategorieIntervenants" + Etat.nom + " SET codeCatInt = ?, libCatInt = ?, coefCatInt = ?, heureMinCatInt = ?, heureMaxCatInt = ? WHERE codeCatInt = ?;";
 
 		this.info = new ArrayList<>(List.of(cNew.getCodeCatInt(), cNew.getLibCatInt(), cNew.getCoefCatInt(), cNew.getHeureMinCatInt(), cNew.getHeureMaxCatInt(), cOld.getCodeCatInt()));
+	}
+
+	public Modification(Semestres sem) {
+
+		this.requetes = "UPDATE Semestres" + Etat.nom + " SET nbGpTdSem = ?, nbGpTpSem = ?, nbEtdSem = ?, nbSemSem = ? WHERE numSem = ?;";
+
+		this.info = new ArrayList<>(List.of(sem.getNbGpTdSem(), sem.getNbGpTpSem(), sem.getNbEtdSem(), sem.getNbSemSem(), sem.getNumSem()));
 	}
 }
