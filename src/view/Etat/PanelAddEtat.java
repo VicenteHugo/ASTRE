@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
+import view.JButtonStyle;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,8 +30,8 @@ public class PanelAddEtat extends JPanel {
 	private JComboBox<String> lstEtat;
 
 
-	private JButton btnValider;
-	private JButton btnAnnuler;
+	private JButtonStyle btnValider;
+	private JButtonStyle btnAnnuler;
 
 
 	private PanelEtat panel;
@@ -54,8 +54,8 @@ public class PanelAddEtat extends JPanel {
 		for (String s : Etat.getEtats())
 			comboBoxModel.addElement(s);
 
-		this.btnAnnuler = new JButton("Annuler");
-		this.btnValider = new JButton("Créer");
+		this.btnAnnuler = new JButtonStyle("Annuler");
+		this.btnValider = new JButtonStyle("Créer");
 
 
         /* STYLE */
