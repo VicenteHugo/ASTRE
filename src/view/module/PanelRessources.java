@@ -912,12 +912,8 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		this.txtHPTotEtd.setText( hpHTotEtd + "");
 
 		this.txtTotEtd.setText((cmHTotEtd + tdHTotEtd + tpHTotEtd + hpHTotEtd) + "");
-
-
-
 	}
-
-
+	
 	public void focusGained(FocusEvent e) {
 	}
 }
