@@ -1,6 +1,7 @@
 package view.previsionnel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -58,16 +59,16 @@ public class PanelPrevi extends JPanel {
 
         JPanel panel = new JPanel(new FlowLayout());
 
-        this.btnCreer = new JButtonStyle("Créer Ressource");
-        panel.add(this.btnCreer);
-
         this.cmbChoixCreer = new JComboBox<String>();
         this.cmbChoixCreer.addItem("Créer Ressource");
         this.cmbChoixCreer.addItem("Créer Saé");
         this.cmbChoixCreer.addItem("Créer Stage");
         this.cmbChoixCreer.addItem("Créer PPP");
-
+        this.cmbChoixCreer.setBackground(Color.decode("0xD0D0D0"));
         panel.add(this.cmbChoixCreer);
+
+        this.btnCreer = new JButtonStyle("Créer Ressource");
+        panel.add(this.btnCreer);
 
         this.btnModifier = new JButtonStyle("Modifier");
         panel.add(this.btnModifier);

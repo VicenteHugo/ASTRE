@@ -19,6 +19,7 @@ import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import view.JButtonStyle;
 import controleur.*;
+import model.Affectations;
 import model.Semestres;
 import model.modules.Module;
 
@@ -387,6 +388,7 @@ public class PanelStage extends JPanel implements ActionListener{
         this.txtNbGpTd .setEditable(false);
 		this.txtNbGpTp .setEditable(false);
 
+		this.txtTotEtd.setEditable(false);
 
 		this.txtREHTotEtdAffect.setEditable(false);
 		this.txthTutTotEtdAffect.setEditable(false);
@@ -548,31 +550,36 @@ public class PanelStage extends JPanel implements ActionListener{
 
 	public void focusLost(FocusEvent e) {
 
-		//Récupération des données
-		int hREHPN  = Integer.parseInt(this.txtHeureEtdREHPN.getText());
-		int hTutPN = Integer.parseInt(this.txtHeureEtdhTutPN.getText());
-		int somPN  = Integer.parseInt(this.txtHeureEtdSPN.getText());
-
-		int gpTd = Integer.parseInt(this.txtNbGpTd.getText());
-		int gpTp = Integer.parseInt(this.txtNbGpTp.getText());
-
-		int rehToteqtd = Integer.parseInt(this.txtREHTotEtd.getText());
-		int tutToteqtd = Integer.parseInt(this.txthTutTotEtd.getText());
-
 		float coefREH  = Controleur.getControleur().getCategorieHeure("REH").getcoefCatHeur();
-		float coefTut = Controleur.getControleur().getCategorieHeure("Tut").getcoefCatHeur();
+		float coefTut = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
+
+		int totEqtd = Integer.parseInt(this.txtREHTotEtdAffect.getText()) + Integer.parseInt(this.txthTutTotEtdAffect.getText());
+
+		this.txtTotEtd.setText(totEqtd + "");
 
 
 		/* CALCUL REPARTITION */
 
 		//EQTD
-		int rehHTotEtd = Math.round((cmHeu * cmSem) * coefREH);
-		int tutHTotEtd = Math.round((tpHeu * tpSem) * coefTut * gpTp);
+		int rehAffect = 0;
+		int tutAffect = 0;
 
-		this.txtREHTotEtdAffect.setText( rehHTotEtd + "");
-		this.txthTutTotEtdAffect.setText( tutHTotEtd + "");
 
-		this.txtTotEtd.setText((rehHTotEtd + tutHTotEtd) + "");
+		for (Affectations a : this.mod.getLstAffectations()) {
+
+			System.out.println(a.getCategorieHeures().getlibCatHeur());
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("REH"))
+				rehAffect += a.getNbHeure() * coefREH;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
+				tutAffect += a.getNbHeure() * coefTut;
+		}
+
+		this.txtREHTotEtdAffect.setText( rehAffect + "");
+		this.txthTutTotEtdAffect.setText( tutAffect + "");
+
+		this.txtTotEtdAffect.setText((rehAffect + tutAffect) + "");
 
 
 
