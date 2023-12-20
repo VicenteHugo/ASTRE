@@ -28,10 +28,15 @@ body {
     background-color: wheat;
 }
 
+div{
+    font-family: 'Courier New', Courier, monospace;
+}
+
 /**
  * titre de la partie
 */
 h2 {
+    font-size: 35px;
     color: #0097B2;
 }
 
@@ -57,7 +62,7 @@ ul {
 li {
     color: black;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 17px;
 }
 
 /**
@@ -76,8 +81,4 @@ info {
     color: black;
     font-weight: normal;
     font-size: 12px;
-}
-
-table{
-    margin: 5%;
 }
