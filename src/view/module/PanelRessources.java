@@ -761,6 +761,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 	private void quitter () {
 		this.frame.changePanel(new PanelPrevi(this.frame));
+		Controleur.getControleur().annuler();
 	}
 
 
@@ -798,6 +799,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 			this.mod.setHeurePonctuel(hp );
 
 			if (Controleur.getControleur().ajouterModule(this.mod)) {
+				Controleur.getControleur().enregistrer();
 				this.quitter();
 				return;
 			}

@@ -62,6 +62,7 @@ public class Intervenants {
 
 		this.coefficient = coef;
 		this.listeHeuresSemestre = new ArrayList<Integer>();
+		this.lstAffectations     = new ArrayList<Affectations>();
 	}
 
 	/*-------------------------------------------------------------*/
@@ -149,7 +150,7 @@ public class Intervenants {
 				+ ", totauxSemestreImpaires=" + totauxSemestreImpaires + ", totauxSemestrePaire=" + totauxSemestrePaire
 				+ ", coefficient=" + coefficient + ", listeHeuresSemestre=" + listeHeuresSemestre + "]";
 	}
-	
+
 	public void addAffectations (Affectations a) { this.lstAffectations.add(a);}
 
 }
