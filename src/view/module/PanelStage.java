@@ -567,13 +567,13 @@ public class PanelStage extends JPanel implements ActionListener{
 		/* CALCUL REPARTITION */
 
 		//EQTD
-		int rehHTotEtd = Math.round(rehToteqtd * coefREH);
-		int tutHTotEtd = Math.round(tutToteqtd * coefTut * gpTp);
+		int rehHTotEtdaff = Math.round(rehToteqtd * coefREH);
+		int tutHTotEtdaff = Math.round(tutToteqtd * coefTut * gpTp);
 
-		this.txtREHTotEtdAffect.setText( rehHTotEtd + "");
-		this.txthTutTotEtdAffect.setText( tutHTotEtd + "");
+		this.txtREHTotEtdAffect.setText( rehHTotEtdaff + "");
+		this.txthTutTotEtdAffect.setText( tutHTotEtdaff + "");
 
-		this.txtTotEtd.setText((rehHTotEtd + tutHTotEtd) + "");
+		this.txtTotEtd.setText((rehHTotEtdaff + tutHTotEtdaff) + "");
 
 
 
