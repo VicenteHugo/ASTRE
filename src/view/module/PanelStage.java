@@ -569,7 +569,7 @@ public class PanelStage extends JPanel implements ActionListener{
 
 			System.out.println(a.getCategorieHeures().getlibCatHeur());
 
-			if (a.getCategorieHeures().getlibCatHeur().equals("SAE"))
+			if (a.getCategorieHeures().getlibCatHeur().equals("REH"))
 				rehAffect += a.getNbHeure() * coefREH;
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
