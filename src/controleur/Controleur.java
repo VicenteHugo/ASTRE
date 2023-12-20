@@ -157,14 +157,7 @@ public class Controleur {
 	public void modifSemestres (Semestres sem) { Etat.ajouterAction(new Modification(sem));}
 
 
-	/* CATEGORIE-HEURE */
-	public void supprimerCategorieHeure(int i) {
-		if (i >= 0 && i < Etat.getCategoriesHeures().size()) {
-			CategorieHeures cat = Etat.getCategoriesHeures().remove(i);
-			Etat.ajouterAction(new Suppression(cat));
-		}
-	}
-
+	/* CATEGORIE-Interveneants */
 	public boolean supprimerCategorieIntervenants(int i) {
 		CategorieIntervenant cat = Etat.getCategoriesIntervenants().get(i);
 
@@ -230,11 +223,15 @@ public class Controleur {
 		Etat.ajouterIntervenant(inter);
 	}
 
-	public void supprimerIntervenant(int ind) {
-		if (ind >= 0 && ind < Etat.getIntervenants().size()) {
-			Intervenants inter = Etat.getIntervenants().remove(ind);
-			Etat.ajouterAction(new Suppression(inter));
-		}
+	public boolean supprimerIntervenant(int ind) {
+		Intervenants i = Etat.getIntervenants(ind);
+
+		if (!Etat.pasUtiliser(i)) return false;
+
+		Intervenants inter = Etat.getIntervenants().remove(ind);
+		Etat.ajouterAction(new Suppression(inter));
+
+		return true;
 	}
 
 	public boolean modifIntervenant(int i, CategorieIntervenant categ, String nomIntervenant, String prenomIntervenant, int services, int mexHeure, float coef) {

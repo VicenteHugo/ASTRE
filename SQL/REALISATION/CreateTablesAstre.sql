@@ -116,7 +116,7 @@ INSERT INTO CategorieHeuresETAT (libCatHeur, coefCatHeur)
 VALUES      ('CM'   , 1.5),
             ('TD'   , 1.0),
             ('TP'   , 1.0),
-            ('Tut'  , 1.0),
+            ('TUT'  , 1.0),
             ('REH'  , 1.0),
             ('Sae'  , 1.0),
             ('HP'   , 1.0),

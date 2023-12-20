@@ -160,21 +160,17 @@ INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'TD' , 5 , 2, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'TP' , 5 , 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'CM' , 5 , 4, 14);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'TD' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'TP' , 5 , 4, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'CM' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'TUT' , 5 , 4, 1);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'TD' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'TP' , 5 , 4, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'CM' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'TUT' , 5 , 4, 1);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'TD' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'TP' , 5 , 4, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'CM' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'TUT' , 5 , 4, 1);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'TD' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'TP' , 5 , 4, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'CM' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'TUT' , 5 , 4, 1);
 
 
 
@@ -284,17 +280,14 @@ INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)
 
 INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Griette', 'Quentin', 'R1.07', 'TD'  , 14 , 2);
 -- INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Griette', 'Quentin', 'R3.08', 'TD'  , 14 , 2);
-INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Griette', 'Quentin', 'S1.02', 'REH' , 1  , 3);
 
 INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Laffaech', 'Quentin', 'R1.08', 'TD' , 13  , 2);
 INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Laffaech', 'Quentin', 'R1.09', 'TD' , 14  , 2);
-INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Laffaech', 'Quentin', 'S1.05', 'REH', 1   , 3);
 -- INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Laffaech', 'Quentin', 'R3.11', 'TD' , 14  , 2);
 -- INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Laffaech', 'Quentin', 'R5.01', 'TD' , 14  , 2);
 -- INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Laffaech', 'Quentin', 'R6.02', 'TD' , 14  , 2);
 
 INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Foubert', 'Jean', 'R1.10', 'TD' , 14  , 3);
-INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Foubert', 'Jean', 'S1.06', 'REH', 1   , 3);
 -- INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Foubert', 'Jean', 'R5.14', 'TD' , 14  , 2);
 
 INSERT INTO AffectationEtat1(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Bertin', 'Sebastien', 'R1.11', 'TD' , 14  , 1);

@@ -140,12 +140,6 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		this.txtCodeMod    .setText(this.mod.getCode());
 		this.txtLibLongMod .setText(this.mod.getLibLong());
 		this.txtLibCourtMod.setText(this.mod.getLibCourt());
-		
-		//Semestres info
-		Semestres s = this.mod.getSemestres();
-		this.txtNbEtd .setText("" + s.getNbEtdSem());
-		this.txtNbGpTd.setText("" + s.getNbGpTdSem());
-		this.txtNbGpTp.setText("" + s.getNbGpTpSem()); 
 
 
 		//Heure ponctuelle
@@ -200,9 +194,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		//Informations Semestres
         this.txtTypeMod = new JTextField("Ressource", 8);
         this.txtSem     = new JTextField("S" + semestres.getNumSem(), 5);
-        this.txtNbEtd   = new JTextFieldNumber("0", 3);
-        this.txtNbGpTd  = new JTextFieldNumber("0", 3);
-        this.txtNbGpTp  = new JTextFieldNumber("0", 3);
+		this.txtNbEtd   = new JTextFieldNumber("" + semestres.getNbEtdSem (), 3);
+		this.txtNbGpTd  = new JTextFieldNumber("" + semestres.getNbGpTdSem(), 3);
+		this.txtNbGpTp  = new JTextFieldNumber("" + semestres.getNbGpTpSem(), 3); 
 
 
 
@@ -821,7 +815,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	private void ajouter () {
 		JFrame f = new JFrame();
         f.add(new PanelAddRessourceIntervenant(this,this.frame, f,mod));
-        f.setTitle("Ajout d'un Intervenant");
+        f.setTitle("Ajout d'une affectation");
 		f.pack();
 		f.setResizable(false);
 		f.setLocationRelativeTo(null);
