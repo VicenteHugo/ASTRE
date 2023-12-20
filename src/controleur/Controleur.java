@@ -258,6 +258,7 @@ public class Controleur {
 
 
 	/* AFFECTATIONS */
+	
 	public void ajouterAffectation(Affectations affect) {
 		Etat.ajouterAction(new Ajout(affect));
 		Etat.ajouterAffectation(affect);
@@ -332,6 +333,7 @@ public class Controleur {
             int i = Etat.getModules().indexOf(mOld);
             Etat.getModules().remove(mOld);
             Etat.getModules().add(i, mNew);
+
 
             // On ajouter l'action
             Etat.ajouterAction(new Modification(mOld, mNew));

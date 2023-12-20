@@ -21,7 +21,7 @@ import view.JLabelModule;
 import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
-
+import view.previsionnel.PanelSemestre;
 import controleur.*;
 import model.CategorieHeures;
 import model.Semestres;
@@ -82,7 +82,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	private JTextFieldNumber txtTotEtdAffect;
 
 	//Affectation 
-	private JTable tblGrilleDonnees;
+	JTable tblGrilleDonnees;
 	private JButton btnAjouter;
 	private JButton btnSupprimer;
 
@@ -128,11 +128,11 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 	public PanelRessources (FrameAccueil frame, Module m) {
 		this.frame = frame;
+		this.frame.setTitle("Astre - Previsionnel");
+
 		this.mod = m;
 
 		loadPage(m.getSemestres());
-
-		this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
 
 		//txtCode
 		this.txtCodeMod    .setText(this.mod.getCode());
@@ -780,7 +780,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
 		
 
-		//                                            PN                                             SEMAINE                                      NB HEURE
+		//                                                   PN                                             SEMAINE                                      NB HEURE
 		List<Integer> lstCM = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
 		List<Integer> lstTP = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureTPPN.getText()), Integer.parseInt(this.txtTPNbSem.getText()), Integer.parseInt(this.txtTPNbHeure.getText())));
 		List<Integer> lstTD = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureTDPN.getText()), Integer.parseInt(this.txtTDNbSem.getText()), Integer.parseInt(this.txtTDNbHeure.getText())));
@@ -814,7 +814,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 				return;
 			}
 		}
-
+		
 		this.showMessageDialog("Le code est déja utiliser");
 	}
 
@@ -832,17 +832,12 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 	private void supprimer() {
-		int ind = this.tblGrilleDonnees.getSelectedRow();
-
-		Controleur.getControleur().supprimerIntervenant(ind);
-		if (ind >= 0)
-			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
-		this.maj();
-	}
-
-    public void maj() {
-		//this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
-	}
+        int[] selectedRow = this.tblGrilleDonnees.getSelectedRows();
+        for (int i =0; i < selectedRow.length; i++) {
+            Controleur.getControleur().supprimerAffectation(i);
+        }
+		this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
+	}	
 
 	private void showMessageDialog(String message) {
 		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);

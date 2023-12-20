@@ -119,23 +119,12 @@ public class PanelAddRessourceIntervenant extends JPanel {
 
 		//Activation
 		this.btnValider.addActionListener((e)->{
-			Intervenants intervenant = null;
+			Intervenants intervenant = Controleur.getControleur().getIntervenants(this.boxIntervenant.getSelectedIndex());
 			CategorieHeures categ = null;
 			int nbSemaine = Integer.parseInt(this.txtNbSemaine.getText());
 			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
-			String[] parties = ((String) this.boxIntervenant.getSelectedItem()).split(" ");
-			String nomIntervenant = parties[0];
-			String prenomIntervenant = parties[1];
-			
 
-			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
-				if(inter.getNomIntervenant().equals(nomIntervenant) && 
-				inter.getPrenomIntervenant().equals(prenomIntervenant)){
-					intervenant = inter;
-					break;
-				}
-			}
-
+			System.out.println(intervenant);
 			for(CategorieHeures ch : Controleur.getControleur().getCategorieHeures()){
 				if(ch.getlibCatHeur().equals(this.boxCategorie.getSelectedItem())){
 					categ =ch;
@@ -150,11 +139,13 @@ public class PanelAddRessourceIntervenant extends JPanel {
 					
 					Controleur.getControleur().ajouterAffectation(affectations);
 					this.frameM.dispose();
+					panel.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 		
+
 				}
 			}
-
-			this.panel.maj();
+		
 		});
+
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
 	}
 }

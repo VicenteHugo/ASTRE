@@ -17,6 +17,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 import controleur.Controleur;
+import model.Affectations;
 import model.Etat;
 import model.Semestres;
 import model.modules.Module;
