@@ -54,7 +54,8 @@ public class Affectations {
 
 	public void setIntervenant(Intervenants intervenant) {
 		this.intervenant = intervenant;
-	}
+		intervenant.addAffectations(this);
+}
 
 	public Module getModule() {
 		return module;

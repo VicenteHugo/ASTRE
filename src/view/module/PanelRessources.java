@@ -151,7 +151,6 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		//CM
 		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
-		System.out.println(map);
 
 		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("CM"));
 		if (lst != null) {
@@ -784,13 +783,10 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		List<Integer> lstCM = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
 		List<Integer> lstTP = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureTPPN.getText()), Integer.parseInt(this.txtTPNbSem.getText()), Integer.parseInt(this.txtTPNbHeure.getText())));
 		List<Integer> lstTD = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureTDPN.getText()), Integer.parseInt(this.txtTDNbSem.getText()), Integer.parseInt(this.txtTDNbHeure.getText())));
-		List<Integer> lstHP = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHPTot    .getText()), 1                                          , Integer.parseInt(this.txtHPTot    .getText())));
-
 
 		map.put(Controleur.getControleur().getCategorieHeure("CM"), lstCM);
 		map.put(Controleur.getControleur().getCategorieHeure("TP"), lstTP);
 		map.put(Controleur.getControleur().getCategorieHeure("TD"), lstTD);
-		map.put(Controleur.getControleur().getCategorieHeure("HP"), lstHP);
 
 		if (this.estNouveau) {
 			this.mod.setCode         (cod);
@@ -799,8 +795,6 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 			this.mod.setValide       (val);
 			this.mod.initList        (map);
 			this.mod.setHeurePonctuel(hp );
-
-			System.out.println(val);
 
 			if (Controleur.getControleur().ajouterModule(this.mod)) {
 				this.quitter();
@@ -915,11 +909,6 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 
-		//On met tous dans la liste de mod
-		this.mod.initList(tdHeu, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("CM"));
-		this.mod.initList(tdHeu, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("TD"));
-		this.mod.initList(tpPN, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("TP"));
-		this.mod.initList(tdHeu, 1, tpHeu, Controleur.getControleur().getCategorieHeure("HP"));
 	}
 
 

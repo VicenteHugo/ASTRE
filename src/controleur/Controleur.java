@@ -337,6 +337,9 @@ public class Controleur {
 			for (Affectations a : mOld.getLstAffectations())
 				a.setModule(mNew);
 
+			mNew.setHeures(heures);
+
+
             // On ajouter l'action
             Etat.ajouterAction(new Modification(mOld, mNew));
             return true;

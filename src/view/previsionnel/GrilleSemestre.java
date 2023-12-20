@@ -21,9 +21,15 @@ public class GrilleSemestre extends AbstractTableModel {
 
         int cpt = 0;
         for (Module module : ctrl.getModules(semestre)) {
+
+            // Code/Nom
             this.tabDonnees[cpt][0] = module.getCode();
             this.tabDonnees[cpt][1] = module.getLibLong();
+
+            //Heure calculer
             this.tabDonnees[cpt][2] = module.getHeureAffecte() + "/"  + module.getHeurePn();
+            
+            //Valider
             this.tabDonnees[cpt][3] = module.isValide();
             cpt++;
         }
