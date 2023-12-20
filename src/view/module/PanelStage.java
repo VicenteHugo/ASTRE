@@ -131,7 +131,7 @@ public class PanelStage extends JPanel implements ActionListener{
         gbcPanelHaut.gridy = 0;
         gbcPanelHaut.weightx = 1;
         gbcPanelHaut.weighty = 1;
-        gbcPanelHaut.insets = new Insets(3, 3, 3, 3);
+        gbcPanelHaut.insets = new Insets(2,2,2,2);
 		gbcPanelHaut.anchor = GridBagConstraints.LINE_START;
 
         // Ajout des libellés première ligne
@@ -211,7 +211,7 @@ public class PanelStage extends JPanel implements ActionListener{
 		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
 		
 		
-		gbcHeurePN.insets = new Insets(2, 3, 10, 3);
+		gbcHeurePN.insets = new Insets(2, 2, 10, 2);
 		gbcHeurePN.gridx  = 0;
 		gbcHeurePN.gridy++;
 		panelHeurePN.add(new JLabelModule("Total (eqtd) promo"), gbcHeurePN);
@@ -247,13 +247,13 @@ public class PanelStage extends JPanel implements ActionListener{
 		panelRepartition.add(new JLabelModule("REH", JLabel.CENTER), gbcRepar);
 		gbcRepar.gridx++;
 		panelRepartition.add(new JLabelModule("h Tut", JLabel.CENTER), gbcRepar);
-		gbcRepar.insets = new Insets(2,340,5,10);
+		gbcRepar.insets = new Insets(2,340,2,10);
 		gbcRepar.gridx++;
 		panelRepartition.add(new JLabelModule("∑", JLabel.CENTER), gbcRepar);
 
 
 		// Deuxième ligne
-		gbcRepar.insets = new Insets(2,5,5,5);
+		gbcRepar.insets = new Insets(2,2,2,2);
 		gbcRepar.gridwidth = 3;
 		gbcRepar.gridy++;
 		gbcRepar.gridx= 0;
@@ -265,12 +265,12 @@ public class PanelStage extends JPanel implements ActionListener{
 		panelRepartition.add(this.txtREHTotEtd, gbcRepar);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txthTutTotEtd, gbcRepar);
-		gbcRepar.insets = new Insets(2,340,5,10);
+		gbcRepar.insets = new Insets(2,340,2,10);
 		gbcRepar.gridx++;
 		panelRepartition.add(this.txtTotEtd, gbcRepar);
 
 		// Troisième ligne
-		gbcRepar.insets = new Insets(2,5,5,5);
+		gbcRepar.insets = new Insets(2,2,2,2);
 		gbcRepar.gridwidth = 3;
 		gbcRepar.gridy ++;
 		gbcRepar.gridx = 0;
@@ -282,7 +282,7 @@ public class PanelStage extends JPanel implements ActionListener{
 		panelRepartition.add(this.txtREHTotEtdAffect, gbcRepar);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txthTutTotEtdAffect, gbcRepar);
-		gbcRepar.insets = new Insets(2,340,5,10);
+		gbcRepar.insets = new Insets(2,340,2,10);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtTotEtdAffect, gbcRepar);
 
@@ -305,9 +305,20 @@ public class PanelStage extends JPanel implements ActionListener{
 		panelTable.add(new JLabelModule("Affectation"), BorderLayout.NORTH);
 		panelTable.add(panelAjoutSupp, BorderLayout.SOUTH);
 
+
+		JPanel panelRepInt = new JPanel(new GridBagLayout());
+		GridBagConstraints gpcPanRepInt = new GridBagConstraints();
+        gpcPanRepInt.gridx = 0;
+        gpcPanRepInt.gridy = 0;
+        gpcPanRepInt.weightx = 1;
+        gpcPanRepInt.weighty = 1;
+        gpcPanRepInt.insets = new Insets(2, 2, 2, 2);
+		gpcPanRepInt.anchor = GridBagConstraints.CENTER;
+		panelRepInt.add(panelRepartition,gpcPanRepInt);
+
 		JPanel panelRep = new JPanel(new BorderLayout());
 		panelRep.add(new JLabelModule("Repartition",JLabel.CENTER), BorderLayout.NORTH);
-		panelRep.add(panelRepartition, BorderLayout.CENTER);
+		panelRep.add(panelRepInt, BorderLayout.CENTER);
 
 
 
@@ -315,7 +326,7 @@ public class PanelStage extends JPanel implements ActionListener{
 		// Ajout des pannels au panel central
 		JPanel panelCentre = new JPanel(new GridBagLayout());
 		GridBagConstraints gbcCentre = new GridBagConstraints();
-		gbcCentre.insets = new Insets(5, 5, 5, 5);
+		gbcCentre.insets = new Insets(2,2,2,2);
 		gbcCentre.weightx = 1;
 		gbcCentre.weighty = 1;
 		gbcCentre.gridx = 0;
@@ -390,7 +401,7 @@ public class PanelStage extends JPanel implements ActionListener{
 		//Bordure et fond
 		PanelStage.fond(this, Color.decode("0xD0D0D0"), new Dimension(120,20));
 		panelHeurePN.setBorder(BorderFactory.createLineBorder(Color.decode("0xD0D0D0")));
-		panelRepartition.setBorder(BorderFactory.createLineBorder(Color.decode("0xD0D0D0")));
+		panelRepInt.setBorder(BorderFactory.createLineBorder(Color.decode("0xD0D0D0")));
 
 
 
