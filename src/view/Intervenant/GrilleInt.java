@@ -95,51 +95,47 @@ public class GrilleInt extends AbstractTableModel {
 	}
 
 	public void setValueAt(Object value, int row, int col) {
+		CategorieIntervenant categorieIntervenant  = Controleur.getControleur().getCategorieIntervenant((String)this.tabDonnees[row][0]);
+		String  nom = (String) this.tabDonnees[row][1];
+		String  prenom = (String) this.tabDonnees[row][2];
+		int  services = (int) this.tabDonnees[row][3];
+		int  nbHeureMax = (int) this.tabDonnees[row][4];
+		Float  coef = (Float) this.tabDonnees[row][5];
 
-		
-		if(isCellEditable(row, col)){
-			CategorieIntervenant categorieIntervenant  = Controleur.getControleur().getCategorieIntervenant((String)this.tabDonnees[row][0]);
-			String  nom = (String) this.tabDonnees[row][1];
-			String  prenom = (String) this.tabDonnees[row][2];
-			int  services = (int) this.tabDonnees[row][3];
-			int  nbHeureMax = (int) this.tabDonnees[row][4];
-			Float  coef = (Float) this.tabDonnees[row][5];
+		switch (col) {
+			case 0:
+				categorieIntervenant = Controleur.getControleur().getCategorieIntervenant((String) value);
+				break;
 
-			switch (col) {
-				case 0:
-					categorieIntervenant = Controleur.getControleur().getCategorieIntervenant((String) value);
-					break;
+			case 1:
+				nom = (String) value;
+				break;
+			case 2:
+				prenom = (String) value;
+				break;
 
-				case 1:
-					nom = (String) value;
-					break;
-				case 2:
-					prenom = (String) value;
-					break;
-
-				case 3:
-					
-					services = (int) value;
-					break;
-				case 4:
-
-					nbHeureMax = (int) value;
-					break;
-
-				case 5:
-					
-					coef = (Float) value;
-					break;
+			case 3:
 				
-				default:
-					break;
-			}
+				services = (int) value;
+				break;
+			case 4:
 
-			if (coef < 0) return;
-			if(nbHeureMax <= services) return;
-			if(nbHeureMax < 0 || services < 0) return;
-			if(categorieIntervenant == null)return;
-			if(Controleur.getControleur().modifIntervenant(row, categorieIntervenant, nom, prenom, services, nbHeureMax,coef)){this.tabDonnees[row][col] = value;}		
+				nbHeureMax = (int) value;
+				break;
+
+			case 5:
+				
+				coef = (Float) value;
+				break;
+			
+			default:
+				break;
 		}
+
+		if (coef < 0) return;
+		if(nbHeureMax <= services) return;
+		if(nbHeureMax < 0 || services < 0) return;
+		if(categorieIntervenant == null)return;
+		if(Controleur.getControleur().modifIntervenant(row, categorieIntervenant, nom, prenom, services, nbHeureMax,coef)){this.tabDonnees[row][col] = value;}
 	}
 }
