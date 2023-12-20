@@ -160,21 +160,17 @@ INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'TD' , 5 , 2, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'TP' , 5 , 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'CM' , 5 , 4, 14);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'TD' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'TP' , 5 , 4, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'CM' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'TUT' , 5 , 4, 1);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'TD' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'TP' , 5 , 4, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'CM' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'TUT' , 5 , 4, 1);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'TD' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'TP' , 5 , 4, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'CM' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'TUT' , 5 , 4, 1);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'TD' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'TP' , 5 , 4, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'CM' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'TUT' , 5 , 4, 1);
 
 
 

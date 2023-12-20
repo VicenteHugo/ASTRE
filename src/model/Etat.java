@@ -431,10 +431,19 @@ public class Etat {
 	}
 
 	public static boolean pasUtiliser (Module m) {
-
 		for (Affectations a : Etat.lstAffectations) 
 			if (a.getModule() == m) 
 				return false;
+
+		return true;
+	}
+
+	public static boolean pasUtiliser (Intervenants i) {
+		for (Affectations a : Etat.lstAffectations) 
+			if (a.getIntervenant() == i) {
+				System.out.println(a);
+				return false;
+			}
 
 		return true;
 	}
