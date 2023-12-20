@@ -122,8 +122,6 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		this.estNouveau = true;
 
 		loadPage(semestres);
-		
-        
 
     }
 
@@ -170,7 +168,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 			this.txtTPNbHeure.setText(lst.get(2) + "");	
 		}	
 
-		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TD"));
 		if (lst != null) { 
 			this.txtHeureTDPN.setText(lst.get(0) + "");		
 			this.txtTDNbSem  .setText(lst.get(1) + "");		
@@ -451,22 +449,22 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		gbcRepar.gridx = 0;
 		gbcRepar.gridy++;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
-		panelRepartition.add(this.txtCMNbHeure, gbcRepar);
-		gbcRepar.gridx++;
-		gbcRepar.anchor = GridBagConstraints.LINE_START;
 		panelRepartition.add(this.txtCMNbSem  , gbcRepar);
 		gbcRepar.gridx++;
-		gbcRepar.anchor = GridBagConstraints.LINE_END;
-		panelRepartition.add(this.txtTDNbHeure, gbcRepar);
-		gbcRepar.gridx++;
 		gbcRepar.anchor = GridBagConstraints.LINE_START;
+		panelRepartition.add(this.txtCMNbHeure, gbcRepar);
+		gbcRepar.gridx++;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		panelRepartition.add(this.txtTDNbSem  , gbcRepar);
 		gbcRepar.gridx++;
+		gbcRepar.anchor = GridBagConstraints.LINE_START;
+		panelRepartition.add(this.txtTDNbHeure, gbcRepar);
+		gbcRepar.gridx++;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
-		panelRepartition.add(this.txtTPNbHeure, gbcRepar);
+		panelRepartition.add(this.txtTPNbSem  , gbcRepar);
 		gbcRepar.gridx++;
 		gbcRepar.anchor = GridBagConstraints.LINE_START;
-		panelRepartition.add(this.txtTPNbSem  , gbcRepar);
+		panelRepartition.add(this.txtTPNbHeure, gbcRepar);
 		gbcRepar.gridx++;
 
         gbcRepar.insets.left = 20;
@@ -505,9 +503,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		gbcRepar.gridwidth = 1;
 		panelRepartition.add(this.txtCMTotEtd, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTPTotEtd, gbcRepar);
-		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtTDTotEtd, gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtTPTotEtd, gbcRepar);
 
         gbcRepar.insets.left = 20;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
@@ -533,9 +531,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		gbcRepar.gridwidth = 1;
 		panelRepartition.add(this.txtCMTotEtdAffect, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTPTotEtdAffect, gbcRepar);
-		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtTDTotEtdAffect, gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtTPTotEtdAffect, gbcRepar);
 
         gbcRepar.insets.left = 20;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
@@ -868,6 +866,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		int hpHeu = Integer.parseInt(this.txtHPTot.getText());
 
+		int gpTd = Integer.parseInt(this.txtNbGpTd.getText());
+		int gpTp = Integer.parseInt(this.txtNbGpTp.getText());
+
 		float coefCM = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
 		float coefTD = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
 		float coefTP = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
@@ -878,9 +879,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		/* CALCUL PN */
 
 		// eqtd
-		int cmPNetd = (int) (cmPN * coefCM);
-		int tdPNetd = (int) (tdPN * coefTD);
-		int tpPNetd = (int) (tpPN * coefTP);
+		int cmPNetd = Math.round(cmPN * coefCM);
+		int tdPNetd = Math.round(tdPN * coefTD) * gpTd;
+		int tpPNetd = Math.round(tpPN * coefTP) * gpTp;
 		this.txtHeureEtdCMPN.setText( cmPNetd + "");
 		this.txtHeureEtdTDPN.setText( tdPNetd + "");
 		this.txtHeureEtdTPPN.setText( tpPNetd + "");
@@ -905,17 +906,17 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		this.txtTot.setText((cmHTot + tdHTot + tpHTot + hpHeu) + "");
 
 		//EQTD
-		int cmHTotEtd = (int) ((cmHeu * cmSem) * coefCM);
-		int tdHTotEtd = (int) ((tpHeu * tpSem) * coefTD);
-		int tpHTotEtd = (int) ((tdHeu * tdSem) * coefTP);
-		int hpHTotEtd = (int) ( hpHeu          * coefHP);
+		int cmHTotEtd = Math.round((cmHeu * cmSem) * coefCM);
+		int tpHTotEtd = Math.round((tpHeu * tpSem) * coefTD * gpTp);
+		int tdHTotEtd = Math.round((tdHeu * tdSem) * coefTP * gpTd);
+		int hpHTotEtd = Math.round( hpHeu          * coefHP);
 
 		this.txtCMTotEtd.setText( cmHTotEtd + "");
-		this.txtTPTotEtd.setText( tdHTotEtd + "");
-		this.txtTDTotEtd.setText( tpHTotEtd + "");
+		this.txtTDTotEtd.setText( tdHTotEtd + "");
+		this.txtTPTotEtd.setText( tpHTotEtd + "");
 		this.txtHPTotEtd.setText( hpHTotEtd + "");
 
-		this.txtTot.setText((cmHTotEtd + tdHTotEtd + tpHTotEtd + hpHTotEtd) + "");
+		this.txtTotEtd.setText((cmHTotEtd + tdHTotEtd + tpHTotEtd + hpHTotEtd) + "");
 
 
 

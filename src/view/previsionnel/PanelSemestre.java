@@ -3,6 +3,7 @@ package view.previsionnel;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.*;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,7 +13,7 @@ import controleur.Controleur;
 import model.Semestres;
 import view.JTextFieldNumber;
 
-public class PanelSemestre extends JPanel {
+public class PanelSemestre extends JPanel implements FocusListener {
     private JTextFieldNumber txtNbGpTD;
     private JTextFieldNumber txtNbGpTP;
     private JTextFieldNumber txtNbETD;
@@ -64,6 +65,12 @@ public class PanelSemestre extends JPanel {
         this.grilleSemestre.setFillsViewportHeight(true);
         this.grilleSemestre.setShowVerticalLines(false);
 
+
+        this.txtNbETD     .addFocusListener(this);
+        this.txtNbGpTD    .addFocusListener(this);
+        this.txtNbGpTP    .addFocusListener(this);
+        this.txtNbSemaines.addFocusListener(this);
+
         this.add(this.grilleSemestre, BorderLayout.CENTER);
     }
 
@@ -82,5 +89,14 @@ public class PanelSemestre extends JPanel {
         this.sem.setNbSemSem (Integer.parseInt(this.txtNbSemaines.getText()));
 
         return this.sem;
+    }
+
+    public void focusGained(FocusEvent e) {}
+
+    public void focusLost(FocusEvent e) {
+        this.sem.setNbEtdSem (Integer.parseInt(this.txtNbETD     .getText()));
+        this.sem.setNbGpTdSem(Integer.parseInt(this.txtNbGpTD    .getText()));
+        this.sem.setNbGpTpSem(Integer.parseInt(this.txtNbGpTP    .getText()));
+        this.sem.setNbSemSem (Integer.parseInt(this.txtNbSemaines.getText()));
     }
 }
