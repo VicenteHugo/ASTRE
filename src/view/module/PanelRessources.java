@@ -21,7 +21,7 @@ import view.JLabelModule;
 import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
-
+import view.previsionnel.PanelSemestre;
 import controleur.*;
 import model.CategorieHeures;
 import model.Semestres;
@@ -816,6 +816,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 				return;
 			}
 		}
+		
 		this.showMessageDialog("Le code est déja utiliser");
 	}
 
@@ -833,12 +834,10 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 	private void supprimer() {
-		int ind = this.tblGrilleDonnees.getSelectedRow();
-
-		Controleur.getControleur().supprimerAffectation(ind);
-		if (ind >= 0)
-			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
-		
+        int[] selectedRow = this.tblGrilleDonnees.getSelectedRows();
+        for (int i =0; i < selectedRow.length; i++) {
+            Controleur.getControleur().supprimerAffectation(i);
+        }
 		this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
 	}	
 

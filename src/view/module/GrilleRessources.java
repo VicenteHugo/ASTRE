@@ -17,6 +17,7 @@ public class GrilleRessources extends AbstractTableModel {
 	private List<Module> moduleIntervenant;
 
 	public GrilleRessources(Module mod) {
+		System.out.println(mod.getCode());
 		List<Affectations> listAffectations = Controleur.getControleur().getAffectations(mod);
 		for(Affectations a : listAffectations){
 			System.out.println(a.getIntervenant().getNomIntervenant() + " : " + a.getIntervenant().getPrenomIntervenant());
