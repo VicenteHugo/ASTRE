@@ -10,6 +10,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -18,10 +21,13 @@ import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import controleur.*;
+import model.Affectations;
+import model.CategorieHeures;
 import model.Semestres;
 import model.modules.Module;
+import model.modules.Ressource;
 
-public class PanelSAE extends JPanel implements ActionListener{
+public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
     // Modules
     private JTextField txtCodeMod;
@@ -64,14 +70,88 @@ public class PanelSAE extends JPanel implements ActionListener{
 	//Object
 	private FrameAccueil frame;
 	private Module       mod;
+	private boolean      estNouveau;
 
 
-	public PanelSAE(FrameAccueil frame) {
-
-		
+	public PanelSAE(FrameAccueil frame, Semestres semestres){
 
 		this.frame = frame;
 		this.frame.setTitle("Astre - Previsionnel");
+		
+		this.mod   = new Ressource(semestres, "", "", "", 0, false);
+
+		//Mettre la liste à 0
+		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
+
+		//                                             PN                                             SEMAINE                                      NB HEURE
+		List<Integer> lstSAE = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstTut = new ArrayList<Integer>(List.of(0,0,0));
+
+
+		map.put(Controleur.getControleur().getCategorieHeure("SAE"), lstSAE);
+		map.put(Controleur.getControleur().getCategorieHeure("TUT"), lstTut);
+
+
+		this.mod.setHeures(map);
+		this.estNouveau = true;
+
+		loadPage(semestres);
+    }
+
+
+	public PanelSAE (FrameAccueil frame, Module m) {
+		this.frame = frame;
+		this.frame.setTitle("Astre - Previsionnel");
+
+		this.mod = m;
+
+		loadPage(m.getSemestres());
+
+		//txtCode
+		this.txtCodeMod    .setText(this.mod.getCode());
+		this.txtLibLongMod .setText(this.mod.getLibLong());
+		this.txtLibCourtMod.setText(this.mod.getLibCourt());
+		
+		//Semestres info
+		Semestres s = this.mod.getSemestres();
+		this.txtNbEtd .setText("" + s.getNbEtdSem());
+		this.txtNbGpTd.setText("" + s.getNbGpTdSem());
+		this.txtNbGpTp.setText("" + s.getNbGpTpSem()); 
+
+		//SAR
+		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
+
+		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("SAE"));
+		if (lst != null) {
+			this.txtHeureEtdSaePN.setText(lst.get(0) + "");		
+			this.txtEtdSaePromRep.setText(lst.get(2) + "");		
+		}
+		
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TUT"));
+		if (lst != null) {
+			this.txtHeureEtdTutPN.setText(lst.get(0) + "");		
+			this.txtEtdTutPromRep.setText(lst.get(2) + "");		
+		}
+
+		this.cbValide.setSelected(this.mod.isValide());
+
+		//Juste pour faire les calculs
+		this.focusLost(null);
+
+
+		this.estNouveau = false;
+
+	}
+
+
+
+
+
+
+
+
+	public void loadPage (Semestres semestres) {
+
 		//this.mod   = new Ressource(null, "", "", "", 0);
 		
         /*                         */
@@ -403,7 +483,8 @@ public class PanelSAE extends JPanel implements ActionListener{
 		this.txtNbEtd .setHorizontalAlignment(JTextField.CENTER);
 		this.txtNbGpTd.setHorizontalAlignment(JTextField.CENTER);
 		this.txtNbGpTp.setHorizontalAlignment(JTextField.CENTER);
-		PanelSAE.aligner(panelCentre, JTextField.CENTER);
+
+		PanelSAE.aligner(panelCentre, JTextField.RIGHT);
 
 		//Bordure et style
 		PanelSAE.style(this, Color.decode("0xD0D0D0"), new Dimension(120,20));
@@ -423,25 +504,6 @@ public class PanelSAE extends JPanel implements ActionListener{
 
 
     }
-
-
-	public PanelSAE (FrameAccueil frame, Module m) {
-
-		this (frame);
-		this.mod = m;
-
-		//txtCode
-		this.txtCodeMod    .setText(this.mod.getCode());
-		this.txtLibLongMod .setText(this.mod.getLibLong());
-		this.txtLibCourtMod.setText(this.mod.getLibCourt());
-		
-		//Semestres info
-		Semestres s = this.mod.getSemestres();
-		this.txtNbEtd .setText("" + s.getNbEtdSem());
-		this.txtNbGpTd.setText("" + s.getNbGpTdSem());
-		this.txtNbGpTp.setText("" + s.getNbGpTpSem());
-
-	}
 
 
 
@@ -517,7 +579,7 @@ public class PanelSAE extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == this.btnAnnuler    ) this.quitter();
-		if (e.getSource() == this.btnSauvegarder) this.quitter();
+		if (e.getSource() == this.btnSauvegarder) this.sauvegarder();
 
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
@@ -528,14 +590,71 @@ public class PanelSAE extends JPanel implements ActionListener{
 
 
 	private void quitter () {
-		this.frame.changePanel(new PanelPrevi(frame));
+		this.frame.changePanel(new PanelPrevi(this.frame));
+		Controleur.getControleur().annuler();
+	}
+
+
+
+	private void sauvegarder () {
+
+		if (this.txtCodeMod.getText().isEmpty()) {
+			this.showMessageDialog("Le code est obligatoire");
+			return;
+		}
+
+		boolean   val = this.cbValide      .isSelected();
+		String    cod = this.txtCodeMod    .getText();
+		String    liL = this.txtLibLongMod .getText();
+		String    liC = this.txtLibCourtMod.getText();
+
+		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
+		
+
+		//                                                   PN                                             SEMAINE                                      NB HEURE
+		List<Integer> lstSAE = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdSaePN.getText()), 1, Integer.parseInt(this.txtEtdSaePromRep.getText())));
+		List<Integer> lstTUT = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTutPN.getText()), 1, Integer.parseInt(this.txtEtdTutPromRep.getText())));
+
+		map.put(Controleur.getControleur().getCategorieHeure("TUT"), lstTUT);
+		map.put(Controleur.getControleur().getCategorieHeure("SAE"), lstSAE);
+
+		if (this.estNouveau) {
+			this.mod.setCode         (cod);
+			this.mod.setLibLong      (liL);
+			this.mod.setLibCourt     (liC);
+			this.mod.setValide       (val);
+			this.mod.initList        (map);
+			this.mod.setHeurePonctuel(0 );
+
+			if (Controleur.getControleur().ajouterModule(this.mod)) {
+				Controleur.getControleur().enregistrer();
+				this.quitter();
+				return;
+			}
+
+
+		}else{
+			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, 0, val, map)) {
+				Controleur.getControleur().enregistrer();
+				this.quitter();
+				return;
+			}
+		}
+		
+		this.showMessageDialog("Le code est déja utiliser");
 	}
 
 
 	private void ajouter () {
-		System.out.println("Quitter");
+		JFrame f = new JFrame();
+        // f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
+        f.setTitle("Ajout d'une affectation");
+		f.pack();
+		f.setResizable(false);
+		f.setLocationRelativeTo(null);
+		f.setAlwaysOnTop(true);
+		f.setVisible(true);
 	}
-
 
 	private void supprimer() {
 
@@ -549,5 +668,49 @@ public class PanelSAE extends JPanel implements ActionListener{
 
     public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleSAE()); 
+	}
+
+	private void showMessageDialog(String message) {
+		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+
+	public void focusLost(FocusEvent e) {
+
+		float coefSAE = Controleur.getControleur().getCategorieHeure("SAE").getcoefCatHeur();
+		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
+
+		int totPN   = Integer.parseInt(this.txtHeureEtdSaePN.getText()) + Integer.parseInt(this.txtHeureEtdTutPN.getText());
+		int totEqtd = Integer.parseInt(this.txtEtdSaeAffectRep.getText()) + Integer.parseInt(this.txtEtdTutAffectRep.getText());
+
+		this.txtHeureEtdTotPN.setText(totPN   + "");
+		this.txtEtdTotPromRep.setText(totEqtd + "");
+
+
+
+		// Affecté 
+		int saeAffect = 0;
+		int tutAffect = 0;
+
+
+		for (Affectations a : this.mod.getLstAffectations()) {
+
+			System.out.println(a.getCategorieHeures().getlibCatHeur());
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("SAE"))
+				saeAffect += a.getNbHeure() * coefSAE;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
+				tutAffect += a.getNbHeure() * coefTUT;
+		}
+
+		this.txtEtdSaeAffectRep.setText(saeAffect + "");
+		this.txtEtdTutAffectRep.setText(tutAffect + "");
+
+		this.txtEtdTotAffectRep.setText(saeAffect + tutAffect + "");
+	}
+
+
+	public void focusGained(FocusEvent e) {
 	}
 }
