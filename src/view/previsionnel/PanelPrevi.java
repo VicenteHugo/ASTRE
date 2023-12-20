@@ -102,7 +102,7 @@ public class PanelPrevi extends JPanel {
 
         switch (indice) {
             case 0 -> this.frame.changePanel(new PanelRessources(frame, Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex())));
-            case 1 -> this.frame.changePanel(new PanelSAE(frame));
+            case 1 -> this.frame.changePanel(new PanelSAE(frame,Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex())));
             case 2 -> this.frame.changePanel(new PanelStage(frame));
             case 3 -> this.frame.changePanel(new PanelPPP(frame));
         }
@@ -132,7 +132,7 @@ public class PanelPrevi extends JPanel {
         if (m instanceof Ressource)
             this.frame.changePanel(new PanelRessources(this.frame,m));
         if (m instanceof Sae)
-            this.frame.changePanel(new PanelSAE(this.frame));
+            this.frame.changePanel(new PanelSAE(this.frame,m));
         if (m instanceof Stage)
             this.frame.changePanel(new PanelStage(this.frame));
         

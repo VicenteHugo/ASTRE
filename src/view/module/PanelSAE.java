@@ -39,7 +39,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 	private JCheckBox  cbValide;
 
     // Semestres
-    private JTextFieldNumber txtSem;
+    private JTextField       txtSem;
     private JTextFieldNumber txtNbEtd;
     private JTextFieldNumber txtNbGpTd;
 	private JTextFieldNumber txtNbGpTp;
@@ -106,6 +106,8 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		this.frame.setTitle("Astre - Previsionnel");
 
 		this.mod = m;
+		System.out.println(this.mod);
+
 
 		loadPage(m.getSemestres());
 
@@ -113,22 +115,19 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		this.txtCodeMod    .setText(this.mod.getCode());
 		this.txtLibLongMod .setText(this.mod.getLibLong());
 		this.txtLibCourtMod.setText(this.mod.getLibCourt());
-		
-		//Semestres info
-		Semestres s = this.mod.getSemestres();
-		this.txtNbEtd .setText("" + s.getNbEtdSem());
-		this.txtNbGpTd.setText("" + s.getNbGpTdSem());
-		this.txtNbGpTp.setText("" + s.getNbGpTpSem()); 
 
-		//SAR
+
+		//SAE
 		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
 
 		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("SAE"));
+		System.out.println(lst);
 		if (lst != null) {
 			this.txtHeureEtdSaePN.setText(lst.get(0) + "");		
 			this.txtEtdSaePromRep.setText(lst.get(2) + "");		
 		}
 		
+		System.out.println(lst);
 		lst = map.get(Controleur.getControleur().getCategorieHeure("TUT"));
 		if (lst != null) {
 			this.txtHeureEtdTutPN.setText(lst.get(0) + "");		
@@ -168,17 +167,17 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 		//Informations Semestres
         this.txtTypeMod = new JTextField("SAE", 8);
-        this.txtSem     = new JTextFieldNumber("S1", 5);
-        this.txtNbEtd   = new JTextFieldNumber("52", 3);
-        this.txtNbGpTd  = new JTextFieldNumber("2", 3);
-        this.txtNbGpTp  = new JTextFieldNumber("4", 3);
+        this.txtSem     = new JTextField("S" + semestres.getNumSem(), 5);
+		this.txtNbEtd   = new JTextFieldNumber("" + semestres.getNbEtdSem (), 3);
+		this.txtNbGpTd  = new JTextFieldNumber("" + semestres.getNbGpTdSem(), 3);
+		this.txtNbGpTp  = new JTextFieldNumber("" + semestres.getNbGpTpSem(), 3); 
 
 
 
 		//Informations calcul heure PN
-        this.txtHeureEtdSaePN = new JTextFieldNumber("40", 3);
-        this.txtHeureEtdTutPN = new JTextFieldNumber("38", 3);
-        this.txtHeureEtdTotPN = new JTextFieldNumber("78", 3);
+        this.txtHeureEtdSaePN = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTutPN = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTotPN = new JTextFieldNumber("0", 3);
 		
 		//Informations calcul repartitions
 		this.txtEtdSaePromRep       = new JTextFieldNumber("0", 3); 
@@ -468,17 +467,10 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
         this.txtNbGpTd .setEditable(false);
 		this.txtNbGpTp .setEditable(false);
 
-        this.txtHeureEtdSaePN.setEditable(false);
-        this.txtHeureEtdTutPN.setEditable(false);
 		this.txtHeureEtdTotPN .setEditable(false);
-
-		this.txtEtdSaePromRep      .setEditable(false);
-		this.txtEtdTotPromRep      .setEditable(false);
-		this.txtEtdTutPromRep      .setEditable(false);
-
 		this.txtEtdSaeAffectRep.setEditable(false);
-		this.txtEtdTotAffectRep.setEditable(false);
 		this.txtEtdTutAffectRep.setEditable(false);
+		this.txtEtdTotAffectRep.setEditable(false);
 
 
 		// Alignement
@@ -682,7 +674,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		float coefSAE = Controleur.getControleur().getCategorieHeure("SAE").getcoefCatHeur();
 		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
 
-		int totPN   = Integer.parseInt(this.txtHeureEtdSaePN.getText()) + Integer.parseInt(this.txtHeureEtdTutPN.getText());
+		int totPN   = Integer.parseInt(this.txtHeureEtdSaePN.getText())   + Integer.parseInt(this.txtHeureEtdTutPN.getText());
 		int totEqtd = Integer.parseInt(this.txtEtdSaeAffectRep.getText()) + Integer.parseInt(this.txtEtdTutAffectRep.getText());
 
 		this.txtHeureEtdTotPN.setText(totPN   + "");
