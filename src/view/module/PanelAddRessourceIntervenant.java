@@ -8,7 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
+import view.JButtonStyle;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,8 +32,8 @@ public class PanelAddRessourceIntervenant extends JPanel {
 	private JTextFieldNumber txtNbGroupe;
     private JTextField txtCommentaire;
 
-	private JButton btnValider;
-	private JButton btnAnnuler;
+	private JButtonStyle btnValider;
+	private JButtonStyle btnAnnuler;
 
 
 	private Frame frameM;
@@ -62,8 +62,8 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		this.txtNbSemaine = new JTextFieldNumber(5);
 		this.txtNbGroupe = new JTextFieldNumber(5);
 
-		this.btnAnnuler = new JButton("Annuler");
-		this.btnValider = new JButton("Valider");
+		this.btnAnnuler = new JButtonStyle("Annuler");
+		this.btnValider = new JButtonStyle("Valider");
 
 		//Layout
 		JPanel panelCentre = new JPanel();
@@ -92,12 +92,6 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		
 		gbc.gridx = 0;
 		gbc.gridy++;
-		panelCentre.add(new JLabel("Nombre de semaine : "), gbc);
-		gbc.gridx++;
-		panelCentre.add(this.txtNbSemaine, gbc);
-		
-		gbc.gridx = 0;
-		gbc.gridy++;
 		panelCentre.add(new JLabel("Nombre de groupe : "), gbc);
 		gbc.gridx++;
 		panelCentre.add(this.txtNbGroupe, gbc);
@@ -121,7 +115,8 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		this.btnValider.addActionListener((e)->{
 			Intervenants intervenant = Controleur.getControleur().getIntervenants(this.boxIntervenant.getSelectedIndex());
 			CategorieHeures categ = null;
-			int nbSemaine = Integer.parseInt(this.txtNbSemaine.getText());
+			
+ 			int nbSemaine;
 			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
 
 			System.out.println(intervenant);
@@ -130,10 +125,14 @@ public class PanelAddRessourceIntervenant extends JPanel {
 					categ =ch;
 				}
 			}
+
+			ArrayList<Integer> list = (ArrayList<Integer>) mod.getHeures().get(categ);
+			nbSemaine = list.get(0);
 			
 			if (lstInter != null) {
-				if (nbGroupe < 0 || nbSemaine < 0) {
+				if (nbGroupe < 0 ) {
 					JOptionPane.showMessageDialog(this, "Le nombre de groupe et le nombre de semaine doivent être supérieur à 0");
+
 				} else {
 					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbGroupe, this.txtCommentaire.getText());
 					

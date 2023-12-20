@@ -8,7 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
+import view.JButtonStyle;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,8 +29,8 @@ public class PanelAddIntervenant extends JPanel {
 	private JTextFieldNumber txtHMax;
 	private JTextFieldNumber txtCoefTP;
 
-	private JButton btnValider;
-	private JButton btnAnnuler;
+	private JButtonStyle btnValider;
+	private JButtonStyle btnAnnuler;
 
 	private Frame frameM;
 
@@ -56,8 +56,8 @@ public class PanelAddIntervenant extends JPanel {
 		this.txtCoefTP = new JTextFieldNumber(3);
 		this.txtCoefTP.setFloat(true);
 
-		this.btnAnnuler = new JButton("Annuler");
-		this.btnValider = new JButton("Valider");
+		this.btnAnnuler = new JButtonStyle("Annuler");
+		this.btnValider = new JButtonStyle("Valider");
 
 		// Layout
 		JPanel panelCentre = new JPanel();

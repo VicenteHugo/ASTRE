@@ -21,6 +21,7 @@ import view.JLabelModule;
 import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
+import view.JButtonStyle;
 
 import controleur.*;
 import model.CategorieHeures;
@@ -83,12 +84,12 @@ public class PanelPPP extends JPanel implements ActionListener{
 
 	//Affectation 
 	private JTable tblGrilleDonnees;
-	private JButton btnAjouter;
-	private JButton btnSupprimer;
+	private JButtonStyle btnAjouter;
+	private JButtonStyle btnSupprimer;
 
 	//Boutton
-	private JButton btnSauvegarder;
-	private JButton btnAnnuler;
+	private JButtonStyle btnSauvegarder;
+	private JButtonStyle btnAnnuler;
 
 	//Object
 	private FrameAccueil frame;
@@ -179,11 +180,11 @@ public class PanelPPP extends JPanel implements ActionListener{
 		this.txtTotEtd       = new JTextFieldNumber("0",3);
 		this.txtTotEtdAffect = new JTextFieldNumber("0",3);
 
-		this.btnAjouter   = new JButton("Ajouter");
-		this.btnSupprimer = new JButton("Supprimer");
+		this.btnAjouter   = new JButtonStyle("Ajouter");
+		this.btnSupprimer = new JButtonStyle("Supprimer");
 
-		this.btnSauvegarder = new JButton("Sauvegarder");
-		this.btnAnnuler     = new JButton("Annuler");
+		this.btnSauvegarder = new JButtonStyle("Sauvegarder");
+		this.btnAnnuler     = new JButtonStyle("Annuler");
 		
 
 		
@@ -664,9 +665,9 @@ public class PanelPPP extends JPanel implements ActionListener{
 				((JTextField) component).setBackground(c);
 			}
 
-			if (component instanceof JButton) {
-				((JButton) component).setBackground(c);
-				((JButton) component).setPreferredSize(d);
+			if (component instanceof JButtonStyle) {
+				((JButtonStyle) component).setBackground(c);
+				((JButtonStyle) component).setPreferredSize(d);
 			}
 
 			if (component instanceof Container) {
@@ -685,8 +686,8 @@ public class PanelPPP extends JPanel implements ActionListener{
 	private static void activer(Container container, ActionListener a) {
 		for (Component component : container.getComponents()) {
 
-			if (component instanceof JButton) {
-				((JButton) component).addActionListener(a);
+			if (component instanceof JButtonStyle) {
+				((JButtonStyle) component).addActionListener(a);
 			}
 
 			if (component instanceof Container) {

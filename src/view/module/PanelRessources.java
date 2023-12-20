@@ -21,7 +21,8 @@ import view.JLabelModule;
 import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
-import view.previsionnel.PanelSemestre;
+import view.JButtonStyle;
+
 import controleur.*;
 import model.Affectations;
 import model.CategorieHeures;
@@ -84,12 +85,12 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 	//Affectation 
 	JTable tblGrilleDonnees;
-	private JButton btnAjouter;
-	private JButton btnSupprimer;
+	private JButtonStyle btnAjouter;
+	private JButtonStyle btnSupprimer;
 
 	//Boutton
-	private JButton btnSauvegarder;
-	private JButton btnAnnuler;
+	private JButtonStyle btnSauvegarder;
+	private JButtonStyle btnAnnuler;
 
 	//Object
 	private FrameAccueil frame;
@@ -244,11 +245,11 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		this.txtTotEtd       = new JTextFieldNumber("0",3);
 		this.txtTotEtdAffect = new JTextFieldNumber("0",3);
 
-		this.btnAjouter   = new JButton("Ajouter");
-		this.btnSupprimer = new JButton("Supprimer");
+		this.btnAjouter   = new JButtonStyle("Ajouter");
+		this.btnSupprimer = new JButtonStyle("Supprimer");
 
-		this.btnSauvegarder = new JButton("Sauvegarder");
-		this.btnAnnuler     = new JButton("Annuler");
+		this.btnSauvegarder = new JButtonStyle("Sauvegarder");
+		this.btnAnnuler     = new JButtonStyle("Annuler");
 		
 
 		
@@ -711,9 +712,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 				((JTextField) component).setBackground(c);
 			}
 
-			if (component instanceof JButton) {
-				((JButton) component).setBackground(c);
-				((JButton) component).setPreferredSize(d);
+			if (component instanceof JButtonStyle) {
+				((JButtonStyle) component).setBackground(c);
+				((JButtonStyle) component).setPreferredSize(d);
 			}
 
 			if (component instanceof Container) {
@@ -736,8 +737,8 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 				((JTextField) component).addFocusListener(k);
 			}
 
-			if (component instanceof JButton) {
-				((JButton) component).addActionListener(a);
+			if (component instanceof JButtonStyle) {
+				((JButtonStyle) component).addActionListener(a);
 			}
 
 			if (component instanceof Container) {
@@ -904,7 +905,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		int cmHTotEtd = Math.round((cmHeu * cmSem) * coefCM);
 		int tpHTotEtd = Math.round((tpHeu * tpSem) * coefTD * gpTp);
 		int tdHTotEtd = Math.round((tdHeu * tdSem) * coefTP * gpTd);
-		int hpHTotEtd = Math.round( hpHeu          * coefHP);
+		int hpHTotEtd = Math.round( hpHeu          * coefHP * gpTd);
 
 		this.txtCMTotEtd.setText( cmHTotEtd + "");
 		this.txtTDTotEtd.setText( tdHTotEtd + "");
@@ -913,11 +914,38 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		this.txtTotEtd.setText((cmHTotEtd + tdHTotEtd + tpHTotEtd + hpHTotEtd) + "");
 
+		// Affecté 
+		int cmAffect = 0;
+		int tdAffect = 0;
+		int tpAffect = 0;
+		int hpAffect = 0;
 
 
+		for (Affectations a : this.mod.getLstAffectations()) {
+
+			System.out.println(a.getCategorieHeures().getlibCatHeur());
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("CM"))
+				cmAffect += (cmHeu * a.getNbSemaine() * a.getNbGroupe() + a.getNbHeure()) * coefCM;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("TD"))
+				tdAffect += (tdHeu * a.getNbSemaine() * a.getNbGroupe() + a.getNbHeure()) * coefTD;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("TP"))
+				tpAffect += (tpHeu * a.getNbSemaine() * a.getNbGroupe() + a.getNbHeure()) * coefTP;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("HP"))
+				hpAffect += (hpHeu * a.getNbSemaine() * a.getNbGroupe() + a.getNbHeure()) * coefHP;
+		}
+
+		this.txtCMTotEtdAffect.setText(cmAffect + "");
+		this.txtTDTotEtdAffect.setText(tdAffect + "");
+		this.txtTPTotEtdAffect.setText(tpAffect + "");
+		this.txtHPTotEtdAffect.setText(hpAffect + "");
+
+		this.txtTotEtdAffect.setText(cmAffect + tdAffect + tpAffect + hpAffect + "");
 	}
-
-
+	
 	public void focusGained(FocusEvent e) {
 	}
 }

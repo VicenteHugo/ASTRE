@@ -9,7 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.JButton;
+import view.JButtonStyle;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -28,8 +28,8 @@ public class PanelAddCatInt extends JPanel {
 	private JTextFieldNumber txtHMax;
 	private JTextFieldNumber txtHMin;
 
-	private JButton btnValider;
-	private JButton btnAnnuler;
+	private JButtonStyle btnValider;
+	private JButtonStyle btnAnnuler;
 
 
 	private PanelIntPara panel;
@@ -50,8 +50,8 @@ public class PanelAddCatInt extends JPanel {
 		this.txtHMax = new JTextFieldNumber(5);
 		this.txtHMin = new JTextFieldNumber(5);
 
-		this.btnAnnuler = new JButton("Annuler");
-		this.btnValider = new JButton("Valider");
+		this.btnAnnuler = new JButtonStyle("Annuler");
+		this.btnValider = new JButtonStyle("Valider");
 
 
         /* STYLE */

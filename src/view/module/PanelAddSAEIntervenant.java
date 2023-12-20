@@ -7,7 +7,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.JButton;
+import view.JButtonStyle;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -23,8 +23,8 @@ public class PanelAddSAEIntervenant extends JPanel {
     private JTextFieldNumber txtTotal;
     private JTextField txtCommentaire;
 
-	private JButton btnValider;
-	private JButton btnAnnuler;
+	private JButtonStyle btnValider;
+	private JButtonStyle btnAnnuler;
 
 
 	private Frame frameM;
@@ -40,8 +40,8 @@ public class PanelAddSAEIntervenant extends JPanel {
         this.txtTotal        = new JTextFieldNumber(5);
 		this.txtCommentaire  = new JTextField(15);
 
-		this.btnAnnuler = new JButton("Annuler");
-		this.btnValider = new JButton("Valider");
+		this.btnAnnuler = new JButtonStyle("Annuler");
+		this.btnValider = new JButtonStyle("Valider");
 
 		//Layout
 		JPanel panelCentre = new JPanel();

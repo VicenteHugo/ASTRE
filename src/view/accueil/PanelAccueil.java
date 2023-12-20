@@ -3,6 +3,7 @@ package view.accueil;
 import view.Intervenant.PanelIntervenants;
 import view.parametrage.*;
 import view.previsionnel.*;
+import view.JButtonStyle;
 import view.Etat.*;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ import java.awt.*;
 
 public class PanelAccueil extends JPanel {
 
-    private JButton btnParametre, btnPrevisionnel, btnIntervenant, btnEtat;
+    private JButtonStyle btnParametre, btnPrevisionnel, btnIntervenant, btnEtat;
     private FrameAccueil frame;
 
     public PanelAccueil(FrameAccueil frame) {
@@ -23,10 +24,10 @@ public class PanelAccueil extends JPanel {
 
         // création des composants
         this.frame.setTitle("Astre - Accueil");
-        this.btnParametre = new JButton("Paramètres");
-        this.btnPrevisionnel = new JButton("Prévisionnel");
-        this.btnIntervenant = new JButton("Intervenants");
-        this.btnEtat = new JButton("Etats");
+        this.btnParametre    = new JButtonStyle("Paramètres");
+        this.btnPrevisionnel = new JButtonStyle("Prévisionnel");
+        this.btnIntervenant  = new JButtonStyle("Intervenants");
+        this.btnEtat         = new JButtonStyle("Etats");
 
         /* STYLE */
 
@@ -41,12 +42,6 @@ public class PanelAccueil extends JPanel {
         this.btnPrevisionnel.setPreferredSize(buttonSize);
         this.btnIntervenant.setPreferredSize(buttonSize);
         this.btnEtat.setPreferredSize(buttonSize);
-
-        Color coul = Color.decode("0xD0D0D0");
-        this.btnParametre.setBackground(coul);
-        this.btnPrevisionnel.setBackground(coul);
-        this.btnIntervenant.setBackground(coul);
-        this.btnEtat.setBackground(coul);
 
         // Texte
         JLabel lblLogo = new JLabel("Astre");
