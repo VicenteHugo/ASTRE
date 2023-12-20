@@ -200,7 +200,7 @@ public class PanelPPP extends JPanel implements ActionListener{
         gbcPanelHaut.gridy = 0;
         gbcPanelHaut.weightx = 1;
         gbcPanelHaut.weighty = 1;
-        gbcPanelHaut.insets = new Insets(3, 3, 3, 3);
+        gbcPanelHaut.insets = new Insets(2, 2, 2, 2);
 		gbcPanelHaut.anchor = GridBagConstraints.LINE_START;
 
         // Ajout des libellés première ligne
@@ -476,7 +476,7 @@ public class PanelPPP extends JPanel implements ActionListener{
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
+		this.tblGrilleDonnees = new JTable(new GrillePPP());
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
