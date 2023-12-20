@@ -5,7 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
-import javax.swing.JButton;
+import view.JButtonStyle;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,11 +21,11 @@ public class PanelIntPara extends JPanel {
 	private FrameAccueil frame;
 	private JTable tblGrilleDonnees;
 
-	private JButton btnValider;
-	private JButton btnRetour;
+	private JButtonStyle btnValider;
+	private JButtonStyle btnRetour;
 
-	private JButton btnAjouter;
-	private JButton btnSupprimer;
+	private JButtonStyle btnAjouter;
+	private JButtonStyle btnSupprimer;
 
 	public PanelIntPara(FrameAccueil frame) {
 
@@ -40,10 +40,10 @@ public class PanelIntPara extends JPanel {
 		this.tblGrilleDonnees = new JTable(new GrilleCatInt());
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
-		this.btnValider = new JButton("Valider");
-		this.btnRetour = new JButton("Annuler");
-		this.btnAjouter = new JButton("Ajouter");
-		this.btnSupprimer = new JButton("Supprimer");
+		this.btnValider = new JButtonStyle("Valider");
+		this.btnRetour = new JButtonStyle("Annuler");
+		this.btnAjouter = new JButtonStyle("Ajouter");
+		this.btnSupprimer = new JButtonStyle("Supprimer");
 
 		// Button
         Dimension buttonSize = new Dimension(120, 20); // Vous pouvez ajuster la taille selon vos besoins
@@ -100,6 +100,8 @@ public class PanelIntPara extends JPanel {
 	}
 	
 	private void valider() {
+		if (this.tblGrilleDonnees.isEditing())
+			this.tblGrilleDonnees.getCellEditor().stopCellEditing();
 		this.frame.changePanel(new PanelParametre(this.frame));
 		Controleur.getControleur().enregistrer();
 	}

@@ -17,6 +17,7 @@ import view.JTextFieldNumber;
 import view.JLabelModule;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
+import view.JButtonStyle;
 import controleur.*;
 import model.Semestres;
 import model.modules.Module;
@@ -55,12 +56,12 @@ public class PanelStage extends JPanel implements ActionListener{
 
 	//Affectation 
 	private JTable tblGrilleDonnees;
-	private JButton btnAjouter;
-	private JButton btnSupprimer;
+	private JButtonStyle btnAjouter;
+	private JButtonStyle btnSupprimer;
 
 	//Boutton
-	private JButton btnSauvegarder;
-	private JButton btnAnnuler;
+	private JButtonStyle btnSauvegarder;
+	private JButtonStyle btnAnnuler;
 
 	//Object
 	private FrameAccueil frame;
@@ -110,11 +111,11 @@ public class PanelStage extends JPanel implements ActionListener{
 		this.txtTotEtd       = new JTextFieldNumber("0",3);
 		this.txtTotEtdAffect = new JTextFieldNumber("0",3);
 
-		this.btnAjouter   = new JButton("Ajouter");
-		this.btnSupprimer = new JButton("Supprimer");
+		this.btnAjouter   = new JButtonStyle("Ajouter");
+		this.btnSupprimer = new JButtonStyle("Supprimer");
 
-		this.btnSauvegarder = new JButton("Sauvegarder");
-		this.btnAnnuler     = new JButton("Annuler");
+		this.btnSauvegarder = new JButtonStyle("Sauvegarder");
+		this.btnAnnuler     = new JButtonStyle("Annuler");
 		
 
 		
@@ -202,7 +203,7 @@ public class PanelStage extends JPanel implements ActionListener{
 		//Ajout des JLabelModule première lignes
 		gbcHeurePN.anchor = GridBagConstraints.CENTER;
 		gbcHeurePN.gridx = 1;
-		panelHeurePN.add(new JLabelModule("h Sae"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule("REH"), gbcHeurePN);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(new JLabelModule("h Tut"), gbcHeurePN);
 		gbcHeurePN.insets = new Insets(2,40,10,10);
@@ -472,9 +473,9 @@ public class PanelStage extends JPanel implements ActionListener{
 				((JTextField) component).setBackground(c);
 			}
 
-			if (component instanceof JButton) {
-				((JButton) component).setBackground(c);
-				((JButton) component).setPreferredSize(d);
+			if (component instanceof JButtonStyle) {
+				((JButtonStyle) component).setBackground(c);
+				((JButtonStyle) component).setPreferredSize(d);
 			}
 
 			if (component instanceof Container) {
@@ -497,8 +498,8 @@ public class PanelStage extends JPanel implements ActionListener{
 				((JTextField) component).addActionListener(a);
 			}
 
-			if (component instanceof JButton) {
-				((JButton) component).addActionListener(a);
+			if (component instanceof JButtonStyle) {
+				((JButtonStyle) component).addActionListener(a);
 			}
 
 			if (component instanceof Container) {
@@ -543,5 +544,37 @@ public class PanelStage extends JPanel implements ActionListener{
 
     public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleStage()); 
+	}
+
+	public void focusLost(FocusEvent e) {
+
+		//Récupération des données
+		int hREHPN  = Integer.parseInt(this.txtHeureEtdREHPN.getText());
+		int hTutPN = Integer.parseInt(this.txtHeureEtdhTutPN.getText());
+		int somPN  = Integer.parseInt(this.txtHeureEtdSPN.getText());
+
+		int gpTd = Integer.parseInt(this.txtNbGpTd.getText());
+		int gpTp = Integer.parseInt(this.txtNbGpTp.getText());
+
+		int rehToteqtd = Integer.parseInt(this.txtREHTotEtd.getText());
+		int tutToteqtd = Integer.parseInt(this.txthTutTotEtd.getText());
+
+		float coefREH  = Controleur.getControleur().getCategorieHeure("REH").getcoefCatHeur();
+		float coefTut = Controleur.getControleur().getCategorieHeure("Tut").getcoefCatHeur();
+
+
+		/* CALCUL REPARTITION */
+
+		//EQTD
+		int rehHTotEtd = Math.round((cmHeu * cmSem) * coefREH);
+		int tutHTotEtd = Math.round((tpHeu * tpSem) * coefTut * gpTp);
+
+		this.txtREHTotEtdAffect.setText( rehHTotEtd + "");
+		this.txthTutTotEtdAffect.setText( tutHTotEtd + "");
+
+		this.txtTotEtd.setText((rehHTotEtd + tutHTotEtd) + "");
+
+
+
 	}
 }

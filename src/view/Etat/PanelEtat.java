@@ -1,13 +1,12 @@
 package view.Etat;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 
-import javax.swing.JButton;
+import view.JButtonStyle;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -23,14 +22,14 @@ public class PanelEtat extends JPanel {
     private FrameAccueil frame;
     
     private JComboBox<String> lstEtat;
-    private JButton           btnSelection;
-    private JButton           btnNouveau;
-    private JButton           btnSupprimer;
+    private JButtonStyle           btnSelection;
+    private JButtonStyle           btnNouveau;
+    private JButtonStyle           btnSupprimer;
 
     private JComboBox<String> lstGeneration;
-    private JButton           btnGenerer;
+    private JButtonStyle           btnGenerer;
 
-    private JButton           btnRetour;
+    private JButtonStyle           btnRetour;
 
     public PanelEtat(FrameAccueil frame) {
         /* Frame */
@@ -44,17 +43,17 @@ public class PanelEtat extends JPanel {
         //Changement et création d'état
         this.lstEtat = new JComboBox<>(Controleur.getControleur().getEtats());
         this.lstEtat.setSelectedItem(Etat.nom);
-        this.btnSelection = new JButton("Sélectionner");
-        this.btnNouveau   = new JButton("Nouveau");
-        this.btnSupprimer = new JButton("Supprimer");
+        this.btnSelection = new JButtonStyle("Sélectionner");
+        this.btnNouveau   = new JButtonStyle("Nouveau");
+        this.btnSupprimer = new JButtonStyle("Supprimer");
 
         //Génerer les pages
         this.lstGeneration = new JComboBox<>(new String[] {"Par intervenants (HTML)", "Par modules (HTML)", "Recap intervenants (CSV)"});
         this.lstGeneration.setSelectedIndex(0);
-        this.btnGenerer = new JButton("Générer");
+        this.btnGenerer = new JButtonStyle("Générer");
 
         //Retourner à l'acceuil
-        this.btnRetour    = new JButton("Retour");
+        this.btnRetour    = new JButtonStyle("Retour");
 
 
         /* STYLE */
@@ -72,13 +71,6 @@ public class PanelEtat extends JPanel {
         this.btnRetour   .setPreferredSize(buttonSize);
         this.btnSelection.setPreferredSize(buttonSize);
         this.btnSupprimer.setPreferredSize(buttonSize);
-
-        Color coul = Color.decode("0xD0D0D0");
-        this.btnGenerer  .setBackground(coul);
-        this.btnNouveau  .setBackground(coul);
-        this.btnRetour   .setBackground(coul);
-        this.btnSelection.setBackground(coul);
-        this.btnSupprimer.setBackground(coul);
 
 
         //List

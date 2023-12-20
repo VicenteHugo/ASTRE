@@ -16,6 +16,8 @@ import java.awt.FlowLayout;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import view.JButtonStyle;
+
 // ASTRE
 import controleur.Controleur;
 import view.accueil.FrameAccueil;
@@ -34,9 +36,9 @@ public class PanelHeurePara extends JPanel {
 	private JTable tblGrilleDonnees;
 
 	/** Boutton permettant de valider les modifications. Renvoie à l'acceuil. */
-	private JButton btnValider;
+	private JButtonStyle btnValider;
 	/** Boutton permettant d'annuler les modifications. Renvoie à l'acceuil. */
-	private JButton btnRetour;
+	private JButtonStyle btnRetour;
 
 
 
@@ -69,8 +71,8 @@ public class PanelHeurePara extends JPanel {
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		//Bouton
-		this.btnValider = new JButton("Valider");
-		this.btnRetour = new JButton("Annuler");
+		this.btnValider = new JButtonStyle("Valider");
+		this.btnRetour = new JButtonStyle("Annuler");
 
 
 
@@ -139,6 +141,8 @@ public class PanelHeurePara extends JPanel {
 	 * Valide les modifications et retourne à l'acceuil paramétrage.
 	 */
 	private void valider() {
+		if (this.tblGrilleDonnees.isEditing())
+			this.tblGrilleDonnees.getCellEditor().stopCellEditing();
 		this.frame.changePanel(new PanelParametre(this.frame));
 		Controleur.getControleur().enregistrer();
 	}
