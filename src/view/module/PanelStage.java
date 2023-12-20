@@ -387,6 +387,7 @@ public class PanelStage extends JPanel implements ActionListener{
         this.txtNbGpTd .setEditable(false);
 		this.txtNbGpTp .setEditable(false);
 
+		this.txtTotEtd.setEditable(false);
 
 		this.txtREHTotEtdAffect.setEditable(false);
 		this.txthTutTotEtdAffect.setEditable(false);
@@ -566,8 +567,8 @@ public class PanelStage extends JPanel implements ActionListener{
 		/* CALCUL REPARTITION */
 
 		//EQTD
-		int rehHTotEtd = Math.round((cmHeu * cmSem) * coefREH);
-		int tutHTotEtd = Math.round((tpHeu * tpSem) * coefTut * gpTp);
+		int rehHTotEtd = Math.round(rehToteqtd * coefREH);
+		int tutHTotEtd = Math.round(tutToteqtd * coefTut * gpTp);
 
 		this.txtREHTotEtdAffect.setText( rehHTotEtd + "");
 		this.txthTutTotEtdAffect.setText( tutHTotEtd + "");
