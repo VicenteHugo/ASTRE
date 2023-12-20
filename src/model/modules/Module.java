@@ -103,11 +103,18 @@ public abstract class Module implements Comparable<Module> {
 	}
 
 	public int getHeurePn(){
-		int heurePN = 0;
+		int somme = 0;
 		for (CategorieHeures catH : this.heures.keySet()) {
-			heurePN += this.heures.get(catH).get(0);
+
+			int heurePN = Math.round(this.heures.get(catH).get(0) * catH.getcoefCatHeur());
+
+			if(catH.getlibCatHeur().equals("TD")) heurePN = heurePN * this.semestres.getNbGpTdSem();
+			if(catH.getlibCatHeur().equals("TP")) heurePN = heurePN * this.semestres.getNbGpTpSem();
+
+
+			somme += heurePN;
 		}
-		return heurePN;
+		return somme;
 	}
 
 	public List<Affectations> getLstAffectations() {
@@ -146,6 +153,8 @@ public abstract class Module implements Comparable<Module> {
 
 		return (int) (heure + this.heurePonctuel * coef);
 	}
+
+
 
 	public void addAffectations (Affectations a) { this.lstAffectations.add(a);}
 

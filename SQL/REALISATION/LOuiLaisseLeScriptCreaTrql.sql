@@ -144,6 +144,14 @@ INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.08', 'TD' , 5 , 2, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.08', 'TP' , 5 , 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.08', 'CM' , 5 , 4, 14);
 
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.09', 'TD' , 5 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.09', 'TP' , 5 , 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.09', 'CM' , 5 , 4, 14);
+
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.10', 'TD' , 5 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.10', 'TP' , 5 , 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.10', 'CM' , 5 , 4, 14);
+
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.11', 'TD' , 5 , 2, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.11', 'TP' , 5 , 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.11', 'CM' , 5 , 4, 14);
