@@ -334,6 +334,8 @@ public class Controleur {
             Etat.getModules().remove(mOld);
             Etat.getModules().add(i, mNew);
 
+			for (Affectations a : mOld.getLstAffectations())
+				a.setModule(mNew);
 
             // On ajouter l'action
             Etat.ajouterAction(new Modification(mOld, mNew));

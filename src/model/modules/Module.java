@@ -110,6 +110,10 @@ public abstract class Module implements Comparable<Module> {
 		return heurePN;
 	}
 
+	public List<Affectations> getLstAffectations() {
+		return lstAffectations;
+	}
+
 
 	public int getHeureAffecte () {
 		int heure = 0;
