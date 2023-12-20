@@ -2,9 +2,12 @@ package model.modules;
 
 import java.util.List;
 
+import controleur.Controleur;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import model.Affectations;
 import model.CategorieHeures;
 import model.Semestres;
 
@@ -36,10 +39,15 @@ public abstract class Module implements Comparable<Module> {
 	protected List<CategorieHeures> listCategorieHeure;
 
 	/**
-	 * Liste d'heures(heures PN, nb Semaines, heures par semaines, heures ponctuels)
+	 * Liste d'heures(heures PN, nb Semaines, heures par semaines)
 	 * par catégorie
 	 */
 	protected HashMap<CategorieHeures, List<Integer>> heures;
+
+	/**
+	 * Liste des affectations
+	 */
+	private List<Affectations> lstAffectations;
 
 	/*
 	 * Constructeur du Module prenant en paramètre le semestre, le code, le libellé
@@ -54,7 +62,8 @@ public abstract class Module implements Comparable<Module> {
 		this.valide = valid;
 		this.listCategorieHeure = new ArrayList<CategorieHeures>();
 		this.heures = new HashMap<>();
-		initHashMap();
+
+		this.lstAffectations = new ArrayList<Affectations>();
 	}
 
 	/*-------------------------------------------------------------*/
@@ -94,12 +103,60 @@ public abstract class Module implements Comparable<Module> {
 	}
 
 	public int getHeurePn(){
-		int heurePN = 0;
+		int somme = 0;
 		for (CategorieHeures catH : this.heures.keySet()) {
-			heurePN += this.heures.get(catH).get(0);
+
+			int heurePN = Math.round(this.heures.get(catH).get(0) * catH.getcoefCatHeur());
+
+			if(catH.getlibCatHeur().equals("TD")) heurePN = heurePN * this.semestres.getNbGpTdSem();
+			if(catH.getlibCatHeur().equals("TP")) heurePN = heurePN * this.semestres.getNbGpTpSem();
+
+
+			somme += heurePN;
 		}
-		return heurePN;
+		return somme;
 	}
+
+	public List<Affectations> getLstAffectations() {
+		return lstAffectations;
+	}
+
+
+	public int getHeureAffecte () {
+		int heure = 0;
+
+		for (Affectations a : this.lstAffectations) {
+			int nbHeureSem = 0;
+
+			CategorieHeures cat = a.getCategorieHeures();
+			if( this.heures.get(cat) != null)
+				nbHeureSem = this.heures.get(cat).get(2);
+
+			heure += a.getNbHeure() + a.getNbSemaine() * a.getNbGroupe() * nbHeureSem * cat.getcoefCatHeur();
+		}
+
+		return heure;
+	}
+
+
+	public int getHeureTotal () {
+		int heure = 0;
+
+		for (CategorieHeures catH : this.heures.keySet()) {
+			
+			List<Integer> info = this.heures.get(catH);
+
+			heure += info.get(1) * info.get(2) * catH.getcoefCatHeur();
+		}
+
+		float coef = Controleur.getControleur().getCategorieHeure("HP").getcoefCatHeur();
+
+		return (int) (heure + this.heurePonctuel * coef);
+	}
+
+
+
+	public void addAffectations (Affectations a) { this.lstAffectations.add(a);}
 
 	/*-------------------------------------------------------------*/
 	/* SET-TEURS */
@@ -157,14 +214,5 @@ public abstract class Module implements Comparable<Module> {
 		return "Module [semestres=" + semestres + ", code=" + code + ", libLong=" + libLong + ", libCourt=" + libCourt
 				+ ", valide=" + valide + ", heurePonctuel=" + heurePonctuel + ", listCategorieHeure="
 				+ listCategorieHeure + ", heures=" + heures + "]";
-	}
-
-	public void initHashMap(){
-		ArrayList<Integer> list = new ArrayList<>();
-		list.add(0);
-		list.add(0);
-		list.add(0);
-		list.add(0);	
-		this.heures.put(null,list);
 	}
 }

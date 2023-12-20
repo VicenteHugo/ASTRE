@@ -18,15 +18,16 @@ import javax.swing.JTextField;
 import controleur.Controleur;
 import model.CategorieIntervenant;
 import model.Intervenants;
+import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 
 public class PanelAddIntervenant extends JPanel {
 	private JComboBox<String> boxCategorie;
 	private JTextField txtNom;
 	private JTextField txtPrenom;
-	private JTextField txtHServ;
-	private JTextField txtHMax;
-	private JTextField txtCoefTP;
+	private JTextFieldNumber txtHServ;
+	private JTextFieldNumber txtHMax;
+	private JTextFieldNumber txtCoefTP;
 
 	private JButton btnValider;
 	private JButton btnAnnuler;
@@ -50,9 +51,10 @@ public class PanelAddIntervenant extends JPanel {
 
 		this.txtNom = new JTextField(10);
 		this.txtPrenom = new JTextField(10);
-		this.txtHServ = new JTextField(5);
-		this.txtHMax = new JTextField(5);
-		this.txtCoefTP = new JTextField(3);
+		this.txtHServ  = new JTextFieldNumber(5);
+		this.txtHMax   = new JTextFieldNumber(5);
+		this.txtCoefTP = new JTextFieldNumber(3);
+		this.txtCoefTP.setFloat(true);
 
 		this.btnAnnuler = new JButton("Annuler");
 		this.btnValider = new JButton("Valider");

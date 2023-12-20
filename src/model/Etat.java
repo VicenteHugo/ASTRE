@@ -257,10 +257,9 @@ public class Etat {
 					m = new PPP(sem, code, libLong, libCourt, heurePonctuel,valide);
 
 				Statement st1 = connec.createStatement();
-				ResultSet res1 = st1.executeQuery("SELECT * FROM ModulesCatHeures"+ Etat.nom);
+				ResultSet res1 = st1.executeQuery("SELECT * FROM ModulesCatHeures"+ Etat.nom+ " WHERE codeMod = '" + code +"'");
 
 				while (res1.next()) {
-
 					CategorieHeures catH = Etat.getCatHeure(res1.getString("libCatHeur"));
 					int heurePn = res1.getInt("nbHeurePN");
 					int heureSem = res1.getInt("nbHeureSem");
@@ -496,6 +495,7 @@ public class Etat {
 				}
 
 				// On l'execute
+				System.out.println(st);
 				st.executeUpdate();
 			}
 		} catch (Exception e) { e.printStackTrace(); }

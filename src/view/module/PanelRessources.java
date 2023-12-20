@@ -21,7 +21,7 @@ import view.JLabelModule;
 import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
-
+import view.previsionnel.PanelSemestre;
 import controleur.*;
 import model.CategorieHeures;
 import model.Semestres;
@@ -82,7 +82,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	private JTextFieldNumber txtTotEtdAffect;
 
 	//Affectation 
-	private JTable tblGrilleDonnees;
+	JTable tblGrilleDonnees;
 	private JButton btnAjouter;
 	private JButton btnSupprimer;
 
@@ -122,19 +122,17 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		this.estNouveau = true;
 
 		loadPage(semestres);
-		
-        
 
     }
 
 
 	public PanelRessources (FrameAccueil frame, Module m) {
 		this.frame = frame;
+		this.frame.setTitle("Astre - Previsionnel");
+
 		this.mod = m;
 
 		loadPage(m.getSemestres());
-
-		this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
 
 		//txtCode
 		this.txtCodeMod    .setText(this.mod.getCode());
@@ -153,23 +151,31 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		//CM
 		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
+		System.out.println(map);
 
 		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("CM"));
-		this.txtHeureCMPN.setText(lst.get(0) + "");		
-		this.txtCMNbSem  .setText(lst.get(1) + "");		
-		this.txtCMNbHeure.setText(lst.get(2) + "");		
+		if (lst != null) {
+			this.txtHeureCMPN.setText(lst.get(0) + "");		
+			this.txtCMNbSem  .setText(lst.get(1) + "");		
+			this.txtCMNbHeure.setText(lst.get(2) + "");		
+		}
+
 
 		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
-		this.txtHeureTPPN.setText(lst.get(0) + "");		
-		this.txtTPNbSem  .setText(lst.get(1) + "");		
-		this.txtTPNbHeure.setText(lst.get(2) + "");		
+		if (lst != null) {
+			this.txtHeureTPPN.setText(lst.get(0) + "");		
+			this.txtTPNbSem  .setText(lst.get(1) + "");		
+			this.txtTPNbHeure.setText(lst.get(2) + "");	
+		}	
 
-		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
-		this.txtHeureTDPN.setText(lst.get(0) + "");		
-		this.txtTDNbSem  .setText(lst.get(1) + "");		
-		this.txtTDNbHeure.setText(lst.get(2) + "");		
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TD"));
+		if (lst != null) { 
+			this.txtHeureTDPN.setText(lst.get(0) + "");		
+			this.txtTDNbSem  .setText(lst.get(1) + "");		
+			this.txtTDNbHeure.setText(lst.get(2) + "");		
+		}
 
-		if (this.mod.isValide()) this.cbValide.validate();
+		this.cbValide.setSelected(this.mod.isValide());
 
 		//Juste pour faire les calculs
 		this.focusLost(null);
@@ -193,9 +199,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		//Informations Semestres
         this.txtTypeMod = new JTextField("Ressource", 8);
         this.txtSem     = new JTextField("S" + semestres.getNumSem(), 5);
-        this.txtNbEtd   = new JTextFieldNumber("80", 3);
-        this.txtNbGpTd  = new JTextFieldNumber("80", 3);
-        this.txtNbGpTp  = new JTextFieldNumber("80", 3);
+        this.txtNbEtd   = new JTextFieldNumber("0", 3);
+        this.txtNbGpTd  = new JTextFieldNumber("0", 3);
+        this.txtNbGpTp  = new JTextFieldNumber("0", 3);
 
 
 
@@ -443,22 +449,22 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		gbcRepar.gridx = 0;
 		gbcRepar.gridy++;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
-		panelRepartition.add(this.txtCMNbHeure, gbcRepar);
-		gbcRepar.gridx++;
-		gbcRepar.anchor = GridBagConstraints.LINE_START;
 		panelRepartition.add(this.txtCMNbSem  , gbcRepar);
 		gbcRepar.gridx++;
-		gbcRepar.anchor = GridBagConstraints.LINE_END;
-		panelRepartition.add(this.txtTDNbHeure, gbcRepar);
-		gbcRepar.gridx++;
 		gbcRepar.anchor = GridBagConstraints.LINE_START;
+		panelRepartition.add(this.txtCMNbHeure, gbcRepar);
+		gbcRepar.gridx++;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		panelRepartition.add(this.txtTDNbSem  , gbcRepar);
 		gbcRepar.gridx++;
+		gbcRepar.anchor = GridBagConstraints.LINE_START;
+		panelRepartition.add(this.txtTDNbHeure, gbcRepar);
+		gbcRepar.gridx++;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
-		panelRepartition.add(this.txtTPNbHeure, gbcRepar);
+		panelRepartition.add(this.txtTPNbSem  , gbcRepar);
 		gbcRepar.gridx++;
 		gbcRepar.anchor = GridBagConstraints.LINE_START;
-		panelRepartition.add(this.txtTPNbSem  , gbcRepar);
+		panelRepartition.add(this.txtTPNbHeure, gbcRepar);
 		gbcRepar.gridx++;
 
         gbcRepar.insets.left = 20;
@@ -497,9 +503,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		gbcRepar.gridwidth = 1;
 		panelRepartition.add(this.txtCMTotEtd, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTPTotEtd, gbcRepar);
-		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtTDTotEtd, gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtTPTotEtd, gbcRepar);
 
         gbcRepar.insets.left = 20;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
@@ -525,9 +531,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		gbcRepar.gridwidth = 1;
 		panelRepartition.add(this.txtCMTotEtdAffect, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTPTotEtdAffect, gbcRepar);
-		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtTDTotEtdAffect, gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtTPTotEtdAffect, gbcRepar);
 
         gbcRepar.insets.left = 20;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
@@ -765,7 +771,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 			return;
 		}
 
-		boolean   val = this.cbValide      .isValid();
+		boolean   val = this.cbValide      .isSelected();
 		String    cod = this.txtCodeMod    .getText();
 		String    liL = this.txtLibLongMod .getText();
 		String    liC = this.txtLibCourtMod.getText();
@@ -774,7 +780,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
 		
 
-		//                                            PN                                             SEMAINE                                      NB HEURE
+		//                                                   PN                                             SEMAINE                                      NB HEURE
 		List<Integer> lstCM = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
 		List<Integer> lstTP = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureTPPN.getText()), Integer.parseInt(this.txtTPNbSem.getText()), Integer.parseInt(this.txtTPNbHeure.getText())));
 		List<Integer> lstTD = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureTDPN.getText()), Integer.parseInt(this.txtTDNbSem.getText()), Integer.parseInt(this.txtTDNbHeure.getText())));
@@ -808,7 +814,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 				return;
 			}
 		}
-
+		
 		this.showMessageDialog("Le code est déja utiliser");
 	}
 
@@ -826,17 +832,12 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 	private void supprimer() {
-		int ind = this.tblGrilleDonnees.getSelectedRow();
-
-		Controleur.getControleur().supprimerIntervenant(ind);
-		if (ind >= 0)
-			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
-		this.maj();
-	}
-
-    public void maj() {
-		//this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
-	}
+        int[] selectedRow = this.tblGrilleDonnees.getSelectedRows();
+        for (int i =0; i < selectedRow.length; i++) {
+            Controleur.getControleur().supprimerAffectation(i);
+        }
+		this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
+	}	
 
 	private void showMessageDialog(String message) {
 		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -860,6 +861,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		int hpHeu = Integer.parseInt(this.txtHPTot.getText());
 
+		int gpTd = Integer.parseInt(this.txtNbGpTd.getText());
+		int gpTp = Integer.parseInt(this.txtNbGpTp.getText());
+
 		float coefCM = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
 		float coefTD = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
 		float coefTP = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
@@ -870,9 +874,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		/* CALCUL PN */
 
 		// eqtd
-		int cmPNetd = (int) (cmPN * coefCM);
-		int tdPNetd = (int) (tdPN * coefTD);
-		int tpPNetd = (int) (tpPN * coefTP);
+		int cmPNetd = Math.round(cmPN * coefCM);
+		int tdPNetd = Math.round(tdPN * coefTD) * gpTd;
+		int tpPNetd = Math.round(tpPN * coefTP) * gpTp;
 		this.txtHeureEtdCMPN.setText( cmPNetd + "");
 		this.txtHeureEtdTDPN.setText( tdPNetd + "");
 		this.txtHeureEtdTPPN.setText( tpPNetd + "");
@@ -897,17 +901,17 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		this.txtTot.setText((cmHTot + tdHTot + tpHTot + hpHeu) + "");
 
 		//EQTD
-		int cmHTotEtd = (int) ((cmHeu * cmSem) * coefCM);
-		int tdHTotEtd = (int) ((tpHeu * tpSem) * coefTD);
-		int tpHTotEtd = (int) ((tdHeu * tdSem) * coefTP);
-		int hpHTotEtd = (int) ( hpHeu          * coefHP);
+		int cmHTotEtd = Math.round((cmHeu * cmSem) * coefCM);
+		int tpHTotEtd = Math.round((tpHeu * tpSem) * coefTD * gpTp);
+		int tdHTotEtd = Math.round((tdHeu * tdSem) * coefTP * gpTd);
+		int hpHTotEtd = Math.round( hpHeu          * coefHP);
 
 		this.txtCMTotEtd.setText( cmHTotEtd + "");
-		this.txtTPTotEtd.setText( tdHTotEtd + "");
-		this.txtTDTotEtd.setText( tpHTotEtd + "");
+		this.txtTDTotEtd.setText( tdHTotEtd + "");
+		this.txtTPTotEtd.setText( tpHTotEtd + "");
 		this.txtHPTotEtd.setText( hpHTotEtd + "");
 
-		this.txtTot.setText((cmHTotEtd + tdHTotEtd + tpHTotEtd + hpHTotEtd) + "");
+		this.txtTotEtd.setText((cmHTotEtd + tdHTotEtd + tpHTotEtd + hpHTotEtd) + "");
 
 
 

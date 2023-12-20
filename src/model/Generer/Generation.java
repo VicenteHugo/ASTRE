@@ -2,7 +2,6 @@ package model.Generer;
 
 import java.io.PrintWriter;
 
-import javax.swing.text.html.HTML;
 
 import model.CategorieIntervenant;
 import model.Intervenants;
