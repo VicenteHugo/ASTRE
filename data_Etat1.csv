@@ -1,0 +1,19 @@
+Intervenants,,Categorie,,,,S1,,S3,,S5,,SSTot,,S2,,S4,,S6,,SSTot,,Totaux,,
+nom,prenomn, categorie, coef,hmin, hmax, théo, réel, théo, réel, théo, réel, théo, réel, théo, réel, théo, réel, théo, réel, théo, réel, théo, réel
+Guinand,Frederic,Professeurs-Chercheur,4,100,150,32,32,0,0,0,0,32,32,32,32,0,0,0,0,0,0,32,32
+Boudebous,Dalila,Professeurs-Chercheur,4,100,150,48,48,0,0,0,0,48,48,48,48,0,0,0,0,0,0,48,48
+Sadeg,Bruno,Contractuel,4,80,100,24,24,0,0,0,0,24,24,24,24,0,0,0,0,0,0,24,24
+Dubocage,Tiphaine,Vacataire,4,60,70,40,40,0,0,0,0,40,40,40,40,0,0,0,0,0,0,40,40
+Le Pivert,Philippe,Professeurs,2,150,200,60,60,4,4,0,0,64,64,60,60,4,4,0,0,12,12,76,76
+Laffaech,Quentin,Professeurs,2,150,200,0,0,0,0,12,12,12,12,0,0,0,0,12,12,4,4,16,16
+Foubert,Jean,Contractuel,4,100,150,0,0,0,0,8,8,8,8,0,0,0,0,8,8,0,0,8,8
+Boukachour,Hadhoum,Professeurs-Chercheur,4,100,150,24,24,8,8,0,0,32,32,24,24,8,8,0,0,0,0,32,32
+Colignon,Thomas,Vacataire,4,60,70,40,40,0,0,0,0,40,40,40,40,0,0,0,0,24,24,64,64
+Legrix,Bruno,Professeurs,2,150,200,20,20,0,0,0,0,20,20,20,20,0,0,0,0,16,16,36,36
+Alabboud,Hassan,Contractuel,4,80,100,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,8,8,8
+Colin,Jean-Yves,Professeurs,2,100,150,0,0,0,0,0,0,0,0,0,0,0,0,0,0,12,12,12,12
+Nivet,Laurence,Professeurs,2,150,200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,4
+Pytel,Steve,Vacataire,4,60,70,32,32,0,0,0,0,32,32,32,32,0,0,0,0,0,0,32,32
+Boukachour,Jaouad,Professeurs-Chercheur,4,100,150,32,32,0,0,0,0,32,32,32,32,0,0,0,0,0,0,32,32
+Zahour,Abderrazak,Professeurs-Chercheur,4,100,150,32,32,0,0,0,0,32,32,32,32,0,0,0,0,14,14,46,46
+Totaux,,,,,,384,384,12,12,20,20,416,416,384,384,12,12,20,20,94,94,510,510

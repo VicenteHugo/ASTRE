@@ -23,13 +23,13 @@
 
 
 -- Suppressions des tables
--- DROP TABLE IF EXISTS AffectationETAT;
--- DROP TABLE IF EXISTS ModulesCatHeuresETAT;
--- DROP TABLE IF EXISTS ModulesETAT;
--- DROP TABLE IF EXISTS IntervenantsETAT;
--- DROP TABLE IF EXISTS SemestresETAT;
--- DROP TABLE IF EXISTS CategorieHeuresETAT;
--- DROP TABLE IF EXISTS CategorieIntervenantsETAT;
+--DROP TABLE IF EXISTS AffectationETAT;
+--DROP TABLE IF EXISTS ModulesCatHeuresETAT;
+--DROP TABLE IF EXISTS ModulesETAT;
+--DROP TABLE IF EXISTS IntervenantsETAT;
+--DROP TABLE IF EXISTS SemestresETAT;
+--DROP TABLE IF EXISTS CategorieHeuresETAT;
+--DROP TABLE IF EXISTS CategorieIntervenantsETAT;
 
 -- Création des tables ayant un niveau de liaison 1
 CREATE TABLE IF NOT EXISTS CategorieIntervenantsETAT
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS IntervenantsETAT
 -- Création des tables ayant un niveau de liaison 3
 CREATE TABLE IF NOT EXISTS ModulesCatHeuresETAT
 (
-	codeMod    VARCHAR(255) NOT NULL REFERENCES ModulesETAT(codeMod),
+	codeMod    VARCHAR(255) NOT NULL REFERENCES ModulesETAT(codeMod) ON DELETE CASCADE,
 	libCatHeur VARCHAR(255) NOT NULL REFERENCES CategorieHeuresETAT(libCatHeur),
 	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN >= 0),
 	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem >= 0),

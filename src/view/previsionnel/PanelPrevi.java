@@ -18,6 +18,7 @@ import javax.swing.JTable;
 
 import controleur.Controleur;
 import model.Etat;
+import model.Semestres;
 import model.modules.Module;
 import model.modules.PPP;
 import model.modules.Ressource;
@@ -41,13 +42,14 @@ public class PanelPrevi extends JPanel {
     private JButton btnModifier;
     private JButton btnSupprimer;
 
-    private JButton btnAccueil;
+    private JButton btnSauvegarder;
+    private JButton btnQuitter;
 
     public PanelPrevi(FrameAccueil frame) {
 
         this.frame = frame;
-        frame.setTitle("Astre - Previsionnel (Accueil)");
-		frame.setMinimumSize(new Dimension(600, 400));
+        this.frame.setTitle("Astre - Previsionnel (Accueil)");
+		this.frame.setMinimumSize(new Dimension(600, 400));
         this.setLayout(new BorderLayout());
 
         ongletSemestres = new JTabbedPane(JTabbedPane.TOP);
@@ -83,24 +85,25 @@ public class PanelPrevi extends JPanel {
         
         panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         
-        this.btnAccueil = new JButton("Accueil");
-        panel.add(this.btnAccueil);
+        this.btnSauvegarder = new JButton("Sauvegarder");
+        this.btnQuitter     = new JButton("Annuler");
+        panel.add(this.btnSauvegarder);
+        panel.add(this.btnQuitter);
         
         this.add(panel, BorderLayout.NORTH);
         
         
-        this.btnCreer.addActionListener((e)->this.creation(this.cmbChoixCreer.getSelectedIndex()) );
-        this.btnAccueil.addActionListener((e)->{ this.frame.changePanel(new PanelAccueil(this.frame));} );
-        this.btnModifier.addActionListener((e)->{ this.modifier();});
-        this.cmbChoixCreer.addActionListener((e)->this.btnCreer.setText(this.cmbChoixCreer.getSelectedItem().toString()));
-        this.btnSupprimer.addActionListener((e)-> this.supprimer());
+        this.btnCreer      .addActionListener((e)->this.creation(this.cmbChoixCreer.getSelectedIndex()) );
+        this.btnSauvegarder.addActionListener((e)->{ this.sauvegarde(); });
+        this.btnQuitter    .addActionListener((e)->{ Controleur.getControleur().annuler()    ;this.frame.changePanel(new PanelAccueil(this.frame));} );
+        this.btnModifier   .addActionListener((e)->{ this.modifier();});
+        this.cmbChoixCreer .addActionListener((e)->this.btnCreer.setText(this.cmbChoixCreer.getSelectedItem().toString()));
+        this.btnSupprimer  .addActionListener((e)-> this.supprimer());
         //this.ongletSemestres.addChangeListener((l)-> this.ongletSemestres.selec);
     }
 
     private void creation(int indice) {
-        System.out.println(indice);
         if(indice < 0) indice = 0;
-
 
         switch (indice) {
             case 0 -> this.frame.changePanel(new PanelRessources(frame, Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex())));
@@ -116,8 +119,8 @@ public class PanelPrevi extends JPanel {
         int indice = 0;
         Module m = null;
         for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
-        PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
-        JTable table = panelSemestre.getTable();
+            PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+            JTable table = panelSemestre.getTable();
             if(table.getSelectedRow() != -1){
                 indice = table.getSelectedRow();
                 String code = (String) table.getValueAt(table.getSelectedRow(),0);
@@ -130,9 +133,8 @@ public class PanelPrevi extends JPanel {
         }
 
         if (m instanceof PPP)
-            System.out.println("Page pas fait pout ppp");
+            this.frame.changePanel(new PanelPPP(this.frame, m));
         if (m instanceof Ressource)
-        System.out.println("Je suis une ressource");
             this.frame.changePanel(new PanelRessources(this.frame,m));
         if (m instanceof Sae)
             this.frame.changePanel(new PanelSAE(this.frame));
@@ -151,10 +153,26 @@ public class PanelPrevi extends JPanel {
             val-= i;
             String code = (String) table.getValueAt(val, 0);
             m = Controleur.getControleur().getModule(code);
-            Controleur.getControleur().supprimerModule(m);
+            if (!Controleur.getControleur().supprimerModule(m))
+                this.showMessageDialog("Ce module à encore des affectations");
             panelSemestre.majGrille(ongletSemestres.getSelectedIndex() + 1);
             
         }
+    }
+
+
+    private void sauvegarde () {
+
+        for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
+            PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+            Semestres sem = panelSemestre.getSemNew();
+            Controleur.getControleur().modifSemestres(sem);
+        }
+        
+
+
+        Controleur.getControleur().enregistrer();
+        this.frame.changePanel(new PanelAccueil(this.frame));
     }
 
 	private void showMessageDialog(String message) {

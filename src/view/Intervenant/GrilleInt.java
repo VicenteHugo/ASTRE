@@ -98,14 +98,12 @@ public class GrilleInt extends AbstractTableModel {
 
 		
 		if(isCellEditable(row, col)){
-			System.out.println("je peut modifier hihi ahaha MOnstre TrIplE mOnstRe");
 			CategorieIntervenant categorieIntervenant  = Controleur.getControleur().getCategorieIntervenant((String)this.tabDonnees[row][0]);
 			String  nom = (String) this.tabDonnees[row][1];
 			String  prenom = (String) this.tabDonnees[row][2];
 			int  services = (int) this.tabDonnees[row][3];
 			int  nbHeureMax = (int) this.tabDonnees[row][4];
 			Float  coef = (Float) this.tabDonnees[row][5];
-			System.out.println(categorieIntervenant + " : " + nom + " : " + prenom + " : " + services + " : " + nbHeureMax + " : " + coef);
 
 			switch (col) {
 				case 0:
@@ -135,8 +133,7 @@ public class GrilleInt extends AbstractTableModel {
 				
 				default:
 					break;
-		}
-			System.out.println(categorieIntervenant + " : " + nom + " : " + prenom + " : " + services + " : " + nbHeureMax + " : " + coef);
+			}
 
 			if (coef < 0) return;
 			if(nbHeureMax <= services) return;

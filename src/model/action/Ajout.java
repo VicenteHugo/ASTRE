@@ -33,8 +33,6 @@ public class Ajout extends Action {
 
 			this.info.addAll(List.of(m.getCode(), cat.getlibCatHeur(), lst.get(0), lst.get(2), lst.get(1)));
 		}
-
-		System.out.println(this.info);
 	}
 
 	public Ajout(Intervenants inter) {

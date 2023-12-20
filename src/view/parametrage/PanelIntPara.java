@@ -129,8 +129,6 @@ public class PanelIntPara extends JPanel {
 			return ;
 		}
 
-		System.out.println("Indice : " + ind);
-		
 		this.maj();
 
 		int max = this.tblGrilleDonnees.getRowCount();

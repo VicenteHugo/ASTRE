@@ -71,6 +71,7 @@ public class PanelSAE extends JPanel implements ActionListener{
 		
 
 		this.frame = frame;
+		this.frame.setTitle("Astre - Previsionnel");
 		//this.mod   = new Ressource(null, "", "", "", 0);
 		
         /*                         */
@@ -193,7 +194,7 @@ public class PanelSAE extends JPanel implements ActionListener{
         gbcHeurePN.gridy = 0;
         gbcHeurePN.weightx = 1;
         gbcHeurePN.weighty = 1;
-        gbcHeurePN.insets = new Insets(3, 3, 3, 3);
+        gbcHeurePN.insets = new Insets(2, 2, 2, 2);
 
 
 		//Ajout des JLabelModule première lignes
@@ -207,7 +208,7 @@ public class PanelSAE extends JPanel implements ActionListener{
 		panelHeurePN.add(new JLabelModule("∑"), gbcHeurePN);
 		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
 
-		gbcHeurePN.insets = new Insets(2, 3, 41, 3);
+		gbcHeurePN.insets = new Insets(2, 3, 10, 3);
 		gbcHeurePN.gridx  = 0;
 		gbcHeurePN.gridy++;
 		panelHeurePN.add(new JLabelModule("Total (eqtd) promo"), gbcHeurePN);
@@ -215,7 +216,7 @@ public class PanelSAE extends JPanel implements ActionListener{
 		panelHeurePN.add(this.txtHeureEtdSaePN,gbcHeurePN);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(this.txtHeureEtdTutPN,gbcHeurePN);
-		gbcHeurePN.insets = new Insets(2,40,41,10);
+		gbcHeurePN.insets = new Insets(2,40,10,10);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(this.txtHeureEtdTotPN,gbcHeurePN);
 
@@ -241,52 +242,54 @@ public class PanelSAE extends JPanel implements ActionListener{
         gbcRepar.insets = new Insets(2,5,0,5);
 
 		// Ajout première ligne
-		gbcRepar.anchor = GridBagConstraints.CENTER;
 		gbcRepar.gridx = 3;
-		panelRepartition.add(new JLabelModule("h Sae"), gbcRepar);
+		panelRepartition.add(new JLabelModule("h Sae", JLabel.CENTER), gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabelModule("h Tot"), gbcRepar);
+		panelRepartition.add(new JLabelModule("h Tot", JLabel.CENTER), gbcRepar);
 		gbcRepar.gridx ++;
-		gbcRepar.insets = new Insets(2,350,10,10);
-		gbcRepar.anchor = GridBagConstraints.CENTER;
+		gbcRepar.insets = new Insets(2,340,10,10);
+		
 		panelRepartition.add(new JLabelModule("∑", JLabel.CENTER), gbcRepar);
 
 		//Deuxième ligne
-		gbcRepar.insets = new Insets(2,5,10,5);
+		gbcRepar.insets = new Insets(2,5,5,5);
 		gbcRepar.gridwidth = 3;
 		gbcRepar.gridx     = 0;
 		gbcRepar.gridy++;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		panelRepartition.add(new JLabelModule("Total promo (eqtd)"), gbcRepar);
+		gbcRepar.anchor = GridBagConstraints.CENTER;
 		gbcRepar.gridx += 3;
 		gbcRepar.gridwidth = 1;
 		panelRepartition.add(this.txtEtdSaePromRep, gbcRepar);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtEtdTutPromRep, gbcRepar);
-		gbcRepar.insets = new Insets(2,350,10,10);
+		gbcRepar.insets = new Insets(2,340,5,10);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtEtdTotPromRep, gbcRepar);
 
 		//Troisieme
-		gbcRepar.insets = new Insets(2,5,10,5);
-		gbcRepar.anchor = GridBagConstraints.LINE_END;
+		gbcRepar.insets = new Insets(2,5,5,5);
+		gbcRepar.anchor = GridBagConstraints.CENTER;
 		gbcRepar.gridy++;
 		gbcRepar.gridwidth = 3;
 		gbcRepar.gridx= 0;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		panelRepartition.add(new JLabelModule("Total affecté (eqtd)"), gbcRepar);
+		gbcRepar.anchor = GridBagConstraints.CENTER;
 		gbcRepar.gridx += 3;
 		gbcRepar.gridwidth = 1;
 		panelRepartition.add(this.txtEtdSaeAffectRep, gbcRepar);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtEtdTutAffectRep, gbcRepar);
-		gbcRepar.insets = new Insets(2,350,10,10);
+		gbcRepar.insets = new Insets(2,340,5,10);
 		gbcRepar.gridx ++;
 		panelRepartition.add(this.txtEtdTotAffectRep, gbcRepar);
 
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleRessources());
+		this.tblGrilleDonnees = new JTable(new GrilleSAE());
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -310,18 +313,19 @@ public class PanelSAE extends JPanel implements ActionListener{
 		// Ajout des pannels au panel central
 		JPanel panelCentre = new JPanel(new GridBagLayout());
 		GridBagConstraints gbcCentre = new GridBagConstraints();
-		gbcCentre.insets = new Insets(5, 20, 5, 5);
+		gbcCentre.insets = new Insets(5, 5, 5, 5);
 		gbcCentre.weightx = 1;
 		gbcCentre.weighty = 1;
 		gbcCentre.gridx = 0;
 		gbcCentre.gridy = 0;
+		gbcCentre.fill=GridBagConstraints.HORIZONTAL;
 		gbcCentre.anchor = GridBagConstraints.FIRST_LINE_START;
 
+		gbcCentre.gridwidth = 1;
 		panelCentre.add(panelHeurePNValid, gbcCentre);
 		gbcCentre.gridx++;
 		gbcCentre.weighty = 1;
 		panelCentre.add(panelRep, gbcCentre);
-
 		gbcCentre.gridy++;
 		panelCentre.add(panelTable, gbcCentre);
 
@@ -524,7 +528,7 @@ public class PanelSAE extends JPanel implements ActionListener{
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
-		System.out.println(ind);
+		
 		Controleur.getControleur().supprimerIntervenant(ind);
 		if (ind >= 0)
 			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
@@ -532,6 +536,6 @@ public class PanelSAE extends JPanel implements ActionListener{
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleRessources()); 
+		this.tblGrilleDonnees.setModel(new GrilleSAE()); 
 	}
 }

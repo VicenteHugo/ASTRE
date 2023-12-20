@@ -98,6 +98,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 	public PanelRessources(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
+		this.frame.setTitle("Astre - Previsionnel");
 		
 		this.mod   = new Ressource(semestres, "", "", "", 0, false);
 
@@ -119,8 +120,67 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		this.mod.setHeures(map);
 		this.estNouveau = true;
+
+		loadPage(semestres);
 		
-        /*                         */
+        
+
+    }
+
+
+	public PanelRessources (FrameAccueil frame, Module m) {
+		this.frame = frame;
+		this.mod = m;
+
+		loadPage(m.getSemestres());
+
+		this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
+
+		//txtCode
+		this.txtCodeMod    .setText(this.mod.getCode());
+		this.txtLibLongMod .setText(this.mod.getLibLong());
+		this.txtLibCourtMod.setText(this.mod.getLibCourt());
+		
+		//Semestres info
+		Semestres s = this.mod.getSemestres();
+		this.txtNbEtd .setText("" + s.getNbEtdSem());
+		this.txtNbGpTd.setText("" + s.getNbGpTdSem());
+		this.txtNbGpTp.setText("" + s.getNbGpTpSem()); 
+
+
+		//Heure ponctuelle
+		this.txtHPTot.setText(this.mod.getHeurePonctuel() + "");
+
+		//CM
+		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
+
+		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("CM"));
+		this.txtHeureCMPN.setText(lst.get(0) + "");		
+		this.txtCMNbSem  .setText(lst.get(1) + "");		
+		this.txtCMNbHeure.setText(lst.get(2) + "");		
+
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
+		this.txtHeureTPPN.setText(lst.get(0) + "");		
+		this.txtTPNbSem  .setText(lst.get(1) + "");		
+		this.txtTPNbHeure.setText(lst.get(2) + "");		
+
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
+		this.txtHeureTDPN.setText(lst.get(0) + "");		
+		this.txtTDNbSem  .setText(lst.get(1) + "");		
+		this.txtTDNbHeure.setText(lst.get(2) + "");		
+
+		if (this.mod.isValide()) this.cbValide.validate();
+
+		//Juste pour faire les calculs
+		this.focusLost(null);
+
+
+		this.estNouveau = false;
+
+	}
+
+	private void loadPage(Semestres semestres){
+		/*                         */
         /* CREATION DES COMPOSANTS */
         /*                         */
 
@@ -199,7 +259,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
         gbcPanelHaut.gridy = 0;
         gbcPanelHaut.weightx = 1;
         gbcPanelHaut.weighty = 1;
-        gbcPanelHaut.insets = new Insets(3, 3, 3, 3);
+        gbcPanelHaut.insets = new Insets(2, 2, 2, 2);
 		gbcPanelHaut.anchor = GridBagConstraints.LINE_START;
 
         // Ajout des libellés première ligne
@@ -613,59 +673,6 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
         /* STYLE DES COMPOSANTS */
         /*                      */
 		PanelRessources.activer(this, this, this);
-
-    }
-
-
-	public PanelRessources (FrameAccueil frame, Module m) {
-
-		this (frame, m.getSemestres());
-		this.mod = m;
-		if(m.getCode() != null)
-			this.tblGrilleDonnees = new JTable(new GrilleRessources(this.mod));
-
-
-		//txtCode
-		this.txtCodeMod    .setText(this.mod.getCode());
-		this.txtLibLongMod .setText(this.mod.getLibLong());
-		this.txtLibCourtMod.setText(this.mod.getLibCourt());
-		
-		//Semestres info
-		Semestres s = this.mod.getSemestres();
-		this.txtNbEtd .setText("" + s.getNbEtdSem());
-		this.txtNbGpTd.setText("" + s.getNbGpTdSem());
-		this.txtNbGpTp.setText("" + s.getNbGpTpSem()); 
-
-
-		//Heure ponctuelle
-		this.txtHPTot.setText(this.mod.getHeurePonctuel() + "");
-
-		//CM
-		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
-
-		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("CM"));
-		this.txtHeureCMPN.setText(lst.get(0) + "");		
-		this.txtCMNbSem  .setText(lst.get(1) + "");		
-		this.txtCMNbHeure.setText(lst.get(2) + "");		
-
-		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
-		this.txtHeureTPPN.setText(lst.get(0) + "");		
-		this.txtTPNbSem  .setText(lst.get(1) + "");		
-		this.txtTPNbHeure.setText(lst.get(2) + "");		
-
-		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
-		this.txtHeureTDPN.setText(lst.get(0) + "");		
-		this.txtTDNbSem  .setText(lst.get(1) + "");		
-		this.txtTDNbHeure.setText(lst.get(2) + "");		
-
-		if (this.mod.isValide()) this.cbValide.validate();
-
-		//Juste pour faire les calculs
-		this.focusLost(null);
-
-
-		this.estNouveau = false;
-
 	}
 
 
@@ -747,7 +754,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 	private void quitter () {
-		this.frame.changePanel(new PanelPrevi(frame));
+		this.frame.changePanel(new PanelPrevi(this.frame));
 	}
 
 
@@ -758,9 +765,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 			return;
 		}
 
-		boolean   val = this.cbValide.isValid();
-		String    cod = this.txtCodeMod.getText();
-		String    liL = this.txtLibLongMod.getText();
+		boolean   val = this.cbValide      .isValid();
+		String    cod = this.txtCodeMod    .getText();
+		String    liL = this.txtLibLongMod .getText();
 		String    liC = this.txtLibCourtMod.getText();
 		int       hp  = Integer.parseInt(this.txtHPTot.getText());
 
@@ -768,10 +775,10 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		
 
 		//                                            PN                                             SEMAINE                                      NB HEURE
-		List<Integer> lstCM = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
-		List<Integer> lstTP = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureTPPN.getText()), Integer.parseInt(this.txtTPNbSem.getText()), Integer.parseInt(this.txtTPNbHeure.getText())));
-		List<Integer> lstTD = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureTDPN.getText()), Integer.parseInt(this.txtTDNbSem.getText()), Integer.parseInt(this.txtTDNbHeure.getText())));
-		List<Integer> lstHP = new ArrayList<>(List.of(Integer.parseInt(this.txtHPTot    .getText()), 1                                          , Integer.parseInt(this.txtHPTot    .getText())));
+		List<Integer> lstCM = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()), Integer.parseInt(this.txtCMNbSem.getText()), Integer.parseInt(this.txtCMNbHeure.getText())));
+		List<Integer> lstTP = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureTPPN.getText()), Integer.parseInt(this.txtTPNbSem.getText()), Integer.parseInt(this.txtTPNbHeure.getText())));
+		List<Integer> lstTD = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureTDPN.getText()), Integer.parseInt(this.txtTDNbSem.getText()), Integer.parseInt(this.txtTDNbHeure.getText())));
+		List<Integer> lstHP = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHPTot    .getText()), 1                                          , Integer.parseInt(this.txtHPTot    .getText())));
 
 
 		map.put(Controleur.getControleur().getCategorieHeure("CM"), lstCM);
@@ -787,8 +794,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 			this.mod.initList        (map);
 			this.mod.setHeurePonctuel(hp );
 
+			System.out.println(val);
+
 			if (Controleur.getControleur().ajouterModule(this.mod)) {
-				Controleur.getControleur().enregistrer();
 				this.quitter();
 				return;
 			}
@@ -796,7 +804,6 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		}else{
 			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, hp, val, map)) {
-				Controleur.getControleur().enregistrer();
 				this.quitter();
 				return;
 			}
@@ -819,9 +826,8 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 	private void supprimer() {
-
 		int ind = this.tblGrilleDonnees.getSelectedRow();
-		System.out.println(ind);
+
 		Controleur.getControleur().supprimerIntervenant(ind);
 		if (ind >= 0)
 			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
@@ -829,7 +835,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
+		//this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
 	}
 
 	private void showMessageDialog(String message) {
