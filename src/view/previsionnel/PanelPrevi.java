@@ -1,15 +1,10 @@
 package view.previsionnel;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import javax.swing.JButton;
+import view.JButtonStyle;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -17,7 +12,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 
 import controleur.Controleur;
-import model.Affectations;
 import model.Etat;
 import model.Semestres;
 import model.modules.Module;
@@ -39,12 +33,12 @@ public class PanelPrevi extends JPanel {
      
     private JComboBox<String> cmbChoixCreer;
 
-    private JButton btnCreer;
-    private JButton btnModifier;
-    private JButton btnSupprimer;
+    private JButtonStyle btnCreer;
+    private JButtonStyle btnModifier;
+    private JButtonStyle btnSupprimer;
 
-    private JButton btnSauvegarder;
-    private JButton btnQuitter;
+    private JButtonStyle btnSauvegarder;
+    private JButtonStyle btnQuitter;
 
     public PanelPrevi(FrameAccueil frame) {
 
@@ -64,7 +58,7 @@ public class PanelPrevi extends JPanel {
 
         JPanel panel = new JPanel(new FlowLayout());
 
-        this.btnCreer = new JButton("Créer Ressource");
+        this.btnCreer = new JButtonStyle("Créer Ressource");
         panel.add(this.btnCreer);
 
         this.cmbChoixCreer = new JComboBox<String>();
@@ -75,10 +69,10 @@ public class PanelPrevi extends JPanel {
 
         panel.add(this.cmbChoixCreer);
 
-        this.btnModifier = new JButton("Modifier");
+        this.btnModifier = new JButtonStyle("Modifier");
         panel.add(this.btnModifier);
 
-        this.btnSupprimer = new JButton("Supprimer");
+        this.btnSupprimer = new JButtonStyle("Supprimer");
         panel.add(this.btnSupprimer);
 
         this.add(panel, BorderLayout.SOUTH);
@@ -86,8 +80,8 @@ public class PanelPrevi extends JPanel {
         
         panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         
-        this.btnSauvegarder = new JButton("Sauvegarder");
-        this.btnQuitter     = new JButton("Annuler");
+        this.btnSauvegarder = new JButtonStyle("Sauvegarder");
+        this.btnQuitter     = new JButtonStyle("Annuler");
         panel.add(this.btnSauvegarder);
         panel.add(this.btnQuitter);
         
