@@ -203,7 +203,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Intervenants"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM Intervenants"+ Etat.nom+ " ORDER BY nomInt, prenomInt");
 
 			while (res.next()) {
 				String nom = res.getString("nomInt");
