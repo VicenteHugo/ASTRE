@@ -118,7 +118,7 @@ VALUES      ('CM'   , 1.5),
             ('TP'   , 1.0),
             ('TUT'  , 1.0),
             ('REH'  , 1.0),
-            ('Sae'  , 1.0),
+            ('SAE'  , 1.0),
             ('HP'   , 1.0),
             ('Autre', 1.0)
 ON CONFLICT (libCatHeur) DO NOTHING;

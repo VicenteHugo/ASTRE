@@ -471,6 +471,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		this.txtEtdSaeAffectRep.setEditable(false);
 		this.txtEtdTutAffectRep.setEditable(false);
 		this.txtEtdTotAffectRep.setEditable(false);
+		this.txtEtdTotPromRep.setEditable(false);
 
 
 		// Alignement
@@ -675,7 +676,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
 
 		int totPN   = Integer.parseInt(this.txtHeureEtdSaePN.getText())   + Integer.parseInt(this.txtHeureEtdTutPN.getText());
-		int totEqtd = Integer.parseInt(this.txtEtdSaeAffectRep.getText()) + Integer.parseInt(this.txtEtdTutAffectRep.getText());
+		int totEqtd = Integer.parseInt(this.txtEtdSaePromRep.getText()) + Integer.parseInt(this.txtEtdTutPromRep.getText());
 
 		this.txtHeureEtdTotPN.setText(totPN   + "");
 		this.txtEtdTotPromRep.setText(totEqtd + "");
