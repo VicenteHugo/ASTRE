@@ -23,6 +23,7 @@ import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import view.previsionnel.PanelSemestre;
 import controleur.*;
+import model.Affectations;
 import model.CategorieHeures;
 import model.Semestres;
 import model.modules.Module;
@@ -832,10 +833,12 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 	private void supprimer() {
-        int[] selectedRow = this.tblGrilleDonnees.getSelectedRows();
-        for (int i =0; i < selectedRow.length; i++) {
-            Controleur.getControleur().supprimerAffectation(i);
-        }
+		int ind = this.tblGrilleDonnees.getSelectedRow();
+		ArrayList<Affectations> list = (ArrayList<Affectations>) Controleur.getControleur().getAffectations(this.mod);
+		Controleur.getControleur().supprimerAffectation(list.get(ind));
+		if (ind >= 0)
+			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
+		
 		this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
 	}	
 
