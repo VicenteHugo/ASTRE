@@ -821,7 +821,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	private void ajouter () {
 		JFrame f = new JFrame();
         f.add(new PanelAddRessourceIntervenant(this,this.frame, f,mod));
-        f.setTitle("Ajout d'un Intervenant");
+        f.setTitle("Ajout d'une affectation");
 		f.pack();
 		f.setResizable(false);
 		f.setLocationRelativeTo(null);

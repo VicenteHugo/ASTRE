@@ -19,6 +19,7 @@ import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import view.JButtonStyle;
 import controleur.*;
+import model.Affectations;
 import model.Semestres;
 import model.modules.Module;
 
@@ -203,7 +204,7 @@ public class PanelStage extends JPanel implements ActionListener{
 		//Ajout des JLabelModule première lignes
 		gbcHeurePN.anchor = GridBagConstraints.CENTER;
 		gbcHeurePN.gridx = 1;
-		panelHeurePN.add(new JLabelModule("h Sae"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule("REH"), gbcHeurePN);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(new JLabelModule("h Tut"), gbcHeurePN);
 		gbcHeurePN.insets = new Insets(2,40,10,10);
@@ -387,6 +388,7 @@ public class PanelStage extends JPanel implements ActionListener{
         this.txtNbGpTd .setEditable(false);
 		this.txtNbGpTp .setEditable(false);
 
+		this.txtTotEtd.setEditable(false);
 
 		this.txtREHTotEtdAffect.setEditable(false);
 		this.txthTutTotEtdAffect.setEditable(false);
@@ -544,5 +546,42 @@ public class PanelStage extends JPanel implements ActionListener{
 
     public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleStage()); 
+	}
+
+	public void focusLost(FocusEvent e) {
+
+		float coefREH  = Controleur.getControleur().getCategorieHeure("REH").getcoefCatHeur();
+		float coefTut = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
+
+		int totEqtd = Integer.parseInt(this.txtREHTotEtdAffect.getText()) + Integer.parseInt(this.txthTutTotEtdAffect.getText());
+
+		this.txtTotEtd.setText(totEqtd + "");
+
+
+		/* CALCUL REPARTITION */
+
+		//EQTD
+		int rehAffect = 0;
+		int tutAffect = 0;
+
+
+		for (Affectations a : this.mod.getLstAffectations()) {
+
+			System.out.println(a.getCategorieHeures().getlibCatHeur());
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("REH"))
+				rehAffect += a.getNbHeure() * coefREH;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
+				tutAffect += a.getNbHeure() * coefTut;
+		}
+
+		this.txtREHTotEtdAffect.setText( rehAffect + "");
+		this.txthTutTotEtdAffect.setText( tutAffect + "");
+
+		this.txtTotEtdAffect.setText((rehAffect + tutAffect) + "");
+
+
+
 	}
 }
