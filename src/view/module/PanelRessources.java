@@ -807,6 +807,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 		}else{
 			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, hp, val, map)) {
+				Controleur.getControleur().enregistrer();
 				this.quitter();
 				return;
 			}
