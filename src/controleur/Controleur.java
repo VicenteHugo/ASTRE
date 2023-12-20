@@ -271,6 +271,11 @@ public class Controleur {
 			Etat.ajouterAction(new Suppression(inter));
 		}
 	}
+
+	public void supprimerAffectation(Affectations affect){
+		Etat.getAffectations().remove(affect);
+		Etat.ajouterAction(new Suppression(affect));
+	}
 	
 	public boolean modifAffectation(int i, String nomIntervenant,String prenom, Module m,String type, int nbSem, int nbGp, String com) {
 		Affectations    aOld = Etat.getAffectations(i);

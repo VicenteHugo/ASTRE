@@ -1,7 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 header {
-    background-color: red;
+    background-color: darkgrey;
+    padding: 0%;
     text-align: left;
     color: wheat;
+    display: flex;
+    flex-direction: row;
+}
+#logoTitre{
+    width: 150px;
+    height: auto;
+    margin: 10px;
+}
+h1{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    margin: 10px;
+    flex: auto;
 }
 
 body {
@@ -57,4 +76,8 @@ info {
     color: black;
     font-weight: normal;
     font-size: 12px;
+}
+
+table{
+    margin: 5%;
 }
