@@ -57,19 +57,9 @@ public class GrilleCatHeures extends AbstractTableModel {
 		String lib  = (String) this.tabDonnees[row][0];
 		float  coef = (Float) this.tabDonnees[row][1];
 
-		switch (col) {
-			case 0:
-				lib = (String) value;
-				break;
-
-			case 1:
-				
-				coef = (Float) value;
-				break;
+		String tmp = (String) value;
+		coef = Float.parseFloat(tmp);
 		
-			default:
-				break;
-		}
 
 		if (coef < 0) return;
 		
