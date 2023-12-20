@@ -202,7 +202,7 @@ public class PanelStage extends JPanel implements ActionListener{
 		//Ajout des JLabelModule première lignes
 		gbcHeurePN.anchor = GridBagConstraints.CENTER;
 		gbcHeurePN.gridx = 1;
-		panelHeurePN.add(new JLabelModule("h Sae"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule("REH"), gbcHeurePN);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(new JLabelModule("h Tut"), gbcHeurePN);
 		gbcHeurePN.insets = new Insets(2,40,10,10);
@@ -543,5 +543,37 @@ public class PanelStage extends JPanel implements ActionListener{
 
     public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleStage()); 
+	}
+
+	public void focusLost(FocusEvent e) {
+
+		//Récupération des données
+		int hREHPN  = Integer.parseInt(this.txtHeureEtdREHPN.getText());
+		int hTutPN = Integer.parseInt(this.txtHeureEtdhTutPN.getText());
+		int somPN  = Integer.parseInt(this.txtHeureEtdSPN.getText());
+
+		int gpTd = Integer.parseInt(this.txtNbGpTd.getText());
+		int gpTp = Integer.parseInt(this.txtNbGpTp.getText());
+
+		int rehToteqtd = Integer.parseInt(this.txtREHTotEtd.getText());
+		int tutToteqtd = Integer.parseInt(this.txthTutTotEtd.getText());
+
+		float coefREH  = Controleur.getControleur().getCategorieHeure("REH").getcoefCatHeur();
+		float coefTut = Controleur.getControleur().getCategorieHeure("Tut").getcoefCatHeur();
+
+
+		/* CALCUL REPARTITION */
+
+		//EQTD
+		int rehHTotEtd = Math.round((cmHeu * cmSem) * coefREH);
+		int tutHTotEtd = Math.round((tpHeu * tpSem) * coefTut * gpTp);
+
+		this.txtREHTotEtdAffect.setText( rehHTotEtd + "");
+		this.txthTutTotEtdAffect.setText( tutHTotEtd + "");
+
+		this.txtTotEtd.setText((rehHTotEtd + tutHTotEtd) + "");
+
+
+
 	}
 }
