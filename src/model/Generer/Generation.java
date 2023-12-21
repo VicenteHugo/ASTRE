@@ -68,6 +68,57 @@ public class Generation {
 		}
 		catch (Exception e){ e.printStackTrace(); }
 	}
+
+	public Generation(Module module)
+	{
+		this.haut  ="<!DOCTYPE HTML>\n";
+		this.haut +="<html lang=\"fr\">\n";
+		this.haut +="	<head>\n" ;
+		this.haut +="		<meta charset=\"utf-8\" />\n" ;
+		this.haut +="		<title>ASTRE-"+ module.getCode()+" "+ module.getLibCourt() +"</title>\n" ;
+		this.haut +="		<link href=\"style/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\">\n";
+		this.haut +="	</head>\n" ;
+		this.haut +="	<body>\n" ;
+		this.haut +="		<header>\n" ;
+		this.haut +="			<img id=\"logoTitre\" src=\"../lib/logoAstre-nobg.png\" alt=\"LogoAstre\">\n" ;
+		this.haut +="			<h1>ASTRE- "+ module.getCode() +" "+ module.getLibCourt() +" - "+ module.getSemestres()+" - *(Année)*</h1>\n";
+		this.haut +="			<hr>\n" ;
+		this.haut +="		</header>";
+		try
+		{
+			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/ressource.html") );
+
+			pw.print (this.haut);
+			pw.println ( "		<div>");
+			pw.println ( "			<h2>Heures</h2>");
+			pw.println ( "			<ul>");
+			pw.println ( "					<li>Code : "+module.getCode()+"</li>");
+			pw.println ( "					<li>Libellé : "+module.getLibLong()+"</li>");
+			pw.println ( "				<br>");
+			pw.println ( "				<li>Heures Pn : "+module.getHeurePn()+"</li>");
+			pw.println ( "				<li>Heures Ponctuel : "+module.getHeurePonctuel()+"</li>");
+			pw.println ( "				<li>Heures Prévues : "+module.getHeureAffecte()+"</li>");
+			pw.println ( "				<li>Heures Total : "+module.getHeureTotal()+"</li>");
+			pw.println ( "			</ul>");
+			pw.println ( "		</div>");
+			pw.println ( "		<div>");
+			pw.println ( "			<h2>Intervenants</h2>");
+			pw.println ( "			<ul>");
+			for (Affectations affec : module.getLstAffectations()) {
+				if (!printedItems.contains(affec.getIntervenant().getNomIntervenant())) {
+					pw.println ( "					<li>"+ affec.getIntervenant().getNomIntervenant()+" "+affec.getIntervenant().getNomIntervenant()+"</li>");
+					printedItems.add(affec.getIntervenant().getNomIntervenant());
+				}
+			}
+			pw.println ( "			</ul>");
+			pw.println ( "		</div>");
+
+			
+			pw.println ( "		</hr>");
+			pw.close();
+		}
+		catch (Exception e){ e.printStackTrace(); }
+	}
 	/** Gestion des valeurs de l'intervenant */
 
 	public String divRessource(Intervenants intervenant){
