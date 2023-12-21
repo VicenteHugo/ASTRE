@@ -46,6 +46,8 @@ public class Affectations {
 		this.categorieHeures = categorie;
 		this.nbHeure = nbHeure;
 		this.commentaire = commentaire;
+		this.nbGroupe = 1;
+		this.nbSemaine = 0;	
 	}
 
 	public Intervenants getIntervenant() {

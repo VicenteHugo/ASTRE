@@ -431,7 +431,7 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleSAE());
+		this.tblGrilleDonnees = new JTable(new GrillePPP(this.mod));
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -728,7 +728,7 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleSAE()); 
+		this.tblGrilleDonnees.setModel(new GrillePPP(this.mod)); 
 	}
 
 	private void showMessageDialog(String message) {

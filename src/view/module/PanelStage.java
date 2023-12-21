@@ -367,7 +367,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleStage());
+		this.tblGrilleDonnees = new JTable(new GrilleStage(this.mod));
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -658,7 +658,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleStage()); 
+		this.tblGrilleDonnees.setModel(new GrilleStage(this.mod)); 
 	}
 
 
