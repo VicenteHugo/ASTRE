@@ -3,7 +3,10 @@ package model.Generer;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Set;
+
+import javax.swing.text.html.parser.Element;
 
 import controleur.Controleur;
 import model.Affectations;
@@ -21,9 +24,13 @@ public class Generation {
 
 	private String haut;
 	private String pied;
+	private Intervenants intervenant;
+	HashMap<Module, ArrayList<Affectations>> hashMapModAffec;
 	Set<String> printedItems = new HashSet<>();
-	public Generation(Intervenants intervenant,int cptIntervenant)
+	public Generation(Intervenants intervenant,HashMap<Module, ArrayList<Affectations>> map,int cptIntervenant)
 	{
+		this.intervenant = intervenant;
+		this.hashMapModAffec = map;
 		this.haut  ="<!DOCTYPE HTML>\n";
 		this.haut +="<html lang=\"fr\">\n";
 		this.haut +="	<head>\n" ;
@@ -47,29 +54,33 @@ public class Generation {
 			pw.println ( "		<div class=\"premiereLigne\">\n");
 			pw.println ( "			<div>");
 			pw.println ( "				<h2>Heures</h2>");
-			pw.println ( "				<ul>");
-			pw.println ( "					<li>Nom : "+intervenant.getNomIntervenant()+"</li>");
-			pw.println ( "					<li>Prenom : "+intervenant.getPrenomIntervenant()+"</li>");
-			pw.println ( "					<br>");
-			pw.println ( "					<li>Heure Maximum : "+intervenant.getMaxHeures()+"</li>");
-			pw.println ( "					<li>Heure Minimum : "+intervenant.getServices()+"</li>");
-			pw.println ( "					<li>Heures Prévues : "+3+"</li>");
-			pw.println ( "				</ul>");
+			pw.println ( "				<div class=\"barreBleue\">");
+			pw.println ( "					<ul>");
+			pw.println ( "						<li>Nom : "+intervenant.getNomIntervenant()+"</li>");
+			pw.println ( "						<li>Prenom : "+intervenant.getPrenomIntervenant()+"</li>");
+			pw.println ( "						<br>");
+			pw.println ( "						<li>Heure Maximum : "+intervenant.getMaxHeures()+"</li>");
+			pw.println ( "						<li>Heure Minimum : "+intervenant.getServices()+"</li>");
+			pw.println ( "						<li>Heures Prévues : "+3+"</li>");
+			pw.println ( "					</ul>");
+			pw.println ( "				</div>");
 			pw.println ( "			</div>");
 			pw.println ( "			<div>");
 			pw.println ( "				<h2>Ressources</h2>");
-			pw.println ( "				<ul>");
+			pw.println ( "				<div class=\"barreBleue\">");
+			pw.println ( "					<ul>");
 			for (Affectations affec : intervenant.getLstAffectations()) {
 				if (!printedItems.contains(affec.getModule().getLibLong())) {
                 	pw.println ("					<li>"+ affec.getModule().getCode()+" "+affec.getModule().getLibLong()+"</li>");
             		printedItems.add(affec.getModule().getLibLong());
 				}
 			}
-			pw.println ( "				</ul>");
+			pw.println ( "					</ul>");
+			pw.println ( "				</div>");
 			pw.println ( "			</div>");
-			pw.println ( "		</div>\n");
-			pw.println ( "		<div class=\"gridRessource\">\n");
-			pw.println (divRessource(intervenant));
+			pw.println ( "		</div>");
+			pw.println ( "		<div class=\"gridRessource\">");
+			pw.println (divRessource(map));
 			pw.println ( "		</div>\n");
 			pw.println (this.pied);
 			pw.close();
@@ -126,46 +137,51 @@ public class Generation {
 	}
 	/** Gestion des valeurs de l'intervenant */
 
-	public String divRessource(Intervenants intervenant){
+	public String divRessource(HashMap<Module, ArrayList<Affectations>> map){
 		String  divRess = "";
 		String  codeActuel = "";
 		Boolean premPassage = false;
 		CategorieHeures catHeure = null;
 		int cpt = 1;
-		for (Affectations affec : intervenant.getLstAffectations()) {
-			if(affec.getModule() instanceof Ressource)
-			{
-				if (!affec.getModule().getCode().equals(codeActuel)){
-					if(premPassage)
-					{
-						divRess+="				</ul>\n";
-						divRess+="			</div>\n";
-					}
-					cpt = 1;
-					premPassage = true;
-					codeActuel= affec.getModule().getCode();
-					divRess+="			<div class=\"info\">\n";
-					divRess+="				<h2 class=\"module\">"+ affec.getModule().getCode()+" "+affec.getModule().getLibLong()+"</h2>\n";
-					divRess+="				<ul>\n";
-				}
-
-				if (affec.getModule().getCode().equals(codeActuel)){
-					if (affec.getCategorieHeures()!=catHeure) {
+		for (Module key : map.keySet()) {
+			for (Affectations affec : map.get(key)) {
+				if(affec.getModule() instanceof Ressource && affec.getIntervenant() == this.intervenant )
+				{
+					if (!affec.getModule().getCode().equals(codeActuel)){
+						if(premPassage)
+						{
+							divRess+="					</ul>\n";
+							divRess+="				</div>\n";
+							divRess+="			</div>\n";
+						}
 						cpt = 1;
-						divRess+="					<li class=\"\">"+affec.getCategorieHeures().getlibCatHeur()+"</li>\n";
-						catHeure  = affec.getCategorieHeures();
+						premPassage = true;
+						codeActuel= affec.getModule().getCode();
+						divRess+="			<div>\n";
+						divRess+="				<h2>"+ affec.getModule().getCode()+" "+affec.getModule().getLibLong()+"</h2>\n";
+						divRess+="				<div class=\"barreBleue\">\n";
+						divRess+="					<ul>\n";
 					}
-					divRess+="					<li>Affectation "+cpt+" :\n";
-					divRess+="						<ul>\n";
-					divRess+="							<li>Nb Heures : "+affec.getNbHeure()+"</li>\n";
-					divRess+="							<li>Nb Semaine : "+affec.getNbSemaine()+"</li>\n";
-					divRess+="						</ul>\n";
-					divRess+="					</li>\n";
-					cpt++;
+
+					if (affec.getModule().getCode().equals(codeActuel)){
+						if (affec.getCategorieHeures()!=catHeure) {
+							cpt = 1;
+							divRess+="						<li class=\"\">"+affec.getCategorieHeures().getlibCatHeur()+"</li>\n";
+							catHeure  = affec.getCategorieHeures();
+						}
+						divRess+="						<li>Affectation "+cpt+" :\n";
+						divRess+="							<ul>\n";
+						divRess+="								<li>Nb Heures : "+affec.getNbHeure()+"</li>\n";
+						divRess+="								<li>Nb Semaine : "+affec.getNbSemaine()+"</li>\n";
+						divRess+="							</ul>\n";
+						divRess+="						</li>\n";
+						cpt++;
+					}
 				}
 			}
 		}
-		divRess+="				</ul>\n";
+		divRess+="					</ul>\n";
+		divRess+="				</div>\n";
 		divRess+="			</div>\n";
 		return divRess;
 	}
@@ -254,6 +270,20 @@ public class Generation {
 			System.out.println("bob");
 			System.out.println(affec.getModule().getCode()+affec.getModule().getLibLong());
 		}
-		Generation g = new Generation(tBoucher);
+		Generation g = new Generation(tBoucher);*/
+		Etat e = new Etat();
+		HashMap <Module, ArrayList<Affectations>> hashMap = new HashMap <Module, ArrayList<Affectations>>();
+		for (Affectations a : Etat.getAffectations()) {
+			if(! hashMap.containsKey(a.getModule()))
+			{
+				hashMap.put(a.getModule(),new ArrayList < Affectations >());
+			}
+			hashMap.get(a.getModule()).add(a);
+		}
+		int cpt = 0;
+		for (Intervenants i : Etat.getIntervenants()) {
+			Generation g = new Generation(i,hashMap,cpt);
+			cpt++;
+		}
 	}
 }

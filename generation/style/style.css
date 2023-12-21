@@ -37,14 +37,19 @@ div{
     flex-wrap: wrap;
     gap: 50px;
     padding: 20px;
+    margin-bottom:50px;
 }
 .gridRessource{
-    border:1px solid #0097B2;
+    margin-left: 20px;
     display: grid;
-    grid-auto-columns: 300px;
-    grid-auto-flow: auto;
+    grid-template-columns: repeat( auto-fill, minmax(460px, 1fr) );
+    grid-gap: 10px;
 }
-
+.barreBleue{
+    padding-left: 10px;
+    margin-left: 20px;
+    border-left: 3px solid #0097B2;
+}
 /**
  * titre de la partie
 */
@@ -78,8 +83,7 @@ ul {
 
 li {
     color: black;
-    font-weight: bold;
-    font-size: 17px;
+    font-size: 15px;
 }
 
 /**
@@ -97,7 +101,6 @@ li::before {
  * information générer dans le li 
 */
 .info {
-    align-content: center;
     color: black;
     font-weight: normal;
     font-size: 12px;
