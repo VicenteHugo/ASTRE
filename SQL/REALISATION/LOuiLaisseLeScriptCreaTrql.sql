@@ -109,6 +109,7 @@ INSERT INTO IntervenantsEtat1 VALUES('Colin'     , 'Jean-Yves' , 100, 150, 4, 'P
 INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'CM' , 8 , 2, 2 );
 INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'TD' , 10, 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'TP' , 10, 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'TUT' , 10, 2, 14);
 
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.01', 'CM' , 8 , 2, 2 );
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.01', 'TD' , 10, 4, 14);

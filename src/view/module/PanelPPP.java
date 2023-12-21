@@ -123,7 +123,6 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 		this.frame.setTitle("Astre - Previsionnel");
 
 		this.mod = m;
-		System.out.println(this.mod);
 
 
 		loadPage(m.getSemestres());
@@ -669,14 +668,16 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 		//                                                   PN                                             SEMAINE                                      NB HEURE
 		List<Integer> lstTUT = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTutPN.getText()), 1, Integer.parseInt(this.txtEtdTutPromRep.getText())));
-		List<Integer> lstCM  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTutPN.getText()), 1, Integer.parseInt(this.txtEtdTutPromRep.getText())));
-		List<Integer> lstTP  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTutPN.getText()), 1, Integer.parseInt(this.txtEtdTutPromRep.getText())));
-		List<Integer> lstTD  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTutPN.getText()), 1, Integer.parseInt(this.txtEtdTutPromRep.getText())));
+		List<Integer> lstCM  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdCmPN.getText()) , 1, Integer.parseInt(this.txtEtdCmPromRep.getText())) );
+		List<Integer> lstTP  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTpPN.getText()) , 1, Integer.parseInt(this.txtEtdTpPromRep.getText())) );
+		List<Integer> lstTD  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTdPN.getText()) , 1, Integer.parseInt(this.txtEtdTdPromRep.getText())) );
 
 		map.put(Controleur.getControleur().getCategorieHeure("TUT"), lstTUT);
 		map.put(Controleur.getControleur().getCategorieHeure("CM" ), lstCM );
 		map.put(Controleur.getControleur().getCategorieHeure("TP" ), lstTP );
 		map.put(Controleur.getControleur().getCategorieHeure("TD" ), lstTD );
+
+		System.out.println(map);
 
 		if (this.estNouveau) {
 			this.mod.setCode         (cod);
@@ -742,8 +743,11 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 		float coefTD  = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
 		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
 
-		int totPN   = Integer.parseInt(this.txtHeureEtdTutPN.getText());
-		int totEqtd = Integer.parseInt(this.txtEtdTutPromRep.getText());
+		int totPN   = Integer.parseInt(this.txtHeureEtdTutPN.getText()) + Integer.parseInt(this.txtHeureEtdCmPN.getText()) + 
+		              Integer.parseInt(this.txtHeureEtdTpPN .getText()) + Integer.parseInt(this.txtHeureEtdTdPN.getText());
+
+		int totEqtd = Integer.parseInt(this.txtEtdTutPromRep.getText()) + Integer.parseInt(this.txtEtdCmPromRep.getText()) + 
+		              Integer.parseInt(this.txtEtdTdPromRep .getText()) + Integer.parseInt(this.txtEtdTpPromRep.getText());
 
 		this.txtHeureEtdTotPN.setText(totPN   + "");
 		this.txtEtdTotPromRep.setText(totEqtd + "");
@@ -751,30 +755,39 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 		// Affecté 
-		int saeAffect = 0;
+		int cmAffect  = 0;
+		int tpAffect  = 0;
+		int tdAffect  = 0;
 		int tutAffect = 0;
+		int hpAffect  = 0;
 
 
 		for (Affectations a : this.mod.getLstAffectations()) {
 
-			System.out.println(a.getCategorieHeures().getlibCatHeur());
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("CM"))
-				saeAffect += a.getNbHeure() * coefCM;
+				cmAffect += a.getNbHeure() * coefCM;
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TP"))
-				saeAffect += a.getNbHeure() * coefTP;
+				tpAffect += a.getNbHeure() * coefTP;
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TD"))
-				saeAffect += a.getNbHeure() * coefTD;
+				tdAffect += a.getNbHeure() * coefTD;
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
 				tutAffect += a.getNbHeure() * coefTUT;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("HP"))
+				hpAffect += a.getNbHeure() * coefTUT;
 		}
 
 		this.txtEtdTutAffectRep.setText(tutAffect + "");
+		this.txtEtdCmAffectRep .setText(cmAffect  + "");
+		this.txtEtdTdAffectRep .setText(tdAffect  + "");
+		this.txtEtdTpAffectRep .setText(tpAffect  + "");
+		this.txtEtdHpAffectRep .setText(hpAffect  + "");
 
-		this.txtEtdTotAffectRep.setText(saeAffect + tutAffect + "");
+		this.txtEtdTotAffectRep.setText(tutAffect + cmAffect + tdAffect + tpAffect + hpAffect + "");
 	}
 
 
