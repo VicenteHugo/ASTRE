@@ -127,7 +127,7 @@ public class Etat {
 		try {
 
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieHeures"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM CategorieHeures"+ Etat.nom + " ORDER BY libCatHeur");
 
 			while (res.next())
 				Etat.lstCategorieHeures
@@ -147,7 +147,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants"+ Etat.nom + " ORDER BY codeCatInt");
 
 			while (res.next()) {
 				String code = res.getString("codeCatInt");
@@ -173,7 +173,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Semestres"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM Semestres"+ Etat.nom + " ORDER BY numSem");
 
 			while (res.next()) {
 
@@ -288,7 +288,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Affectation"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM Affectation"+ Etat.nom + " ORDER BY libCatHeur, nomInt, prenomInt");
 
 			while (res.next()) {
 
