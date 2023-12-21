@@ -10,12 +10,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.*;
-
-import javax.swing.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.swing.*;
 
 import view.JLabelModule;
 import view.JTextFieldNumber;
@@ -24,11 +23,13 @@ import view.previsionnel.PanelPrevi;
 import view.JButtonStyle;
 
 import controleur.*;
+import model.Affectations;
 import model.CategorieHeures;
 import model.Semestres;
 import model.modules.Module;
+import model.modules.PPP;
 
-public class PanelPPP extends JPanel implements ActionListener{
+public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
     // Modules
     private JTextField txtCodeMod;
@@ -38,49 +39,39 @@ public class PanelPPP extends JPanel implements ActionListener{
 	private JCheckBox  cbValide;
 
     // Semestres
-    private JTextFieldNumber txtSem;
+    private JTextField       txtSem;
     private JTextFieldNumber txtNbEtd;
     private JTextFieldNumber txtNbGpTd;
 	private JTextFieldNumber txtNbGpTp;
 	
 	//Heures PN
-	private JTextFieldNumber txtHeureCMPN;
-	private JTextFieldNumber txtHeureTDPN;
-	private JTextFieldNumber txtHeureTPPN;
-	private JTextFieldNumber txtHeureSPN ;
 
-	private JTextFieldNumber txtHeureEtdCMPN;
-	private JTextFieldNumber txtHeureEtdTDPN;
-	private JTextFieldNumber txtHeureEtdTPPN;
-	private JTextFieldNumber txtHeureEtdSPN ;
+	private JTextFieldNumber txtHeureEtdCmPN;
+	private JTextFieldNumber txtHeureEtdTdPN;
+	private JTextFieldNumber txtHeureEtdTpPN;
+	private JTextFieldNumber txtHeureEtdTutPN;
+	private JTextFieldNumber txtHeureEtdTotPN;
 
 
 	//Repartition
-	private JTextFieldNumber txtCMNbHeure;
-	private JTextFieldNumber txtTDNbHeure;
-	private JTextFieldNumber txtTPNbHeure;
 
-	private JTextFieldNumber txtCMTot;
-	private JTextFieldNumber txtCMTotEtd;
-	private JTextFieldNumber txtCMTotEtdAffect;
-	private JTextFieldNumber txtTDTot;
-	private JTextFieldNumber txtTDTotEtd;
-	private JTextFieldNumber txtTDTotEtdAffect;
-	private JTextFieldNumber txtTPTot;
-	private JTextFieldNumber txtTPTotEtd;  
-	private JTextFieldNumber txtTPTotEtdAffect;
+	private JTextFieldNumber txtEtdCmPromRep;
+	private JTextFieldNumber txtEtdCmAffectRep;
 
-	private JTextFieldNumber txtHPTot;
-	private JTextFieldNumber txtHPTotEtd;
-	private JTextFieldNumber txtHPTotEtdAffect;
+	private JTextFieldNumber txtEtdTdPromRep;
+	private JTextFieldNumber txtEtdTdAffectRep;
 
-	private JTextFieldNumber txtHTTot;
-	private JTextFieldNumber txtHTTotEtd;
-	private JTextFieldNumber txtHTTotEtdAffect;
+	private JTextFieldNumber txtEtdTpPromRep;
+	private JTextFieldNumber txtEtdTpAffectRep;
+	
+	private JTextFieldNumber txtEtdTutPromRep;  
+	private JTextFieldNumber txtEtdTutAffectRep;
 
-	private JTextFieldNumber txtTot;
-	private JTextFieldNumber txtTotEtd;
-	private JTextFieldNumber txtTotEtdAffect;
+	private JTextFieldNumber txtEtdHpPromRep;
+	private JTextFieldNumber txtEtdHpAffectRep;
+
+	private JTextFieldNumber txtEtdTotPromRep;
+	private JTextFieldNumber txtEtdTotAffectRep;
 
 	//Affectation 
 	private JTable tblGrilleDonnees;
@@ -94,91 +85,144 @@ public class PanelPPP extends JPanel implements ActionListener{
 	//Object
 	private FrameAccueil frame;
 	private Module       mod;
+	private boolean      estNouveau;
 
 
-	public PanelPPP(FrameAccueil frame) {
+	public PanelPPP(FrameAccueil frame, Semestres semestres){
+
 		this.frame = frame;
-		//this.mod   = new Ressource(null, "", "", "", 0, false);
+		this.frame.setTitle("Astre - Previsionnel");
+		
+		this.mod   = new PPP(semestres, "", "", "", 0, false);
 
 		//Mettre la liste à 0
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
 
-		//                                            PN                                             SEMAINE                                      NB HEURE
-		List<Integer> lstCM = new ArrayList<>(List.of(0,0,0));
-		List<Integer> lstTP = new ArrayList<>(List.of(0,0,0));
-		List<Integer> lstTD = new ArrayList<>(List.of(0,0,0));
-		List<Integer> lstHP = new ArrayList<>(List.of(0,0,0));
+		//                                             PN                                             SEMAINE                                      NB HEURE
+		List<Integer> lstCM  = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstTP  = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstTD  = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstTut = new ArrayList<Integer>(List.of(0,0,0));
 
 
-		map.put(Controleur.getControleur().getCategorieHeure("CM"), lstCM);
-		map.put(Controleur.getControleur().getCategorieHeure("TP"), lstTP);
-		map.put(Controleur.getControleur().getCategorieHeure("TD"), lstTD);
-		map.put(Controleur.getControleur().getCategorieHeure("HP"), lstHP);
+		map.put(Controleur.getControleur().getCategorieHeure("CM" ), lstCM );
+		map.put(Controleur.getControleur().getCategorieHeure("TP" ), lstTP );
+		map.put(Controleur.getControleur().getCategorieHeure("TD" ), lstTD );
+		map.put(Controleur.getControleur().getCategorieHeure("TUT"), lstTut);
 
 
-		//this.mod.setHeures(map);
+		this.mod.setHeures(map);
+		this.estNouveau = true;
 
-	//	Controleur.getControleur().ajouterModule(this.mod);
+		loadPage(semestres);
+    }
 
+
+	public PanelPPP (FrameAccueil frame, Module m) {
+		this.frame = frame;
+		this.frame.setTitle("Astre - Previsionnel");
+
+		this.mod = m;
+		System.out.println(this.mod);
+
+
+		loadPage(m.getSemestres());
+
+		//txtCode
+		this.txtCodeMod    .setText(this.mod.getCode());
+		this.txtLibLongMod .setText(this.mod.getLibLong());
+		this.txtLibCourtMod.setText(this.mod.getLibCourt());
+
+
+		//SAE
+		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
+
+		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("CM"));
+		if (lst != null) {
+			this.txtHeureEtdCmPN.setText(lst.get(0) + "");		
+			this.txtEtdCmPromRep.setText(lst.get(2) + "");		
+		}
+
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TD"));
+		if (lst != null) {
+			this.txtHeureEtdTdPN.setText(lst.get(0) + "");		
+			this.txtEtdTdPromRep.setText(lst.get(2) + "");		
+		}
+
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
+		if (lst != null) {
+			this.txtHeureEtdTpPN.setText(lst.get(0) + "");		
+			this.txtEtdTpPromRep.setText(lst.get(2) + "");		
+		}
+		
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TUT"));
+		if (lst != null) {
+			this.txtHeureEtdTutPN.setText(lst.get(0) + "");		
+			this.txtEtdTutPromRep.setText(lst.get(2) + "");		
+		}
+
+		this.cbValide.setSelected(this.mod.isValide());
+
+		//Juste pour faire les calculs
+		this.focusLost(null);
+
+
+		this.estNouveau = false;
+
+	}
+
+
+
+
+
+
+
+
+	public void loadPage (Semestres semestres) {
+
+		//this.mod   = new Ressource(null, "", "", "", 0);
 		
         /*                         */
         /* CREATION DES COMPOSANTS */
         /*                         */
 
 		//Informations Modules
-        this.txtCodeMod     = new JTextField("PPP");
+        this.txtCodeMod     = new JTextField(5);
         this.txtLibLongMod  = new JTextField(25);
         this.txtLibCourtMod = new JTextField(10);
 		this.cbValide       = new JCheckBox ("Validation");
 
 		//Informations Semestres
-        this.txtTypeMod = new JTextField("Ressource", 8);
-        this.txtSem     = new JTextFieldNumber("S1", 5);
-        this.txtNbEtd   = new JTextFieldNumber("80", 3);
-        this.txtNbGpTd  = new JTextFieldNumber("80", 3);
-        this.txtNbGpTp  = new JTextFieldNumber("80", 3);
+        this.txtTypeMod = new JTextField("PPP", 8);
+        this.txtSem     = new JTextField("S" + semestres.getNumSem(), 5);
+		this.txtNbEtd   = new JTextFieldNumber("" + semestres.getNbEtdSem (), 3);
+		this.txtNbGpTd  = new JTextFieldNumber("" + semestres.getNbGpTdSem(), 3);
+		this.txtNbGpTp  = new JTextFieldNumber("" + semestres.getNbGpTpSem(), 3); 
 
 
-
-		//Informations heure PN
-        this.txtHeureCMPN = new JTextFieldNumber( "0", 3);
-        this.txtHeureTDPN = new JTextFieldNumber( "0", 3);
-        this.txtHeureTPPN = new JTextFieldNumber( "0", 3);
 
 		//Informations calcul heure PN
-        this.txtHeureSPN     = new JTextFieldNumber("0", 3);
-        this.txtHeureEtdCMPN = new JTextFieldNumber("0", 3);
-        this.txtHeureEtdTDPN = new JTextFieldNumber("0", 3);
-        this.txtHeureEtdTPPN = new JTextFieldNumber("0", 3);
-        this.txtHeureEtdSPN  = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdCmPN  = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTpPN  = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTdPN  = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTutPN = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTotPN = new JTextFieldNumber("0", 3);
+		
+		//Informations calcul repartitions
+		this.txtEtdCmPromRep   = new JTextFieldNumber("0", 3); 
+		this.txtEtdTdPromRep   = new JTextFieldNumber("0", 3); 
+		this.txtEtdTpPromRep   = new JTextFieldNumber("0", 3); 
+		this.txtEtdTutPromRep  = new JTextFieldNumber("0", 3);
+		this.txtEtdHpPromRep   = new JTextFieldNumber("0", 3); 
+		this.txtEtdTotPromRep  = new JTextFieldNumber("0", 3);
 
-		//Information répartition
-		this.txtCMNbHeure = new JTextFieldNumber("0",3);
-		this.txtTDNbHeure = new JTextFieldNumber("0",3);
-		this.txtTPNbHeure = new JTextFieldNumber("0",3);
+		this.txtEtdCmAffectRep  = new JTextFieldNumber("0", 3);
+		this.txtEtdTpAffectRep  = new JTextFieldNumber("0", 3);
+		this.txtEtdTdAffectRep  = new JTextFieldNumber("0", 3);
+		this.txtEtdTutAffectRep = new JTextFieldNumber("0", 3);
+		this.txtEtdHpAffectRep  = new JTextFieldNumber("0", 3);
+		this.txtEtdTotAffectRep = new JTextFieldNumber("0", 3);
 
-
-		this.txtCMTot          = new JTextFieldNumber("0", 3); 
-		this.txtTDTot          = new JTextFieldNumber("0", 3);
-		this.txtTPTot          = new JTextFieldNumber("0", 3);
-		this.txtCMTotEtd       = new JTextFieldNumber("0", 3); 
-		this.txtTDTotEtd       = new JTextFieldNumber("0", 3);
-		this.txtTPTotEtd       = new JTextFieldNumber("0", 3);
-		this.txtCMTotEtdAffect = new JTextFieldNumber("0", 3); 
-		this.txtTDTotEtdAffect = new JTextFieldNumber("0", 3);
-		this.txtTPTotEtdAffect = new JTextFieldNumber("0", 3);
-
-		this.txtHPTot          = new JTextFieldNumber("0",3);
-		this.txtHPTotEtd       = new JTextFieldNumber("0",3);
-		this.txtHPTotEtdAffect = new JTextFieldNumber("0",3);
-
-		this.txtHTTot          = new JTextFieldNumber("0", 3);
-		this.txtHTTotEtd       = new JTextFieldNumber("0", 3);
-		this.txtHTTotEtdAffect = new JTextFieldNumber("0", 3);
-
-		this.txtTot          = new JTextFieldNumber("0",3);
-		this.txtTotEtd       = new JTextFieldNumber("0",3);
-		this.txtTotEtdAffect = new JTextFieldNumber("0",3);
 
 		this.btnAjouter   = new JButtonStyle("Ajouter");
 		this.btnSupprimer = new JButtonStyle("Supprimer");
@@ -201,7 +245,7 @@ public class PanelPPP extends JPanel implements ActionListener{
         gbcPanelHaut.gridy = 0;
         gbcPanelHaut.weightx = 1;
         gbcPanelHaut.weighty = 1;
-        gbcPanelHaut.insets = new Insets(2, 2, 2, 2);
+        gbcPanelHaut.insets = new Insets(3, 3, 3, 3);
 		gbcPanelHaut.anchor = GridBagConstraints.LINE_START;
 
         // Ajout des libellés première ligne
@@ -266,50 +310,48 @@ public class PanelPPP extends JPanel implements ActionListener{
         gbcHeurePN.gridy = 0;
         gbcHeurePN.weightx = 1;
         gbcHeurePN.weighty = 1;
-        gbcHeurePN.insets = new Insets(3, 3, 3, 3);
+        gbcHeurePN.insets = new Insets(2, 2, 2, 2);
 
 
 		//Ajout des JLabelModule première lignes
-		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
-		gbcHeurePN.gridx = 1;
-		panelHeurePN.add(new JLabelModule("CM"), gbcHeurePN);
-		gbcHeurePN.gridx++;
-		panelHeurePN.add(new JLabelModule("TD"), gbcHeurePN);
-		gbcHeurePN.gridx++;
-		panelHeurePN.add(new JLabelModule("TP"), gbcHeurePN);
-		gbcHeurePN.gridx++;
 		gbcHeurePN.anchor = GridBagConstraints.CENTER;
+		gbcHeurePN.gridx = 1;
+		panelHeurePN.add(new JLabelModule("h CM"), gbcHeurePN);
+		gbcHeurePN.gridx++;
+		panelHeurePN.add(new JLabelModule("h TP"), gbcHeurePN);
+		gbcHeurePN.gridx++;
+		panelHeurePN.add(new JLabelModule("h TD"), gbcHeurePN);
+		gbcHeurePN.gridx++;
+		panelHeurePN.add(new JLabelModule("h TUT"), gbcHeurePN);
+
+
+		gbcHeurePN.insets = new Insets(2,20,10,10);
+		gbcHeurePN.gridx++;
 		panelHeurePN.add(new JLabelModule("∑"), gbcHeurePN);
 		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
 
-		gbcHeurePN.gridx = 1;
-		gbcHeurePN.gridy++;
-		panelHeurePN.add(this.txtHeureCMPN,gbcHeurePN);
-		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureTDPN,gbcHeurePN);
-		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureTPPN,gbcHeurePN);
-		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureSPN,gbcHeurePN);
-
-		gbcHeurePN.gridx = 0;
+		gbcHeurePN.insets = new Insets(2, 3, 10, 3);
+		gbcHeurePN.gridx  = 0;
 		gbcHeurePN.gridy++;
 		panelHeurePN.add(new JLabelModule("Total (eqtd) promo"), gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureEtdCMPN,gbcHeurePN);
+		panelHeurePN.add(this.txtHeureEtdCmPN,gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureEtdTDPN,gbcHeurePN);
+		panelHeurePN.add(this.txtHeureEtdTpPN,gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureEtdTPPN,gbcHeurePN);
+		panelHeurePN.add(this.txtHeureEtdTdPN,gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureEtdSPN,gbcHeurePN);
+		panelHeurePN.add(this.txtHeureEtdTutPN,gbcHeurePN);
+		gbcHeurePN.insets = new Insets(2,20,10,10);
+		gbcHeurePN.gridx++;
+		panelHeurePN.add(this.txtHeureEtdTotPN,gbcHeurePN);
 
 
 		JPanel panelHeurePNValid = new JPanel();
 		panelHeurePNValid.setLayout(new BorderLayout());
 		panelHeurePNValid.add(panelHeurePN, BorderLayout.CENTER);
 		panelHeurePNValid.add(this.cbValide, BorderLayout.SOUTH);
-		panelHeurePNValid.add(new JLabelModule("PN Local (nb h tot/etd)",JLabelModule.CENTER), BorderLayout.PAGE_START);
+		panelHeurePNValid.add(new JLabelModule("PN Local (nb h tot/etd)",JLabel.CENTER), BorderLayout.NORTH);
 
 
 		//Repartion 
@@ -318,166 +360,79 @@ public class PanelPPP extends JPanel implements ActionListener{
 		//Layout
 		panelRepartition.setLayout(new GridBagLayout());
 		GridBagConstraints gbcRepar = new GridBagConstraints();
-        gbcRepar.gridx = 0;
+		gbcRepar.gridx = 0;
         gbcRepar.gridy = 0;
         gbcRepar.weightx = 1;
         gbcRepar.weighty = 1;
-        gbcRepar.insets = new Insets(2,5,2,5);
+        gbcRepar.insets = new Insets(2,2,2,2);
 
 		// Ajout première ligne
-		gbcRepar.gridwidth = 1;
-		panelRepartition.add(new JLabelModule("CM"), gbcRepar);
-		gbcRepar.gridx+= 1;
-		panelRepartition.add(new JLabelModule("TD"), gbcRepar);
-		gbcRepar.gridx+= 1;
-		panelRepartition.add(new JLabelModule("TP"), gbcRepar);
-
+		gbcRepar.gridx = 3;
+		panelRepartition.add(new JLabelModule("h CM", JLabel.CENTER), gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(new JLabelModule("h TP", JLabel.CENTER), gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(new JLabelModule("h TD", JLabel.CENTER), gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(new JLabelModule("h TUT", JLabel.CENTER), gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(new JLabelModule("h HP", JLabel.CENTER), gbcRepar);
+		gbcRepar.gridx ++;
+		gbcRepar.insets = new Insets(2,300,10,10);
+		
+		panelRepartition.add(new JLabelModule("∑", JLabel.CENTER), gbcRepar);
 
 		//Deuxième ligne
-		gbcRepar.gridwidth = 1;
+		gbcRepar.insets = new Insets(2,2,2,2);
+		gbcRepar.gridwidth = 3;
 		gbcRepar.gridx     = 0;
-		gbcRepar.gridy+=2;
-		panelRepartition.add(new JLabelModule("nb heures "), gbcRepar);
-		gbcRepar.gridx+=1;
-		panelRepartition.add(new JLabelModule("nb heures "), gbcRepar);
-		gbcRepar.gridx+=1;
-		panelRepartition.add(new JLabelModule("nb heures "), gbcRepar);
-		gbcRepar.gridx+=4;
-
-       // gbcRepar.insets.left = 20;
-		panelRepartition.add(new JLabelModule("CM", JLabelModule.LEFT), gbcRepar);
-		
-       // gbcRepar.insets.left = 2;
-		gbcRepar.gridx+=1;
-		panelRepartition.add(new JLabelModule("TD", JLabelModule.LEFT), gbcRepar);
-		gbcRepar.gridx++;
-		panelRepartition.add(new JLabelModule("TP", JLabelModule.LEFT), gbcRepar);
-
-		
-        gbcRepar.insets.left = 20;
+		gbcRepar.gridy++;
+		gbcRepar.anchor = GridBagConstraints.LINE_END;
+		panelRepartition.add(new JLabelModule("Total promo (eqtd)"), gbcRepar);
 		gbcRepar.anchor = GridBagConstraints.CENTER;
+		gbcRepar.gridx += 3;
+		gbcRepar.gridwidth = 1;
+		panelRepartition.add(this.txtEtdCmPromRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabelModule(), gbcRepar);
+		panelRepartition.add(this.txtEtdTpPromRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabelModule("HP", JLabelModule.LEFT), gbcRepar);
+		panelRepartition.add(this.txtEtdTdPromRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabelModule("HT", JLabelModule.LEFT), gbcRepar);
-		gbcRepar.gridx++;
-		panelRepartition.add(new JLabelModule(), gbcRepar);
+		panelRepartition.add(this.txtEtdTutPromRep, gbcRepar);
 		gbcRepar.gridx ++;
-        gbcRepar.insets.right = 20;
-		panelRepartition.add(new JLabelModule("∑", JLabelModule.LEFT), gbcRepar);
-        gbcRepar.insets.left = 2;
-		
-
-
+		panelRepartition.add(this.txtEtdHpPromRep, gbcRepar);
+		gbcRepar.insets = new Insets(2,300,2,10);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtEtdTotPromRep, gbcRepar);
 
 		//Troisieme
-        gbcRepar.insets = new Insets(2,2,2,2);
-		gbcRepar.gridx = 0;
-		gbcRepar.gridy+=2;
+		gbcRepar.insets = new Insets(2,2,2,2);
 		gbcRepar.anchor = GridBagConstraints.CENTER;
-		panelRepartition.add(this.txtCMNbHeure, gbcRepar);
-		gbcRepar.gridx+=1;
-		gbcRepar.anchor = GridBagConstraints.CENTER;
-		panelRepartition.add(this.txtTDNbHeure, gbcRepar);
-		gbcRepar.gridx+=1;
-		gbcRepar.anchor = GridBagConstraints.CENTER;
-		panelRepartition.add(this.txtTPNbHeure, gbcRepar);
-		gbcRepar.gridx+=1;
-
-        gbcRepar.insets.left = 20;
-		gbcRepar.gridx+=3;
-		panelRepartition.add(this.txtCMTot, gbcRepar);
-        gbcRepar.insets.left = 2;
-		gbcRepar.gridx++;
-		panelRepartition.add(this.txtTDTot, gbcRepar);
-		gbcRepar.gridx++;
-		panelRepartition.add(this.txtTPTot, gbcRepar);
-
-        gbcRepar.insets.left = 20;
-		gbcRepar.anchor = GridBagConstraints.LINE_END;
-		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabelModule(), gbcRepar);
-		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtHPTot, gbcRepar);
-		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtHTTot, gbcRepar);
-		gbcRepar.gridx++;
-		panelRepartition.add(new JLabelModule(), gbcRepar);
-		gbcRepar.gridx ++;
-        gbcRepar.insets.right = 20;
-		panelRepartition.add(this.txtTot, gbcRepar);
-        gbcRepar.insets.left = 2;
-
-
-
-		// Quatrième ligne
-		gbcRepar.anchor = GridBagConstraints.LINE_END;
-        gbcRepar.insets = new Insets(2,2,2,2);
 		gbcRepar.gridy++;
 		gbcRepar.gridwidth = 3;
-		gbcRepar.insets.top = 8;
-		gbcRepar.gridx= 3;
-		panelRepartition.add(new JLabelModule("Total promo (eqtd)"), gbcRepar);
-		gbcRepar.gridx += 3;
-		gbcRepar.gridwidth = 1;
-		panelRepartition.add(this.txtCMTotEtd, gbcRepar);
-		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTPTotEtd, gbcRepar);
-		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTDTotEtd, gbcRepar);
-
-        gbcRepar.insets.left = 20;
+		gbcRepar.gridx= 0;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
-		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabelModule(), gbcRepar);
-		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtHPTotEtd, gbcRepar);
-		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtHTTotEtd, gbcRepar);
-		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabelModule(), gbcRepar);
-		gbcRepar.gridx ++;
-        gbcRepar.insets.right = 20;
-		panelRepartition.add(this.txtTotEtd, gbcRepar);
-        gbcRepar.insets.left = 2;
-
-		// Ciqnuième ligne
-		gbcRepar.anchor = GridBagConstraints.LINE_END;
-        gbcRepar.insets = new Insets(2,2,20,2);
-		gbcRepar.gridy++;
-		gbcRepar.gridwidth = 3;
-		gbcRepar.gridx= 3;
 		panelRepartition.add(new JLabelModule("Total affecté (eqtd)"), gbcRepar);
+		gbcRepar.anchor = GridBagConstraints.CENTER;
 		gbcRepar.gridx += 3;
 		gbcRepar.gridwidth = 1;
-		panelRepartition.add(this.txtCMTotEtdAffect, gbcRepar);
+		panelRepartition.add(this.txtEtdCmAffectRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTPTotEtdAffect, gbcRepar);
+		panelRepartition.add(this.txtEtdTpAffectRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTDTotEtdAffect, gbcRepar);
-
-        gbcRepar.insets.left = 20;
-		gbcRepar.anchor = GridBagConstraints.LINE_END;
+		panelRepartition.add(this.txtEtdTdAffectRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabelModule(), gbcRepar);
+		panelRepartition.add(this.txtEtdTutAffectRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtHPTotEtdAffect, gbcRepar);
+		panelRepartition.add(this.txtEtdHpAffectRep, gbcRepar);
+		gbcRepar.insets = new Insets(2,300,2,10);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtHTTotEtdAffect, gbcRepar);
-		gbcRepar.gridx ++;
-		panelRepartition.add(new JLabelModule(), gbcRepar);
-		gbcRepar.gridx ++;
-        gbcRepar.insets.right = 20;
-		panelRepartition.add(this.txtTotEtdAffect, gbcRepar);
-
-
+		panelRepartition.add(this.txtEtdTotAffectRep, gbcRepar);
 
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrillePPP());
+		this.tblGrilleDonnees = new JTable(new GrilleSAE());
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -491,9 +446,22 @@ public class PanelPPP extends JPanel implements ActionListener{
 		panelTable.add(new JLabelModule("Affectation"), BorderLayout.NORTH);
 		panelTable.add(panelAjoutSupp, BorderLayout.SOUTH);
 
+
+		
+		JPanel panelRepInt = new JPanel(new GridBagLayout());
+		GridBagConstraints gpcPanRepInt = new GridBagConstraints();
+        gpcPanRepInt.gridx = 0;
+        gpcPanRepInt.gridy = 0;
+        gpcPanRepInt.weightx = 1;
+        gpcPanRepInt.weighty = 1;
+        gpcPanRepInt.insets = new Insets(2, 2, 2, 2);
+		gpcPanRepInt.anchor = GridBagConstraints.CENTER;
+		panelRepInt.add(panelRepartition,gpcPanRepInt);
+
 		JPanel panelRep = new JPanel(new BorderLayout());
-		panelRep.add(new JLabelModule("Repartition",JLabelModule.CENTER), BorderLayout.NORTH);
-		panelRep.add(panelRepartition, BorderLayout.CENTER);
+		panelRep.add(new JLabelModule("Repartition",JLabel.CENTER), BorderLayout.NORTH);
+		panelRep.add(panelRepInt, BorderLayout.CENTER);
+
 
 
 
@@ -501,18 +469,19 @@ public class PanelPPP extends JPanel implements ActionListener{
 		// Ajout des pannels au panel central
 		JPanel panelCentre = new JPanel(new GridBagLayout());
 		GridBagConstraints gbcCentre = new GridBagConstraints();
-		gbcCentre.insets = new Insets(5, 20, 5, 5);
+		gbcCentre.insets = new Insets(2,2,2,2);
 		gbcCentre.weightx = 1;
 		gbcCentre.weighty = 1;
 		gbcCentre.gridx = 0;
 		gbcCentre.gridy = 0;
-		gbcCentre.anchor = GridBagConstraints.NORTHWEST;
+		gbcCentre.fill=GridBagConstraints.HORIZONTAL;
+		gbcCentre.anchor = GridBagConstraints.FIRST_LINE_START;
 
+		gbcCentre.gridwidth = 1;
 		panelCentre.add(panelHeurePNValid, gbcCentre);
 		gbcCentre.gridx++;
 		gbcCentre.weighty = 1;
 		panelCentre.add(panelRep, gbcCentre);
-
 		gbcCentre.gridy++;
 		panelCentre.add(panelTable, gbcCentre);
 
@@ -533,7 +502,7 @@ public class PanelPPP extends JPanel implements ActionListener{
 		gbcMain.weightx = 1;
 		gbcMain.weighty = 0;
 		gbcMain.gridy = 0;
-		gbcMain.anchor = GridBagConstraints.NORTHWEST;
+		gbcMain.anchor = GridBagConstraints.FIRST_LINE_START;
 
 		this.add(panelHaut, gbcMain);
 
@@ -561,43 +530,27 @@ public class PanelPPP extends JPanel implements ActionListener{
         this.txtNbGpTd .setEditable(false);
 		this.txtNbGpTp .setEditable(false);
 
-		this.txtHeureSPN    .setEditable(false);
-        this.txtHeureEtdCMPN.setEditable(false);
-        this.txtHeureEtdTDPN.setEditable(false);
-        this.txtHeureEtdTPPN.setEditable(false);
-		this.txtHeureEtdSPN .setEditable(false);
-
-		this.txtCMTot         .setEditable(false);
-		this.txtTDTot         .setEditable(false);
-		this.txtTPTot         .setEditable(false);
-		this.txtCMTotEtd      .setEditable(false);
-		this.txtTDTotEtd      .setEditable(false);
-		this.txtTPTotEtd      .setEditable(false);
-		this.txtCMTotEtdAffect.setEditable(false);
-		this.txtTDTotEtdAffect.setEditable(false);
-		this.txtTPTotEtdAffect.setEditable(false);
-
-		this.txtHPTotEtd      .setEditable(false);
-		this.txtHPTotEtdAffect.setEditable(false);
-
-		this.txtHTTotEtd      .setEditable(false);
-		this.txtHTTotEtdAffect.setEditable(false);
-
-		this.txtTot         .setEditable(false);
-		this.txtTotEtd      .setEditable(false);
-		this.txtTotEtdAffect.setEditable(false);
+		this.txtHeureEtdTotPN .setEditable(false);
+		this.txtEtdCmAffectRep.setEditable(false);
+		this.txtEtdTpAffectRep.setEditable(false);
+		this.txtEtdTdAffectRep.setEditable(false);
+		this.txtEtdTutAffectRep.setEditable(false);
+		this.txtEtdHpAffectRep.setEditable(false);
+		this.txtEtdTotAffectRep.setEditable(false);
+		this.txtEtdTotPromRep.setEditable(false);
 
 
 		// Alignement
 		this.txtNbEtd .setHorizontalAlignment(JTextField.CENTER);
 		this.txtNbGpTd.setHorizontalAlignment(JTextField.CENTER);
 		this.txtNbGpTp.setHorizontalAlignment(JTextField.CENTER);
+
 		PanelPPP.aligner(panelCentre, JTextField.RIGHT);
 
-		//Bordure et fond
-		PanelPPP.fond(this, Color.decode("0xD0D0D0"), new Dimension(120,20));
+		//Bordure et style
+		PanelPPP.style(this, Color.decode("0xD0D0D0"), new Dimension(120,20));
 		panelHeurePN.setBorder(BorderFactory.createLineBorder(Color.decode("0xD0D0D0")));
-		panelRepartition.setBorder(BorderFactory.createLineBorder(Color.decode("0xD0D0D0")));
+		panelRepInt.setBorder(BorderFactory.createLineBorder(Color.decode("0xD0D0D0")));
 
 
 
@@ -606,28 +559,8 @@ public class PanelPPP extends JPanel implements ActionListener{
         /*                      */
         /* STYLE DES COMPOSANTS */
         /*                      */
-		PanelPPP.activer(this, this);
-
+		PanelPPP.activer(this, this, this);
     }
-
-
-	public PanelPPP (FrameAccueil frame, Module m) {
-
-		this (frame);
-		this.mod = m;
-
-		//txtCode
-		this.txtCodeMod    .setText(this.mod.getCode());
-		this.txtLibLongMod .setText(this.mod.getLibLong());
-		this.txtLibCourtMod.setText(this.mod.getLibCourt());
-		
-		//Semestres info
-		Semestres s = this.mod.getSemestres();
-		this.txtNbEtd .setText("" + s.getNbEtdSem());
-		this.txtNbGpTd.setText("" + s.getNbGpTdSem());
-		this.txtNbGpTp.setText("" + s.getNbGpTpSem()); 
-
-	}
 
 
 
@@ -653,14 +586,13 @@ public class PanelPPP extends JPanel implements ActionListener{
 
 
 	/**
-	 * Permettre de changer le stylede boutton + des JTextFiel inactif.
+	 * Permettre de changer le style de bouton + des JTextField inactif.
 	 * @param container
 	 * @param c
 	 * @param d
 	 */
-	private static void fond(Container container, Color c, Dimension d) {
+	private static void style(Container container, Color c, Dimension d) {
 		for (Component component : container.getComponents()) {
-
 			if (component instanceof JTextField && !((JTextField) component).isEditable()) {
 				((JTextField) component).setBackground(c);
 			}
@@ -671,7 +603,7 @@ public class PanelPPP extends JPanel implements ActionListener{
 			}
 
 			if (component instanceof Container) {
-				fond((Container) component, c, d);
+				style((Container) component, c, d);
 			}
 		}
 	}
@@ -683,15 +615,19 @@ public class PanelPPP extends JPanel implements ActionListener{
 	 * @param c
 	 * @param d
 	 */
-	private static void activer(Container container, ActionListener a) {
+	private static void activer(Container container, ActionListener a, FocusListener k) {
 		for (Component component : container.getComponents()) {
+
+			if (component instanceof JTextField && ((JTextField) component).isEditable()) {
+				((JTextField) component).addFocusListener(k);
+			}
 
 			if (component instanceof JButtonStyle) {
 				((JButtonStyle) component).addActionListener(a);
 			}
 
 			if (component instanceof Container) {
-				activer((Container) component, a);
+				activer((Container) component, a,k);
 			}
 		}
 	}
@@ -705,55 +641,80 @@ public class PanelPPP extends JPanel implements ActionListener{
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
 
-
+		this.focusLost(null);
 	}
 
 
 	private void quitter () {
-		this.frame.changePanel(new PanelPrevi(frame));
+		this.frame.changePanel(new PanelPrevi(this.frame));
+		Controleur.getControleur().annuler();
 	}
+
 
 
 	private void sauvegarder () {
 
-		boolean   val = this.cbValide.isValid();
-		String    cod = this.txtCodeMod.getText();
-		String    liL = this.txtLibLongMod.getText();
+		if (this.txtCodeMod.getText().isEmpty()) {
+			this.showMessageDialog("Le code est obligatoire");
+			return;
+		}
+
+		boolean   val = this.cbValide      .isSelected();
+		String    cod = this.txtCodeMod    .getText();
+		String    liL = this.txtLibLongMod .getText();
 		String    liC = this.txtLibCourtMod.getText();
-		int       hp  = Integer.parseInt(this.txtHPTot.getText());
 
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
+		
 
-		//                                            PN                                                NB HEURE
-		List<Integer> lstCM = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureCMPN.getText()),    Integer.parseInt(this.txtCMNbHeure.getText())));
-		List<Integer> lstTP = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureTPPN.getText()),    Integer.parseInt(this.txtTPNbHeure.getText())));
-		List<Integer> lstTD = new ArrayList<>(List.of(Integer.parseInt(this.txtHeureTDPN.getText()),    Integer.parseInt(this.txtTDNbHeure.getText())));
-		List<Integer> lstHP = new ArrayList<>(List.of(Integer.parseInt(this.txtHPTot    .getText()), 1, Integer.parseInt(this.txtHPTot    .getText())));
+		//                                                   PN                                             SEMAINE                                      NB HEURE
+		List<Integer> lstTUT = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTutPN.getText()), 1, Integer.parseInt(this.txtEtdTutPromRep.getText())));
+		List<Integer> lstCM  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTutPN.getText()), 1, Integer.parseInt(this.txtEtdTutPromRep.getText())));
+		List<Integer> lstTP  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTutPN.getText()), 1, Integer.parseInt(this.txtEtdTutPromRep.getText())));
+		List<Integer> lstTD  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTutPN.getText()), 1, Integer.parseInt(this.txtEtdTutPromRep.getText())));
+
+		map.put(Controleur.getControleur().getCategorieHeure("TUT"), lstTUT);
+		map.put(Controleur.getControleur().getCategorieHeure("CM" ), lstCM );
+		map.put(Controleur.getControleur().getCategorieHeure("TP" ), lstTP );
+		map.put(Controleur.getControleur().getCategorieHeure("TD" ), lstTD );
+
+		if (this.estNouveau) {
+			this.mod.setCode         (cod);
+			this.mod.setLibLong      (liL);
+			this.mod.setLibCourt     (liC);
+			this.mod.setValide       (val);
+			this.mod.initList        (map);
+			this.mod.setHeurePonctuel(0 );
+
+			if (Controleur.getControleur().ajouterModule(this.mod)) {
+				Controleur.getControleur().enregistrer();
+				this.quitter();
+				return;
+			}
 
 
-		map.put(Controleur.getControleur().getCategorieHeure("CM"), lstCM);
-		map.put(Controleur.getControleur().getCategorieHeure("TP"), lstTP);
-		map.put(Controleur.getControleur().getCategorieHeure("TD"), lstTD);
-		map.put(Controleur.getControleur().getCategorieHeure("HP"), lstHP);
-
-		if (Controleur.getControleur().modifModules(mod, cod, liL, liC, hp, val, map))
-			this.quitter();
-		else
-			this.showMessageDialog("Le code est déja utiliser");
+		}else{
+			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, 0, val, map)) {
+				Controleur.getControleur().enregistrer();
+				this.quitter();
+				return;
+			}
+		}
+		
+		this.showMessageDialog("Le code est déja utiliser");
 	}
 
 
 	private void ajouter () {
 		JFrame f = new JFrame();
-      //  f.add(new PanelAddRessourceIntervenant(this,this.frame, f,mod));
-        f.setTitle("Ajout d'un Intervenant");
+        // f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
+        f.setTitle("Ajout d'une affectation");
 		f.pack();
 		f.setResizable(false);
 		f.setLocationRelativeTo(null);
 		f.setAlwaysOnTop(true);
 		f.setVisible(true);
 	}
-
 
 	private void supprimer() {
 
@@ -766,102 +727,57 @@ public class PanelPPP extends JPanel implements ActionListener{
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleRessources(this.mod)); 
+		this.tblGrilleDonnees.setModel(new GrilleSAE()); 
 	}
 
 	private void showMessageDialog(String message) {
 		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
-	/*
-	@Override
-	public void keyTyped(KeyEvent e) {
 
-		String chiffreAv = ((JTextField) e.getSource()).getText();
+	public void focusLost(FocusEvent e) {
 
-		try {
+		float coefCM  = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
+		float coefTP  = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
+		float coefTD  = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
+		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
 
-			//Récupération des données
-			int cmPN  = Integer.parseInt(this.txtHeureCMPN.getText());
-			int cmSem = Integer.parseInt(this.txtCMNbSem  .getText());
-			int cmHeu = Integer.parseInt(this.txtCMNbHeure.getText());
-			
-			int tdPN  = Integer.parseInt(this.txtHeureTDPN.getText());
-			int tdSem = Integer.parseInt(this.txtTDNbSem  .getText());
-			int tdHeu = Integer.parseInt(this.txtTDNbHeure.getText());
-			
-			int tpPN  = Integer.parseInt(this.txtHeureTPPN.getText());
-			int tpSem = Integer.parseInt(this.txtTPNbSem  .getText());
-			int tpHeu = Integer.parseInt(this.txtTPNbHeure.getText());
+		int totPN   = Integer.parseInt(this.txtHeureEtdTutPN.getText());
+		int totEqtd = Integer.parseInt(this.txtEtdTutPromRep.getText());
 
-			int hpHeu = Integer.parseInt(this.txtHPTot.getText());
-
-			float coefCM = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
-			float coefTD = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
-			float coefTP = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
-			float coefHP = Controleur.getControleur().getCategorieHeure("HP").getcoefCatHeur();
+		this.txtHeureEtdTotPN.setText(totPN   + "");
+		this.txtEtdTotPromRep.setText(totEqtd + "");
 
 
 
-			/* CALCUL PN */
-
-		/*	// eqtd
-			int cmPNetd = (int) (cmPN * coefCM);
-			int tdPNetd = (int) (tdPN * coefTD);
-			int tpPNetd = (int) (tpPN * coefTP);
-			this.txtHeureEtdCMPN.setText( cmPNetd + "");
-			this.txtHeureEtdTDPN.setText( tdPNetd + "");
-			this.txtHeureEtdTPPN.setText( tpPNetd + "");
-
-			//somme
-			this.txtHeureSPN   .setText((cmPN + tdPN + tpPN) + "");
-			this.txtHeureEtdSPN.setText((cmPNetd + tdPNetd + tpPNetd) + "");
+		// Affecté 
+		int saeAffect = 0;
+		int tutAffect = 0;
 
 
+		for (Affectations a : this.mod.getLstAffectations()) {
 
-			/* CALCUL REPARTITION */
+			System.out.println(a.getCategorieHeures().getlibCatHeur());
 
-			/*// semaine * heure
-			int cmHTot = (cmHeu * cmSem);
-			int tdHTot = (tpHeu * tpSem);
-			int tpHTot = (tdHeu * tdSem);
+			if (a.getCategorieHeures().getlibCatHeur().equals("CM"))
+				saeAffect += a.getNbHeure() * coefCM;
 
-			this.txtCMTot.setText( cmHTot + "");
-			this.txtTPTot.setText( tdHTot + "");
-			this.txtTDTot.setText( tpHTot + "");
+			if (a.getCategorieHeures().getlibCatHeur().equals("TP"))
+				saeAffect += a.getNbHeure() * coefTP;
 
-			this.txtTot.setText((cmHTot + tdHTot + tpHTot + hpHeu) + "");
+			if (a.getCategorieHeures().getlibCatHeur().equals("TD"))
+				saeAffect += a.getNbHeure() * coefTD;
 
-			//EQTD
-			int cmHTotEtd = (int) ((cmHeu * cmSem) * coefCM);
-			int tdHTotEtd = (int) ((tpHeu * tpSem) * coefTD);
-			int tpHTotEtd = (int) ((tdHeu * tdSem) * coefTP);
-			int hpHTotEtd = (int) ( hpHeu          * coefHP);
-
-			this.txtCMTotEtd.setText( cmHTotEtd + "");
-			this.txtTPTotEtd.setText( tdHTotEtd + "");
-			this.txtTDTotEtd.setText( tpHTotEtd + "");
-			this.txtHPTotEtd.setText( hpHTotEtd + "");
-
-			this.txtTot.setText((cmHTotEtd + tdHTotEtd + tpHTotEtd + hpHTotEtd) + "");
-
-
-
-			//On met tous dans la liste de mod
-			this.mod.initList(tdHeu, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("CM"));
-			this.mod.initList(tdHeu, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("TD"));
-			this.mod.initList(tpPN, tpSem, tpHeu, Controleur.getControleur().getCategorieHeure("TP"));
-			this.mod.initList(tdHeu, 1, tpHeu, Controleur.getControleur().getCategorieHeure("HP"));
-
-
-		} catch (NumberFormatException ex) {
-			this.showMessageDialog("Le chiffre saisie est inccorect.");
-
-			if (chiffreAv.isEmpty())
-				((JTextField) e.getSource()).setText("0");
-			else
-				((JTextField) e.getSource()).setText(chiffreAv);
-
+			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
+				tutAffect += a.getNbHeure() * coefTUT;
 		}
-	} */
+
+		this.txtEtdTutAffectRep.setText(tutAffect + "");
+
+		this.txtEtdTotAffectRep.setText(saeAffect + tutAffect + "");
+	}
+
+
+	public void focusGained(FocusEvent e) {
+	}
 }
