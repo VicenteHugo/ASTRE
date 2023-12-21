@@ -61,7 +61,7 @@ public class Generation {
 			pw.println ( "						<br>");
 			pw.println ( "						<li>Heure Maximum : "+intervenant.getMaxHeures()+"</li>");
 			pw.println ( "						<li>Heure Minimum : "+intervenant.getServices()+"</li>");
-			pw.println ( "						<li>Heures Prévues : "+3+"</li>");
+			pw.println ( "						<li>Heures Prévues : "+intervenant.getSommeSem()+"</li>");
 			pw.println ( "					</ul>");
 			pw.println ( "				</div>");
 			pw.println ( "			</div>");

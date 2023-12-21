@@ -283,7 +283,7 @@ public class Etat {
 
 	//Affectations
 	public static void genererAffectations() {
-
+		
 		Etat.lstAffectations = new ArrayList<>();
 
 		try {
