@@ -212,11 +212,16 @@ public class Controleur {
 
 			// On remplace l'objet
 			CategorieIntervenant cNew = new CategorieIntervenant(code, lib, coef, hMax, hMin);
-			Etat.getCategoriesIntervenants().add(i, cNew);
-			Etat.getCategoriesIntervenants().remove(cOld);
 
 			// On ajouter l'action
 			Etat.ajouterAction(new Modification(cOld, cNew));
+
+			cOld.setCodeCatInt    (cNew.getCodeCatInt    ());
+			cOld.setLibCatInt     (cNew.getLibCatInt     ());
+			cOld.setCoefCatInt    (cNew.getCoefCatInt    ());	
+			cOld.setHeureMaxCatInt(cNew.getHeureMaxCatInt());
+			cOld.setHeureMinCatInt(cNew.getHeureMinCatInt());
+			
 			return true;
 		}
 
