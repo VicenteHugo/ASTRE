@@ -28,10 +28,10 @@ import view.accueil.FrameAccueil;
 
 
 public class PanelAddRessourceIntervenant extends JPanel{
+
 	//certains attribut ne sont pas instancié
 	private JComboBox<String> boxCategorie;
 	private JComboBox<String> boxIntervenant;
-	private JTextFieldNumber txtNbSemaine;
 	private JTextFieldNumber txtNbGroupe;
     private JTextField txtCommentaire;
 
@@ -42,11 +42,9 @@ public class PanelAddRessourceIntervenant extends JPanel{
 
 
 	private Frame frameM;
-	private PanelRessources panel;
 	private Module mod;
 
 	public PanelAddRessourceIntervenant (PanelRessources panel,FrameAccueil frame, Frame frameM,Module mod) {
-		this.panel = panel;
 		this.frameM = frameM;
 		this.mod = mod;
 
@@ -66,7 +64,6 @@ public class PanelAddRessourceIntervenant extends JPanel{
 		} 
 
 		this.txtCommentaire       = new JTextField(15);
-		this.txtNbSemaine = new JTextFieldNumber(5);
 		this.txtNbGroupe = new JTextFieldNumber(5);
 
 		this.labelHeure = new JLabel("Nombre de groupe : ");
@@ -135,9 +132,19 @@ public class PanelAddRessourceIntervenant extends JPanel{
 
 		//Activation
 		this.btnValider.addActionListener((e)->{
+
+			if (this.txtNbGroupe.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Entrez des données valides", "Erreur", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+
 			Intervenants intervenant = Controleur.getControleur().getIntervenants(this.boxIntervenant.getSelectedIndex());
 			CategorieHeures categ = null;
 			
+
+
+
  			int nbSemaine;
 			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
 

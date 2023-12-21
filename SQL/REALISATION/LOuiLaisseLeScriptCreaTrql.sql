@@ -172,6 +172,9 @@ INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'TUT' , 5 , 4, 1);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'SAE' , 5 , 2, 1);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'TUT' , 5 , 4, 1);
 
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'TUT' , 5 , 4, 1);
+
 
 
 

@@ -572,8 +572,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
 
-
-
+		this.focusLost(null);
 	}
 
 
