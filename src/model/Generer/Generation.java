@@ -254,6 +254,6 @@ public class Generation {
 			System.out.println("bob");
 			System.out.println(affec.getModule().getCode()+affec.getModule().getLibLong());
 		}
-		Generation g = new Generation(tBoucher);
+		Generation g = new Generation(tBoucher);*/
 	}
 }
