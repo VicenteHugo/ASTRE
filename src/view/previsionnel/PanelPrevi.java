@@ -83,8 +83,8 @@ public class PanelPrevi extends JPanel {
         
         this.btnSauvegarder = new JButtonStyle("Sauvegarder");
         this.btnQuitter     = new JButtonStyle("Annuler");
-        panel.add(this.btnSauvegarder);
         panel.add(this.btnQuitter);
+        panel.add(this.btnSauvegarder);
         
         this.add(panel, BorderLayout.NORTH);
         

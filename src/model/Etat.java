@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Generer.Generation;
 import model.action.Action;
 import model.modules.Module;
 import model.modules.Ressource;
@@ -76,8 +77,8 @@ public class Etat {
 			Class.forName("org.postgresql.Driver"); //Postgress
 
 			// Connection
-			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
-			Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
+			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			
 			Etat.recupererNomEtat();
 
@@ -276,6 +277,8 @@ public class Etat {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+
 	}
 
 
@@ -283,7 +286,7 @@ public class Etat {
 
 	//Affectations
 	public static void genererAffectations() {
-
+		
 		Etat.lstAffectations = new ArrayList<>();
 
 		try {
@@ -674,6 +677,14 @@ public class Etat {
 	/*-------------------------------------------------*/
 	/*               GENERATION FICHIER                */
 	/*-------------------------------------------------*/
+
+	public static void genererHTMLIntervenants(){
+		new Generation(lstIntervenants);
+	}
+
+	public static void genererHTMLModules(){
+		new Generation(lstModule);
+	}
 
 	// JAI PAS ACCES A LA COMMANDE DONC MODE BRUTAL
 	public static void genererCSV() { 

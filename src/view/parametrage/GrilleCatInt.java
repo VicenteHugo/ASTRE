@@ -54,7 +54,7 @@ public class GrilleCatInt extends AbstractTableModel {
 	}
 
 	public boolean isCellEditable(int row, int col) {
-		return true;
+		return col > 1;
 	}
 
 	public void setValueAt(Object value, int row, int col) {

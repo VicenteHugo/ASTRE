@@ -24,9 +24,11 @@ public class GrilleRessources extends AbstractTableModel {
 		tabDonnees = new Object[listAffectations.size()][6];
 
 		for (int lig = 0; lig < listAffectations.size(); lig++) {
+			Affectations affectations = listAffectations.get(lig);
+			affectations.getIntervenant().setHeures(mod.getSemestres(), affectations.getHeureEqtd() );
+
 			if(listAffectations.get(lig).getCategorieHeures().getlibCatHeur().equals("HP")){
-				Affectations affectations = listAffectations.get(lig);
-				List<Integer> listInfosHeure = affectations.getModule().getHeures().get(affectations.getCategorieHeures());
+				//choses a sortir du if else
 				tabDonnees[lig][0] = affectations.getIntervenant().getNomIntervenant();
 				tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
 				tabDonnees[lig][2] = affectations.getNbSemaine();
@@ -37,8 +39,6 @@ public class GrilleRessources extends AbstractTableModel {
 				moduleIntervenant.add(affectations.getModule());
 			}
 			else{
-				Affectations affectations = listAffectations.get(lig);
-				List<Integer> listInfosHeure = affectations.getModule().getHeures().get(affectations.getCategorieHeures());
 				tabDonnees[lig][0] = affectations.getIntervenant().getNomIntervenant();
 				tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
 				tabDonnees[lig][2] = affectations.getNbSemaine();

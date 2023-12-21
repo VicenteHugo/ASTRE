@@ -34,10 +34,12 @@ public class Affectations {
 		this.nbSemaine = nbSemaine;
 		this.commentaire = commentaire;
 		this.nbGroupe = nbGroupe;
+		this.nbHeure = nbSemaine * nbGroupe;
 
 
 		mode.addAffectations(this);
 		inter.addAffectations(this);
+		inter.setHeures(mode.getSemestres(), this.getHeureEqtd());
 	}
 
 	public Affectations(Intervenants inter, Module mode, CategorieHeures categorie, int nbHeure, String commentaire) {
@@ -120,6 +122,10 @@ public class Affectations {
 	}
 
 	public int getHeureEqtd() {
+		if(this.categorieHeures.getlibCatHeur().equals("HP") || this.categorieHeures.getlibCatHeur().equals("REH")){
+			return this.nbHeure;
+		}
+
 		int nbH = this.module.getHeures().get(this.categorieHeures).get(2);
 
 		int heure = (int) Math.ceil((this.nbHeure +  nbH * this.nbGroupe * this.nbSemaine) * this.categorieHeures.getcoefCatHeur());
