@@ -5,34 +5,33 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import controleur.Controleur;
 import model.Affectations;
+import model.modules.Module;
 
 public class GrilleSAE extends AbstractTableModel {
 
 	private String[] tabEntetes;
 	private Object[][] tabDonnees;
 
-	public GrilleSAE() {
-		List<Affectations> listAffectations = new ArrayList<>();
+	public GrilleSAE(Module mod) {
+		List<Affectations> listAffectations = Controleur.getControleur().getAffectations(mod);
 		this.tabDonnees = new Object[listAffectations.size()][5];
 
-		for (int lig = 0; lig < listAffectations.size(); lig++) {
-			Affectations affectations = listAffectations.get(lig);
-			if (affectations.getModule().getClass().getName().equals("Sae")) {
-			//	List<Integer> listInfosHeure = affectations.getModule().getHeures() //il sert à quoi ?
-			//			.get(affectations.getCategorieHeures());
-				this.tabDonnees[0][lig] = affectations.getIntervenant().getNomIntervenant();
-				this.tabDonnees[1][lig] = affectations.getCategorieHeures().getlibCatHeur();
-				this.tabDonnees[2][lig] = affectations.getNbHeure();
-				this.tabDonnees[3][lig] = affectations.getNbHeure()
-						* affectations.getCategorieHeures().getcoefCatHeur();
-				this.tabDonnees[4][lig] = affectations.getCommentaire();
-
-			}
+		for(Affectations a : listAffectations){
+			System.out.println(a.getIntervenant().getNomIntervenant());
 		}
 
-		this.tabEntetes = new String[] { "Intervenants", "Type", "Nb h", "tot eqtd", "commentaire" };
+		for (int lig = 0; lig < listAffectations.size(); lig++) {
+			Affectations affectations = listAffectations.get(lig);	
 
+			this.tabDonnees[lig][0] = affectations.getIntervenant().getNomIntervenant();
+			this.tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
+			this.tabDonnees[lig][2] = affectations.getNbHeure();
+			this.tabDonnees[lig][3] = affectations.getNbHeure()* affectations.getCategorieHeures().getcoefCatHeur();				
+			this.tabDonnees[lig][4] = affectations.getCommentaire();
+		}
+		this.tabEntetes = new String[] { "Intervenants", "Type", "Nb h", "tot eqtd", "commentaire" };
 	}
 
 	public int getRowCount() {
@@ -56,7 +55,7 @@ public class GrilleSAE extends AbstractTableModel {
 	}
 
 	public boolean isCellEditable(int row, int col) {
-		return true;
+		return false;
 	}
 
 	public void setValueAt(Object value, int row, int col) {
