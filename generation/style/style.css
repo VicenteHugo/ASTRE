@@ -7,7 +7,7 @@ header {
     background-color: darkgrey;
     padding: 0%;
     text-align: left;
-    color: wheat;
+    color: whitesmoke;
     display: flex;
     flex-direction: row;
 }
@@ -25,7 +25,7 @@ h1{
 
 body {
     font-family: 'Open Sans', sans-serif;
-    background-color: wheat;
+    background-color: whitesmoke;
 }
 
 div{
@@ -42,8 +42,11 @@ div{
 .gridRessource{
     margin-left: 20px;
     display: grid;
-    grid-template-columns: repeat( auto-fill, minmax(460px, 1fr) );
-    grid-gap: 10px;
+    grid-template-columns: repeat( auto-fit, minmax(470px, 470px) );
+    grid-gap: 40px;
+}
+.icecube{
+    border: 1px solid #0097B2;
 }
 .barreBleue{
     padding-left: 10px;
@@ -84,6 +87,10 @@ ul {
 li {
     color: black;
     font-size: 15px;
+}
+
+.typeHeure{
+    font-weight: bold;
 }
 
 /**
