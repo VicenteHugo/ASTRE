@@ -129,9 +129,6 @@ public class PanelAddSAEIntervenant extends JPanel {
 					categ =ch;
 				}
 			}
-
-			
-			
 			if (nbHeure < 0 ) {
 				JOptionPane.showMessageDialog(this, "Le nombre d'heure doit être supérieur à 0");
 			} else {
