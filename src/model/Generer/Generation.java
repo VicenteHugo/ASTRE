@@ -108,25 +108,33 @@ public class Generation {
 			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/ressource.html") );
 
 			pw.print (this.haut);
+			pw.println ( "	<div class=\"premiereLigne\">\n");
 			pw.println ( "		<div>");
 			pw.println ( "			<h2>Année Total</h2>");
+			pw.println ( "			<div class=\"barreBleue\">");
 			pw.println ( "			<ul>");
 			pw.println ( "					<li>Module 			   : "+module.getCode()+ " " + module.getLibLong()+ "</li>");
-			//pw.println ( "					<li>Total Heure : "+module.getHeureTotal()+"</li>");
+			pw.println ( "					<li>Total Heure : "/*+module.getHeureTotal()*/+"</li>");
 			pw.println ( "					<li>Nombre Intervenants: "+module.getLstAffectations().size()+"</li>");
 			pw.println ( "				<br>");
 			pw.println ( "			</ul>");
+			pw.println ( "			</div>");
 			pw.println ( "		</div>");
+			pw.println ( "	</div>");
 			pw.println ( "		<div>");
 			pw.println ( "			<h2>Intervenants</h2>");
+			pw.println ( "			<div class=\"gridRessource\">");
 			pw.println ( "			<ul>");
 			for (Affectations affec : module.getLstAffectations()) {
 				if (!printedItems.contains(affec.getIntervenant().getNomIntervenant() + "" + affec.getIntervenant().getPrenomIntervenant())) {
+					pw.println ( "			<div class=\"barreBleue\">");
 					pw.println ( "					<li>"+ affec.getIntervenant().getNomIntervenant()+" "+affec.getIntervenant().getPrenomIntervenant()+ " / Nombre d'heure : "+ affec.getIntervenant().getServices() +"H</li>");
+					pw.println ( "			</div>");
 					printedItems.add(affec.getIntervenant().getNomIntervenant() + "" + affec.getIntervenant().getPrenomIntervenant());
 				}
 			}
 			pw.println ( "			</ul>");
+			pw.println ( "			</div>");
 			pw.println ( "		</div>");
 
 			
@@ -257,6 +265,9 @@ public class Generation {
 		for (Intervenants i : Etat.getIntervenants()) {
 			Generation g = new Generation(i,hashMap,cpt);
 			cpt++;
+		}
+		for (Affectations a : Etat.getAffectations()) {
+			Generation g = new Generation(a.getModule());
 		}
 	}
 }
