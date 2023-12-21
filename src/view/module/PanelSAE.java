@@ -147,10 +147,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 
-	public void loadPage (Semestres semestres) {
-
-		//this.mod   = new Ressource(null, "", "", "", 0);
-		
+	public void loadPage (Semestres semestres) {		
         /*                         */
         /* CREATION DES COMPOSANTS */
         /*                         */

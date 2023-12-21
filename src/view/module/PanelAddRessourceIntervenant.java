@@ -141,11 +141,7 @@ public class PanelAddRessourceIntervenant extends JPanel{
 
 			Intervenants intervenant = Controleur.getControleur().getIntervenants(this.boxIntervenant.getSelectedIndex());
 			CategorieHeures categ = null;
-			
 
-
-
- 			int nbSemaine;
 			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
 			int nbSemaine = 1;
 
@@ -155,10 +151,7 @@ public class PanelAddRessourceIntervenant extends JPanel{
 				if(ch.getlibCatHeur().equals(this.boxCategorie.getSelectedItem())){
 					categ =ch;
 				}
-			}
-
-			
-			
+			}	
 			if (nbGroupe < 0 ) {
 				JOptionPane.showMessageDialog(this, "Le nombre de groupe doit être supérieur à 0");
 			} else {
@@ -191,7 +184,7 @@ public class PanelAddRessourceIntervenant extends JPanel{
 					Controleur.getControleur().ajouterAffectation(affectations);
 					this.frameM.dispose();
 					panel.tblGrilleDonnees.setModel(new GrilleRessources(this.mod));
-					this.panel.focusLost(null);
+					panel.focusLost(null);
 
 				}
 			}	

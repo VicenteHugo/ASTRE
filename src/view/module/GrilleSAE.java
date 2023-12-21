@@ -1,6 +1,5 @@
 package view.module;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -17,18 +16,12 @@ public class GrilleSAE extends AbstractTableModel {
 	public GrilleSAE(Module mod) {
 		List<Affectations> listAffectations = Controleur.getControleur().getAffectations(mod);
 		this.tabDonnees = new Object[listAffectations.size()][5];
-
-		for(Affectations a : listAffectations){
-			System.out.println(a.getIntervenant().getNomIntervenant());
-		}
-
 		for (int lig = 0; lig < listAffectations.size(); lig++) {
 			Affectations affectations = listAffectations.get(lig);	
-
 			this.tabDonnees[lig][0] = affectations.getIntervenant().getNomIntervenant();
 			this.tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
-			this.tabDonnees[lig][2] = affectations.getNbHeure();
-			this.tabDonnees[lig][3] = affectations.getNbHeure()* affectations.getCategorieHeures().getcoefCatHeur();				
+			this.tabDonnees[lig][2] = affectations.getNbGroupe();
+			this.tabDonnees[lig][3] = affectations.getNbGroupe()* affectations.getCategorieHeures().getcoefCatHeur();				
 			this.tabDonnees[lig][4] = affectations.getCommentaire();
 		}
 		this.tabEntetes = new String[] { "Intervenants", "Type", "Nb h", "tot eqtd", "commentaire" };
