@@ -45,8 +45,8 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	
 	//Heures PN
 
-	private JTextFieldNumber txtHeureEtdREHPN;
-	private JTextFieldNumber txtHeureEtdhTutPN;
+	JTextFieldNumber txtHeureEtdREHPN;
+	JTextFieldNumber txtHeureEtdhTutPN;
 	private JTextFieldNumber txtHeureEtdSPN ;
 
 
@@ -61,7 +61,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	private JTextFieldNumber txtTotEtdAffect;
 
 	//Affectation 
-	private JTable tblGrilleDonnees;
+	JTable tblGrilleDonnees;
 	private JButtonStyle btnAjouter;
 	private JButtonStyle btnSupprimer;
 
@@ -637,7 +637,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 	private void ajouter () {
 		JFrame f = new JFrame();
-        // f.add(new PanelAddS(this,this.frame, f,mod));
+        f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
         f.setTitle("Ajout d'une affectation");
 		f.pack();
 		f.setResizable(false);

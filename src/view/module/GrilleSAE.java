@@ -42,11 +42,7 @@ public class GrilleSAE extends AbstractTableModel {
 	public Object getValueAt(int row, int col) {
 		return this.tabDonnees[row][col];
 	}
-
-	public Class<?> getColumnClass(int c) {
-		return getValueAt(0, c).getClass();
-	}
-
+	
 	public boolean isCellEditable(int row, int col) {
 		return false;
 	}

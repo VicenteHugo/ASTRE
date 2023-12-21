@@ -43,7 +43,7 @@ public class GrilleRessources extends AbstractTableModel {
 				tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
 				tabDonnees[lig][2] = affectations.getNbSemaine();
 				tabDonnees[lig][3] = String.format("%8s",affectations.getNbGroupe());
-				tabDonnees[lig][4] = affectations.getNbSemaine()
+				tabDonnees[lig][4] =(int) affectations.getNbSemaine()
 						* affectations.getNbGroupe()
 						* listInfosHeure.get(2)
 						* affectations.getCategorieHeures().getcoefCatHeur();

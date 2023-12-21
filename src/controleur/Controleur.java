@@ -103,6 +103,12 @@ public class Controleur {
 		return Etat.getAffectations();
 	}
 
+	public ArrayList<Affectations> getAffectations(Module mod){
+		return Etat.getAffectations(mod);
+	}
+
+
+
 	public CategorieIntervenant getCategorieIntervenant(String nom){
 		return Etat.getCatInt(nom);
 	}
@@ -390,9 +396,7 @@ public class Controleur {
 
 	public void genererCSV () { Etat.genererCSV();}
 	
-	public List<Affectations> getAffectations(Module mod){
-		return Etat.getAffectations(mod);
-	}
+
 	/*-------------------------------------------------------------*/
 	/* MAIN */
 	/*-------------------------------------------------------------*/

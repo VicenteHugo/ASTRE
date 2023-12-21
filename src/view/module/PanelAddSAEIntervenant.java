@@ -24,6 +24,8 @@ import model.Intervenants;
 import model.modules.Module;
 import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
+import view.module.*;
+import view.module.PanelStage;
 
 
 
@@ -41,6 +43,7 @@ public class PanelAddSAEIntervenant extends JPanel {
 
 	private Frame frameM;
 	private PanelSAE panel;
+	private PanelStage panelBis;
 	private Module mod;
 
 	public PanelAddSAEIntervenant (PanelSAE panel, FrameAccueil frame, Frame frameM, Module mod2) {
@@ -53,7 +56,7 @@ public class PanelAddSAEIntervenant extends JPanel {
 		ArrayList<CategorieHeures> l = Controleur.getControleur().getCategorieHeures();
 		this.boxCategorie = new JComboBox<String>();
 		for(int i=0; i < l.size(); i++){
-			if(l.get(i).getlibCatHeur().equals("SAE") || l.get(i).getlibCatHeur().equals("RHE")){
+			if(l.get(i).getlibCatHeur().equals("SAE") || l.get(i).getlibCatHeur().equals("TUT")){
 				this.boxCategorie.addItem(l.get(i).getlibCatHeur());
 			}
 		}
@@ -129,7 +132,7 @@ public class PanelAddSAEIntervenant extends JPanel {
 					categ =ch;
 				}
 			}
-			if (nbHeure < 0 ) {
+			if (nbHeure <= 0 ) {
 				JOptionPane.showMessageDialog(this, "Le nombre d'heure doit être supérieur à 0");
 			} else {
 				String categerie = categ.getlibCatHeur();
@@ -161,6 +164,128 @@ public class PanelAddSAEIntervenant extends JPanel {
 
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
 	}
+
+	public PanelAddSAEIntervenant (PanelStage panel, FrameAccueil frame, Frame frameM, Module mod2) {
+		this.frameM = frameM;
+		this.panelBis = panel;
+		this.mod = mod2;
+
+		//Création
+
+		ArrayList<CategorieHeures> l = Controleur.getControleur().getCategorieHeures();
+		this.boxCategorie = new JComboBox<String>();
+		for(int i=0; i < l.size(); i++){
+			if(l.get(i).getlibCatHeur().equals("SAE") || l.get(i).getlibCatHeur().equals("TUT")){
+				this.boxCategorie.addItem(l.get(i).getlibCatHeur());
+			}
+		}
+		ArrayList<Intervenants> lstInter = Controleur.getControleur().getIntervenants();
+		this.boxIntervenant = new JComboBox<String>();
+		for(int j= 0;  j < lstInter.size(); j++ ){
+			this.boxIntervenant.addItem(lstInter.get(j).getNomIntervenant() + " " + lstInter.get(j).getPrenomIntervenant());
+		} 
+
+
+		this.txtNbHeure    = new JTextFieldNumber(3);
+		this.txtCommentaire  = new JTextField(15);
+
+		this.btnAnnuler = new JButtonStyle("Annuler");
+		this.btnValider = new JButtonStyle("Valider");
+
+		//Layout
+		JPanel panelCentre = new JPanel();
+		panelCentre.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		JPanel panelBas = new JPanel(new FlowLayout());
+
+		this.setLayout(new BorderLayout());
+		
+		// Positionnement
+		gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.insets = new Insets(5, 10, 5, 10);
+		
+		panelCentre.add(new JLabel("Nom de l'intervenant : "), gbc);
+		gbc.gridx++;
+		panelCentre.add(this.boxIntervenant, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy++;
+		panelCentre.add(new JLabel("Type : "), gbc);
+		gbc.gridx++;
+		panelCentre.add(this.boxCategorie, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy++;
+		panelCentre.add(new JLabel("Nombre d'heure : "), gbc);
+		gbc.gridx++;
+		panelCentre.add(this.txtNbHeure, gbc);
+
+        gbc.gridx = 0;
+		gbc.gridy++;
+		panelCentre.add(new JLabel("Commentaire : "), gbc);
+		gbc.gridx++;
+		panelCentre.add(this.txtCommentaire, gbc);
+
+
+
+		panelBas.add(this.btnAnnuler);
+		panelBas.add(this.btnValider);
+
+		//Ajout
+		this.add(panelCentre, BorderLayout.CENTER);
+		this.add(panelBas, BorderLayout.SOUTH);
+
+		//Activation
+	this.btnValider.addActionListener((e)->{
+			Intervenants intervenant = Controleur.getControleur().getIntervenants(this.boxIntervenant.getSelectedIndex());
+			CategorieHeures categ = null;
+			
+			int nbHeure  = Integer.parseInt(this.txtNbHeure.getText());
+			boolean isOk = false;
+
+			for(CategorieHeures ch : Controleur.getControleur().getCategorieHeures()){
+				if(ch.getlibCatHeur().equals(this.boxCategorie.getSelectedItem())){
+					categ =ch;
+				}
+			}
+			if (nbHeure <= 0 ) {
+				JOptionPane.showMessageDialog(this, "Le nombre d'heure doit être supérieur à 0");
+			} else {
+				String categerie = categ.getlibCatHeur();
+				int nbHeureTotal = calculNbGroupe(nbHeure, categ);
+				if(categerie.equals("SAE")){
+					if(nbHeure > Integer.parseInt(panelBis.txtHeureEtdREHPN.getText())   ||   nbHeureTotal > Integer.parseInt(panelBis.txtHeureEtdREHPN.getText())){
+						JOptionPane.showMessageDialog(this, "Trop d'heure assigné par rapport aux heures " +  categerie +" attitrés");
+					}else{
+					isOk = true;
+					}
+				}else{
+					if( nbHeure > Integer.parseInt(panelBis.txtHeureEtdhTutPN.getText())   ||   nbHeureTotal > Integer.parseInt(panelBis.txtHeureEtdhTutPN.getText())){
+						JOptionPane.showMessageDialog(this, "Trop d'heure assigné par rapport aux heures " +  categerie + " attitrés");
+					}else{
+						isOk = true;
+					}
+
+				}
+				if(isOk){
+					int nbSemaine = 1;
+					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbHeure, this.txtCommentaire.getText());
+					Controleur.getControleur().ajouterAffectation(affectations);
+					this.frameM.dispose();
+					panelBis.tblGrilleDonnees.setModel(new GrilleSAE(this.mod));
+					this.panel.focusLost(null);		
+				}
+			}	
+		});
+
+		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
+	}
+
+	
+
 
 	private int calculNbGroupe(int nbGroupe,CategorieHeures categ){
 		List<Affectations> listAffectations = Controleur.getControleur().getAffectations(mod);
