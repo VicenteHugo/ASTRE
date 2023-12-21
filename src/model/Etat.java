@@ -76,8 +76,8 @@ public class Etat {
 			Class.forName("org.postgresql.Driver"); //Postgress
 
 			// Connection
-			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
-			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
+			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			
 			Etat.recupererNomEtat();
 
@@ -250,11 +250,11 @@ public class Etat {
 				if (type.equals("Ressource"))
 					m = new Ressource(sem, code, libLong, libCourt, heurePonctuel,valide);
 				if (type.equals("Sae"))
-					m = new Sae(sem, code, libLong, libCourt, heurePonctuel,valide);
+					m = new Sae      (sem, code, libLong, libCourt, heurePonctuel,valide);
 				if (type.equals("Stage"))
-					m = new Stage(sem, code, libLong, libCourt, heurePonctuel,valide);
+					m = new Stage    (sem, code, libLong, libCourt, heurePonctuel,valide);
 				if (type.equals("PPP"))
-					m = new PPP(sem, code, libLong, libCourt, heurePonctuel,valide);
+					m = new PPP      (sem, code, libLong, libCourt, heurePonctuel,valide);
 
 				Statement st1 = connec.createStatement();
 				ResultSet res1 = st1.executeQuery("SELECT * FROM ModulesCatHeures"+ Etat.nom+ " WHERE codeMod = '" + code +"'");

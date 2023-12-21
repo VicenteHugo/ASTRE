@@ -32,12 +32,29 @@ div{
     font-family: 'Courier New', Courier, monospace;
 }
 
+.premiereLigne{
+    display: flex;  
+    flex-wrap: wrap;
+    gap: 50px;
+    padding: 20px;
+}
+.gridRessource{
+    border:1px, #0097B2;
+    display: grid;
+    grid-auto-columns: 300px;
+    grid-auto-flow: column;
+}
+
 /**
  * titre de la partie
 */
 h2 {
-    font-size: 35px;
+    font-size: 20px;
     color: #0097B2;
+}
+
+.module{
+    font-size: 15px;
 }
 
 
@@ -74,10 +91,13 @@ li::before {
     margin-right: 5px;
 }
 
+
+
 /**
  * information générer dans le li 
 */
-info {
+.info {
+    align-content: center;
     color: black;
     font-weight: normal;
     font-size: 12px;

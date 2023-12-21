@@ -100,12 +100,13 @@ public class PanelPrevi extends JPanel {
 
     private void creation(int indice) {
         if(indice < 0) indice = 0;
+        Semestres sem = Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex());
 
         switch (indice) {
-            case 0 -> this.frame.changePanel(new PanelRessources(frame, Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex())));
-            case 1 -> this.frame.changePanel(new PanelSAE(frame,Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex())));
-            case 2 -> this.frame.changePanel(new PanelStage(frame));
-            case 3 -> this.frame.changePanel(new PanelPPP(frame));
+            case 0 -> this.frame.changePanel(new PanelRessources(frame, sem));
+            case 1 -> this.frame.changePanel(new PanelSAE       (frame, sem));
+            case 2 -> this.frame.changePanel(new PanelStage     (frame, sem));
+            case 3 -> this.frame.changePanel(new PanelPPP       (frame, sem));
         }
     }
 
@@ -136,6 +137,7 @@ public class PanelPrevi extends JPanel {
 
         int indice = 0;
         Module m = null;
+        
         for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
             PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
             JTable table = panelSemestre.getTable();
@@ -146,6 +148,7 @@ public class PanelPrevi extends JPanel {
             }
         }
 
+
         if ( indice < 0) {
 			JOptionPane.showMessageDialog(this, "Selectionnez un module", "Erreur", JOptionPane.ERROR_MESSAGE);
 			return;
@@ -153,13 +156,13 @@ public class PanelPrevi extends JPanel {
 
 
         if (m instanceof PPP)
-            this.frame.changePanel(new PanelPPP(this.frame, m));
+            this.frame.changePanel(new PanelPPP       (this.frame, m));
         if (m instanceof Ressource)
             this.frame.changePanel(new PanelRessources(this.frame,m));
         if (m instanceof Sae)
-            this.frame.changePanel(new PanelSAE(this.frame,m));
+            this.frame.changePanel(new PanelSAE       (this.frame,m));
         if (m instanceof Stage)
-            this.frame.changePanel(new PanelStage(this.frame));
+            this.frame.changePanel(new PanelStage(this.frame,m));
         
     }
     

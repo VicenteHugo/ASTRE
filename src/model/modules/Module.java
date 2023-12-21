@@ -157,6 +157,7 @@ public abstract class Module implements Comparable<Module> {
 
 
 	public void addAffectations (Affectations a) { this.lstAffectations.add(a);}
+	public void delAffectations (Affectations a) { this.lstAffectations.remove(a);}
 
 	/*-------------------------------------------------------------*/
 	/* SET-TEURS */

@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS CategorieIntervenantsETAT
 
 CREATE TABLE IF NOT EXISTS CategorieHeuresETAT
 (
-    libCatHeur  VARCHAR(255) PRIMARY KEY, 
+    libCatHeur  VARCHAR(255) PRIMARY KEY UNIQUE, 
     coefCatHeur FLOAT DEFAULT 1.0 CHECK (coefCatHeur >= 0)
 );
 
@@ -117,7 +117,7 @@ VALUES      ('CM'   , 1.5),
             ('TD'   , 1.0),
             ('TP'   , 1.0),
             ('TUT'  , 1.0),
-            ('REH'  , 1.0),
+            ('RHE'  , 1.0),
             ('SAE'  , 1.0),
             ('HP'   , 1.0),
             ('Autre', 1.0)
