@@ -723,7 +723,7 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 	private void ajouter () {
 		JFrame f = new JFrame();
-        // f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
+        f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
         f.setTitle("Ajout d'une affectation");
 		f.pack();
 		f.setResizable(false);
