@@ -27,7 +27,7 @@ import model.Affectations;
 import model.CategorieHeures;
 import model.Semestres;
 import model.modules.Module;
-import model.modules.Ressource;
+import model.modules.Sae;
 
 public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
@@ -80,7 +80,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		this.frame = frame;
 		this.frame.setTitle("Astre - Previsionnel");
 		
-		this.mod   = new Ressource(semestres, "", "", "", 0, false);
+		this.mod   = new Sae(semestres, "", "", "", 0, false);
 
 		//Mettre la liste à 0
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
@@ -471,6 +471,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		this.txtEtdSaeAffectRep.setEditable(false);
 		this.txtEtdTutAffectRep.setEditable(false);
 		this.txtEtdTotAffectRep.setEditable(false);
+		this.txtEtdTotPromRep.setEditable(false);
 
 
 		// Alignement
@@ -492,11 +493,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
         /*                      */
         /* STYLE DES COMPOSANTS */
         /*                      */
-		PanelSAE.activer(this, this);
-
-
-
-
+		PanelSAE.activer(this, this, this);
     }
 
 
@@ -547,16 +544,16 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 	/**
-	 * Permettre de changer le style de bouton + des JTextField inactif.
+	 * Permettre de changer le stylede boutton + des JTextFiel inactif.
 	 * @param container
 	 * @param c
 	 * @param d
 	 */
-	private static void activer(Container container, ActionListener a) {
+	private static void activer(Container container, ActionListener a, FocusListener k) {
 		for (Component component : container.getComponents()) {
 
 			if (component instanceof JTextField && ((JTextField) component).isEditable()) {
-				((JTextField) component).addActionListener(a);
+				((JTextField) component).addFocusListener(k);
 			}
 
 			if (component instanceof JButtonStyle) {
@@ -564,7 +561,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 			}
 
 			if (component instanceof Container) {
-				activer((Container) component, a);
+				activer((Container) component, a,k);
 			}
 		}
 	}
@@ -675,7 +672,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
 
 		int totPN   = Integer.parseInt(this.txtHeureEtdSaePN.getText())   + Integer.parseInt(this.txtHeureEtdTutPN.getText());
-		int totEqtd = Integer.parseInt(this.txtEtdSaeAffectRep.getText()) + Integer.parseInt(this.txtEtdTutAffectRep.getText());
+		int totEqtd = Integer.parseInt(this.txtEtdSaePromRep.getText()) + Integer.parseInt(this.txtEtdTutPromRep.getText());
 
 		this.txtHeureEtdTotPN.setText(totPN   + "");
 		this.txtEtdTotPromRep.setText(totEqtd + "");

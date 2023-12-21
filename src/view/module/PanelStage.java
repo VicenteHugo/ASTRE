@@ -10,6 +10,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.*;
 
@@ -20,10 +23,12 @@ import view.previsionnel.PanelPrevi;
 import view.JButtonStyle;
 import controleur.*;
 import model.Affectations;
+import model.CategorieHeures;
 import model.Semestres;
 import model.modules.Module;
+import model.modules.Stage;
 
-public class PanelStage extends JPanel implements ActionListener{
+public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
     // Modules
     private JTextField txtCodeMod;
@@ -33,7 +38,7 @@ public class PanelStage extends JPanel implements ActionListener{
 	private JCheckBox  cbValide;
 
     // Semestres
-    private JTextFieldNumber txtSem;
+    private JTextField       txtSem;
     private JTextFieldNumber txtNbEtd;
     private JTextFieldNumber txtNbGpTd;
 	private JTextFieldNumber txtNbGpTp;
@@ -67,18 +72,87 @@ public class PanelStage extends JPanel implements ActionListener{
 	//Object
 	private FrameAccueil frame;
 	private Module       mod;
+	private boolean      estNouveau;
 
 
-	public PanelStage(FrameAccueil frame) {
 
 
+	public PanelStage(FrameAccueil frame, Semestres semestres) {
+		this.frame = frame;
+		this.frame.setTitle("Astre - Stage");
+		
+		this.mod   = new Stage(semestres, "", "", "", 0, false);
 
+		//Mettre la liste à 0
+		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
+
+		//                                            PN                                             SEMAINE                                      NB HEURE
+		List<Integer> lstCM = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstTP = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstTD = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstHP = new ArrayList<Integer>(List.of(0,0,0));
+
+
+		map.put(Controleur.getControleur().getCategorieHeure("CM"), lstCM);
+		map.put(Controleur.getControleur().getCategorieHeure("TP"), lstTP);
+		map.put(Controleur.getControleur().getCategorieHeure("TD"), lstTD);
+		map.put(Controleur.getControleur().getCategorieHeure("HP"), lstHP);
+
+
+		this.mod.setHeures(map);
+		this.estNouveau = true;
+
+		loadPage(semestres);
+
+    }
+	
+	
+	
+	public PanelStage (FrameAccueil frame, Module m) {
 		this.frame = frame;
 		this.frame.setTitle("Astre - Previsionnel");
 
-		//this.mod   = new Ressource(null, "", "", "", 0, false);
+		this.mod = m;
 
-		
+		loadPage(m.getSemestres());
+
+		//txtCode
+		this.txtCodeMod    .setText(this.mod.getCode());
+		this.txtLibLongMod .setText(this.mod.getLibLong());
+		this.txtLibCourtMod.setText(this.mod.getLibCourt());
+
+
+
+		//CM
+		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
+
+		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("TUT"));
+		if (lst != null) {
+			this.txtHeureEtdhTutPN.setText(lst.get(0) + "");		
+			this.txthTutTotEtd    .setText(lst.get(2) + "");
+		}
+
+
+		lst = map.get(Controleur.getControleur().getCategorieHeure("RHE"));
+		if (lst != null) {
+			this.txtHeureEtdREHPN.setText(lst.get(0) + "");		
+			this.txtREHTotEtd    .setText(lst.get(2) + "");
+		}
+
+		this.cbValide.setSelected(this.mod.isValide());
+
+		//Juste pour faire les calculs
+		this.focusLost(null);
+
+
+		this.estNouveau = false;
+
+	}
+
+
+
+	public void loadPage(Semestres semestres) {
+
         /*                         */
         /* CREATION DES COMPOSANTS */
         /*                         */
@@ -90,11 +164,11 @@ public class PanelStage extends JPanel implements ActionListener{
 		this.cbValide       = new JCheckBox ("Validation");
 
 		//Informations Semestres
-        this.txtTypeMod = new JTextField("Ressources", 8);
-        this.txtSem     = new JTextFieldNumber("S1", 5);
-        this.txtNbEtd   = new JTextFieldNumber("80", 3);
-        this.txtNbGpTd  = new JTextFieldNumber("80", 3);
-        this.txtNbGpTp  = new JTextFieldNumber("80", 3);
+        this.txtTypeMod = new JTextField("Stage", 8);
+        this.txtSem     = new JTextField("S" + semestres.getNumSem(), 5);
+		this.txtNbEtd   = new JTextFieldNumber("" + semestres.getNbEtdSem (), 3);
+		this.txtNbGpTd  = new JTextFieldNumber("" + semestres.getNbGpTdSem(), 3);
+		this.txtNbGpTp  = new JTextFieldNumber("" + semestres.getNbGpTpSem(), 3); 
 
 
 		//Informations calcul heure PN
@@ -389,6 +463,7 @@ public class PanelStage extends JPanel implements ActionListener{
 		this.txtNbGpTp .setEditable(false);
 
 		this.txtTotEtd.setEditable(false);
+		this.txtHeureEtdSPN.setEditable(false);
 
 		this.txtREHTotEtdAffect.setEditable(false);
 		this.txthTutTotEtdAffect.setEditable(false);
@@ -399,7 +474,7 @@ public class PanelStage extends JPanel implements ActionListener{
 		this.txtNbEtd .setHorizontalAlignment(JTextField.CENTER);
 		this.txtNbGpTd.setHorizontalAlignment(JTextField.CENTER);
 		this.txtNbGpTp.setHorizontalAlignment(JTextField.CENTER);
-		PanelStage.aligner(panelCentre, JTextField.CENTER);
+		PanelStage.aligner(panelCentre, JTextField.RIGHT);
 
 		//Bordure et fond
 		PanelStage.fond(this, Color.decode("0xD0D0D0"), new Dimension(120,20));
@@ -413,31 +488,9 @@ public class PanelStage extends JPanel implements ActionListener{
         /*                      */
         /* STYLE DES COMPOSANTS */
         /*                      */
-		PanelStage.activer(this, this);
-
-
-
+		PanelStage.activer(this, this, this);
 
     }
-
-
-	public PanelStage (FrameAccueil frame, Module m) {
-
-		this (frame);
-		this.mod = m;
-
-		//txtCode
-		this.txtCodeMod    .setText(this.mod.getCode());
-		this.txtLibLongMod .setText(this.mod.getLibLong());
-		this.txtLibCourtMod.setText(this.mod.getLibCourt());
-		
-		//Semestres info
-		Semestres s = this.mod.getSemestres();
-		this.txtNbEtd .setText("" + s.getNbEtdSem());
-		this.txtNbGpTd.setText("" + s.getNbGpTdSem());
-		this.txtNbGpTp.setText("" + s.getNbGpTpSem());
-
-	}
 
 
 
@@ -493,11 +546,11 @@ public class PanelStage extends JPanel implements ActionListener{
 	 * @param c
 	 * @param d
 	 */
-	private static void activer(Container container, ActionListener a) {
+	private static void activer(Container container, ActionListener a, FocusListener k) {
 		for (Component component : container.getComponents()) {
 
 			if (component instanceof JTextField && ((JTextField) component).isEditable()) {
-				((JTextField) component).addActionListener(a);
+				((JTextField) component).addFocusListener(k);
 			}
 
 			if (component instanceof JButtonStyle) {
@@ -505,7 +558,7 @@ public class PanelStage extends JPanel implements ActionListener{
 			}
 
 			if (component instanceof Container) {
-				activer((Container) component, a);
+				activer((Container) component, a,k);
 			}
 		}
 	}
@@ -514,7 +567,7 @@ public class PanelStage extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		if (e.getSource() == this.btnAnnuler    ) this.quitter();
-		if (e.getSource() == this.btnSauvegarder) this.quitter();
+		if (e.getSource() == this.btnSauvegarder) this.sauvegarder();
 
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
@@ -524,13 +577,74 @@ public class PanelStage extends JPanel implements ActionListener{
 	}
 
 
+	private void sauvegarder () {
+
+		if (this.txtCodeMod.getText().isEmpty()) {
+			this.showMessageDialog("Le code est obligatoire");
+			return;
+		}
+
+		boolean   val = this.cbValide      .isSelected();
+		String    cod = this.txtCodeMod    .getText();
+		String    liL = this.txtLibLongMod .getText();
+		String    liC = this.txtLibCourtMod.getText();
+
+		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
+		
+
+		//                                                    PN                                                 SEMAINE                                      NB HEURE
+		List<Integer> lstTUT = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdhTutPN.getText()), 1, Integer.parseInt(this.txthTutTotEtd.getText())));
+		List<Integer> lstRHE = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdREHPN .getText()), 1, Integer.parseInt(this.txtREHTotEtd.getText())));
+
+		map.put(Controleur.getControleur().getCategorieHeure("TUT"), lstTUT);
+		map.put(Controleur.getControleur().getCategorieHeure("RHE"), lstRHE);
+
+		if (this.estNouveau) {
+			this.mod.setCode         (cod);
+			this.mod.setLibLong      (liL);
+			this.mod.setLibCourt     (liC);
+			this.mod.setValide       (val);
+			this.mod.initList        (map);
+			this.mod.setHeurePonctuel(0 );
+
+			if (Controleur.getControleur().ajouterModule(this.mod)) {
+				Controleur.getControleur().enregistrer();
+				this.quitter();
+				return;
+			}
+
+
+		}else{
+			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, 0, val, map)) {
+				Controleur.getControleur().enregistrer();
+				this.quitter();
+				return;
+			}
+		}
+		
+		this.showMessageDialog("Le code est déja utiliser");
+	}
+
+	private void showMessageDialog(String message) {
+		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+
+
 	private void quitter () {
 		this.frame.changePanel(new PanelPrevi(frame));
 	}
 
 
 	private void ajouter () {
-		System.out.println("Quitter");
+		JFrame f = new JFrame();
+        // f.add(new PanelAddS(this,this.frame, f,mod));
+        f.setTitle("Ajout d'une affectation");
+		f.pack();
+		f.setResizable(false);
+		f.setLocationRelativeTo(null);
+		f.setAlwaysOnTop(true);
+		f.setVisible(true);
 	}
 
 
@@ -548,13 +662,14 @@ public class PanelStage extends JPanel implements ActionListener{
 		this.tblGrilleDonnees.setModel(new GrilleStage()); 
 	}
 
+
+
 	public void focusLost(FocusEvent e) {
 
-		float coefREH  = Controleur.getControleur().getCategorieHeure("REH").getcoefCatHeur();
-		float coefTut = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
+		int totPN = Integer.parseInt(this.txtHeureEtdREHPN.getText()) + Integer.parseInt(this.txtHeureEtdhTutPN.getText());
+		this.txtHeureEtdSPN.setText(totPN + "");
 
-		int totEqtd = Integer.parseInt(this.txtREHTotEtdAffect.getText()) + Integer.parseInt(this.txthTutTotEtdAffect.getText());
-
+		int totEqtd = Integer.parseInt(this.txthTutTotEtd.getText()) + Integer.parseInt(this.txtREHTotEtd.getText());
 		this.txtTotEtd.setText(totEqtd + "");
 
 
@@ -563,6 +678,9 @@ public class PanelStage extends JPanel implements ActionListener{
 		//EQTD
 		int rehAffect = 0;
 		int tutAffect = 0;
+
+		float coefREH = Controleur.getControleur().getCategorieHeure("REH").getcoefCatHeur();
+		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
 
 
 		for (Affectations a : this.mod.getLstAffectations()) {
@@ -573,7 +691,7 @@ public class PanelStage extends JPanel implements ActionListener{
 				rehAffect += a.getNbHeure() * coefREH;
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
-				tutAffect += a.getNbHeure() * coefTut;
+				tutAffect += a.getNbHeure() * coefTUT;
 		}
 
 		this.txtREHTotEtdAffect.setText( rehAffect + "");
@@ -583,5 +701,8 @@ public class PanelStage extends JPanel implements ActionListener{
 
 
 
+	}
+
+	public void focusGained(FocusEvent e) {
 	}
 }

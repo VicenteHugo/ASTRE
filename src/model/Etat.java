@@ -441,7 +441,6 @@ public class Etat {
 	public static boolean pasUtiliser (Intervenants i) {
 		for (Affectations a : Etat.lstAffectations) 
 			if (a.getIntervenant() == i) {
-				System.out.println(a);
 				return false;
 			}
 
@@ -504,7 +503,6 @@ public class Etat {
 				}
 
 				// On l'execute
-				System.out.println(st);
 				st.executeUpdate();
 			}
 		} catch (Exception e) { e.printStackTrace(); }
@@ -842,7 +840,7 @@ public class Etat {
 
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		
 		
