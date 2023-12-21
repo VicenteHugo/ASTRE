@@ -141,64 +141,53 @@ public class PanelAddRessourceIntervenant extends JPanel{
 
 			Intervenants intervenant = Controleur.getControleur().getIntervenants(this.boxIntervenant.getSelectedIndex());
 			CategorieHeures categ = null;
-			
 
-
-
- 			int nbSemaine;
 			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
+			int nbSemaine = 1;
 
 			boolean isOk = false;
+
 			for(CategorieHeures ch : Controleur.getControleur().getCategorieHeures()){
 				if(ch.getlibCatHeur().equals(this.boxCategorie.getSelectedItem())){
 					categ =ch;
 				}
-			}
-
-			ArrayList<Integer> list = (ArrayList<Integer>) mod.getHeures().get(categ);
-			nbSemaine = list.get(1);
-			
-			if (lstInter != null) {
-				if (nbGroupe < 0 ) {
-					JOptionPane.showMessageDialog(this, "Le nombre de groupe doit être supérieur à 0");
-
-				} else {
-					if(categ.getlibCatHeur().equals("TD")){
-						int nbGroupeTd = calculNbGroupe(nbGroupe, categ);
-						if(nbGroupe > mod.getSemestres().getNbGpTdSem() || nbGroupeTd > mod.getSemestres().getNbGpTdSem()){
-							JOptionPane.showMessageDialog(this, "Trop de groupe TD sont assignés");
+			}	
+			if (nbGroupe < 0 ) {
+				JOptionPane.showMessageDialog(this, "Le nombre de groupe doit être supérieur à 0");
+			} else {
+				String categerie = categ.getlibCatHeur();
+				int nbGroupeTotal = calculNbGroupe(nbGroupe, categ);
+				if(!(categerie.equals("HP"))){
+					if(categerie.equals("TD")){
+						if(nbGroupe > mod.getSemestres().getNbGpTdSem() || nbGroupeTotal > mod.getSemestres().getNbGpTdSem()){
+							JOptionPane.showMessageDialog(this, "Trop de groupe " +  categerie +" sont assignés");
 						}else{
+						ArrayList<Integer> list = (ArrayList<Integer>) mod.getHeures().get(categ);
+						nbSemaine = list.get(1);
+						isOk = true;
+						}
+					}else{
+						if(nbGroupe > mod.getSemestres().getNbGpTpSem()|| nbGroupeTotal > mod.getSemestres().getNbGpTpSem()){
+							JOptionPane.showMessageDialog(this, "Trop de groupe " +  categerie +" sont assignés");
+						}else{
+							ArrayList<Integer> list = (ArrayList<Integer>) mod.getHeures().get(categ);
+							nbSemaine = list.get(1);
 							isOk = true;
 						}
-					}
-					if(categ.getlibCatHeur().equals("TP")){
-						int nbGroupeTp = calculNbGroupe(nbGroupe, categ);
-						if(nbGroupe > mod.getSemestres().getNbGpTpSem()|| nbGroupeTp > mod.getSemestres().getNbGpTpSem()){
-							JOptionPane.showMessageDialog(this, "Trop de groupe TP sont assignés");
-						}
-						else{
-							isOk = true;
-						}
-					}
-					if(categ.getlibCatHeur().equals("HP")){
-						if(nbGroupe < 0){
-							nbSemaine = 0;
-							JOptionPane.showMessageDialog(this, "Trop de groupe TP sont assignés");
-						}
-						else{
-							isOk = true;
-						}
-					}
-					if(isOk){
-						Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbGroupe, this.txtCommentaire.getText());
-						Controleur.getControleur().ajouterAffectation(affectations);
-						this.frameM.dispose();
-						panel.tblGrilleDonnees.setModel(new GrilleRessources(this.mod));
-					}
+					}	
+				}
+				else{
+					isOk = true;
+				}
+				if(isOk){
+					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbGroupe, this.txtCommentaire.getText());
+					Controleur.getControleur().ajouterAffectation(affectations);
+					this.frameM.dispose();
+					panel.tblGrilleDonnees.setModel(new GrilleRessources(this.mod));
+					panel.focusLost(null);
 
 				}
-			}
-		
+			}	
 		});
 
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
