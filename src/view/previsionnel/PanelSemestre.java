@@ -83,10 +83,10 @@ public class PanelSemestre extends JPanel implements FocusListener {
     }
 
     public Semestres getSemNew () {
-        this.sem.setNbEtdSem (Integer.parseInt(this.txtNbETD     .getText()));
-        this.sem.setNbGpTdSem(Integer.parseInt(this.txtNbGpTD    .getText()));
-        this.sem.setNbGpTpSem(Integer.parseInt(this.txtNbGpTP    .getText()));
-        this.sem.setNbSemSem (Integer.parseInt(this.txtNbSemaines.getText()));
+        // this.sem.setNbEtdSem (Integer.parseInt(this.txtNbETD     .getText()));
+        // this.sem.setNbGpTdSem(Integer.parseInt(this.txtNbGpTD    .getText()));
+        // this.sem.setNbGpTpSem(Integer.parseInt(this.txtNbGpTP    .getText()));
+        // this.sem.setNbSemSem (Integer.parseInt(this.txtNbSemaines.getText()));
 
         return this.sem;
     }

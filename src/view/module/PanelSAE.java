@@ -106,8 +106,6 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		this.frame.setTitle("Astre - Previsionnel");
 
 		this.mod = m;
-		System.out.println(this.mod);
-
 
 		loadPage(m.getSemestres());
 
@@ -121,13 +119,11 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
 
 		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("SAE"));
-		System.out.println(lst);
 		if (lst != null) {
 			this.txtHeureEtdSaePN.setText(lst.get(0) + "");		
 			this.txtEtdSaePromRep.setText(lst.get(2) + "");		
 		}
 		
-		System.out.println(lst);
 		lst = map.get(Controleur.getControleur().getCategorieHeure("TUT"));
 		if (lst != null) {
 			this.txtHeureEtdTutPN.setText(lst.get(0) + "");		

@@ -36,9 +36,6 @@ public class Intervenants{
 	/** Liste des heures pour chaque semestre. */
 	private List<Integer> listeHeuresSemestre;
 
-	/** Nombre total d'heure */
-	private int totalHeures;
-
 	/** List des affectations qu'ils fait */
 	private List<Affectations> lstAffectations;
 

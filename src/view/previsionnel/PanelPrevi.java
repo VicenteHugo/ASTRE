@@ -114,6 +114,7 @@ public class PanelPrevi extends JPanel {
 
         int indice = 0;
         Module m = null;
+        
         for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
             PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
             JTable table = panelSemestre.getTable();
@@ -123,19 +124,20 @@ public class PanelPrevi extends JPanel {
                 m =  Controleur.getControleur().getModule(code);
             }
         }
+
         if ( indice < 0) {
 			this.showMessageDialog("Selectionner un module");
 			return;
         }
 
         if (m instanceof PPP)
-            this.frame.changePanel(new PanelPPP(this.frame, m));
+            this.frame.changePanel(new PanelPPP       (this.frame, m));
         if (m instanceof Ressource)
             this.frame.changePanel(new PanelRessources(this.frame,m));
         if (m instanceof Sae)
-            this.frame.changePanel(new PanelSAE(this.frame,m));
+            this.frame.changePanel(new PanelSAE       (this.frame,m));
         if (m instanceof Stage)
-            this.frame.changePanel(new PanelStage(this.frame));
+            this.frame.changePanel(new PanelStage     (this.frame));
         
     }
     
