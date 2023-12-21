@@ -929,7 +929,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 				tpAffect += (tpHeu * a.getNbSemaine() * a.getNbGroupe() + a.getNbHeure()) * coefTP;
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("HP"))
-				hpAffect += (hpHeu * a.getNbSemaine() * a.getNbGroupe() + a.getNbHeure()) * coefHP;
+				hpAffect += a.getNbGroupe() * coefHP;
 		}
 
 		this.txtCMTotEtdAffect.setText(cmAffect + "");

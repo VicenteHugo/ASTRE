@@ -593,10 +593,12 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
 		
+		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
+		float coefSAE = Controleur.getControleur().getCategorieHeure("SAE").getcoefCatHeur();
 
 		//                                                   PN                                             SEMAINE                                      NB HEURE
-		List<Integer> lstSAE = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdSaePN.getText()), 1, Integer.parseInt(this.txtEtdSaePromRep.getText())));
-		List<Integer> lstTUT = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTutPN.getText()), 1, Integer.parseInt(this.txtEtdTutPromRep.getText())));
+		List<Integer> lstTUT = new ArrayList<Integer>(List.of((int) (Math.ceil(Integer.parseInt(this.txtHeureEtdTutPN.getText()) / coefTUT)), 1, (int) (Math.ceil(Integer.parseInt(this.txtEtdTutPromRep.getText())) / coefTUT)));
+		List<Integer> lstSAE = new ArrayList<Integer>(List.of((int) (Math.ceil(Integer.parseInt(this.txtHeureEtdSaePN.getText()) / coefSAE)), 1, (int) (Math.ceil(Integer.parseInt(this.txtEtdSaePromRep.getText())) / coefSAE)));
 
 		map.put(Controleur.getControleur().getCategorieHeure("TUT"), lstTUT);
 		map.put(Controleur.getControleur().getCategorieHeure("SAE"), lstSAE);
@@ -617,6 +619,9 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 		}else{
+
+			System.out.println(map);
+
 			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, 0, val, map)) {
 				Controleur.getControleur().enregistrer();
 				this.quitter();

@@ -24,4 +24,20 @@ public class Ressource extends Module {
 		this.listCategorieHeure.add(catH);
 		this.heures.put(catH, list);
 	}
+
+	public int getHeurePn(){
+		int somme = 0;
+		
+		for (CategorieHeures catH : this.heures.keySet()) {
+
+			int heurePN = this.heures.get(catH).get(0);
+
+			if(catH.getlibCatHeur().equals("TD")) heurePN = heurePN * this.semestres.getNbGpTdSem();
+			if(catH.getlibCatHeur().equals("TP")) heurePN = heurePN * this.semestres.getNbGpTpSem();
+
+
+			somme += heurePN  * catH.getcoefCatHeur();
+		}
+		return somme;
+	}
 }

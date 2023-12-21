@@ -596,7 +596,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		List<Integer> lstRHE = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdREHPN .getText()), 1, Integer.parseInt(this.txtREHTotEtd.getText())));
 
 		map.put(Controleur.getControleur().getCategorieHeure("TUT"), lstTUT);
-		map.put(Controleur.getControleur().getCategorieHeure("RHE"), lstRHE);
+		map.put(Controleur.getControleur().getCategorieHeure("REH"), lstRHE);
 
 		if (this.estNouveau) {
 			this.mod.setCode         (cod);
@@ -604,6 +604,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 			this.mod.setLibCourt     (liC);
 			this.mod.setValide       (val);
 			this.mod.initList        (map);
+
 			this.mod.setHeurePonctuel(0 );
 
 			if (Controleur.getControleur().ajouterModule(this.mod)) {
@@ -614,6 +615,9 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 
 		}else{
+
+			System.out.println(map);
+
 			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, 0, val, map)) {
 				Controleur.getControleur().enregistrer();
 				this.quitter();

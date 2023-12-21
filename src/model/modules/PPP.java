@@ -22,5 +22,4 @@ public class PPP extends Module {
 		this.listCategorieHeure.add(catH);
 		this.heures.put(catH, list);
 	}
-
 }
