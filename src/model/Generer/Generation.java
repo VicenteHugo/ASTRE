@@ -156,6 +156,7 @@ public class Generation {
 						}
 						cpt = 1;
 						premPassage = true;
+						catHeure = null;
 						codeActuel= affec.getModule().getCode();
 						divRess+="			<div>\n";
 						divRess+="				<h2>"+ affec.getModule().getCode()+" "+affec.getModule().getLibLong()+"</h2>\n";
@@ -166,7 +167,7 @@ public class Generation {
 					if (affec.getModule().getCode().equals(codeActuel)){
 						if (affec.getCategorieHeures()!=catHeure) {
 							cpt = 1;
-							divRess+="						<li class=\"\">"+affec.getCategorieHeures().getlibCatHeur()+"</li>\n";
+							divRess+="						<li class=\"typeHeure\">"+affec.getCategorieHeures().getlibCatHeur()+": </li>\n";
 							catHeure  = affec.getCategorieHeures();
 						}
 						divRess+="						<li>Affectation "+cpt+" :\n";
