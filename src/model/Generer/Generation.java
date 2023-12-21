@@ -244,12 +244,6 @@ public class Generation {
 
 	public static void main(String[] args) {
 		Etat e = new Etat();
-
-		for(Affectations a : e.getAffectations()){
-			Generation g = new Generation(a.getModule());
-		}
-		Generation g = new Generation(tBoucher);*/
-		Etat e = new Etat();
 		HashMap <Module, ArrayList<Affectations>> hashMap = new HashMap <Module, ArrayList<Affectations>>();
 		for (Affectations a : Etat.getAffectations()) {
 			if(! hashMap.containsKey(a.getModule()))
