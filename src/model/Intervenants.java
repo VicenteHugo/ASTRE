@@ -36,9 +36,6 @@ public class Intervenants{
 	/** Liste des heures pour chaque semestre. */
 	private List<Integer> listeHeuresSemestre;
 
-	/** Nombre total d'heure */
-	private int totalHeures;
-
 	/** List des affectations qu'ils fait */
 	private List<Affectations> lstAffectations;
 
@@ -94,12 +91,12 @@ public class Intervenants{
 	}
 
 	public int getSommeSemPaire() {
-		return (int) ((listeHeuresSemestre.get(0) + listeHeuresSemestre.get(2) + listeHeuresSemestre.get(4))
+		return (int) ((listeHeuresSemestre.get(1) + listeHeuresSemestre.get(3) + listeHeuresSemestre.get(5))
 				* this.coefficient);
 	}
 
 	public int getSommeSemImpaire() {
-		return (int) ((listeHeuresSemestre.get(1) + listeHeuresSemestre.get(3) + listeHeuresSemestre.get(5))
+		return (int) ((listeHeuresSemestre.get(0) + listeHeuresSemestre.get(2) + listeHeuresSemestre.get(4))
 				* this.coefficient);
 	}
 

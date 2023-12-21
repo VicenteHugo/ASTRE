@@ -103,6 +103,12 @@ public class Controleur {
 		return Etat.getAffectations();
 	}
 
+	public ArrayList<Affectations> getAffectations(Module mod){
+		return Etat.getAffectations(mod);
+	}
+
+
+
 	public CategorieIntervenant getCategorieIntervenant(String nom){
 		return Etat.getCatInt(nom);
 	}
@@ -149,22 +155,15 @@ public class Controleur {
 	/*----------------------------------------------------*/
 
 	/* GENERAL */
-	public void enregistrer() { Etat.enregistrer(); }
-	public void annuler    () { Etat.anuller();     }
+	public void enregistrer() { Etat.enregistrer();}
+	public void annuler    () { Etat.anuller();    }
 
 	
 	/* SEMESTRES */
 	public void modifSemestres (Semestres sem) { Etat.ajouterAction(new Modification(sem));}
 
 
-	/* CATEGORIE-HEURE */
-	public void supprimerCategorieHeure(int i) {
-		if (i >= 0 && i < Etat.getCategoriesHeures().size()) {
-			CategorieHeures cat = Etat.getCategoriesHeures().remove(i);
-			Etat.ajouterAction(new Suppression(cat));
-		}
-	}
-
+	/* CATEGORIE-Interveneants */
 	public boolean supprimerCategorieIntervenants(int i) {
 		CategorieIntervenant cat = Etat.getCategoriesIntervenants().get(i);
 
@@ -235,11 +234,15 @@ public class Controleur {
 		Etat.ajouterIntervenant(inter);
 	}
 
-	public void supprimerIntervenant(int ind) {
-		if (ind >= 0 && ind < Etat.getIntervenants().size()) {
-			Intervenants inter = Etat.getIntervenants().remove(ind);
-			Etat.ajouterAction(new Suppression(inter));
-		}
+	public boolean supprimerIntervenant(int ind) {
+		Intervenants i = Etat.getIntervenants(ind);
+
+		if (!Etat.pasUtiliser(i)) return false;
+
+		Intervenants inter = Etat.getIntervenants().remove(ind);
+		Etat.ajouterAction(new Suppression(inter));
+
+		return true;
 	}
 
 	public boolean modifIntervenant(int i, CategorieIntervenant categ, String nomIntervenant, String prenomIntervenant, int services, int mexHeure, float coef) {
@@ -279,6 +282,8 @@ public class Controleur {
 
 	public void supprimerAffectation(Affectations affect){
 		Etat.getAffectations().remove(affect);
+		affect.delete();
+
 		Etat.ajouterAction(new Suppression(affect));
 	}
 	
@@ -396,9 +401,7 @@ public class Controleur {
 
 	public void genererCSV () { Etat.genererCSV();}
 	
-	public List<Affectations> getAffectations(Module mod){
-		return Etat.getAffectations(mod);
-	}
+
 	/*-------------------------------------------------------------*/
 	/* MAIN */
 	/*-------------------------------------------------------------*/

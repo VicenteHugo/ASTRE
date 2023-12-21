@@ -28,11 +28,38 @@ body {
     background-color: wheat;
 }
 
+div{
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.premiereLigne{
+    display: flex;  
+    flex-wrap: wrap;
+    gap: 50px;
+    padding: 20px;
+    margin-bottom:50px;
+}
+.gridRessource{
+    margin-left: 20px;
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax(460px, 1fr) );
+    grid-gap: 10px;
+}
+.barreBleue{
+    padding-left: 10px;
+    margin-left: 20px;
+    border-left: 3px solid #0097B2;
+}
 /**
  * titre de la partie
 */
 h2 {
+    font-size: 20px;
     color: #0097B2;
+}
+
+.module{
+    font-size: 15px;
 }
 
 
@@ -56,8 +83,7 @@ ul {
 
 li {
     color: black;
-    font-weight: bold;
-    font-size: 12px;
+    font-size: 15px;
 }
 
 /**
@@ -69,15 +95,13 @@ li::before {
     margin-right: 5px;
 }
 
+
+
 /**
  * information générer dans le li 
 */
-info {
+.info {
     color: black;
     font-weight: normal;
     font-size: 12px;
-}
-
-table{
-    margin: 5%;
 }

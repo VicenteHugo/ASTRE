@@ -46,6 +46,8 @@ public class Affectations {
 		this.categorieHeures = categorie;
 		this.nbHeure = nbHeure;
 		this.commentaire = commentaire;
+		this.nbGroupe = 1;
+		this.nbSemaine = 0;	
 	}
 
 	public Intervenants getIntervenant() {
@@ -111,6 +113,18 @@ public class Affectations {
 
 	public void setNbHeure(int nbHeure) {
 		this.nbHeure = nbHeure;
+	}
+
+	public void delete() {
+		this.module.delAffectations(this);
+	}
+
+	public int getHeureEqtd() {
+		int nbH = this.module.getHeures().get(this.categorieHeures).get(2);
+
+		int heure = (int) Math.ceil((this.nbHeure +  nbH * this.nbGroupe * this.nbSemaine) * this.categorieHeures.getcoefCatHeur());
+
+		return heure;
 	}
 
 }

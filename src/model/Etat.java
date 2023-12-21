@@ -76,8 +76,8 @@ public class Etat {
 			Class.forName("org.postgresql.Driver"); //Postgress
 
 			// Connection
-			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
-			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
+			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			
 			Etat.recupererNomEtat();
 
@@ -127,7 +127,7 @@ public class Etat {
 		try {
 
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieHeures"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM CategorieHeures"+ Etat.nom + " ORDER BY libCatHeur");
 
 			while (res.next())
 				Etat.lstCategorieHeures
@@ -147,7 +147,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants"+ Etat.nom + " ORDER BY codeCatInt");
 
 			while (res.next()) {
 				String code = res.getString("codeCatInt");
@@ -173,7 +173,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Semestres"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM Semestres"+ Etat.nom + " ORDER BY numSem");
 
 			while (res.next()) {
 
@@ -250,11 +250,11 @@ public class Etat {
 				if (type.equals("Ressource"))
 					m = new Ressource(sem, code, libLong, libCourt, heurePonctuel,valide);
 				if (type.equals("Sae"))
-					m = new Sae(sem, code, libLong, libCourt, heurePonctuel,valide);
+					m = new Sae      (sem, code, libLong, libCourt, heurePonctuel,valide);
 				if (type.equals("Stage"))
-					m = new Stage(sem, code, libLong, libCourt, heurePonctuel,valide);
+					m = new Stage    (sem, code, libLong, libCourt, heurePonctuel,valide);
 				if (type.equals("PPP"))
-					m = new PPP(sem, code, libLong, libCourt, heurePonctuel,valide);
+					m = new PPP      (sem, code, libLong, libCourt, heurePonctuel,valide);
 
 				Statement st1 = connec.createStatement();
 				ResultSet res1 = st1.executeQuery("SELECT * FROM ModulesCatHeures"+ Etat.nom+ " WHERE codeMod = '" + code +"'");
@@ -288,7 +288,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Affectation"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM Affectation"+ Etat.nom + " ORDER BY libCatHeur, nomInt, prenomInt");
 
 			while (res.next()) {
 
@@ -431,10 +431,18 @@ public class Etat {
 	}
 
 	public static boolean pasUtiliser (Module m) {
-
 		for (Affectations a : Etat.lstAffectations) 
 			if (a.getModule() == m) 
 				return false;
+
+		return true;
+	}
+
+	public static boolean pasUtiliser (Intervenants i) {
+		for (Affectations a : Etat.lstAffectations) 
+			if (a.getIntervenant() == i) {
+				return false;
+			}
 
 		return true;
 	}
@@ -495,7 +503,6 @@ public class Etat {
 				}
 
 				// On l'execute
-				System.out.println(st);
 				st.executeUpdate();
 			}
 		} catch (Exception e) { e.printStackTrace(); }
@@ -833,7 +840,7 @@ public class Etat {
 
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		
 		

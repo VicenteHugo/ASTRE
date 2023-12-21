@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import view.JButtonStyle;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -107,7 +108,11 @@ public class PanelIntervenants extends JPanel {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
 
-		Controleur.getControleur().supprimerIntervenant(ind);
+		if (!Controleur.getControleur().supprimerIntervenant(ind)) {
+			JOptionPane.showMessageDialog(this, "L'intervenant à encore des affectations", "Erreur", JOptionPane.ERROR_MESSAGE);
+			return ;
+		}
+		
 		if (ind >= 0)
 			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
 

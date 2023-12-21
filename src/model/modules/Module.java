@@ -106,7 +106,7 @@ public abstract class Module implements Comparable<Module> {
 		int somme = 0;
 		for (CategorieHeures catH : this.heures.keySet()) {
 
-			int heurePN = Math.round(this.heures.get(catH).get(0) * catH.getcoefCatHeur());
+			int heurePN = (int) (this.heures.get(catH).get(0) * catH.getcoefCatHeur());
 
 			if(catH.getlibCatHeur().equals("TD")) heurePN = heurePN * this.semestres.getNbGpTdSem();
 			if(catH.getlibCatHeur().equals("TP")) heurePN = heurePN * this.semestres.getNbGpTpSem();
@@ -157,6 +157,7 @@ public abstract class Module implements Comparable<Module> {
 
 
 	public void addAffectations (Affectations a) { this.lstAffectations.add(a);}
+	public void delAffectations (Affectations a) { this.lstAffectations.remove(a);}
 
 	/*-------------------------------------------------------------*/
 	/* SET-TEURS */

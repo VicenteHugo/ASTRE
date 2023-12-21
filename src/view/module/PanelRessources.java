@@ -100,7 +100,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 	public PanelRessources(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
-		this.frame.setTitle("Astre - Previsionnel");
+		this.frame.setTitle("Astre - Ressource");
 		
 		this.mod   = new Ressource(semestres, "", "", "", 0, false);
 
@@ -750,7 +750,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
 
-
+		this.focusLost(null);
 	}
 
 

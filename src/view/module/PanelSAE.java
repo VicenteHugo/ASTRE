@@ -27,7 +27,7 @@ import model.Affectations;
 import model.CategorieHeures;
 import model.Semestres;
 import model.modules.Module;
-import model.modules.Ressource;
+import model.modules.Sae;
 
 public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
@@ -46,8 +46,8 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 	
 	//Heures PN
 
-	private JTextFieldNumber txtHeureEtdSaePN;
-	private JTextFieldNumber txtHeureEtdTutPN;
+	JTextFieldNumber txtHeureEtdSaePN;
+	JTextFieldNumber txtHeureEtdTutPN;
 	private JTextFieldNumber txtHeureEtdTotPN ;
 
 
@@ -61,7 +61,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 	private JTextFieldNumber txtEtdTutAffectRep;
 
 	//Affectation 
-	private JTable tblGrilleDonnees;
+	JTable tblGrilleDonnees;
 	private JButtonStyle btnAjouter;
 	private JButtonStyle btnSupprimer;
 
@@ -80,7 +80,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		this.frame = frame;
 		this.frame.setTitle("Astre - Previsionnel");
 		
-		this.mod   = new Ressource(semestres, "", "", "", 0, false);
+		this.mod   = new Sae(semestres, "", "", "", 0, false);
 
 		//Mettre la liste à 0
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
@@ -106,8 +106,6 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		this.frame.setTitle("Astre - Previsionnel");
 
 		this.mod = m;
-		System.out.println(this.mod);
-
 
 		loadPage(m.getSemestres());
 
@@ -121,13 +119,11 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
 
 		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("SAE"));
-		System.out.println(lst);
 		if (lst != null) {
 			this.txtHeureEtdSaePN.setText(lst.get(0) + "");		
 			this.txtEtdSaePromRep.setText(lst.get(2) + "");		
 		}
 		
-		System.out.println(lst);
 		lst = map.get(Controleur.getControleur().getCategorieHeure("TUT"));
 		if (lst != null) {
 			this.txtHeureEtdTutPN.setText(lst.get(0) + "");		
@@ -151,10 +147,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 
-	public void loadPage (Semestres semestres) {
-
-		//this.mod   = new Ressource(null, "", "", "", 0);
-		
+	public void loadPage (Semestres semestres) {		
         /*                         */
         /* CREATION DES COMPOSANTS */
         /*                         */
@@ -369,7 +362,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleSAE());
+		this.tblGrilleDonnees = new JTable(new GrilleSAE(this.mod));
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -471,6 +464,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		this.txtEtdSaeAffectRep.setEditable(false);
 		this.txtEtdTutAffectRep.setEditable(false);
 		this.txtEtdTotAffectRep.setEditable(false);
+		this.txtEtdTotPromRep.setEditable(false);
 
 
 		// Alignement
@@ -492,11 +486,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
         /*                      */
         /* STYLE DES COMPOSANTS */
         /*                      */
-		PanelSAE.activer(this, this);
-
-
-
-
+		PanelSAE.activer(this, this, this);
     }
 
 
@@ -547,16 +537,16 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 	/**
-	 * Permettre de changer le style de bouton + des JTextField inactif.
+	 * Permettre de changer le stylede boutton + des JTextFiel inactif.
 	 * @param container
 	 * @param c
 	 * @param d
 	 */
-	private static void activer(Container container, ActionListener a) {
+	private static void activer(Container container, ActionListener a, FocusListener k) {
 		for (Component component : container.getComponents()) {
 
 			if (component instanceof JTextField && ((JTextField) component).isEditable()) {
-				((JTextField) component).addActionListener(a);
+				((JTextField) component).addFocusListener(k);
 			}
 
 			if (component instanceof JButtonStyle) {
@@ -564,7 +554,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 			}
 
 			if (component instanceof Container) {
-				activer((Container) component, a);
+				activer((Container) component, a,k);
 			}
 		}
 	}
@@ -578,8 +568,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
 
-
-
+		this.focusLost(null);
 	}
 
 
@@ -641,7 +630,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 	private void ajouter () {
 		JFrame f = new JFrame();
-        // f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
+        f.add(new PanelAddSAEIntervenant(this,this.frame, f,this.mod));
         f.setTitle("Ajout d'une affectation");
 		f.pack();
 		f.setResizable(false);
@@ -661,7 +650,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleSAE()); 
+		this.tblGrilleDonnees.setModel(new GrilleSAE(this.mod)); 
 	}
 
 	private void showMessageDialog(String message) {
@@ -675,7 +664,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
 
 		int totPN   = Integer.parseInt(this.txtHeureEtdSaePN.getText())   + Integer.parseInt(this.txtHeureEtdTutPN.getText());
-		int totEqtd = Integer.parseInt(this.txtEtdSaeAffectRep.getText()) + Integer.parseInt(this.txtEtdTutAffectRep.getText());
+		int totEqtd = Integer.parseInt(this.txtEtdSaePromRep.getText()) + Integer.parseInt(this.txtEtdTutPromRep.getText());
 
 		this.txtHeureEtdTotPN.setText(totPN   + "");
 		this.txtEtdTotPromRep.setText(totEqtd + "");

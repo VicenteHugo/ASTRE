@@ -68,4 +68,8 @@ public class Semestres {
 	public String toString () {
 		return String.format("Sem %1d (%3d etds) : %2d TP et %2d TP sur %3d semaines", this.numSem, this.nbEtdSem, this.nbGpTdSem, this.nbGpTpSem, this.nbSemSem);
 	}
+
+	public boolean equals (Semestres sem) {
+		return this.numSem == sem.numSem && this.nbEtdSem == sem.nbEtdSem && this.nbGpTdSem == sem.nbGpTdSem && this.nbGpTpSem == sem.nbGpTpSem;
+	}
 }
