@@ -161,6 +161,14 @@ public class PanelEtat extends JPanel {
             Controleur.getControleur().genererCSV();
         }
 
+        if(option.equals("Par intervenants (HTML)")) {
+            Controleur.getControleur().genererHTMLIntervenants();
+        }
+
+        if(option.equals("Par modules (HTML)")) {
+            Controleur.getControleur().genererHTMLModules();
+        }
+
     }
 
 

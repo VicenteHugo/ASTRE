@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Generer.Generation;
 import model.action.Action;
 import model.modules.Module;
 import model.modules.Ressource;
@@ -276,6 +277,8 @@ public class Etat {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+
 	}
 
 
@@ -674,6 +677,14 @@ public class Etat {
 	/*-------------------------------------------------*/
 	/*               GENERATION FICHIER                */
 	/*-------------------------------------------------*/
+
+	public static void genererHTMLIntervenants(){
+		new Generation(lstIntervenants);
+	}
+
+	public static void genererHTMLModules(){
+		new Generation(lstModule);
+	}
 
 	// JAI PAS ACCES A LA COMMANDE DONC MODE BRUTAL
 	public static void genererCSV() { 
