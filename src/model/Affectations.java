@@ -115,4 +115,8 @@ public class Affectations {
 		this.nbHeure = nbHeure;
 	}
 
+	public void delete() {
+		this.module.delAffectations(this);
+	}
+
 }

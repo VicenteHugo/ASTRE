@@ -149,8 +149,8 @@ public class Controleur {
 	/*----------------------------------------------------*/
 
 	/* GENERAL */
-	public void enregistrer() { Etat.enregistrer(); }
-	public void annuler    () { Etat.anuller();     }
+	public void enregistrer() { Etat.enregistrer();}
+	public void annuler    () { Etat.anuller();    }
 
 	
 	/* SEMESTRES */
@@ -271,6 +271,8 @@ public class Controleur {
 
 	public void supprimerAffectation(Affectations affect){
 		Etat.getAffectations().remove(affect);
+		affect.delete();
+
 		Etat.ajouterAction(new Suppression(affect));
 	}
 	

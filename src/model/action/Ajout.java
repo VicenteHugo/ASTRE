@@ -3,7 +3,6 @@ package model.action;
 import java.util.ArrayList;
 import java.util.List;
 
-import controleur.Controleur;
 import model.Affectations;
 import model.CategorieHeures;
 import model.CategorieIntervenant;
