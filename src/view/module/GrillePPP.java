@@ -1,6 +1,5 @@
 package view.module;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -23,7 +22,8 @@ public class GrillePPP extends AbstractTableModel {
 		int lig = 0;
 
 		for (Affectations a : listAffectations) {
-			
+			a.getIntervenant().setHeures(mod.getSemestres(), a.getHeureEqtd() );
+
 			this.tabDonnees[lig][0] = a.getIntervenant().getNomIntervenant();
 			this.tabDonnees[lig][1] = a.getCategorieHeures().getlibCatHeur();
 			this.tabDonnees[lig][2] = a.getNbGroupe();

@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import model.Affectations;
 import model.CategorieHeures;
+import model.Etat;
 import model.Semestres;
 
 public abstract class Module implements Comparable<Module> {
@@ -149,7 +150,7 @@ public abstract class Module implements Comparable<Module> {
 			heure += info.get(1) * info.get(2) * catH.getcoefCatHeur();
 		}
 
-		float coef = Controleur.getControleur().getCategorieHeure("HP").getcoefCatHeur();
+		float coef = Etat.getCatHeure("HP").getcoefCatHeur();
 
 		return (int) (heure + this.heurePonctuel * coef);
 	}

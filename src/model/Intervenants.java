@@ -91,17 +91,24 @@ public class Intervenants{
 	}
 
 	public int getSommeSemPaire() {
-		return (int) ((listeHeuresSemestre.get(1) + listeHeuresSemestre.get(3) + listeHeuresSemestre.get(5))
-				* this.coefficient);
+		for (int i = 1; i < this.listeHeuresSemestre.size(); i+=2)
+			this.totauxSemestrePaire += this.listeHeuresSemestre.get(i);
+		
+		return (int) (this.totauxSemestrePaire * this.coefficient);
 	}
 
 	public int getSommeSemImpaire() {
-		return (int) ((listeHeuresSemestre.get(0) + listeHeuresSemestre.get(2) + listeHeuresSemestre.get(4))
-				* this.coefficient);
+		for (int i = 0; i < this.listeHeuresSemestre.size(); i+=2)
+			this.totauxSemestreImpaires += this.listeHeuresSemestre.get(i);
+		
+		return (int) (this.totauxSemestreImpaires * this.coefficient);
 	}
 
 	public int getSommeSem() {
-		return this.getSommeSemPaire() + this.getSommeSemImpaire();
+		this.getSommeSemImpaire();
+		this.getSommeSemPaire();
+
+		return this.totauxSemestreImpaires + this.totauxSemestrePaire;
 	}
 
 	public List<Affectations> getLstAffectations() {
@@ -111,6 +118,10 @@ public class Intervenants{
 	/*-------------------------------------------------------------*/
 	/* SET-TEURS */
 	/*-------------------------------------------------------------*/
+
+	public void setHeures(Semestres semestres, int heures) {
+		this.listeHeuresSemestre.add(heures);
+	}
 
 	public void setCategorieIntervenant(CategorieIntervenant categorieIntervenant) {
 		this.categorieIntervenant = categorieIntervenant;

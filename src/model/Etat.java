@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Generer.Generation;
 import model.action.Action;
 import model.modules.Module;
 import model.modules.Ressource;
@@ -127,7 +128,7 @@ public class Etat {
 		try {
 
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieHeures"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM CategorieHeures"+ Etat.nom + " ORDER BY libCatHeur");
 
 			while (res.next())
 				Etat.lstCategorieHeures
@@ -147,7 +148,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM CategorieIntervenants"+ Etat.nom + " ORDER BY codeCatInt");
 
 			while (res.next()) {
 				String code = res.getString("codeCatInt");
@@ -173,7 +174,7 @@ public class Etat {
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Semestres"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM Semestres"+ Etat.nom + " ORDER BY numSem");
 
 			while (res.next()) {
 
@@ -276,6 +277,8 @@ public class Etat {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+
 	}
 
 
@@ -283,12 +286,12 @@ public class Etat {
 
 	//Affectations
 	public static void genererAffectations() {
-
+		
 		Etat.lstAffectations = new ArrayList<>();
 
 		try {
 			Statement st = connec.createStatement();
-			ResultSet res = st.executeQuery("SELECT * FROM Affectation"+ Etat.nom);
+			ResultSet res = st.executeQuery("SELECT * FROM Affectation"+ Etat.nom + " ORDER BY libCatHeur, nomInt, prenomInt");
 
 			while (res.next()) {
 
@@ -674,6 +677,14 @@ public class Etat {
 	/*-------------------------------------------------*/
 	/*               GENERATION FICHIER                */
 	/*-------------------------------------------------*/
+
+	public static void genererHTMLIntervenants(){
+		new Generation(lstIntervenants);
+	}
+
+	public static void genererHTMLModules(){
+		new Generation(lstModule);
+	}
 
 	// JAI PAS ACCES A LA COMMANDE DONC MODE BRUTAL
 	public static void genererCSV() { 
