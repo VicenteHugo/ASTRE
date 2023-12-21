@@ -32,11 +32,21 @@ div{
     font-family: 'Courier New', Courier, monospace;
 }
 
+.premiereLigne{
+    display: flex;  
+    flex-wrap: wrap;
+    gap: 50px;
+    padding: 20px;
+}
+.gridRessource{
+    display: grid;
+}
+
 /**
  * titre de la partie
 */
 h2 {
-    font-size: 35px;
+    font-size: 25px;
     color: #0097B2;
 }
 
@@ -73,6 +83,8 @@ li::before {
     font-size: 1.2em;
     margin-right: 5px;
 }
+
+
 
 /**
  * information générer dans le li 
