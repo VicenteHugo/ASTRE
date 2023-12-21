@@ -750,7 +750,7 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		if (e.getSource() == this.btnSupprimer) this.supprimer();
 		if (e.getSource() == this.btnAjouter  ) this.ajouter();
 
-
+		this.focusLost(null);
 	}
 
 

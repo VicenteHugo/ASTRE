@@ -271,6 +271,8 @@ public class Controleur {
 
 	public void supprimerAffectation(Affectations affect){
 		Etat.getAffectations().remove(affect);
+		affect.delete();
+
 		Etat.ajouterAction(new Suppression(affect));
 	}
 	
