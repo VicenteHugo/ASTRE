@@ -60,9 +60,15 @@ public class Generation {
 			pw.println ( "						<li>Nom&nbsp;&nbsp;&nbsp;&nbsp;: "+intervenant.getNomIntervenant()+"</li>");
 			pw.println ( "						<li>Prenom : "+intervenant.getPrenomIntervenant()+"</li>");
 			pw.println ( "						<br>");
+<<<<<<< HEAD
 			pw.println ( "						<li>Heure Maximum&nbsp;&nbsp;: "+intervenant.getMaxHeures()+"</li>");
 			pw.println ( "						<li>Heure Minimum&nbsp;&nbsp;: "+intervenant.getServices()+"</li>");
 			pw.println ( "						<li>Heures Prévues : "+3+"</li>");
+=======
+			pw.println ( "						<li>Heure Maximum : "+intervenant.getMaxHeures()+"</li>");
+			pw.println ( "						<li>Heure Minimum : "+intervenant.getServices()+"</li>");
+			pw.println ( "						<li>Heures Prévues : "+intervenant.getSommeSem()+"</li>");
+>>>>>>> c0b90133ee6745bed6385a687db345271589c65f
 			pw.println ( "					</ul>");
 			pw.println ( "				</div>");
 			pw.println ( "			</div>");
