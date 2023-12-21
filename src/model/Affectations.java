@@ -34,6 +34,7 @@ public class Affectations {
 		this.nbSemaine = nbSemaine;
 		this.commentaire = commentaire;
 		this.nbGroupe = nbGroupe;
+		this.nbHeure = nbSemaine * nbGroupe;
 
 
 		mode.addAffectations(this);
