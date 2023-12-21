@@ -117,7 +117,7 @@ public class Generation {
 			pw.println ( "			<div class=\"barreBleue\">");
 			pw.println ( "			<ul>");
 			pw.println ( "					<li>Module 			   : "+module.getCode()+ " " + module.getLibLong()+ "</li>");
-			pw.println ( "					<li>Total Heure : "/*+module.getHeureTotal()*/+"</li>");
+			pw.println ( "					<li>Total Heure : "+module.getHeureTotal()+"H</li>");
 			pw.println ( "					<li>Nombre Intervenants: "+module.getLstAffectations().size()+"</li>");
 			pw.println ( "				<br>");
 			pw.println ( "			</ul>");
@@ -285,7 +285,7 @@ public class Generation {
 		//R
 		int code = 0;
 		for (Affectations a : listeNonTriee) {
-			code = parseInt();
+			//code = parseInt();
 		}
 		//S		
 		for (Affectations a : listeNonTriee) {
