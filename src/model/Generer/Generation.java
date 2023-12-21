@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.HashSet;
 import java.util.Set;
 
+import controleur.Controleur;
 import model.Affectations;
 import model.CategorieHeures;
 import model.CategorieIntervenant;
@@ -81,7 +82,7 @@ public class Generation {
 		this.haut +="	<body>\n" ;
 		this.haut +="		<header>\n" ;
 		this.haut +="			<img id=\"logoTitre\" src=\"../lib/logoAstre-nobg.png\" alt=\"LogoAstre\">\n" ;
-		this.haut +="			<h1>ASTRE- "+ module.getCode() +" "+ module.getLibCourt() +" - "+ module.getSemestres()+" - *(Année)*</h1>\n";
+		this.haut +="			<h1>ASTRE- "+ module.getCode() +" "+ module.getLibCourt() +" - Semestre "+ module.getSemestres().getNumSem()+"</h1>\n";
 		this.haut +="			<hr>\n" ;
 		this.haut +="		</header>";
 		try
@@ -90,24 +91,21 @@ public class Generation {
 
 			pw.print (this.haut);
 			pw.println ( "		<div>");
-			pw.println ( "			<h2>Heures</h2>");
+			pw.println ( "			<h2>Année Total</h2>");
 			pw.println ( "			<ul>");
-			pw.println ( "					<li>Code : "+module.getCode()+"</li>");
-			pw.println ( "					<li>Libellé : "+module.getLibLong()+"</li>");
+			pw.println ( "					<li>Module 			   : "+module.getCode()+ "" + module.getLibLong()+ "</li>");
+			//pw.println ( "					<li>Total heure: "+module.getHeureTotal()+"</li>");
+			pw.println ( "					<li>Nombre Intervenants: "+module.getLstAffectations().size()+"</li>");
 			pw.println ( "				<br>");
-			pw.println ( "				<li>Heures Pn : "+module.getHeurePn()+"</li>");
-			pw.println ( "				<li>Heures Ponctuel : "+module.getHeurePonctuel()+"</li>");
-			pw.println ( "				<li>Heures Prévues : "+module.getHeureAffecte()+"</li>");
-			pw.println ( "				<li>Heures Total : "+module.getHeureTotal()+"</li>");
 			pw.println ( "			</ul>");
 			pw.println ( "		</div>");
 			pw.println ( "		<div>");
 			pw.println ( "			<h2>Intervenants</h2>");
 			pw.println ( "			<ul>");
 			for (Affectations affec : module.getLstAffectations()) {
-				if (!printedItems.contains(affec.getIntervenant().getNomIntervenant())) {
-					pw.println ( "					<li>"+ affec.getIntervenant().getNomIntervenant()+" "+affec.getIntervenant().getNomIntervenant()+"</li>");
-					printedItems.add(affec.getIntervenant().getNomIntervenant());
+				if (!printedItems.contains(affec.getIntervenant().getNomIntervenant() + "" + affec.getIntervenant().getPrenomIntervenant())) {
+					pw.println ( "					<li>"+ affec.getIntervenant().getNomIntervenant()+" "+affec.getIntervenant().getPrenomIntervenant()+ " / Nombre d'heure : "+ affec.getIntervenant().getServices() +"H</li>");
+					printedItems.add(affec.getIntervenant().getNomIntervenant() + "" + affec.getIntervenant().getPrenomIntervenant());
 				}
 			}
 			pw.println ( "			</ul>");
@@ -217,19 +215,25 @@ public class Generation {
 		CategorieHeures catTD      = new CategorieHeures("TD", 1);
 		CategorieHeures catTP      = new CategorieHeures("TD", 1);
 		Intervenants    tBoucher = new Intervenants(catV,"Boucher" , "Teddy", 60 , 70 , 5);
+		Intervenants    tBoucher1 = new Intervenants(catV,"Boucher" , "Henry", 30 , 70 , 5);
+		Intervenants    tBoucher2 = new Intervenants(catV,"Boucher" , "Ciril", 15 , 70 , 5);
+
 		Semestres semestre1 = new Semestres(1, 3, 3, 80, 14);
 
 		Ressource ressource1 = new Ressource(semestre1, "R1.01", "Developpement", "Dev", 40, false);
 		Ressource ressource2 = new Ressource(semestre1, "R2.01", "Developpement2", "Dev2", 40, false);
 		Affectations a,b,c,d;
 		a = new Affectations(tBoucher, ressource1, catCM, 20, 4,null);
-		b = new Affectations(tBoucher, ressource1, catTD, 20, 4,null);
+		b = new Affectations(tBoucher1, ressource1, catTD, 20, 4,null);
+		c = new Affectations(tBoucher2, ressource1, catTD, 20, 4,null);
 		System.out.println("bobob");
 		System.out.println(tBoucher.getLstAffectations());
 		for (Affectations affec : tBoucher.getLstAffectations()) {
 			System.out.println("bob");
 			System.out.println(affec.getModule().getCode()+affec.getModule().getLibLong());
 		}
-		Generation g = new Generation(tBoucher);
+
+		// Generation g = new Generation(tBoucher);
+		Generation g2 = new Generation(ressource1);
 	}
 }
