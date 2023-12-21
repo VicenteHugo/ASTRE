@@ -39,10 +39,10 @@ div{
     padding: 20px;
 }
 .gridRessource{
-    border:1px, #0097B2;
+    border:1px solid #0097B2;
     display: grid;
     grid-auto-columns: 300px;
-    grid-auto-flow: column;
+    grid-auto-flow: auto;
 }
 
 /**
