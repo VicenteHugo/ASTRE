@@ -157,7 +157,7 @@ public class PanelAddSAEIntervenant extends JPanel {
 					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbHeure, this.txtCommentaire.getText());
 					Controleur.getControleur().ajouterAffectation(affectations);
 					this.frameM.dispose();
-					panel.tblGrilleDonnees.setModel(new GrilleSAE(this.mod));
+					this.panel.tblGrilleDonnees.setModel(new GrilleSAE(this.mod));
 					this.panel.focusLost(null);		
 				}
 			}	
@@ -276,8 +276,8 @@ public class PanelAddSAEIntervenant extends JPanel {
 					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbHeure, this.txtCommentaire.getText());
 					Controleur.getControleur().ajouterAffectation(affectations);
 					this.frameM.dispose();
-					panelBis.tblGrilleDonnees.setModel(new GrilleSAE(this.mod));
-					this.panel.focusLost(null);		
+					this.panelBis.tblGrilleDonnees.setModel(new GrilleSAE(this.mod));
+					this.panelBis.focusLost(null);		
 				}
 			}	
 		});
@@ -300,7 +300,7 @@ public class PanelAddSAEIntervenant extends JPanel {
 				this.boxCategorie.addItem(l.get(i).getlibCatHeur());
 			}
 		}
-		
+
 		ArrayList<Intervenants> lstInter = Controleur.getControleur().getIntervenants();
 		this.boxIntervenant = new JComboBox<String>();
 		for(int j= 0;  j < lstInter.size(); j++ ){
@@ -378,14 +378,39 @@ public class PanelAddSAEIntervenant extends JPanel {
 			} else {
 				String categerie = categ.getlibCatHeur();
 				int nbHeureTotal = calculNbGroupe(nbHeure, categ);
-				if(categerie.equals("SAE")){
-					if(nbHeure > Integer.parseInt(panelBis.txtHeureEtdREHPN.getText())   ||   nbHeureTotal > Integer.parseInt(panelBis.txtHeureEtdREHPN.getText())){
+				if(categerie.equals("CM")){
+					if(nbHeure > Integer.parseInt(panelPPP.txtHeureEtdCmPN.getText())   ||   nbHeureTotal > Integer.parseInt(panelPPP.txtHeureEtdCmPN.getText())){
 						JOptionPane.showMessageDialog(this, "Trop d'heure assigné par rapport aux heures " +  categerie +" attitrés");
 					}else{
 					isOk = true;
 					}
-				}else{
-					if( nbHeure > Integer.parseInt(panelBis.txtHeureEtdhTutPN.getText())   ||   nbHeureTotal > Integer.parseInt(panelBis.txtHeureEtdhTutPN.getText())){
+				}
+				if(categerie.equals("TD")){
+					if( nbHeure > Integer.parseInt(panelPPP.txtHeureEtdTdPN.getText())   ||   nbHeureTotal > Integer.parseInt(panelPPP.txtHeureEtdTdPN.getText())){
+						JOptionPane.showMessageDialog(this, "Trop d'heure assigné par rapport aux heures " +  categerie + " attitrés");
+					}else{
+						isOk = true;
+					}
+
+				}
+				if(categerie.equals("TP")){
+					if( nbHeure > Integer.parseInt(panelPPP.txtHeureEtdTpPN.getText())   ||   nbHeureTotal > Integer.parseInt(panelPPP.txtHeureEtdTpPN.getText())){
+						JOptionPane.showMessageDialog(this, "Trop d'heure assigné par rapport aux heures " +  categerie + " attitrés");
+					}else{
+						isOk = true;
+					}
+
+				}
+				if(categerie.equals("TUT")){
+					if( nbHeure > Integer.parseInt(panelPPP.txtHeureEtdTutPN.getText())   ||   nbHeureTotal > Integer.parseInt(panelPPP.txtHeureEtdTutPN.getText())){
+						JOptionPane.showMessageDialog(this, "Trop d'heure assigné par rapport aux heures " +  categerie + " attitrés");
+					}else{
+						isOk = true;
+					}
+
+				}
+				if(categerie.equals("HP")){
+					if( nbHeure > Integer.parseInt(panelPPP.txtEtdHpPromRep.getText())   ||   nbHeureTotal > Integer.parseInt(panelPPP.txtEtdHpPromRep.getText())){
 						JOptionPane.showMessageDialog(this, "Trop d'heure assigné par rapport aux heures " +  categerie + " attitrés");
 					}else{
 						isOk = true;
@@ -397,8 +422,8 @@ public class PanelAddSAEIntervenant extends JPanel {
 					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbHeure, this.txtCommentaire.getText());
 					Controleur.getControleur().ajouterAffectation(affectations);
 					this.frameM.dispose();
-					panelBis.tblGrilleDonnees.setModel(new GrilleSAE(this.mod));
-					this.panel.focusLost(null);		
+					this.panelPPP.tblGrilleDonnees.setModel(new GrilleSAE(this.mod));
+					this.panelPPP.focusLost(null);		
 				}
 			}	
 		});

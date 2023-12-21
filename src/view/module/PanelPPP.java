@@ -46,10 +46,10 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 	
 	//Heures PN
 
-	private JTextFieldNumber txtHeureEtdCmPN;
-	private JTextFieldNumber txtHeureEtdTdPN;
-	private JTextFieldNumber txtHeureEtdTpPN;
-	private JTextFieldNumber txtHeureEtdTutPN;
+	JTextFieldNumber txtHeureEtdCmPN;
+	JTextFieldNumber txtHeureEtdTdPN;
+	JTextFieldNumber txtHeureEtdTpPN;
+	JTextFieldNumber txtHeureEtdTutPN;
 	private JTextFieldNumber txtHeureEtdTotPN;
 
 
@@ -67,14 +67,14 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 	private JTextFieldNumber txtEtdTutPromRep;  
 	private JTextFieldNumber txtEtdTutAffectRep;
 
-	private JTextFieldNumber txtEtdHpPromRep;
+	JTextFieldNumber txtEtdHpPromRep;
 	private JTextFieldNumber txtEtdHpAffectRep;
 
 	private JTextFieldNumber txtEtdTotPromRep;
 	private JTextFieldNumber txtEtdTotAffectRep;
 
 	//Affectation 
-	private JTable tblGrilleDonnees;
+	JTable tblGrilleDonnees;
 	private JButtonStyle btnAjouter;
 	private JButtonStyle btnSupprimer;
 
