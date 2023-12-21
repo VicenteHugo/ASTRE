@@ -46,8 +46,8 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 	
 	//Heures PN
 
-	private JTextFieldNumber txtHeureEtdSaePN;
-	private JTextFieldNumber txtHeureEtdTutPN;
+	JTextFieldNumber txtHeureEtdSaePN;
+	JTextFieldNumber txtHeureEtdTutPN;
 	private JTextFieldNumber txtHeureEtdTotPN ;
 
 
@@ -61,7 +61,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 	private JTextFieldNumber txtEtdTutAffectRep;
 
 	//Affectation 
-	private JTable tblGrilleDonnees;
+	JTable tblGrilleDonnees;
 	private JButtonStyle btnAjouter;
 	private JButtonStyle btnSupprimer;
 
@@ -147,10 +147,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 
-	public void loadPage (Semestres semestres) {
-
-		//this.mod   = new Ressource(null, "", "", "", 0);
-		
+	public void loadPage (Semestres semestres) {		
         /*                         */
         /* CREATION DES COMPOSANTS */
         /*                         */
@@ -365,7 +362,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleSAE());
+		this.tblGrilleDonnees = new JTable(new GrilleSAE(this.mod));
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -633,7 +630,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 	private void ajouter () {
 		JFrame f = new JFrame();
-        // f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
+        f.add(new PanelAddSAEIntervenant(this,this.frame, f,this.mod));
         f.setTitle("Ajout d'une affectation");
 		f.pack();
 		f.setResizable(false);
@@ -653,7 +650,7 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleSAE()); 
+		this.tblGrilleDonnees.setModel(new GrilleSAE(this.mod)); 
 	}
 
 	private void showMessageDialog(String message) {
@@ -680,8 +677,6 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 		for (Affectations a : this.mod.getLstAffectations()) {
-
-			System.out.println(a.getCategorieHeures().getlibCatHeur());
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("SAE"))
 				saeAffect += a.getNbHeure() * coefSAE;

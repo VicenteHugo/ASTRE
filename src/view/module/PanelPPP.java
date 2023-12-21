@@ -46,10 +46,10 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 	
 	//Heures PN
 
-	private JTextFieldNumber txtHeureEtdCmPN;
-	private JTextFieldNumber txtHeureEtdTdPN;
-	private JTextFieldNumber txtHeureEtdTpPN;
-	private JTextFieldNumber txtHeureEtdTutPN;
+	JTextFieldNumber txtHeureEtdCmPN;
+	JTextFieldNumber txtHeureEtdTdPN;
+	JTextFieldNumber txtHeureEtdTpPN;
+	JTextFieldNumber txtHeureEtdTutPN;
 	private JTextFieldNumber txtHeureEtdTotPN;
 
 
@@ -67,14 +67,14 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 	private JTextFieldNumber txtEtdTutPromRep;  
 	private JTextFieldNumber txtEtdTutAffectRep;
 
-	private JTextFieldNumber txtEtdHpPromRep;
+	JTextFieldNumber txtEtdHpPromRep;
 	private JTextFieldNumber txtEtdHpAffectRep;
 
 	private JTextFieldNumber txtEtdTotPromRep;
 	private JTextFieldNumber txtEtdTotAffectRep;
 
 	//Affectation 
-	private JTable tblGrilleDonnees;
+	JTable tblGrilleDonnees;
 	private JButtonStyle btnAjouter;
 	private JButtonStyle btnSupprimer;
 
@@ -136,31 +136,38 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 		//SAE
 		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
 
+		float coefCM  = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
+		float coefTP  = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
+		float coefTD  = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
+		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
+		float coefHP  = Controleur.getControleur().getCategorieHeure("HP").getcoefCatHeur();
+
 		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("CM"));
 		if (lst != null) {
-			this.txtHeureEtdCmPN.setText(lst.get(0) + "");		
-			this.txtEtdCmPromRep.setText(lst.get(2) + "");		
+			this.txtHeureEtdCmPN.setText((int) (lst.get(0) * coefCM) + "");		
+			this.txtEtdCmPromRep.setText((int) (lst.get(2) * coefCM) + "");		
 		}
 
 		lst = map.get(Controleur.getControleur().getCategorieHeure("TD"));
 		if (lst != null) {
-			this.txtHeureEtdTdPN.setText(lst.get(0) + "");		
-			this.txtEtdTdPromRep.setText(lst.get(2) + "");		
+			this.txtHeureEtdTdPN.setText((int) (lst.get(0) * coefTD) + "");		
+			this.txtEtdTdPromRep.setText((int) (lst.get(2) * coefTD) + "");		
 		}
 
 		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
 		if (lst != null) {
-			this.txtHeureEtdTpPN.setText(lst.get(0) + "");		
-			this.txtEtdTpPromRep.setText(lst.get(2) + "");		
+			this.txtHeureEtdTpPN.setText((int) (lst.get(0) * coefTP) + "");		
+			this.txtEtdTpPromRep.setText((int) (lst.get(2) * coefTP) + "");		
 		}
 		
 		lst = map.get(Controleur.getControleur().getCategorieHeure("TUT"));
 		if (lst != null) {
-			this.txtHeureEtdTutPN.setText(lst.get(0) + "");		
-			this.txtEtdTutPromRep.setText(lst.get(2) + "");		
+			this.txtHeureEtdTutPN.setText((int) (lst.get(0) * coefTUT) + "");		
+			this.txtEtdTutPromRep.setText((int) (lst.get(2) * coefTUT) + "");		
 		}
 
 		this.cbValide.setSelected(this.mod.isValide());
+		this.txtEtdHpPromRep.setText((int) (this.mod.getHeurePonctuel() * coefHP) + ""); 
 
 		//Juste pour faire les calculs
 		this.focusLost(null);
@@ -431,7 +438,7 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleSAE());
+		this.tblGrilleDonnees = new JTable(new GrillePPP(this.mod));
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -665,19 +672,25 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
 		
+		float coefCM  = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
+		float coefTP  = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
+		float coefTD  = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
+		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
+		float coefHP  = Controleur.getControleur().getCategorieHeure("HP").getcoefCatHeur();
 
 		//                                                   PN                                             SEMAINE                                      NB HEURE
-		List<Integer> lstTUT = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTutPN.getText()), 1, Integer.parseInt(this.txtEtdTutPromRep.getText())));
-		List<Integer> lstCM  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdCmPN.getText()) , 1, Integer.parseInt(this.txtEtdCmPromRep.getText())) );
-		List<Integer> lstTP  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTpPN.getText()) , 1, Integer.parseInt(this.txtEtdTpPromRep.getText())) );
-		List<Integer> lstTD  = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdTdPN.getText()) , 1, Integer.parseInt(this.txtEtdTdPromRep.getText())) );
+		List<Integer> lstTUT = new ArrayList<Integer>(List.of((int) (Math.ceil(Integer.parseInt(this.txtHeureEtdTutPN.getText()) / coefTUT)), 1, (int) (Math.ceil(Integer.parseInt(this.txtEtdTutPromRep.getText())) / coefTUT)));
+		List<Integer> lstCM  = new ArrayList<Integer>(List.of((int) (Math.ceil(Integer.parseInt(this.txtHeureEtdCmPN .getText()) / coefCM )), 1, (int) (Math.ceil(Integer.parseInt(this.txtEtdCmPromRep .getText())) / coefCM )));
+		List<Integer> lstTP  = new ArrayList<Integer>(List.of((int) (Math.ceil(Integer.parseInt(this.txtHeureEtdTpPN .getText()) / coefTP )), 1, (int) (Math.ceil(Integer.parseInt(this.txtEtdTpPromRep .getText())) / coefTP )));
+		List<Integer> lstTD  = new ArrayList<Integer>(List.of((int) (Math.ceil(Integer.parseInt(this.txtHeureEtdTdPN .getText()) / coefTD )), 1, (int) (Math.ceil(Integer.parseInt(this.txtEtdTdPromRep .getText())) / coefTD )));
 
 		map.put(Controleur.getControleur().getCategorieHeure("TUT"), lstTUT);
 		map.put(Controleur.getControleur().getCategorieHeure("CM" ), lstCM );
 		map.put(Controleur.getControleur().getCategorieHeure("TP" ), lstTP );
 		map.put(Controleur.getControleur().getCategorieHeure("TD" ), lstTD );
 
-		System.out.println(map);
+		Math.ceil(coefHP);
+		int hp = (int) (Math.ceil(Integer.parseInt(this.txtEtdHpPromRep.getText()) / coefHP));
 
 		if (this.estNouveau) {
 			this.mod.setCode         (cod);
@@ -685,7 +698,7 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 			this.mod.setLibCourt     (liC);
 			this.mod.setValide       (val);
 			this.mod.initList        (map);
-			this.mod.setHeurePonctuel(0 );
+			this.mod.setHeurePonctuel(hp );
 
 			if (Controleur.getControleur().ajouterModule(this.mod)) {
 				Controleur.getControleur().enregistrer();
@@ -695,7 +708,7 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 		}else{
-			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, 0, val, map)) {
+			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, hp, val, map)) {
 				Controleur.getControleur().enregistrer();
 				this.quitter();
 				return;
@@ -708,7 +721,7 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 	private void ajouter () {
 		JFrame f = new JFrame();
-        // f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
+        f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
         f.setTitle("Ajout d'une affectation");
 		f.pack();
 		f.setResizable(false);
@@ -728,7 +741,7 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleSAE()); 
+		this.tblGrilleDonnees.setModel(new GrillePPP(this.mod)); 
 	}
 
 	private void showMessageDialog(String message) {
@@ -747,7 +760,8 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 		              Integer.parseInt(this.txtHeureEtdTpPN .getText()) + Integer.parseInt(this.txtHeureEtdTdPN.getText());
 
 		int totEqtd = Integer.parseInt(this.txtEtdTutPromRep.getText()) + Integer.parseInt(this.txtEtdCmPromRep.getText()) + 
-		              Integer.parseInt(this.txtEtdTdPromRep .getText()) + Integer.parseInt(this.txtEtdTpPromRep.getText());
+		              Integer.parseInt(this.txtEtdTdPromRep .getText()) + Integer.parseInt(this.txtEtdTpPromRep.getText()) +
+		              Integer.parseInt(this.txtEtdHpPromRep .getText());
 
 		this.txtHeureEtdTotPN.setText(totPN   + "");
 		this.txtEtdTotPromRep.setText(totEqtd + "");
@@ -755,39 +769,39 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 		// Affecté 
-		int cmAffect  = 0;
-		int tpAffect  = 0;
-		int tdAffect  = 0;
-		int tutAffect = 0;
-		int hpAffect  = 0;
+		float cmAffect  = 0;
+		float tpAffect  = 0;
+		float tdAffect  = 0;
+		float tutAffect = 0;
+		float hpAffect  = 0;
 
 
 		for (Affectations a : this.mod.getLstAffectations()) {
 
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("CM"))
-				cmAffect += a.getNbHeure() * coefCM;
+				cmAffect += a.getNbGroupe() * coefCM;
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TP"))
-				tpAffect += a.getNbHeure() * coefTP;
+				tpAffect += a.getNbGroupe() * coefTP;
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TD"))
-				tdAffect += a.getNbHeure() * coefTD;
+				tdAffect += a.getNbGroupe() * coefTD;
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
-				tutAffect += a.getNbHeure() * coefTUT;
+				tutAffect += a.getNbGroupe() * coefTUT;
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("HP"))
-				hpAffect += a.getNbHeure() * coefTUT;
+				hpAffect += a.getNbGroupe() * coefTUT;
 		}
 
-		this.txtEtdTutAffectRep.setText(tutAffect + "");
-		this.txtEtdCmAffectRep .setText(cmAffect  + "");
-		this.txtEtdTdAffectRep .setText(tdAffect  + "");
-		this.txtEtdTpAffectRep .setText(tpAffect  + "");
-		this.txtEtdHpAffectRep .setText(hpAffect  + "");
+		this.txtEtdTutAffectRep.setText((int)(tutAffect) + "");
+		this.txtEtdCmAffectRep .setText((int)(cmAffect ) + "");
+		this.txtEtdTdAffectRep .setText((int)(tdAffect ) + "");
+		this.txtEtdTpAffectRep .setText((int)(tpAffect ) + "");
+		this.txtEtdHpAffectRep .setText((int)(hpAffect ) + "");
 
-		this.txtEtdTotAffectRep.setText(tutAffect + cmAffect + tdAffect + tpAffect + hpAffect + "");
+		this.txtEtdTotAffectRep.setText((int)(tutAffect + cmAffect + tdAffect + tpAffect + hpAffect) + "");
 	}
 
 

@@ -34,7 +34,7 @@
 -- Création des tables ayant un niveau de liaison 1
 CREATE TABLE IF NOT EXISTS CategorieIntervenantsETAT
 (
-    codeCatInt     VARCHAR(255) PRIMARY KEY, 
+    codeCatInt     VARCHAR(255) PRIMARY KEY , 
     libCatInt      VARCHAR(255), 
     coefCatInt     FLOAT DEFAULT 1 CHECK (coefCatInt >= 0) ,
     heureMinCatInt INTEGER NOT NULL CHECK (heureMinCatInt >= 0),
@@ -117,8 +117,7 @@ VALUES      ('CM'   , 1.5),
             ('TD'   , 1.0),
             ('TP'   , 1.0),
             ('TUT'  , 1.0),
-            ('RHE'  , 1.0),
+            ('REH'  , 1.0),
             ('SAE'  , 1.0),
-            ('HP'   , 1.0),
-            ('Autre', 1.0)
+            ('HP'   , 1.0)
 ON CONFLICT (libCatHeur) DO NOTHING;

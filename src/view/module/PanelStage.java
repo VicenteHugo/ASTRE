@@ -45,8 +45,8 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	
 	//Heures PN
 
-	private JTextFieldNumber txtHeureEtdREHPN;
-	private JTextFieldNumber txtHeureEtdhTutPN;
+	JTextFieldNumber txtHeureEtdREHPN;
+	JTextFieldNumber txtHeureEtdhTutPN;
 	private JTextFieldNumber txtHeureEtdSPN ;
 
 
@@ -61,7 +61,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	private JTextFieldNumber txtTotEtdAffect;
 
 	//Affectation 
-	private JTable tblGrilleDonnees;
+	JTable tblGrilleDonnees;
 	private JButtonStyle btnAjouter;
 	private JButtonStyle btnSupprimer;
 
@@ -367,7 +367,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleStage());
+		this.tblGrilleDonnees = new JTable(new GrilleStage(this.mod));
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -637,7 +637,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 	private void ajouter () {
 		JFrame f = new JFrame();
-        // f.add(new PanelAddS(this,this.frame, f,mod));
+        f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
         f.setTitle("Ajout d'une affectation");
 		f.pack();
 		f.setResizable(false);
@@ -658,7 +658,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleStage()); 
+		this.tblGrilleDonnees.setModel(new GrilleStage(this.mod)); 
 	}
 
 
@@ -683,8 +683,6 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 
 		for (Affectations a : this.mod.getLstAffectations()) {
-
-			System.out.println(a.getCategorieHeures().getlibCatHeur());
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("REH"))
 				rehAffect += a.getNbHeure() * coefREH;
