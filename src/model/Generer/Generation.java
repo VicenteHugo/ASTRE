@@ -52,7 +52,7 @@ public class Generation {
 			pw.println ( "					<br>");
 			pw.println ( "					<li>Heure Maximum : "+intervenant.getMaxHeures()+"</li>");
 			pw.println ( "					<li>Heure Minimum : "+intervenant.getServices()+"</li>");
-			pw.println ( "					<li>Heures Prévues : "+intervenant+"</li>");
+			pw.println ( "					<li>Heures Prévues : "+3+"</li>");
 			pw.println ( "				</ul>");
 			pw.println ( "			</div>");
 			pw.println ( "			<div>");
@@ -146,8 +146,8 @@ public class Generation {
 					cpt = 1;
 					premPassage = true;
 					codeActuel= affec.getModule().getCode();
-					divRess+="			<div>\n";
-					divRess+="				<h2>"+ affec.getModule().getCode()+" "+affec.getModule().getLibLong()+"</h2>\n";
+					divRess+="			<div class=\"info\">\n";
+					divRess+="				<h2 class=\"module\">"+ affec.getModule().getCode()+" "+affec.getModule().getLibLong()+"</h2>\n";
 					divRess+="				<ul>\n";
 				}
 
