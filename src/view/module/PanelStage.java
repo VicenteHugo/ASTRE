@@ -684,8 +684,6 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 		for (Affectations a : this.mod.getLstAffectations()) {
 
-			System.out.println(a.getCategorieHeures().getlibCatHeur());
-
 			if (a.getCategorieHeures().getlibCatHeur().equals("REH"))
 				rehAffect += a.getNbHeure() * coefREH;
 

@@ -678,8 +678,6 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 		for (Affectations a : this.mod.getLstAffectations()) {
 
-			System.out.println(a.getCategorieHeures().getlibCatHeur());
-
 			if (a.getCategorieHeures().getlibCatHeur().equals("SAE"))
 				saeAffect += a.getNbHeure() * coefSAE;
 

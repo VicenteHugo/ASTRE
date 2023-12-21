@@ -692,8 +692,6 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 		Math.ceil(coefHP);
 		int hp = (int) (Math.ceil(Integer.parseInt(this.txtEtdHpPromRep.getText()) / coefHP));
 
-		System.out.println(map);
-
 		if (this.estNouveau) {
 			this.mod.setCode         (cod);
 			this.mod.setLibLong      (liL);

@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import controleur.Controleur;
 import model.Semestres;
@@ -61,6 +62,9 @@ public class PanelSemestre extends JPanel {
         this.add(panel, BorderLayout.NORTH);
  
         this.grilleSemestre = new JTable(new GrilleSemestre(semestre));
+        DefaultTableCellRenderer centre = new DefaultTableCellRenderer();
+        centre.setHorizontalAlignment(JLabel.RIGHT);
+        this.grilleSemestre.getColumnModel().getColumn(2).setCellRenderer(centre);
         this.grilleSemestre.setFillsViewportHeight(true);
         this.grilleSemestre.setShowVerticalLines(false);
 
