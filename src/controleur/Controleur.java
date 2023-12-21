@@ -400,6 +400,10 @@ public class Controleur {
 	}
 
 	public void genererCSV () { Etat.genererCSV();}
+
+	public void genererHTMLIntervenants() {Etat.genererHTMLIntervenants();}
+
+	public void genererHTMLModules() {Etat.genererHTMLModules();}
 	
 
 	/*-------------------------------------------------------------*/

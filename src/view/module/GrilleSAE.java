@@ -18,6 +18,8 @@ public class GrilleSAE extends AbstractTableModel {
 		this.tabDonnees = new Object[listAffectations.size()][5];
 		for (int lig = 0; lig < listAffectations.size(); lig++) {
 			Affectations affectations = listAffectations.get(lig);	
+			affectations.getIntervenant().setHeures(mod.getSemestres(), affectations.getHeureEqtd() );
+
 			this.tabDonnees[lig][0] = affectations.getIntervenant().getNomIntervenant();
 			this.tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
 			this.tabDonnees[lig][2] = affectations.getNbGroupe();
