@@ -90,7 +90,7 @@ public class PanelPrevi extends JPanel {
         
         
         this.btnCreer      .addActionListener((e)->this.creation(this.cmbChoixCreer.getSelectedIndex()) );
-        this.btnSauvegarder.addActionListener((e)->{ this.sauvegarde(); });
+        this.btnSauvegarder.addActionListener((e)->{ this.sauvegarde(); this.frame.changePanel(new PanelAccueil(this.frame));});
         this.btnQuitter    .addActionListener((e)->{ Controleur.getControleur().annuler()    ;this.frame.changePanel(new PanelAccueil(this.frame));} );
         this.btnModifier   .addActionListener((e)->{ this.modifier();});
         this.cmbChoixCreer .addActionListener((e)->this.btnCreer.setText(this.cmbChoixCreer.getSelectedItem().toString()));
@@ -112,6 +112,28 @@ public class PanelPrevi extends JPanel {
 
     private void modifier () {
 
+        boolean euModif = false;
+        //Si des donner on était modifier on demander à enregistrer ou non 
+        for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
+            PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+
+            if (!panelSemestre.getSemNew().equals(panelSemestre.getSemOld()))
+                euModif = true;
+        }
+
+        //On demande d'enregistrer ou non
+        if (euModif) {
+            int reply = JOptionPane.showConfirmDialog(this, "Des semestres ont été modifiés. Voulez vous sauvegarder les modifications ?", "Modif", JOptionPane.YES_NO_OPTION);
+
+            if (reply == JOptionPane.YES_OPTION) {
+                this.sauvegarde();
+            } else {
+                Controleur.getControleur().annuler();
+            }
+        }
+
+
+
         int indice = 0;
         Module m = null;
         for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
@@ -123,10 +145,12 @@ public class PanelPrevi extends JPanel {
                 m =  Controleur.getControleur().getModule(code);
             }
         }
+
         if ( indice < 0) {
-			this.showMessageDialog("Selectionner un module");
+			JOptionPane.showMessageDialog(this, "Selectionnez un module", "Erreur", JOptionPane.ERROR_MESSAGE);
 			return;
         }
+
 
         if (m instanceof PPP)
             this.frame.changePanel(new PanelPPP(this.frame, m));
@@ -149,10 +173,11 @@ public class PanelPrevi extends JPanel {
             val-= i;
             String code = (String) table.getValueAt(val, 0);
             m = Controleur.getControleur().getModule(code);
+
             if (!Controleur.getControleur().supprimerModule(m))
-                this.showMessageDialog("Ce module à encore des affectations");
+                JOptionPane.showMessageDialog(this, "Ce module à encore des affectations", "Erreur", JOptionPane.ERROR_MESSAGE);
+
             panelSemestre.majGrille(ongletSemestres.getSelectedIndex() + 1);
-            
         }
     }
 
@@ -165,13 +190,6 @@ public class PanelPrevi extends JPanel {
             Controleur.getControleur().modifSemestres(sem);
         }
         
-
-
         Controleur.getControleur().enregistrer();
-        this.frame.changePanel(new PanelAccueil(this.frame));
     }
-
-	private void showMessageDialog(String message) {
-		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
-	}
 }
