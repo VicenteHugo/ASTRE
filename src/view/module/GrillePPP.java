@@ -12,7 +12,7 @@ public class GrillePPP extends AbstractTableModel {
 	private String[] tabEntetes;
 	private Object[][] tabDonnees;
 
-	public GrillePPP() {
+	public GrillePPP(Module mod) {
 		List<Affectations> listAffectations = new ArrayList<>();
 		this.tabDonnees = new Object[listAffectations.size()][5];
 
