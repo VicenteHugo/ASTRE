@@ -122,10 +122,7 @@ public class Affectations {
 	public int getHeureEqtd() {
 		int nbH = this.module.getHeures().get(this.categorieHeures).get(2);
 
-		int heure = (int) Math.ceil(this.nbHeure +  nbH * this.nbSemaine * this.categorieHeures.getcoefCatHeur());
-
-		if(this.categorieHeures.getlibCatHeur().equals("TD")) heure = heure * this.module.getSemestres().getNbGpTdSem();
-		if(this.categorieHeures.getlibCatHeur().equals("TP")) heure = heure * this.module.getSemestres().getNbGpTpSem();
+		int heure = (int) Math.ceil((this.nbHeure +  nbH * this.nbGroupe * this.nbSemaine) * this.categorieHeures.getcoefCatHeur());
 
 		return heure;
 	}
