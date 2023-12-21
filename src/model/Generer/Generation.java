@@ -100,8 +100,8 @@ public class Generation {
 			pw.println ( "		<div>");
 			pw.println ( "			<h2>Année Total</h2>");
 			pw.println ( "			<ul>");
-			pw.println ( "					<li>Module 			   : "+module.getCode()+ "" + module.getLibLong()+ "</li>");
-			//pw.println ( "					<li>Total heure: "+module.getHeureTotal()+"</li>");
+			pw.println ( "					<li>Module 			   : "+module.getCode()+ " " + module.getLibLong()+ "</li>");
+			//pw.println ( "					<li>Total Heure : "+module.getHeureTotal()+"</li>");
 			pw.println ( "					<li>Nombre Intervenants: "+module.getLstAffectations().size()+"</li>");
 			pw.println ( "				<br>");
 			pw.println ( "			</ul>");
@@ -227,33 +227,11 @@ public class Generation {
 	}
 
 	public static void main(String[] args) {
-		/*CategorieIntervenant catP    =new CategorieIntervenant("Prof"  ,"Professeurs"             ,2,600,1024);
-		CategorieIntervenant catPc   =new CategorieIntervenant("Cher"  ,"Professeurs-Chercheur"   ,4,300,600 );
-		CategorieIntervenant catV    =new CategorieIntervenant("Vac"   ,"Vacataire"               ,4,50 ,100 );
-		CategorieIntervenant catCont =new CategorieIntervenant("Cont"  ,"Contractuel"             ,4,30 ,80  );
-		CategorieIntervenant catA    =new CategorieIntervenant("A"     ,"Autre"                   ,4,1  ,20  );
-		
-		
-		CategorieHeures catCM      = new CategorieHeures("CM", 1);
-		CategorieHeures catTD      = new CategorieHeures("TD", 1);
-		CategorieHeures catTP      = new CategorieHeures("TP", 1);
-		Intervenants    tBoucher = new Intervenants(catV,"Boucher" , "Teddy", 60 , 70 , 5);
-		Intervenants    tBoucher1 = new Intervenants(catV,"Boucher" , "Henry", 30 , 70 , 5);
-		Intervenants    tBoucher2 = new Intervenants(catV,"Boucher" , "Ciril", 15 , 70 , 5);
+		Etat e = new Etat();
 
-		Semestres semestre1 = new Semestres(1, 3, 3, 80, 14);
-
-		Ressource ressource1 = new Ressource(semestre1, "R1.01", "Developpement", "Dev", 40, false);
-		Ressource ressource2 = new Ressource(semestre1, "R2.01", "Developpement2", "Dev2", 40, false);
-		Affectations a,b,c,d;
-		a = new Affectations(tBoucher, ressource1, catCM, 20, 4,null);
-		b = new Affectations(tBoucher, ressource1, catTD, 20, 4,null);
-		System.out.println("bobob");
-		System.out.println(tBoucher.getLstAffectations());
-		for (Affectations affec : tBoucher.getLstAffectations()) {
-			System.out.println("bob");
-			System.out.println(affec.getModule().getCode()+affec.getModule().getLibLong());
+		for(Affectations a : e.getAffectations()){
+			Generation g = new Generation(a.getModule());
 		}
-		Generation g = new Generation(tBoucher);
+
 	}
 }
