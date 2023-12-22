@@ -51,7 +51,7 @@ public class Controleur {
 		return Etat.getIntervenants();
 	}
 
-	public Intervenants getIntervenants(int i){
+	public Intervenants getIntervenants(int i) {
 		return Etat.getIntervenants(i);
 	}
 
@@ -94,7 +94,7 @@ public class Controleur {
 		return Etat.getAffectations();
 	}
 
-	public CategorieIntervenant getCategorieIntervenant(String nom){
+	public CategorieIntervenant getCategorieIntervenant(String nom) {
 		return Etat.getCatInt(nom);
 	}
 
@@ -228,7 +228,7 @@ public class Controleur {
 				|| Etat.getIntervenant(nomIntervenant, prenomIntervenant) == cOld) && i >= 0
 				&& i < Etat.getIntervenants().size()) {
 			// On remplace l'objet
-			Intervenants cNew = new Intervenants(categ, nomIntervenant, prenomIntervenant, services, mexHeure,coef);
+			Intervenants cNew = new Intervenants(categ, nomIntervenant, prenomIntervenant, services, mexHeure, coef);
 			Etat.getIntervenants().add(i, cNew);
 			Etat.getIntervenants().remove(cOld);
 
@@ -251,8 +251,9 @@ public class Controleur {
 			Etat.ajouterAction(new Suppression(inter));
 		}
 	}
-	
-	public boolean modifAffectation(int i, String nomIntervenant,String prenom, Module m,String type, int nbSem, int nbGp, String com) {
+
+	public boolean modifAffectation(int i, String nomIntervenant, String prenom, Module m, String type, int nbSem,
+			int nbGp, String com) {
 		Affectations aOld = Etat.getAffectations(i);
 		Intervenants intervenants = null;
 		CategorieHeures categ = null;
@@ -267,17 +268,17 @@ public class Controleur {
 				|| Etat.getAffectations(nomIntervenant) == aOld) && i >= 0
 				&& i < Etat.getIntervenants().size()) {
 			// On remplace l'objet
-			for(Intervenants inter : Etat.getIntervenants()){
-				if(inter.getNomIntervenant().equals(nomIntervenant) && inter.getPrenomIntervenant().equals(prenom)){
+			for (Intervenants inter : Etat.getIntervenants()) {
+				if (inter.getNomIntervenant().equals(nomIntervenant) && inter.getPrenomIntervenant().equals(prenom)) {
 					intervenants = inter;
 				}
 			}
-			for(CategorieHeures ch : Etat.getCategoriesHeures()) {
-				if(ch.getlibCatHeur().equals(type)){
+			for (CategorieHeures ch : Etat.getCategoriesHeures()) {
+				if (ch.getlibCatHeur().equals(type)) {
 					categ = ch;
 				}
 			}
-			Affectations aNew = new Affectations(intervenants, m, categ, nbSem, nbGp,com);
+			Affectations aNew = new Affectations(intervenants, m, categ, nbSem, nbGp, com);
 			Etat.getAffectations().add(i, aNew);
 			Etat.getAffectations().remove(aOld);
 
@@ -293,27 +294,27 @@ public class Controleur {
 		return Etat.getEtats();
 	}
 
-	public boolean nomEtatLibre (String nom) {
+	public boolean nomEtatLibre(String nom) {
 		for (String nomEtat : Etat.getEtats())
 			if (nomEtat.equals(nom))
 				return false;
-		
+
 		return true;
 	}
 
-	public void changerEtat (String nom) {
+	public void changerEtat(String nom) {
 		Etat.changerEtat(nom);
 	}
 
-	public boolean creerEtat (String nom) {
+	public boolean creerEtat(String nom) {
 		return Etat.creerEtat(nom);
 	}
 
-	public void dupliquerEtat (String etatDest,String etatDep) {
+	public void dupliquerEtat(String etatDest, String etatDep) {
 		Etat.dupliquerEtat(etatDest, etatDep);
 	}
 
-	public boolean suppEtat (String etat) {
+	public boolean suppEtat(String etat) {
 		return Etat.suppEtat(etat);
 	}
 
@@ -328,7 +329,7 @@ public class Controleur {
 
 		// System.out.println("Polices disponibles sur ce système :");
 		// for (String police : policesDisponibles) {
-		// 	System.out.println(police);
+		// System.out.println(police);
 		// }
 	}
 
