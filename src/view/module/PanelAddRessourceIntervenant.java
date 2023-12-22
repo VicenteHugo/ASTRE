@@ -6,9 +6,12 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
-import javax.swing.JButton;
+import view.JButtonStyle;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,55 +21,55 @@ import javax.swing.JTextField;
 import controleur.Controleur;
 import model.Affectations;
 import model.CategorieHeures;
-import model.CategorieIntervenant;
 import model.Intervenants;
-import model.modules.*;
 import model.modules.Module;
+import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 
 
-public class PanelAddRessourceIntervenant extends JPanel {
-	private JLabel lblErrCoef;
-	private JLabel lblErrHeurMax;
-	private JLabel lblErrHeurMin;
-	
-	private JTextField txtNomIntervenant;
-	private JTextField txtPrenomIntervenant;
-	private JComboBox boxCategorie;	
-	private JTextField txtNbSemaine;
-	private JTextField txtNbGroupe;
-    private JTextField txtTotal;
+public class PanelAddRessourceIntervenant extends JPanel{
+
+	//certains attribut ne sont pas instancié
+	private JComboBox<String> boxCategorie;
+	private JComboBox<String> boxIntervenant;
+	private JTextFieldNumber txtNbGroupe;
     private JTextField txtCommentaire;
 
-	private JButton btnValider;
-	private JButton btnAnnuler;
+	private JButtonStyle btnValider;
+	private JButtonStyle btnAnnuler;
+
+	private JLabel labelHeure;
 
 
-	private FrameAccueil frame;
 	private Frame frameM;
-	private PanelRessources panel;
-	private String code;
+	private Module mod;
 
-	public PanelAddRessourceIntervenant (PanelRessources panel,FrameAccueil frame, Frame frameM) {
-		this.panel = panel;
-		this.frame  = frame;
+	public PanelAddRessourceIntervenant (PanelRessources panel,FrameAccueil frame, Frame frameM,Module mod) {
 		this.frameM = frameM;
+		this.mod = mod;
 
 
 		//Création
 		ArrayList<CategorieHeures> l = Controleur.getControleur().getCategorieHeures();
-		this.boxCategorie = new JComboBox();
+		this.boxCategorie = new JComboBox<String>();
 		for(int i=0; i < l.size(); i++){
-			this.boxCategorie.addItem(l.get(i).getlibCatHeur());
+			if(l.get(i).getlibCatHeur().equals("TP") || l.get(i).getlibCatHeur().equals("TD") || l.get(i).getlibCatHeur().equals("CM") ||l.get(i).getlibCatHeur().equals("HP")){
+				this.boxCategorie.addItem(l.get(i).getlibCatHeur());
+			}
 		}
-		this.txtNomIntervenant    = new JTextField(10);
-		this.txtPrenomIntervenant = new JTextField(10);
-		this.txtNbSemaine         = new JTextField(3);
-		this.txtNbGroupe          = new JTextField(3);
-		this.txtCommentaire       = new JTextField(15);
+		ArrayList<Intervenants> lstInter = Controleur.getControleur().getIntervenants();
+		this.boxIntervenant = new JComboBox<String>();
+		for(int j= 0;  j < lstInter.size(); j++ ){
+			this.boxIntervenant.addItem(lstInter.get(j).getNomIntervenant() + " " + lstInter.get(j).getPrenomIntervenant());
+		} 
 
-		this.btnAnnuler = new JButton("Annuler");
-		this.btnValider = new JButton("Valider");
+		this.txtCommentaire       = new JTextField(15);
+		this.txtNbGroupe = new JTextFieldNumber(5);
+
+		this.labelHeure = new JLabel("Nombre de groupe : ");
+
+		this.btnAnnuler = new JButtonStyle("Annuler");
+		this.btnValider = new JButtonStyle("Valider");
 
 		//Layout
 		JPanel panelCentre = new JPanel();
@@ -83,17 +86,10 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		gbc.gridy = 0;
 		gbc.insets = new Insets(5, 10, 5, 10);
 		
-		panelCentre.add(new JLabel("Nom de l'intervenant : "), gbc);
+		panelCentre.add(new JLabel("Intervenant : "), gbc);
 		gbc.gridx++;
-		panelCentre.add(this.txtNomIntervenant, gbc);
+		panelCentre.add(this.boxIntervenant, gbc);
 
-		gbc.gridx = 0;
-		gbc.gridy++;
-		panelCentre.add(new JLabel("Prénom de l'intervenant : "), gbc);
-		gbc.gridx++;
-		panelCentre.add(this.txtPrenomIntervenant, gbc);
-
-		
 		gbc.gridx = 0;
 		gbc.gridy++;
 		panelCentre.add(new JLabel("Type : "), gbc);
@@ -102,13 +98,7 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		
 		gbc.gridx = 0;
 		gbc.gridy++;
-		panelCentre.add(new JLabel("Nombre de semaine : "), gbc);
-		gbc.gridx++;
-		panelCentre.add(this.txtNbSemaine, gbc);
-		
-		gbc.gridx = 0;
-		gbc.gridy++;
-		panelCentre.add(new JLabel("Nombre de groupe : "), gbc);
+		panelCentre.add(labelHeure, gbc);
 		gbc.gridx++;
 		panelCentre.add(this.txtNbGroupe, gbc);
 
@@ -127,47 +117,93 @@ public class PanelAddRessourceIntervenant extends JPanel {
 		this.add(panelCentre, BorderLayout.CENTER);
 		this.add(panelBas, BorderLayout.SOUTH);
 
+		this.boxCategorie.addActionListener(new ActionListener() {
+           	
+			@Override
+            public void actionPerformed(ActionEvent e) {
+                String categorieSelectionnee = (String) boxCategorie.getSelectedItem();
+                if (categorieSelectionnee.equals("HP")) {
+                    labelHeure.setText("Nombre d'heure : ");
+                }else{
+					labelHeure.setText("Nombre de groupe : ");
+				}
+            }
+        });
+
 		//Activation
 		this.btnValider.addActionListener((e)->{
-			Intervenants i = null;
-			CategorieHeures categ = null;
-			Module module = null;
-			int nbSemaine = Integer.parseInt(this.txtNbSemaine.getText());
-			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
-			String code = panel.getCode();
-			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
-				if(inter.getNomIntervenant().equals(this.txtNomIntervenant.getText()) && 
-				inter.getPrenomIntervenant().equals(this.txtPrenomIntervenant.getText())){
-					i = inter;
-					break;
-				}
+
+			if (this.txtNbGroupe.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Entrez des données valides", "Erreur", JOptionPane.ERROR_MESSAGE);
+				return;
 			}
+
+
+			Intervenants intervenant = Controleur.getControleur().getIntervenants(this.boxIntervenant.getSelectedIndex());
+			CategorieHeures categ = null;
+
+			int nbGroupe  = Integer.parseInt(this.txtNbGroupe.getText());
+			int nbSemaine = 1;
+
+			boolean isOk = false;
+
 			for(CategorieHeures ch : Controleur.getControleur().getCategorieHeures()){
 				if(ch.getlibCatHeur().equals(this.boxCategorie.getSelectedItem())){
 					categ =ch;
 				}
-			}
-			for(Module m : Controleur.getControleur().getModules()){
-				if(m.getCode() == code){
-					module = m;
-					break;
+			}	
+			if (nbGroupe < 0 ) {
+				JOptionPane.showMessageDialog(this, "Le nombre de groupe doit être supérieur à 0");
+			} else {
+				String categerie = categ.getlibCatHeur();
+				int nbGroupeTotal = calculNbGroupe(nbGroupe, categ);
+				if(!(categerie.equals("HP"))){
+					if(categerie.equals("TD")){
+						if(nbGroupe > mod.getSemestres().getNbGpTdSem() || nbGroupeTotal > mod.getSemestres().getNbGpTdSem()){
+							JOptionPane.showMessageDialog(this, "Trop de groupe " +  categerie +" sont assignés");
+						}else{
+						ArrayList<Integer> list = (ArrayList<Integer>) mod.getHeures().get(categ);
+						nbSemaine = list.get(1);
+						isOk = true;
+						}
+					}else{
+						if(nbGroupe > mod.getSemestres().getNbGpTpSem()|| nbGroupeTotal > mod.getSemestres().getNbGpTpSem()){
+							JOptionPane.showMessageDialog(this, "Trop de groupe " +  categerie +" sont assignés");
+						}else{
+							ArrayList<Integer> list = (ArrayList<Integer>) mod.getHeures().get(categ);
+							nbSemaine = list.get(1);
+							isOk = true;
+						}
+					}	
 				}
-			}
-			if(i != null){
-				if(nbGroupe < 0 || nbSemaine < 0){
-					JOptionPane.showMessageDialog(this,"Le nombre de groupe et le nombre de semaine doivent être supérieur à 0");
-				}else{
-					Affectations affectations = new Affectations(i, module,categ,nbSemaine, nbGroupe,this.txtCommentaire.getText());
-					System.out.println(affectations);
+				else{
+					isOk = true;
+				}
+				if(isOk){
+					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbGroupe, this.txtCommentaire.getText());
 					Controleur.getControleur().ajouterAffectation(affectations);
 					this.frameM.dispose();
+					panel.tblGrilleDonnees.setModel(new GrilleRessources(this.mod));
+					panel.focusLost(null);
+
 				}
-			}else{
-				JOptionPane.showMessageDialog(this,"L'intervenant rentré n'existe pas");
-			}
-			
-			this.panel.maj();	
+			}	
 		});
+
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
 	}
+
+	private int calculNbGroupe(int nbGroupe,CategorieHeures categ){
+		List<Affectations> listAffectations = Controleur.getControleur().getAffectations(mod);
+		int retour = 0;
+
+		for(Affectations a : listAffectations){
+			if(a.getCategorieHeures().getlibCatHeur().equals(categ.getlibCatHeur())){
+				retour+= a.getNbGroupe();
+			}
+		}
+		retour += nbGroupe;
+		return retour;
+	}
+
 }

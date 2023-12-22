@@ -16,19 +16,20 @@ import java.util.List;
 
 import javax.swing.*;
 
-import view.JTextFieldNumber;
 import view.JLabelModule;
+import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 import view.previsionnel.PanelPrevi;
 import view.JButtonStyle;
+
 import controleur.*;
 import model.Affectations;
 import model.CategorieHeures;
 import model.Semestres;
 import model.modules.Module;
-import model.modules.Stage;
+import model.modules.PPP;
 
-public class PanelStage extends JPanel implements ActionListener, FocusListener{
+public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
     // Modules
     private JTextField txtCodeMod;
@@ -45,20 +46,32 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	
 	//Heures PN
 
-	JTextFieldNumber txtHeureEtdREHPN;
-	JTextFieldNumber txtHeureEtdhTutPN;
-	private JTextFieldNumber txtHeureEtdSPN ;
+	JTextFieldNumber txtHeureEtdCmPN;
+	JTextFieldNumber txtHeureEtdTdPN;
+	JTextFieldNumber txtHeureEtdTpPN;
+	JTextFieldNumber txtHeureEtdTutPN;
+	private JTextFieldNumber txtHeureEtdTotPN;
 
 
 	//Repartition
-	private JTextFieldNumber txtREHTotEtd;
-	private JTextFieldNumber txtREHTotEtdAffect;
-	private JTextFieldNumber txthTutTotEtd;  
-	private JTextFieldNumber txthTutTotEtdAffect;
 
+	private JTextFieldNumber txtEtdCmPromRep;
+	private JTextFieldNumber txtEtdCmAffectRep;
 
-	private JTextFieldNumber txtTotEtd;
-	private JTextFieldNumber txtTotEtdAffect;
+	private JTextFieldNumber txtEtdTdPromRep;
+	private JTextFieldNumber txtEtdTdAffectRep;
+
+	private JTextFieldNumber txtEtdTpPromRep;
+	private JTextFieldNumber txtEtdTpAffectRep;
+	
+	private JTextFieldNumber txtEtdTutPromRep;  
+	private JTextFieldNumber txtEtdTutAffectRep;
+
+	JTextFieldNumber txtEtdHpPromRep;
+	private JTextFieldNumber txtEtdHpAffectRep;
+
+	private JTextFieldNumber txtEtdTotPromRep;
+	private JTextFieldNumber txtEtdTotAffectRep;
 
 	//Affectation 
 	JTable tblGrilleDonnees;
@@ -75,44 +88,42 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	private boolean      estNouveau;
 
 
+	public PanelPPP(FrameAccueil frame, Semestres semestres){
 
-
-	public PanelStage(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
-		this.frame.setTitle("Astre - Stage");
+		this.frame.setTitle("Astre - Previsionnel");
 		
-		this.mod   = new Stage(semestres, "", "", "", 0, false);
+		this.mod   = new PPP(semestres, "", "", "", 0, false);
 
 		//Mettre la liste à 0
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
 
-		//                                            PN                                             SEMAINE                                      NB HEURE
-		List<Integer> lstCM = new ArrayList<Integer>(List.of(0,0,0));
-		List<Integer> lstTP = new ArrayList<Integer>(List.of(0,0,0));
-		List<Integer> lstTD = new ArrayList<Integer>(List.of(0,0,0));
-		List<Integer> lstHP = new ArrayList<Integer>(List.of(0,0,0));
+		//                                             PN                                             SEMAINE                                      NB HEURE
+		List<Integer> lstCM  = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstTP  = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstTD  = new ArrayList<Integer>(List.of(0,0,0));
+		List<Integer> lstTut = new ArrayList<Integer>(List.of(0,0,0));
 
 
-		map.put(Controleur.getControleur().getCategorieHeure("CM"), lstCM);
-		map.put(Controleur.getControleur().getCategorieHeure("TP"), lstTP);
-		map.put(Controleur.getControleur().getCategorieHeure("TD"), lstTD);
-		map.put(Controleur.getControleur().getCategorieHeure("HP"), lstHP);
+		map.put(Controleur.getControleur().getCategorieHeure("CM" ), lstCM );
+		map.put(Controleur.getControleur().getCategorieHeure("TP" ), lstTP );
+		map.put(Controleur.getControleur().getCategorieHeure("TD" ), lstTD );
+		map.put(Controleur.getControleur().getCategorieHeure("TUT"), lstTut);
 
 
 		this.mod.setHeures(map);
 		this.estNouveau = true;
 
 		loadPage(semestres);
-
     }
-	
-	
-	
-	public PanelStage (FrameAccueil frame, Module m) {
+
+
+	public PanelPPP (FrameAccueil frame, Module m) {
 		this.frame = frame;
 		this.frame.setTitle("Astre - Previsionnel");
 
 		this.mod = m;
+
 
 		loadPage(m.getSemestres());
 
@@ -122,24 +133,41 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		this.txtLibCourtMod.setText(this.mod.getLibCourt());
 
 
-
-		//CM
+		//SAE
 		HashMap<CategorieHeures, List<Integer>> map = this.mod.getHeures();
 
-		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("TUT"));
+		float coefCM  = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
+		float coefTP  = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
+		float coefTD  = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
+		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
+		float coefHP  = Controleur.getControleur().getCategorieHeure("HP").getcoefCatHeur();
+
+		List<Integer> lst = map.get(Controleur.getControleur().getCategorieHeure("CM"));
 		if (lst != null) {
-			this.txtHeureEtdhTutPN.setText(lst.get(0) + "");		
-			this.txthTutTotEtd    .setText(lst.get(2) + "");
+			this.txtHeureEtdCmPN.setText((int) (lst.get(0) * coefCM) + "");		
+			this.txtEtdCmPromRep.setText((int) (lst.get(2) * coefCM) + "");		
 		}
 
-
-		lst = map.get(Controleur.getControleur().getCategorieHeure("RHE"));
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TD"));
 		if (lst != null) {
-			this.txtHeureEtdREHPN.setText(lst.get(0) + "");		
-			this.txtREHTotEtd    .setText(lst.get(2) + "");
+			this.txtHeureEtdTdPN.setText((int) (lst.get(0) * coefTD) + "");		
+			this.txtEtdTdPromRep.setText((int) (lst.get(2) * coefTD) + "");		
+		}
+
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TP"));
+		if (lst != null) {
+			this.txtHeureEtdTpPN.setText((int) (lst.get(0) * coefTP) + "");		
+			this.txtEtdTpPromRep.setText((int) (lst.get(2) * coefTP) + "");		
+		}
+		
+		lst = map.get(Controleur.getControleur().getCategorieHeure("TUT"));
+		if (lst != null) {
+			this.txtHeureEtdTutPN.setText((int) (lst.get(0) * coefTUT) + "");		
+			this.txtEtdTutPromRep.setText((int) (lst.get(2) * coefTUT) + "");		
 		}
 
 		this.cbValide.setSelected(this.mod.isValide());
+		this.txtEtdHpPromRep.setText((int) (this.mod.getHeurePonctuel() * coefHP) + ""); 
 
 		//Juste pour faire les calculs
 		this.focusLost(null);
@@ -151,8 +179,15 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 
 
-	public void loadPage(Semestres semestres) {
 
+
+
+
+
+	public void loadPage (Semestres semestres) {
+
+		//this.mod   = new Ressource(null, "", "", "", 0);
+		
         /*                         */
         /* CREATION DES COMPOSANTS */
         /*                         */
@@ -164,27 +199,36 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		this.cbValide       = new JCheckBox ("Validation");
 
 		//Informations Semestres
-        this.txtTypeMod = new JTextField("Stage", 8);
+        this.txtTypeMod = new JTextField("PPP", 8);
         this.txtSem     = new JTextField("S" + semestres.getNumSem(), 5);
 		this.txtNbEtd   = new JTextFieldNumber("" + semestres.getNbEtdSem (), 3);
 		this.txtNbGpTd  = new JTextFieldNumber("" + semestres.getNbGpTdSem(), 3);
 		this.txtNbGpTp  = new JTextFieldNumber("" + semestres.getNbGpTpSem(), 3); 
 
 
+
 		//Informations calcul heure PN
-        this.txtHeureEtdREHPN   = new JTextFieldNumber("52", 3);
-        this.txtHeureEtdhTutPN  = new JTextFieldNumber("0", 3);
-        this.txtHeureEtdSPN     = new JTextFieldNumber("52", 3);
+        this.txtHeureEtdCmPN  = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTpPN  = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTdPN  = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTutPN = new JTextFieldNumber("0", 3);
+        this.txtHeureEtdTotPN = new JTextFieldNumber("0", 3);
+		
+		//Informations calcul repartitions
+		this.txtEtdCmPromRep   = new JTextFieldNumber("0", 3); 
+		this.txtEtdTdPromRep   = new JTextFieldNumber("0", 3); 
+		this.txtEtdTpPromRep   = new JTextFieldNumber("0", 3); 
+		this.txtEtdTutPromRep  = new JTextFieldNumber("0", 3);
+		this.txtEtdHpPromRep   = new JTextFieldNumber("0", 3); 
+		this.txtEtdTotPromRep  = new JTextFieldNumber("0", 3);
 
-		//Information répartition
-		this.txtREHTotEtd        = new JTextFieldNumber("0", 3); 
-		this.txthTutTotEtd       = new JTextFieldNumber("0", 3);
-		this.txtREHTotEtdAffect  = new JTextFieldNumber("3", 3); 
-		this.txthTutTotEtdAffect = new JTextFieldNumber("0", 3);
+		this.txtEtdCmAffectRep  = new JTextFieldNumber("0", 3);
+		this.txtEtdTpAffectRep  = new JTextFieldNumber("0", 3);
+		this.txtEtdTdAffectRep  = new JTextFieldNumber("0", 3);
+		this.txtEtdTutAffectRep = new JTextFieldNumber("0", 3);
+		this.txtEtdHpAffectRep  = new JTextFieldNumber("0", 3);
+		this.txtEtdTotAffectRep = new JTextFieldNumber("0", 3);
 
-
-		this.txtTotEtd       = new JTextFieldNumber("0",3);
-		this.txtTotEtdAffect = new JTextFieldNumber("0",3);
 
 		this.btnAjouter   = new JButtonStyle("Ajouter");
 		this.btnSupprimer = new JButtonStyle("Supprimer");
@@ -207,7 +251,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
         gbcPanelHaut.gridy = 0;
         gbcPanelHaut.weightx = 1;
         gbcPanelHaut.weighty = 1;
-        gbcPanelHaut.insets = new Insets(2,2,2,2);
+        gbcPanelHaut.insets = new Insets(3, 3, 3, 3);
 		gbcPanelHaut.anchor = GridBagConstraints.LINE_START;
 
         // Ajout des libellés première ligne
@@ -278,26 +322,35 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		//Ajout des JLabelModule première lignes
 		gbcHeurePN.anchor = GridBagConstraints.CENTER;
 		gbcHeurePN.gridx = 1;
-		panelHeurePN.add(new JLabelModule("REH"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule("h CM"), gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(new JLabelModule("h Tut"), gbcHeurePN);
-		gbcHeurePN.insets = new Insets(2,40,10,10);
+		panelHeurePN.add(new JLabelModule("h TP"), gbcHeurePN);
+		gbcHeurePN.gridx++;
+		panelHeurePN.add(new JLabelModule("h TD"), gbcHeurePN);
+		gbcHeurePN.gridx++;
+		panelHeurePN.add(new JLabelModule("h TUT"), gbcHeurePN);
+
+
+		gbcHeurePN.insets = new Insets(2,20,10,10);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(new JLabelModule("∑"), gbcHeurePN);
 		gbcHeurePN.anchor = GridBagConstraints.LINE_START;
-		
-		
-		gbcHeurePN.insets = new Insets(2, 2, 10, 2);
+
+		gbcHeurePN.insets = new Insets(2, 3, 10, 3);
 		gbcHeurePN.gridx  = 0;
 		gbcHeurePN.gridy++;
-		panelHeurePN.add(new JLabelModule("Total (eqtd) promo"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule(""), gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureEtdREHPN,gbcHeurePN);
+		panelHeurePN.add(this.txtHeureEtdCmPN,gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureEtdhTutPN,gbcHeurePN);
-		gbcHeurePN.insets = new Insets(2,40,10,10);
+		panelHeurePN.add(this.txtHeureEtdTpPN,gbcHeurePN);
 		gbcHeurePN.gridx++;
-		panelHeurePN.add(this.txtHeureEtdSPN,gbcHeurePN);
+		panelHeurePN.add(this.txtHeureEtdTdPN,gbcHeurePN);
+		gbcHeurePN.gridx++;
+		panelHeurePN.add(this.txtHeureEtdTutPN,gbcHeurePN);
+		gbcHeurePN.insets = new Insets(2,20,10,10);
+		gbcHeurePN.gridx++;
+		panelHeurePN.add(this.txtHeureEtdTotPN,gbcHeurePN);
 
 
 		JPanel panelHeurePNValid = new JPanel();
@@ -313,61 +366,79 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		//Layout
 		panelRepartition.setLayout(new GridBagLayout());
 		GridBagConstraints gbcRepar = new GridBagConstraints();
-		gbcRepar.fill = GridBagConstraints.HORIZONTAL; // Remplit horizontalement
-        gbcRepar.gridx = 3;
+		gbcRepar.gridx = 0;
         gbcRepar.gridy = 0;
         gbcRepar.weightx = 1;
         gbcRepar.weighty = 1;
-        gbcRepar.insets = new Insets(2,5,0,5);
+        gbcRepar.insets = new Insets(2,2,2,2);
+
 		// Ajout première ligne
-		panelRepartition.add(new JLabelModule("REH", JLabel.CENTER), gbcRepar);
-		gbcRepar.gridx++;
-		panelRepartition.add(new JLabelModule("h Tut", JLabel.CENTER), gbcRepar);
-		gbcRepar.insets = new Insets(2,340,2,10);
-		gbcRepar.gridx++;
+		gbcRepar.gridx = 3;
+		panelRepartition.add(new JLabelModule("h CM", JLabel.CENTER), gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(new JLabelModule("h TP", JLabel.CENTER), gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(new JLabelModule("h TD", JLabel.CENTER), gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(new JLabelModule("h TUT", JLabel.CENTER), gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(new JLabelModule("h HP", JLabel.CENTER), gbcRepar);
+		gbcRepar.gridx ++;
+		gbcRepar.insets = new Insets(2,300,10,10);
+		
 		panelRepartition.add(new JLabelModule("∑", JLabel.CENTER), gbcRepar);
 
-
-		// Deuxième ligne
+		//Deuxième ligne
 		gbcRepar.insets = new Insets(2,2,2,2);
 		gbcRepar.gridwidth = 3;
+		gbcRepar.gridx     = 0;
 		gbcRepar.gridy++;
-		gbcRepar.gridx= 0;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		panelRepartition.add(new JLabelModule("Total promo (eqtd)"), gbcRepar);
 		gbcRepar.anchor = GridBagConstraints.CENTER;
 		gbcRepar.gridx += 3;
 		gbcRepar.gridwidth = 1;
-		panelRepartition.add(this.txtREHTotEtd, gbcRepar);
+		panelRepartition.add(this.txtEtdCmPromRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txthTutTotEtd, gbcRepar);
-		gbcRepar.insets = new Insets(2,340,2,10);
-		gbcRepar.gridx++;
-		panelRepartition.add(this.txtTotEtd, gbcRepar);
+		panelRepartition.add(this.txtEtdTpPromRep, gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtEtdTdPromRep, gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtEtdTutPromRep, gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtEtdHpPromRep, gbcRepar);
+		gbcRepar.insets = new Insets(2,300,2,10);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtEtdTotPromRep, gbcRepar);
 
-		// Troisième ligne
+		//Troisieme
 		gbcRepar.insets = new Insets(2,2,2,2);
+		gbcRepar.anchor = GridBagConstraints.CENTER;
+		gbcRepar.gridy++;
 		gbcRepar.gridwidth = 3;
-		gbcRepar.gridy ++;
-		gbcRepar.gridx = 0;
+		gbcRepar.gridx= 0;
 		gbcRepar.anchor = GridBagConstraints.LINE_END;
 		panelRepartition.add(new JLabelModule("Total affecté (eqtd)"), gbcRepar);
 		gbcRepar.anchor = GridBagConstraints.CENTER;
 		gbcRepar.gridx += 3;
 		gbcRepar.gridwidth = 1;
-		panelRepartition.add(this.txtREHTotEtdAffect, gbcRepar);
+		panelRepartition.add(this.txtEtdCmAffectRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txthTutTotEtdAffect, gbcRepar);
-		gbcRepar.insets = new Insets(2,340,2,10);
+		panelRepartition.add(this.txtEtdTpAffectRep, gbcRepar);
 		gbcRepar.gridx ++;
-		panelRepartition.add(this.txtTotEtdAffect, gbcRepar);
-
-
+		panelRepartition.add(this.txtEtdTdAffectRep, gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtEtdTutAffectRep, gbcRepar);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtEtdHpAffectRep, gbcRepar);
+		gbcRepar.insets = new Insets(2,300,2,10);
+		gbcRepar.gridx ++;
+		panelRepartition.add(this.txtEtdTotAffectRep, gbcRepar);
 
 		// Table
 		JPanel panelTable = new JPanel();
 		panelTable.setLayout(new BorderLayout());
-		this.tblGrilleDonnees = new JTable(new GrilleStage(this.mod));
+		this.tblGrilleDonnees = new JTable(new GrillePPP(this.mod));
 		this.tblGrilleDonnees.setFillsViewportHeight(true);
 
 		JPanel panelAjoutSupp = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -382,6 +453,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		panelTable.add(panelAjoutSupp, BorderLayout.SOUTH);
 
 
+		
 		JPanel panelRepInt = new JPanel(new GridBagLayout());
 		GridBagConstraints gpcPanRepInt = new GridBagConstraints();
         gpcPanRepInt.gridx = 0;
@@ -399,6 +471,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 
 
+
 		// Ajout des pannels au panel central
 		JPanel panelCentre = new JPanel(new GridBagLayout());
 		GridBagConstraints gbcCentre = new GridBagConstraints();
@@ -407,13 +480,14 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		gbcCentre.weighty = 1;
 		gbcCentre.gridx = 0;
 		gbcCentre.gridy = 0;
-		gbcCentre.anchor = GridBagConstraints.FIRST_LINE_START;
 		gbcCentre.fill=GridBagConstraints.HORIZONTAL;
+		gbcCentre.anchor = GridBagConstraints.FIRST_LINE_START;
+
+		gbcCentre.gridwidth = 1;
 		panelCentre.add(panelHeurePNValid, gbcCentre);
 		gbcCentre.gridx++;
 		gbcCentre.weighty = 1;
 		panelCentre.add(panelRep, gbcCentre);
-
 		gbcCentre.gridy++;
 		panelCentre.add(panelTable, gbcCentre);
 
@@ -462,22 +536,25 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
         this.txtNbGpTd .setEditable(false);
 		this.txtNbGpTp .setEditable(false);
 
-		this.txtTotEtd.setEditable(false);
-		this.txtHeureEtdSPN.setEditable(false);
-
-		this.txtREHTotEtdAffect.setEditable(false);
-		this.txthTutTotEtdAffect.setEditable(false);
-		this.txtTotEtdAffect.setEditable(false);
+		this.txtHeureEtdTotPN .setEditable(false);
+		this.txtEtdCmAffectRep.setEditable(false);
+		this.txtEtdTpAffectRep.setEditable(false);
+		this.txtEtdTdAffectRep.setEditable(false);
+		this.txtEtdTutAffectRep.setEditable(false);
+		this.txtEtdHpAffectRep.setEditable(false);
+		this.txtEtdTotAffectRep.setEditable(false);
+		this.txtEtdTotPromRep.setEditable(false);
 
 
 		// Alignement
 		this.txtNbEtd .setHorizontalAlignment(JTextField.CENTER);
 		this.txtNbGpTd.setHorizontalAlignment(JTextField.CENTER);
 		this.txtNbGpTp.setHorizontalAlignment(JTextField.CENTER);
-		PanelStage.aligner(panelCentre, JTextField.RIGHT);
 
-		//Bordure et fond
-		PanelStage.fond(this, Color.decode("0xD0D0D0"), new Dimension(120,20));
+		PanelPPP.aligner(panelCentre, JTextField.RIGHT);
+
+		//Bordure et style
+		PanelPPP.style(this, Color.decode("0xD0D0D0"), new Dimension(120,20));
 		panelHeurePN.setBorder(BorderFactory.createLineBorder(Color.decode("0xD0D0D0")));
 		panelRepInt.setBorder(BorderFactory.createLineBorder(Color.decode("0xD0D0D0")));
 
@@ -488,8 +565,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
         /*                      */
         /* STYLE DES COMPOSANTS */
         /*                      */
-		PanelStage.activer(this, this, this);
-
+		PanelPPP.activer(this, this, this);
     }
 
 
@@ -516,14 +592,13 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 
 	/**
-	 * Permettre de changer le stylede boutton + des JTextFiel inactif.
+	 * Permettre de changer le style de bouton + des JTextField inactif.
 	 * @param container
 	 * @param c
 	 * @param d
 	 */
-	private static void fond(Container container, Color c, Dimension d) {
+	private static void style(Container container, Color c, Dimension d) {
 		for (Component component : container.getComponents()) {
-
 			if (component instanceof JTextField && !((JTextField) component).isEditable()) {
 				((JTextField) component).setBackground(c);
 			}
@@ -534,7 +609,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 			}
 
 			if (component instanceof Container) {
-				fond((Container) component, c, d);
+				style((Container) component, c, d);
 			}
 		}
 	}
@@ -576,6 +651,13 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	}
 
 
+	private void quitter () {
+		this.frame.changePanel(new PanelPrevi(this.frame));
+		Controleur.getControleur().annuler();
+	}
+
+
+
 	private void sauvegarder () {
 
 		if (this.txtCodeMod.getText().isEmpty()) {
@@ -590,13 +672,25 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 		HashMap <CategorieHeures, List<Integer>> map = new HashMap<>();
 		
+		float coefCM  = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
+		float coefTP  = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
+		float coefTD  = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
+		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
+		float coefHP  = Controleur.getControleur().getCategorieHeure("HP").getcoefCatHeur();
 
-		//                                                    PN                                                 SEMAINE                                      NB HEURE
-		List<Integer> lstTUT = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdhTutPN.getText()), 1, Integer.parseInt(this.txthTutTotEtd.getText())));
-		List<Integer> lstRHE = new ArrayList<Integer>(List.of(Integer.parseInt(this.txtHeureEtdREHPN .getText()), 1, Integer.parseInt(this.txtREHTotEtd.getText())));
+		//                                                   PN                                             SEMAINE                                      NB HEURE
+		List<Integer> lstTUT = new ArrayList<Integer>(List.of((int) (Math.ceil(Integer.parseInt(this.txtHeureEtdTutPN.getText()) / coefTUT)), 1, (int) (Math.ceil(Integer.parseInt(this.txtEtdTutPromRep.getText())) / coefTUT)));
+		List<Integer> lstCM  = new ArrayList<Integer>(List.of((int) (Math.ceil(Integer.parseInt(this.txtHeureEtdCmPN .getText()) / coefCM )), 1, (int) (Math.ceil(Integer.parseInt(this.txtEtdCmPromRep .getText())) / coefCM )));
+		List<Integer> lstTP  = new ArrayList<Integer>(List.of((int) (Math.ceil(Integer.parseInt(this.txtHeureEtdTpPN .getText()) / coefTP )), 1, (int) (Math.ceil(Integer.parseInt(this.txtEtdTpPromRep .getText())) / coefTP )));
+		List<Integer> lstTD  = new ArrayList<Integer>(List.of((int) (Math.ceil(Integer.parseInt(this.txtHeureEtdTdPN .getText()) / coefTD )), 1, (int) (Math.ceil(Integer.parseInt(this.txtEtdTdPromRep .getText())) / coefTD )));
 
 		map.put(Controleur.getControleur().getCategorieHeure("TUT"), lstTUT);
-		map.put(Controleur.getControleur().getCategorieHeure("REH"), lstRHE);
+		map.put(Controleur.getControleur().getCategorieHeure("CM" ), lstCM );
+		map.put(Controleur.getControleur().getCategorieHeure("TP" ), lstTP );
+		map.put(Controleur.getControleur().getCategorieHeure("TD" ), lstTD );
+
+		Math.ceil(coefHP);
+		int hp = (int) (Math.ceil(Integer.parseInt(this.txtEtdHpPromRep.getText()) / coefHP));
 
 		if (this.estNouveau) {
 			this.mod.setCode         (cod);
@@ -604,8 +698,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 			this.mod.setLibCourt     (liC);
 			this.mod.setValide       (val);
 			this.mod.initList        (map);
-
-			this.mod.setHeurePonctuel(0 );
+			this.mod.setHeurePonctuel(hp );
 
 			if (Controleur.getControleur().ajouterModule(this.mod)) {
 				Controleur.getControleur().enregistrer();
@@ -615,10 +708,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 
 		}else{
-
-			System.out.println(map);
-
-			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, 0, val, map)) {
+			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, hp, val, map)) {
 				Controleur.getControleur().enregistrer();
 				this.quitter();
 				return;
@@ -626,16 +716,6 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		}
 		
 		this.showMessageDialog("Le code est déja utiliser");
-	}
-
-	private void showMessageDialog(String message) {
-		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
-	}
-
-
-
-	private void quitter () {
-		this.frame.changePanel(new PanelPrevi(frame));
 	}
 
 
@@ -650,7 +730,6 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		f.setVisible(true);
 	}
 
-
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
@@ -662,47 +741,71 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	}
 
     public void maj() {
-		this.tblGrilleDonnees.setModel(new GrilleStage(this.mod)); 
+		this.tblGrilleDonnees.setModel(new GrillePPP(this.mod)); 
 	}
 
+	private void showMessageDialog(String message) {
+		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
 
 
 	public void focusLost(FocusEvent e) {
 
-		int totPN = Integer.parseInt(this.txtHeureEtdREHPN.getText()) + Integer.parseInt(this.txtHeureEtdhTutPN.getText());
-		this.txtHeureEtdSPN.setText(totPN + "");
-
-		int totEqtd = Integer.parseInt(this.txthTutTotEtd.getText()) + Integer.parseInt(this.txtREHTotEtd.getText());
-		this.txtTotEtd.setText(totEqtd + "");
-
-
-		/* CALCUL REPARTITION */
-
-		//EQTD
-		int rehAffect = 0;
-		int tutAffect = 0;
-
-		float coefREH = Controleur.getControleur().getCategorieHeure("REH").getcoefCatHeur();
+		float coefCM  = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
+		float coefTP  = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
+		float coefTD  = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
 		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
+
+		int totPN   = Integer.parseInt(this.txtHeureEtdTutPN.getText()) + Integer.parseInt(this.txtHeureEtdCmPN.getText()) + 
+		              Integer.parseInt(this.txtHeureEtdTpPN .getText()) * Integer.parseInt(this.txtNbGpTp      .getText()) + 
+					  Integer.parseInt(this.txtHeureEtdTdPN .getText()) * Integer.parseInt(this.txtNbGpTd      .getText()) ;
+
+		int totEqtd = Integer.parseInt(this.txtEtdTutPromRep.getText()) + Integer.parseInt(this.txtEtdCmPromRep.getText()) + 
+		              Integer.parseInt(this.txtEtdTdPromRep .getText()) * Integer.parseInt(this.txtNbGpTd      .getText())+ 
+					  Integer.parseInt(this.txtEtdTpPromRep .getText()) * Integer.parseInt(this.txtNbGpTp.getText())+
+		              Integer.parseInt(this.txtEtdHpPromRep .getText());
+
+		this.txtHeureEtdTotPN.setText(totPN   + "");
+		this.txtEtdTotPromRep.setText(totEqtd + "");
+
+
+
+		// Affecté 
+		float cmAffect  = 0;
+		float tpAffect  = 0;
+		float tdAffect  = 0;
+		float tutAffect = 0;
+		float hpAffect  = 0;
 
 
 		for (Affectations a : this.mod.getLstAffectations()) {
 
-			if (a.getCategorieHeures().getlibCatHeur().equals("REH"))
-				rehAffect += a.getNbHeure() * coefREH;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("CM"))
+				cmAffect += a.getNbGroupe() * coefCM;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("TP"))
+				tpAffect += a.getNbGroupe() * coefTP;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("TD"))
+				tdAffect += a.getNbGroupe() * coefTD;
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
-				tutAffect += a.getNbHeure() * coefTUT;
+				tutAffect += a.getNbGroupe() * coefTUT;
+
+			if (a.getCategorieHeures().getlibCatHeur().equals("HP"))
+				hpAffect += a.getNbGroupe() * coefTUT;
 		}
 
-		this.txtREHTotEtdAffect.setText( rehAffect + "");
-		this.txthTutTotEtdAffect.setText( tutAffect + "");
+		this.txtEtdTutAffectRep.setText((int)(tutAffect) + "");
+		this.txtEtdCmAffectRep .setText((int)(cmAffect ) + "");
+		this.txtEtdTdAffectRep .setText((int)(tdAffect ) + "");
+		this.txtEtdTpAffectRep .setText((int)(tpAffect ) + "");
+		this.txtEtdHpAffectRep .setText((int)(hpAffect ) + "");
 
-		this.txtTotEtdAffect.setText((rehAffect + tutAffect) + "");
-
-
-
+		this.txtEtdTotAffectRep.setText((int)(tutAffect + cmAffect + tdAffect + tpAffect + hpAffect) + "");
 	}
+
 
 	public void focusGained(FocusEvent e) {
 	}

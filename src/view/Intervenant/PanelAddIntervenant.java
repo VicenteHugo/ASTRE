@@ -8,8 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
+import view.JButtonStyle;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,43 +18,32 @@ import javax.swing.JTextField;
 import controleur.Controleur;
 import model.CategorieIntervenant;
 import model.Intervenants;
+import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 
 public class PanelAddIntervenant extends JPanel {
-	private JLabel lblErrCoef;
-	private JLabel lblErrHeurMax;
-	private JLabel lblErrHeurMin;
-
-	private DefaultListModel<CategorieIntervenant> choixCategorie;
-
-	private JComboBox boxCategorie;
+	private JComboBox<String> boxCategorie;
 	private JTextField txtNom;
 	private JTextField txtPrenom;
-	private JTextField txtHServ;
-	private JTextField txtHMax;
-	private JTextField txtCoefTP;
+	private JTextFieldNumber txtHServ;
+	private JTextFieldNumber txtHMax;
+	private JTextFieldNumber txtCoefTP;
 
-	private JButton btnValider;
-	private JButton btnAnnuler;
+	private JButtonStyle btnValider;
+	private JButtonStyle btnAnnuler;
 
-	private FrameAccueil frame;
 	private Frame frameM;
 
-	private CategorieIntervenant categ = null;
 	private PanelIntervenants panelIntervenants;
 	private boolean isValid = true;
 
 	public PanelAddIntervenant(PanelIntervenants p,FrameAccueil frame, Frame frameM) {
 		this.panelIntervenants = p;
-		this.frame = frame;
 		this.frameM = frameM;
 
 		// Création
-		//this.choixCategorie = new DefaultListModel<>();
-		//this.choixCategorie.addAll(Controleur.getControleur().getCategorieIntervenants());
-		// this.comboCategorie = new JComboBox<>(this.choixCategorie.toArray());
 		ArrayList<CategorieIntervenant> l = Controleur.getControleur().getCategorieIntervenants();
-		this.boxCategorie = new JComboBox();
+		this.boxCategorie = new JComboBox<String>();
 		for(int i=0; i < l.size(); i++){
 			this.boxCategorie.addItem(l.get(i).getCodeCatInt());
 		}
@@ -63,12 +51,13 @@ public class PanelAddIntervenant extends JPanel {
 
 		this.txtNom = new JTextField(10);
 		this.txtPrenom = new JTextField(10);
-		this.txtHServ = new JTextField(5);
-		this.txtHMax = new JTextField(5);
-		this.txtCoefTP = new JTextField(3);
+		this.txtHServ  = new JTextFieldNumber(5);
+		this.txtHMax   = new JTextFieldNumber(5);
+		this.txtCoefTP = new JTextFieldNumber(3);
+		this.txtCoefTP.setFloat(true);
 
-		this.btnAnnuler = new JButton("Annuler");
-		this.btnValider = new JButton("Valider");
+		this.btnAnnuler = new JButtonStyle("Annuler");
+		this.btnValider = new JButtonStyle("Valider");
 
 		// Layout
 		JPanel panelCentre = new JPanel();

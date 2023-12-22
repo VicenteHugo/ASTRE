@@ -5,30 +5,29 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import controleur.Controleur;
 import model.Affectations;
+import model.modules.Module;
 
 public class GrilleStage extends AbstractTableModel {
 
 	private String[] tabEntetes;
 	private Object[][] tabDonnees;
 
-	public GrilleStage() {
-		List<Affectations> listAffectations = new ArrayList<>();
+	public GrilleStage(Module mod) {
+
+		List<Affectations> listAffectations = Controleur.getControleur().getAffectations(mod);
 		this.tabDonnees = new Object[listAffectations.size()][5];
 
 		for (int lig = 0; lig < listAffectations.size(); lig++) {
 			Affectations affectations = listAffectations.get(lig);
-			if (affectations.getModule().getClass().getName().equals("Stage")) {
-				List<Integer> listInfosHeure = affectations.getModule().getHeures()
-						.get(affectations.getCategorieHeures());
-				this.tabDonnees[0][lig] = affectations.getIntervenant().getNomIntervenant();
-				this.tabDonnees[1][lig] = affectations.getCategorieHeures().getlibCatHeur();
-				this.tabDonnees[2][lig] = affectations.getNbHeure();
-				this.tabDonnees[3][lig] = affectations.getNbHeure()
-						* affectations.getCategorieHeures().getcoefCatHeur();
-				this.tabDonnees[4][lig] = affectations.getCommentaire();
+			affectations.getIntervenant().setHeures(mod.getSemestres(), affectations.getHeureEqtd() );
 
-			}
+			this.tabDonnees[lig][0] = affectations.getIntervenant().getNomIntervenant();
+			this.tabDonnees[lig][1] = affectations.getCategorieHeures().getlibCatHeur();
+			this.tabDonnees[lig][2] = affectations.getNbGroupe();
+			this.tabDonnees[lig][3] = affectations.getNbGroupe()* affectations.getCategorieHeures().getcoefCatHeur();
+			this.tabDonnees[lig][4] = affectations.getCommentaire();
 		}
 
 		this.tabEntetes = new String[] { "Intervenants", "Type", "Nb h", "tot eqtd", "commentaire" };
@@ -51,7 +50,7 @@ public class GrilleStage extends AbstractTableModel {
 		return this.tabDonnees[row][col];
 	}
 
-	public Class getColumnClass(int c) {
+	public Class<?> getColumnClass(int c) {
 		return getValueAt(0, c).getClass();
 	}
 

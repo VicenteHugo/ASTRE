@@ -8,10 +8,12 @@ import model.CategorieHeures;
 import model.CategorieIntervenant;
 import model.Etat;
 import model.Intervenants;
+import model.Semestres;
 import model.modules.Module;
 
 public class Modification extends Action {
 
+//pas de maj pour le nom de la méthode
 	public Modification(Affectations aOld, Affectations aNew) {
 		
 		this.requetes = "UPDATE Affectation" + Etat.nom + " SET intNom, intPrenom = ?, codeMod = ?, libCatHeur = ?,nbSem = ?, nbGroupe = ?, commentaire = ? WHERE intNom = ? AND intPrenom = ? AND codeMod = ? AND libCatHeur = ?";
@@ -25,10 +27,19 @@ public class Modification extends Action {
 
 	public Modification(Module mOld, Module mNew) {
 
-		this.requetes = "UPDATE Modules" + Etat.nom + " SET codeMod = ?, semMod = ?, libCourtMod = ?, libLongMod = ?, validMod = ?, nbHeurPonc = ? WHERE codeMod = ?";
+		this.requetes = "UPDATE Modules" + Etat.nom + " SET codeMod = ?, semMod = ?, libCourtMod = ?, libLongMod = ?, validMod = ?, nbHeurPonc = ? WHERE codeMod = ?;";
 
 		this.info = new ArrayList<>(
-				List.of(mNew.getCode(), mNew.getSemestres(), mNew.getLibCourt(), mNew.getLibLong(), mNew.isValide(), mNew.getHeurePonctuel(), mOld.getCode()));
+				List.of(mNew.getCode(), mNew.getSemestres().getNumSem(), mNew.getLibCourt(), mNew.getLibLong(), mNew.isValide(), mNew.getHeurePonctuel(), mOld.getCode()));
+
+		
+
+		for (CategorieHeures cat : mNew.getHeures().keySet()) {
+			List<Integer> lst = mNew.getHeures().get(cat);
+			this.requetes += "UPDATE ModulesCatHeures" + Etat.nom+ " SET nbHeurePN = ?, nbHeureSem = ?, nbSemaine = ? WHERE codeMod = ? AND libCatHeur = ?;";
+
+			this.info.addAll(List.of(lst.get(0), lst.get(2), lst.get(1), mNew.getCode(), cat.getlibCatHeur()));
+		}
 	}
 
 	public Modification(Intervenants iOld, Intervenants iNew) {
@@ -51,5 +62,12 @@ public class Modification extends Action {
 		this.requetes = "UPDATE CategorieIntervenants" + Etat.nom + " SET codeCatInt = ?, libCatInt = ?, coefCatInt = ?, heureMinCatInt = ?, heureMaxCatInt = ? WHERE codeCatInt = ?;";
 
 		this.info = new ArrayList<>(List.of(cNew.getCodeCatInt(), cNew.getLibCatInt(), cNew.getCoefCatInt(), cNew.getHeureMinCatInt(), cNew.getHeureMaxCatInt(), cOld.getCodeCatInt()));
+	}
+
+	public Modification(Semestres sem) {
+
+		this.requetes = "UPDATE Semestres" + Etat.nom + " SET nbGpTdSem = ?, nbGpTpSem = ?, nbEtdSem = ?, nbSemSem = ? WHERE numSem = ?;";
+
+		this.info = new ArrayList<>(List.of(sem.getNbGpTdSem(), sem.getNbGpTpSem(), sem.getNbEtdSem(), sem.getNbSemSem(), sem.getNumSem()));
 	}
 }

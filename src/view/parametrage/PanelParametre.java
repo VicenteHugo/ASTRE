@@ -2,12 +2,11 @@ package view.parametrage;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-import javax.swing.JButton;
+import view.JButtonStyle;
 import javax.swing.JPanel;
 
 import view.accueil.FrameAccueil;
@@ -15,9 +14,9 @@ import view.accueil.PanelAccueil;
 
 public class PanelParametre extends JPanel {
 
-    private JButton btnIntervenants;
-    private JButton btnHeures;
-    private JButton btnAccueil;
+    private JButtonStyle btnIntervenants;
+    private JButtonStyle btnHeures;
+    private JButtonStyle btnAccueil;
 
     private FrameAccueil frame;
 
@@ -30,9 +29,9 @@ public class PanelParametre extends JPanel {
         this.frame.setSize(300, 230);
 
         // Création des composants
-        this.btnIntervenants = new JButton("Catégorie Intervenants");
-        this.btnHeures = new JButton("Catégorie Heures");
-        this.btnAccueil = new JButton("Accueil");
+        this.btnIntervenants = new JButtonStyle("Catégorie Intervenants");
+        this.btnHeures = new JButtonStyle("Catégorie Heures");
+        this.btnAccueil = new JButtonStyle("Accueil");
 
         /* STYLE */
 

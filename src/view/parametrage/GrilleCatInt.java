@@ -2,12 +2,10 @@ package view.parametrage;
 
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 import controleur.Controleur;
 import model.CategorieIntervenant;
-import javax.swing.JOptionPane;
 
 
 public class GrilleCatInt extends AbstractTableModel {
@@ -55,44 +53,41 @@ public class GrilleCatInt extends AbstractTableModel {
 		return this.tabDonnees[row][col];
 	}
 
-	public Class getColumnClass(int c) {
-		return getValueAt(0, c).getClass();
-	}
-
 	public boolean isCellEditable(int row, int col) {
-		return true;
+		return col > 1;
 	}
 
 	public void setValueAt(Object value, int row, int col) {
-
 		if (value == this.tabDonnees[row][col])
 			return;
 
 		String code = (String)  this.tabDonnees[row][0];
 		String lib  = (String)  this.tabDonnees[row][1];
-		float  coef = (Float)   this.tabDonnees[row][2];
-		int    hMin = (Integer) this.tabDonnees[row][3];
-		int    hMax = (Integer) this.tabDonnees[row][4];
+		float  coef = this.tabDonnees[row][2] instanceof String ? Float.parseFloat((String) this.tabDonnees[row][2]) : (Float) this.tabDonnees[row][2];
+		int    hMin = this.tabDonnees[row][3] instanceof String ? Integer.parseInt((String) this.tabDonnees[row][3]) : (Integer) this.tabDonnees[row][3];
+		int    hMax = this.tabDonnees[row][4] instanceof String ? Integer.parseInt((String) this.tabDonnees[row][4]) : (Integer) this.tabDonnees[row][4];
+
+		String tmp = (String) value;
 
 		switch (col) {
 			case 0:
-				code = (String) value;
+				code = tmp;
 				break;
 
 			case 1:
-				lib = (String) value;
+				lib = tmp;
 				break;
 
 			case 2:
-				coef = (Float) value;
+				coef = Float.parseFloat(tmp);
 				break;
 
 			case 3:
-				hMin = (Integer) value;
+				hMin = Integer.parseInt(tmp);
 				break;
 
 			case 4:
-				hMax = (Integer) value;
+				hMax = Integer.parseInt(tmp);
 				break;
 
 			default:

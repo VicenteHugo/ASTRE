@@ -34,6 +34,12 @@ public class Affectations {
 		this.nbSemaine = nbSemaine;
 		this.commentaire = commentaire;
 		this.nbGroupe = nbGroupe;
+		this.nbHeure = nbSemaine * nbGroupe;
+
+
+		mode.addAffectations(this);
+		inter.addAffectations(this);
+		inter.setHeures(mode.getSemestres(), this.getHeureEqtd());
 	}
 
 	public Affectations(Intervenants inter, Module mode, CategorieHeures categorie, int nbHeure, String commentaire) {
@@ -42,6 +48,8 @@ public class Affectations {
 		this.categorieHeures = categorie;
 		this.nbHeure = nbHeure;
 		this.commentaire = commentaire;
+		this.nbGroupe = 1;
+		this.nbSemaine = 0;	
 	}
 
 	public Intervenants getIntervenant() {
@@ -50,14 +58,16 @@ public class Affectations {
 
 	public void setIntervenant(Intervenants intervenant) {
 		this.intervenant = intervenant;
-	}
+		intervenant.addAffectations(this);
+}
 
 	public Module getModule() {
 		return module;
 	}
 
 	public void setModule(Module module) {
-		this.module = module;
+		this.module = module;		
+		module.addAffectations(this);
 	}
 
 	public CategorieHeures getCategorieHeures() {
@@ -105,6 +115,22 @@ public class Affectations {
 
 	public void setNbHeure(int nbHeure) {
 		this.nbHeure = nbHeure;
+	}
+
+	public void delete() {
+		this.module.delAffectations(this);
+	}
+
+	public int getHeureEqtd() {
+		if(this.categorieHeures.getlibCatHeur().equals("HP") || this.categorieHeures.getlibCatHeur().equals("REH")){
+			return this.nbHeure;
+		}
+
+		int nbH = this.module.getHeures().get(this.categorieHeures).get(2);
+
+		int heure = (int) Math.ceil(( nbH * this.nbGroupe * this.nbSemaine) * this.categorieHeures.getcoefCatHeur());
+
+		return heure;
 	}
 
 }

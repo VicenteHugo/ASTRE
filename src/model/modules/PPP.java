@@ -8,8 +8,8 @@ import model.Semestres;
 
 public class PPP extends Module {
 
-	public PPP(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel) {
-		super(semestres, code, libLong, libCourt, heurePonctuel);
+	public PPP(Semestres semestres, String code, String libLong, String libCourt, int heurePonctuel, boolean valid) {
+		super(semestres, code, libLong, libCourt, heurePonctuel, valid);
 	}
 
 	@Override
@@ -22,5 +22,19 @@ public class PPP extends Module {
 		this.listCategorieHeure.add(catH);
 		this.heures.put(catH, list);
 	}
+	
+	public int getHeurePn() {
+		int somme = 0;
 
+		for (CategorieHeures catH : this.heures.keySet()) {
+
+			int heurePN = this.heures.get(catH).get(0);
+
+			if (catH.getlibCatHeur().equals("TD")) heurePN = heurePN * this.semestres.getNbGpTdSem();
+			if (catH.getlibCatHeur().equals("TP")) heurePN = heurePN * this.semestres.getNbGpTpSem();
+
+			somme += heurePN * catH.getcoefCatHeur();
+		}
+		return somme;
+	}
 }
