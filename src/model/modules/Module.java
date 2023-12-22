@@ -133,7 +133,7 @@ public abstract class Module implements Comparable<Module> {
 			
 			if( this.heures.get(cat) != null) { //Si pas HP
 				nbHeureSem = this.heures.get(cat).get(2);
-				heure += a.getNbHeure() + a.getNbSemaine() * a.getNbGroupe() * nbHeureSem * cat.getcoefCatHeur();
+				heure += a.getNbSemaine() * a.getNbGroupe() * nbHeureSem * cat.getcoefCatHeur();
 			}else{
 				heure += a.getNbGroupe() * cat.getcoefCatHeur();
 			}
