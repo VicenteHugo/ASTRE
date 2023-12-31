@@ -7,7 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 
 import view.JButtonStyle;
-import javax.swing.JComboBox;
+import view.JComboBoxStyle;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -21,12 +21,12 @@ public class PanelEtat extends JPanel {
 
     private FrameAccueil frame;
     
-    private JComboBox<String> lstEtat;
+    private JComboBoxStyle<String> lstEtat;
     private JButtonStyle           btnSelection;
     private JButtonStyle           btnNouveau;
     private JButtonStyle           btnSupprimer;
 
-    private JComboBox<String> lstGeneration;
+    private JComboBoxStyle<String> lstGeneration;
     private JButtonStyle           btnGenerer;
 
     private JButtonStyle           btnRetour;
@@ -41,14 +41,14 @@ public class PanelEtat extends JPanel {
 
         /* Création des composants */
         //Changement et création d'état
-        this.lstEtat = new JComboBox<>(Controleur.getControleur().getEtats());
+        this.lstEtat = new JComboBoxStyle<>(Controleur.getControleur().getEtats());
         this.lstEtat.setSelectedItem(Etat.nom);
         this.btnSelection = new JButtonStyle("Sélectionner");
         this.btnNouveau   = new JButtonStyle("Nouveau");
         this.btnSupprimer = new JButtonStyle("Supprimer");
 
         //Génerer les pages
-        this.lstGeneration = new JComboBox<>(new String[] {"Par intervenants (HTML)", "Par modules (HTML)", "Recap intervenants (CSV)"});
+        this.lstGeneration = new JComboBoxStyle<>(new String[] {"Par intervenants (HTML)", "Par modules (HTML)", "Recap intervenants (CSV)"});
         this.lstGeneration.setSelectedIndex(0);
         this.btnGenerer = new JButtonStyle("Générer");
 

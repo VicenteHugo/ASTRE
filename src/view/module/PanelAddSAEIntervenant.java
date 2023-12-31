@@ -11,7 +11,7 @@ import java.util.List;
 
 import view.JButtonStyle;
 
-import javax.swing.JComboBox;
+import view.JComboBoxStyle;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -34,8 +34,8 @@ public class PanelAddSAEIntervenant extends JPanel {
 	private JTextFieldNumber txtNbHeure;
     private JTextField txtCommentaire;
 
-	private JComboBox<String> boxCategorie;
-	private JComboBox<String> boxIntervenant;
+	private JComboBoxStyle<String> boxCategorie;
+	private JComboBoxStyle<String> boxIntervenant;
 
 	private JButtonStyle btnValider;
 	private JButtonStyle btnAnnuler;
@@ -55,14 +55,14 @@ public class PanelAddSAEIntervenant extends JPanel {
 		//Création
 
 		ArrayList<CategorieHeures> l = Controleur.getControleur().getCategorieHeures();
-		this.boxCategorie = new JComboBox<String>();
+		this.boxCategorie = new JComboBoxStyle<String>();
 		for(int i=0; i < l.size(); i++){
 			if(l.get(i).getlibCatHeur().equals("SAE") || l.get(i).getlibCatHeur().equals("TUT")){
 				this.boxCategorie.addItem(l.get(i).getlibCatHeur());
 			}
 		}
 		ArrayList<Intervenants> lstInter = Controleur.getControleur().getIntervenants();
-		this.boxIntervenant = new JComboBox<String>();
+		this.boxIntervenant = new JComboBoxStyle<String>();
 		for(int j= 0;  j < lstInter.size(); j++ ){
 			this.boxIntervenant.addItem(lstInter.get(j).getNomIntervenant() + " " + lstInter.get(j).getPrenomIntervenant());
 		} 
@@ -174,14 +174,14 @@ public class PanelAddSAEIntervenant extends JPanel {
 		//Création
 
 		ArrayList<CategorieHeures> l = Controleur.getControleur().getCategorieHeures();
-		this.boxCategorie = new JComboBox<String>();
+		this.boxCategorie = new JComboBoxStyle<String>();
 		for(int i=0; i < l.size(); i++){
 			if(l.get(i).getlibCatHeur().equals("SAE") || l.get(i).getlibCatHeur().equals("TUT")){
 				this.boxCategorie.addItem(l.get(i).getlibCatHeur());
 			}
 		}
 		ArrayList<Intervenants> lstInter = Controleur.getControleur().getIntervenants();
-		this.boxIntervenant = new JComboBox<String>();
+		this.boxIntervenant = new JComboBoxStyle<String>();
 		for(int j= 0;  j < lstInter.size(); j++ ){
 			this.boxIntervenant.addItem(lstInter.get(j).getNomIntervenant() + " " + lstInter.get(j).getPrenomIntervenant());
 		} 
@@ -293,7 +293,7 @@ public class PanelAddSAEIntervenant extends JPanel {
 		//Création
 
 		ArrayList<CategorieHeures> l = Controleur.getControleur().getCategorieHeures();
-		this.boxCategorie = new JComboBox<String>();
+		this.boxCategorie = new JComboBoxStyle<String>();
 		for(int i=0; i < l.size(); i++){
 			if(l.get(i).getlibCatHeur().equals("CM") || l.get(i).getlibCatHeur().equals("TP") || l.get(i).getlibCatHeur().equals("TD") || l.get(i).getlibCatHeur().equals("TUT")
 			|| l.get(i).getlibCatHeur().equals("HP")){
@@ -302,7 +302,7 @@ public class PanelAddSAEIntervenant extends JPanel {
 		}
 
 		ArrayList<Intervenants> lstInter = Controleur.getControleur().getIntervenants();
-		this.boxIntervenant = new JComboBox<String>();
+		this.boxIntervenant = new JComboBoxStyle<String>();
 		for(int j= 0;  j < lstInter.size(); j++ ){
 			this.boxIntervenant.addItem(lstInter.get(j).getNomIntervenant() + " " + lstInter.get(j).getPrenomIntervenant());
 		} 

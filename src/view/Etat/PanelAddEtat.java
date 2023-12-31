@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.DefaultComboBoxModel;
 import view.JButtonStyle;
-import javax.swing.JComboBox;
+import view.JComboBoxStyle;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -27,7 +27,7 @@ import model.Etat;
 public class PanelAddEtat extends JPanel {
 	
 	private JTextField txtNom;
-	private JComboBox<String> lstEtat;
+	private JComboBoxStyle<String> lstEtat;
 
 
 	private JButtonStyle btnValider;
@@ -46,7 +46,7 @@ public class PanelAddEtat extends JPanel {
 
 		//Création
 		this.txtNom = new JTextField(10);
-		this.lstEtat = new JComboBox<>();
+		this.lstEtat = new JComboBoxStyle<>();
 		DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
 		this.lstEtat.setModel(comboBoxModel);
 
