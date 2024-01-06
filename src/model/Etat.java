@@ -681,7 +681,7 @@ public class Etat {
 	/*-------------------------------------------------*/
 
 	public static void genererHTMLIntervenants(){
-		new Generation(lstIntervenants);
+		Generation.generationIntervenants();
 	}
 
 	public static void genererHTMLModules(){
