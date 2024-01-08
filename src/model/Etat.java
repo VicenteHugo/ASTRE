@@ -570,7 +570,6 @@ public class Etat {
 	/* SET ETATS */
 	public static void changerEtat (String nom) {
 		Etat.nom = nom;
-		Etat.lireFichierSQL(Etat.FIC_CREATE);
 		Etat.genererInfos();
 	}
 
