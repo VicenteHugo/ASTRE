@@ -174,11 +174,17 @@ public class PanelAddRessourceIntervenant extends JPanel{
 							nbSemaine = list.get(1);
 							isOk = true;
 						}
-					}	
-				}
-				else{
+					}
+					
+				}else{
 					isOk = true;
 				}
+				int heure =  (int)Math.ceil((mod.getHeures().get(categ).get(2)*nbGroupe*nbSemaine)* categ.getcoefCatHeur());
+				int nbHeureTotal = nbHeureTotal(intervenant,heure);	
+				System.out.println(heure);
+				if(heure > intervenant.getMaxHeures()|| nbHeureTotal > intervenant.getMaxHeures()){
+						JOptionPane.showMessageDialog(this, "Attention rop d'heures sont assignés");
+				}	
 				if(isOk){
 					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbGroupe, this.txtCommentaire.getText());
 					Controleur.getControleur().ajouterAffectation(affectations);
@@ -187,7 +193,7 @@ public class PanelAddRessourceIntervenant extends JPanel{
 					panel.focusLost(null);
 
 				}
-			}	
+			}
 		});
 
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
@@ -204,6 +210,18 @@ public class PanelAddRessourceIntervenant extends JPanel{
 		}
 		retour += nbGroupe;
 		return retour;
+	}
+
+	private int nbHeureTotal(Intervenants inter,int nbHeure){
+		int total = 0;
+		List<Affectations> lAffectations = Controleur.getControleur().getAffectations(mod);
+		for(Affectations a : lAffectations){
+			if(a.getIntervenant().equals(inter)){
+				total+= a.getHeureEqtd();
+			}
+		}
+		total += nbHeure;
+		return total;
 	}
 
 }

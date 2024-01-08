@@ -127,13 +127,7 @@ public abstract class Module implements Comparable<Module> {
 		int heure = 0;
 
 		for (Affectations a : this.lstAffectations) {
-			int nbHeureSem = 0;
-
-			CategorieHeures cat = a.getCategorieHeures();
-			if( this.heures.get(cat) != null)
-				nbHeureSem = this.heures.get(cat).get(2);
-
-			heure += a.getNbHeure() + a.getNbSemaine() * a.getNbGroupe() * nbHeureSem * cat.getcoefCatHeur();
+			heure += a.getHeureEqtd();
 		}
 
 		return heure;

@@ -826,6 +826,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 	private void supprimer() {
 		int ind = this.tblGrilleDonnees.getSelectedRow();
+		if(ind < 0){
+			return ;
+		}
 		ArrayList<Affectations> list = (ArrayList<Affectations>) Controleur.getControleur().getAffectations(this.mod);
 		Controleur.getControleur().supprimerAffectation(list.get(ind));
 		if (ind >= 0)

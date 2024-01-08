@@ -35,7 +35,7 @@ public class GrilleInt extends AbstractTableModel {
 					for (Affectations affectations : Controleur.getControleur().getAffectations()) {
 						if (affectations.getModule().equals(module)
 								&& intervenants.equals(affectations.getIntervenant())) {
-							nbHeure += affectations.getNbSemaine() * affectations.getNbGroupe();
+							nbHeure += affectations.getHeureEqtd();
 						}
 					}
 

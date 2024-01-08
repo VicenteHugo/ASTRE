@@ -733,7 +733,9 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
-		
+		if(ind < 0){
+			return ;
+		}
 		Controleur.getControleur().supprimerIntervenant(ind);
 		if (ind >= 0)
 			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
@@ -780,19 +782,19 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("CM"))
-				cmAffect += a.getNbGroupe() * coefCM;
+				cmAffect += a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TP"))
-				tpAffect += a.getNbGroupe() * coefTP;
+				tpAffect += a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TD"))
-				tdAffect += a.getNbGroupe() * coefTD;
+				tdAffect += a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
-				tutAffect += a.getNbGroupe() * coefTUT;
+				tutAffect += a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("HP"))
-				hpAffect += a.getNbGroupe() * coefTUT;
+				hpAffect += a.getHeureEqtd();
 		}
 
 		this.txtEtdTutAffectRep.setText((int)(tutAffect) + "");
