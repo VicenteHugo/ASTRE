@@ -72,6 +72,13 @@ ul {
     margin: 0;
 }
 
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+    margin-left: 20px;
+}
+
 .ressource {
     display: inline-block;
     margin-right: 10px;
@@ -87,6 +94,7 @@ ul {
 li {
     color: black;
     font-size: 15px;
+    font-weight: normal;
 }
 
 .typeHeure{

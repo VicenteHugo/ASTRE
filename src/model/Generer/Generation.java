@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
@@ -33,14 +34,14 @@ public class Generation {
 	private String pied;
 	private Intervenants intervenant;
 	private Module module;
-	private ArrayList<Affectations> listeTriee;
-	HashMap<Module, ArrayList<Affectations>> hashMapModAffec;
-	Set<String> printedItems = new HashSet<>();
-	public Generation(Intervenants intervenant,HashMap<Module, ArrayList<Affectations>> map,ArrayList<Affectations> listeTriee,int cptIntervenant)
+	private List<Affectations> listeTriee;
+	private Set<String> printedItems = new HashSet<String>();
+	public Generation(Intervenants intervenant)
 	{
 		this.intervenant = intervenant;
-		this.hashMapModAffec = map;
-		this.listeTriee = listeTriee;
+		this.listeTriee = new ArrayList<Affectations>();
+		
+		this.printedItems.clear();
 		this.haut  ="<!DOCTYPE HTML>\n";
 		this.haut +="<html lang=\"fr\">\n";
 		this.haut +="	<head>\n" ;
@@ -56,6 +57,7 @@ public class Generation {
 
 		this.pied  ="	</body>\n";
 		this.pied +="</html>\n";
+		
 		try
 		{
 			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/"+ intervenant.getNomIntervenant() +" "+intervenant.getPrenomIntervenant()+".html") );
@@ -69,7 +71,6 @@ public class Generation {
 			pw.println ( "						<li>Nom&nbsp;&nbsp;&nbsp;&nbsp;: "+intervenant.getNomIntervenant()+"</li>");
 			pw.println ( "						<li>Prenom : "+intervenant.getPrenomIntervenant()+"</li>");
 			pw.println ( "						<br>");
-
 			pw.println ( "						<li>Heure Maximum : "+intervenant.getMaxHeures()+"</li>");
 			pw.println ( "						<li>Heure Minimum : "+intervenant.getServices()+"</li>");
 			pw.println ( "						<li>Heures Prévues : "+intervenant.getSommeSem()+"</li>");
@@ -80,26 +81,29 @@ public class Generation {
 			pw.println ( "				<h2>Modules</h2>");
 			pw.println ( "				<div class=\"barreBleue\">");
 			pw.println ( "					<ul>");
-			for (Affectations list : this.listeTriee) {
-				ArrayList<Affectations> listeAffec= map.get(list.getModule());
-				for (Affectations affectations : listeAffec) {
-					if(affectations.getIntervenant() == this.intervenant ){
-						if (!printedItems.contains(affectations.getModule().getLibLong())) {
-            		    	pw.println ("					<li>"+ affectations.getModule().getCode()+" "+affectations.getModule().getLibLong()+"</li>");
-            				printedItems.add(affectations.getModule().getLibLong());
-						}
-					}
+			this.listeTriee = this.intervenant.getLstAffectations();
+			Collections.sort(this.listeTriee);
+			for (Affectations a : this.listeTriee) {
+				if (!this.printedItems.contains(a.getModule().getLibLong())) {
+					pw.println ("					<li>"+ a.getModule().getCode()+" "+a.getModule().getLibLong()+"</li>");
+					this.printedItems.add(a.getModule().getLibLong());
+					System.out.println(a.getModule().getCode());
 				}
+			}	
+			System.out.println("print?");
+			for (Affectations affectations : listeTriee) {
+				System.out.println(affectations.getModule().getCode());
 			}
+			System.out.println();
 			pw.println ( "					</ul>");
 			pw.println ( "				</div>");
 			pw.println ( "			</div>");
 			pw.println ( "		</div>");
 			pw.println ( "		<div class=\"gridRessource\">");
-            pw.println (divModule(hashMapModAffec,"Ressource"));
-            pw.println (divModule(hashMapModAffec,"Sae"));
-			pw.println (divModule(hashMapModAffec,"Stage"));
-			pw.println (divModule(hashMapModAffec,"PPP"));
+            pw.println (divModule("Ressource"));
+            pw.println (divModule("Sae"));
+			pw.println (divModule("Stage"));
+			pw.println (divModule("PPP"));
 			
 			pw.println ( "		</div>\n");
 			pw.println (this.pied);
@@ -108,10 +112,9 @@ public class Generation {
 		catch (Exception e){ e.printStackTrace(); }
 	}
 
-	public Generation(Module module ,HashMap<Module, ArrayList<Affectations>> map,ArrayList<Affectations> listeTriee,int cptModule)
+	public Generation(Module module ,ArrayList<Affectations> listeTriee)
 	{
 		this.module = module;
-		this.hashMapModAffec = map;
 		this.listeTriee = listeTriee;
 		Set<Intervenants> listeIntervenants =  new HashSet<>();
 		for(Affectations a: module.getLstAffectations()){
@@ -136,7 +139,7 @@ public class Generation {
 		this.pied +="</html>\n";
 		try
 		{
-			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/module"+cptModule+".html") );
+			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/"+ module.getCode() +" "+module.getLibLong() +".html") );
 
 			pw.print (this.haut);
 			pw.println ( "		<div class=\"premiereLigne\">\n");
@@ -167,7 +170,7 @@ public class Generation {
 			pw.println ( "		<div class=\"gridRessource\">");
 			System.out.println("Avant la boucle");
 			for (CategorieHeures cat : module.getListCategorieHeure()) {
-            		pw.println (divHeure(hashMapModAffec,cat.getlibCatHeur()));
+            		pw.println (divHeure(cat.getlibCatHeur()));
 			}
 			System.out.println("Après la boucle");
 			
@@ -179,52 +182,79 @@ public class Generation {
 	}
 	/** Gestion des valeurs de l'intervenant */
 
-	public String divModule(HashMap<Module, ArrayList<Affectations>> map,String typeMod){
-		String  divMod = "";
+	public String divModule(String typeMod){
+		String  divMod     = "";
 		String  codeActuel = "";
+		String  catHeure   = "";
 		ArrayList<Affectations> affec;
-		Boolean premPassage = false;
+		Boolean premPassage   = false;
 		Boolean modulePresent = false;
-		CategorieHeures catHeure = null;
-		int cpt = 1;
-		for (Affectations list : this.listeTriee) {
-			affec = map.get(list.getModule());
-			for (Affectations affectations : affec) {
-				if(affectations.getModule().getClass().getSimpleName().equals(typeMod) && affectations.getIntervenant() == this.intervenant )
-				{
-					modulePresent = true;
-					if (!affectations.getModule().getCode().equals(codeActuel)){
-						if(premPassage)
-						{
-							divMod+="					</ul>\n";
-							divMod+="				</div>\n";
-							divMod+="			</div>\n";
-						}
-						cpt = 1;
-						premPassage = true;
-						catHeure = null;
-						codeActuel= affectations.getModule().getCode();
-						divMod+="			<div>\n";
-						divMod+="				<h2>"+ affectations.getModule().getCode()+" "+affectations.getModule().getLibLong()+"</h2>\n";
-						divMod+="				<div class=\"barreBleue\">\n";
-						divMod+="					<ul>\n";
-					}
+		HashMap<CategorieHeures, ArrayList<Affectations>> map = new HashMap<CategorieHeures, ArrayList<Affectations>>();
+		for (Affectations a : this.intervenant.getLstAffectations()) {
+			if(! map.containsKey(a.getCategorieHeures()))
+			{
+				map.put(a.getCategorieHeures(),new ArrayList < Affectations >());
+			}
+			map.get(a.getCategorieHeures()).add(a);
+		}
 
-					if (affectations.getModule().getCode().equals(codeActuel)){
-						if (affectations.getCategorieHeures()!=catHeure) {
-							cpt = 1;
-							divMod+="						<li class=\"typeHeure\">"+affectations.getCategorieHeures().getlibCatHeur()+": </li>\n";
-							catHeure  = affectations.getCategorieHeures();
+		int cpt = 1;
+		for (String s : this.printedItems) {
+			System.out.println(s);
+		}
+		this.printedItems.clear();
+		for (Affectations a : this.listeTriee){
+			if (!this.printedItems.contains(a.getModule().getLibLong())) {
+				for (String s : this.printedItems) {
+
+				System.out.println(s);
+				}
+				for (CategorieHeures cat : a.getModule().getListCategorieHeure()) {
+					if(map.containsKey(cat))
+					{
+						affec = map.get(cat);
+						for (Affectations catA : affec) {
+							if(catA.getModule().getClass().getSimpleName().equals(typeMod))
+							{
+								modulePresent = true;
+								if (!a.getModule().getCode().equals(codeActuel)){
+									if(premPassage)
+									{
+										divMod+="					</ul>\n";
+										divMod+="				</div>\n";
+										divMod+="			</div>\n";
+									}
+									cpt = 1;
+									premPassage = true;
+									catHeure = null;
+									codeActuel= a.getModule().getCode();
+									divMod+="			<div>\n";
+									divMod+="				<h2>"+ a.getModule().getCode()+" "+a.getModule().getLibLong()+"</h2>\n";
+									divMod+="				<div class=\"barreBleue\">\n";
+									divMod+="					<ul>\n";
+								}
+
+								if (a.getModule().getCode().equals(codeActuel)){
+									if (!a.getCategorieHeures().getlibCatHeur().equals(catHeure)) {
+										cpt = 1;
+										divMod+="						<li class=\"typeHeure\">"+a.getCategorieHeures().getlibCatHeur()+":\n";
+										catHeure  = a.getCategorieHeures().getlibCatHeur();
+									}
+									divMod+="								<ul>\n";
+									divMod+="									<li>Affectation "+cpt+" :\n";
+									divMod+="										<ul>\n";
+									divMod+="											<li>Nb Heures&nbsp;&nbsp;: "+a.getNbHeure()+"</li>\n";
+									divMod+="											<li>Nb Semaine : "+a.getNbSemaine()+"</li>\n";
+									divMod+="										</ul>\n";
+									divMod+="									</li>\n";
+									divMod+="								</ul>\n";
+									cpt++;
+								}
+							}
 						}
-						divMod+="						<li>Affectation "+cpt+" :\n";
-						divMod+="							<ul>\n";
-						divMod+="								<li>Nb Heures&nbsp;&nbsp;: "+affectations.getNbHeure()+"</li>\n";
-						divMod+="								<li>Nb Semaine : "+affectations.getNbSemaine()+"</li>\n";
-						divMod+="							</ul>\n";
-						divMod+="						</li>\n";
-						cpt++;
 					}
 				}
+				printedItems.add(a.getModule().getLibLong());
 			}
 		}
 		if(modulePresent){
@@ -234,15 +264,15 @@ public class Generation {
 		}
 		return divMod;
 	}
-	public String divHeure(HashMap<Module, ArrayList<Affectations>> map,String typeHeure){
-		String  divHeure = "";
+	public String divHeure(String typeHeure){
+		String  divHeure  = "";
 		String  hActuelle = "";
 		ArrayList<Affectations> affec;
 		Boolean typeH = false;
-		affec = map.get(this.module);
-		if(affec!=null){
-			for (Affectations affectations : affec) {
-				if(affectations.getModule() == this.module &&  affectations.getCategorieHeures().getlibCatHeur().equals(typeHeure))
+		HashMap<CategorieHeures, ArrayList<Affectations>> map = new HashMap<CategorieHeures, ArrayList<Affectations>>();
+		/**if(map!=null){
+			for (CategorieHeures affectations : map) {
+				if(affectations.getClass() == this.module &&  affectations.getCategorieHeures().getlibCatHeur().equals(typeHeure))
 				{
 					typeH = true;
 					if (!affectations.getCategorieHeures().getlibCatHeur().equals(hActuelle)){
@@ -269,7 +299,7 @@ public class Generation {
 				divHeure+="				</div>\n";
 				divHeure+="			</div>\n";
 			}
-		}
+		}**/
 		return divHeure;
 	}
 	
@@ -358,10 +388,14 @@ public class Generation {
 	public static void generationIntervenants(){
 		new Etat();
 		Etat.changerEtat("etat1");
-		ArrayList<Affectations> listeTriee = Etat.getAffectations();
-		for (Affectations affectations : listeTriee) {
-			System.out.println(affectations.getModule().getCode());
+		for (Intervenants i : Etat.getIntervenants()) {
+			Generation g = new Generation(i);
 		}
+	}
+	public static void generationModules(){
+		new Etat();
+		Etat.changerEtat("etat1");
+		ArrayList<Affectations> listeTriee = Etat.getAffectations();
 		Collections.sort(listeTriee);
 		HashMap <Module, ArrayList<Affectations>> hashMap = new HashMap <Module, ArrayList<Affectations>>();
 
@@ -372,34 +406,12 @@ public class Generation {
 			}
 			hashMap.get(a.getModule()).add(a);
 		}
-		int cpt = 0;
-		for (Intervenants i : Etat.getIntervenants()) {
-			Generation g = new Generation(i,hashMap,listeTriee,cpt);
-			cpt++;
-		}
-	}
-	public static void generationModules(){
-		ArrayList<Affectations> listeTriee = Generation.triageInter();
-		HashMap <Module, ArrayList<Affectations>> hashMap = new HashMap <Module, ArrayList<Affectations>>();
-
-		for (Affectations a : listeTriee) {
-			if(! hashMap.containsKey(a.getModule()))
-			{
-				hashMap.put(a.getModule(),new ArrayList < Affectations >());
-			}
-			hashMap.get(a.getModule()).add(a);
-		}
-		int cpt = 0;
 		for (Module i : Etat.getModules()) {
-			Generation g = new Generation(i,hashMap,listeTriee,cpt);
-			cpt++;
+			//Generation g = new Generation(i,hashMap,listeTriee);
 		}
 	}
 	public static void main(String[] args) {
 		Generation.generationIntervenants();
 		//Generation.generationModules();
-		//for (Affectations a : Etat.getAffectations()) {
-		//	Generation g = new Generation(a.getModule());
-		//}
 	}
 }
