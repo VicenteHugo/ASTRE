@@ -921,16 +921,16 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		for (Affectations a : this.mod.getLstAffectations()) {
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("CM"))
-				cmAffect += (cmHeu * a.getNbSemaine() * a.getNbGroupe()) * coefCM;
+				cmAffect += a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TD"))
-				tdAffect += (tdHeu * a.getNbSemaine() * a.getNbGroupe()) * coefTD;
+				tdAffect +=  a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TP"))
-				tpAffect += (tpHeu * a.getNbSemaine() * a.getNbGroupe() ) * coefTP;
+				tpAffect +=  a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("HP"))
-				hpAffect += a.getNbGroupe() * coefHP;
+				hpAffect +=  a.getHeureEqtd();
 		}
 
 		this.txtCMTotEtdAffect.setText(cmAffect + "");
