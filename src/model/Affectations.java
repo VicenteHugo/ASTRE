@@ -2,7 +2,7 @@ package model;
 
 import model.modules.Module;
 
-public class Affectations {
+public class Affectations implements Comparable<Affectations>{
 	/** Intervenant */
 	private Intervenants intervenant;
 
@@ -131,6 +131,10 @@ public class Affectations {
 		int heure = (int) Math.ceil(( nbH * this.nbGroupe * this.nbSemaine) * this.categorieHeures.getcoefCatHeur());
 
 		return heure;
+	}
+
+	public int compareTo(Affectations a) {
+		return this.getModule().getCode().compareTo(a.getModule().getCode());
 	}
 
 }
