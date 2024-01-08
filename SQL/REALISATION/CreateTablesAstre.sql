@@ -89,7 +89,8 @@ CREATE TABLE IF NOT EXISTS ModulesCatHeuresETAT
 	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN >= 0),
 	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem >= 0),
 	nbSemaine  INTEGER NOT NULL CHECK (nbSemaine >= 0),
-	PRIMARY KEY(codeMod, libCatHeur)
+	PRIMARY KEY(codeMod, libCatHeur),
+    UNIQUE(codeMod, libCatHeur)
 );
 
 CREATE TABLE IF NOT EXISTS AffectationETAT
