@@ -603,7 +603,7 @@ public class Generation {
 						}
 					}
 				}
-				if(ajout == false){listeTriee.addLast(a);}
+				if(ajout == false){listeTriee.add(a);}
 			}
 		}
 		
@@ -642,7 +642,7 @@ public class Generation {
 						}
 					}
 				}
-				if(ajout == false){listeTriee.addLast(a);}
+				if(ajout == false){listeTriee.add(a);}
 			}
 		}
 		//PPP
@@ -660,7 +660,7 @@ public class Generation {
 						}
 					}
 				}
-				if(ajout == false){listeTriee.addLast(a);}
+				if(ajout == false){listeTriee.add(a);}
 			}
 		}
 		return listeTriee;
