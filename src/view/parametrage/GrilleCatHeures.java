@@ -58,7 +58,12 @@ public class GrilleCatHeures extends AbstractTableModel {
 		float  coef = (Float) this.tabDonnees[row][1];
 
 		String tmp = (String) value;
-		coef = Float.parseFloat(tmp);
+		if(validateNumeric(tmp)){
+			coef = Float.parseFloat(tmp);
+		}else{
+			return;
+		}
+		
 		
 
 		if (coef < 0) return;
@@ -69,4 +74,10 @@ public class GrilleCatHeures extends AbstractTableModel {
 
 		
 	}
+
+	private static boolean validateNumeric(String input) {
+        // Regex pour un entier ou un nombre à virgule flottante avec un seul point ou virgule
+        String regex = "^[+-]?\\d*\\.?\\d+$";
+        return input.matches(regex);
+    }
 }
