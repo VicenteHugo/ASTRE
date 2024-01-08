@@ -63,7 +63,10 @@ public class GrilleCatHeures extends AbstractTableModel {
 
 		if (coef < 0) return;
 		
+
 		if(Controleur.getControleur().modifCategorieHeures(row,lib,coef))
 			this.tabDonnees[row][col] = value;
+
+		
 	}
 }
