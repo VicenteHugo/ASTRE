@@ -109,6 +109,12 @@ public class Generation {
 		this.module = module;
 		this.hashMapModAffec = map;
 		this.listeTriee = listeTriee;
+		Set<Intervenants> listeIntervenants =  new HashSet<>();
+		for(Affectations a: module.getLstAffectations()){
+			if(! listeIntervenants.contains(a.getIntervenant())){
+				listeIntervenants.add(a.getIntervenant());
+			}
+		}
 		this.haut  ="<!DOCTYPE HTML>\n";
 		this.haut +="<html lang=\"fr\">\n";
 		this.haut +="	<head>\n" ;
@@ -136,7 +142,7 @@ public class Generation {
 			pw.println ( "					<ul>");
 			pw.println ( "						<li>Module&nbsp;&nbsp;&nbsp;&nbsp;: "+module.getCode()+" "+module.getLibLong()+"</li>");
 			pw.println ( "						<li>Heures totales(TD) : "+module.getHeureTotal()+"</li>");
-			pw.println ( "						<li>Nombres d'intervenants(TD) : "+"</li>");
+			pw.println ( "						<li>Nombres d'intervenants : "+listeIntervenants.size() + "</li>");
 			pw.println ( "						<br>");
 			pw.println ( "					</ul>");
 			pw.println ( "				</div>");
