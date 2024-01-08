@@ -9,7 +9,7 @@ import java.awt.Insets;
 import java.util.ArrayList;
 
 import view.JButtonStyle;
-import javax.swing.JComboBox;
+import view.JComboBoxStyle;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,7 +22,7 @@ import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 
 public class PanelAddIntervenant extends JPanel {
-	private JComboBox<String> boxCategorie;
+	private JComboBoxStyle<String> boxCategorie;
 	private JTextField txtNom;
 	private JTextField txtPrenom;
 	private JTextFieldNumber txtHServ;
@@ -43,7 +43,7 @@ public class PanelAddIntervenant extends JPanel {
 
 		// Création
 		ArrayList<CategorieIntervenant> l = Controleur.getControleur().getCategorieIntervenants();
-		this.boxCategorie = new JComboBox<String>();
+		this.boxCategorie = new JComboBoxStyle<String>();
 		for(int i=0; i < l.size(); i++){
 			this.boxCategorie.addItem(l.get(i).getCodeCatInt());
 		}

@@ -3,6 +3,7 @@ package view.previsionnel;
 
 import java.util.List;
 
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import controleur.Controleur;
 import model.modules.Module;

@@ -339,7 +339,7 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 		gbcHeurePN.insets = new Insets(2, 3, 10, 3);
 		gbcHeurePN.gridx  = 0;
 		gbcHeurePN.gridy++;
-		panelHeurePN.add(new JLabelModule("Total (eqtd) promo"), gbcHeurePN);
+		panelHeurePN.add(new JLabelModule(""), gbcHeurePN);
 		gbcHeurePN.gridx++;
 		panelHeurePN.add(this.txtHeureEtdCmPN,gbcHeurePN);
 		gbcHeurePN.gridx++;
@@ -692,8 +692,6 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 		Math.ceil(coefHP);
 		int hp = (int) (Math.ceil(Integer.parseInt(this.txtEtdHpPromRep.getText()) / coefHP));
 
-		System.out.println(map);
-
 		if (this.estNouveau) {
 			this.mod.setCode         (cod);
 			this.mod.setLibLong      (liL);
@@ -759,10 +757,12 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
 
 		int totPN   = Integer.parseInt(this.txtHeureEtdTutPN.getText()) + Integer.parseInt(this.txtHeureEtdCmPN.getText()) + 
-		              Integer.parseInt(this.txtHeureEtdTpPN .getText()) + Integer.parseInt(this.txtHeureEtdTdPN.getText());
+		              Integer.parseInt(this.txtHeureEtdTpPN .getText()) * Integer.parseInt(this.txtNbGpTp      .getText()) + 
+					  Integer.parseInt(this.txtHeureEtdTdPN .getText()) * Integer.parseInt(this.txtNbGpTd      .getText()) ;
 
 		int totEqtd = Integer.parseInt(this.txtEtdTutPromRep.getText()) + Integer.parseInt(this.txtEtdCmPromRep.getText()) + 
-		              Integer.parseInt(this.txtEtdTdPromRep .getText()) + Integer.parseInt(this.txtEtdTpPromRep.getText()) +
+		              Integer.parseInt(this.txtEtdTdPromRep .getText()) * Integer.parseInt(this.txtNbGpTd      .getText())+ 
+					  Integer.parseInt(this.txtEtdTpPromRep .getText()) * Integer.parseInt(this.txtNbGpTp.getText())+
 		              Integer.parseInt(this.txtEtdHpPromRep .getText());
 
 		this.txtHeureEtdTotPN.setText(totPN   + "");

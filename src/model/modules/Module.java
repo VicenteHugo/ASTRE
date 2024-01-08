@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import model.Affectations;
 import model.CategorieHeures;
+import model.Etat;
 import model.Semestres;
 
 public abstract class Module implements Comparable<Module> {
@@ -18,7 +19,7 @@ public abstract class Module implements Comparable<Module> {
 	/*-------------------------------------------------------------*/
 
 	/** Semestre assignée à un module */
-	private Semestres semestres;
+	protected Semestres semestres;
 
 	/** Code du module en fonction du semestre et de son libellé */
 	private String code;
@@ -104,15 +105,15 @@ public abstract class Module implements Comparable<Module> {
 
 	public int getHeurePn(){
 		int somme = 0;
+		
 		for (CategorieHeures catH : this.heures.keySet()) {
 
-			int heurePN = (int) (this.heures.get(catH).get(0) * catH.getcoefCatHeur());
+			int heurePN = this.heures.get(catH).get(0);
 
-			if(catH.getlibCatHeur().equals("TD")) heurePN = heurePN * this.semestres.getNbGpTdSem();
-			if(catH.getlibCatHeur().equals("TP")) heurePN = heurePN * this.semestres.getNbGpTpSem();
+			System.out.println("Pour mod " + this.code + " (" +catH.getlibCatHeur()+") : " + heurePN + " * " + catH.getcoefCatHeur());
 
+			somme += heurePN  * catH.getcoefCatHeur();
 
-			somme += heurePN;
 		}
 		return somme;
 	}
@@ -129,10 +130,16 @@ public abstract class Module implements Comparable<Module> {
 			int nbHeureSem = 0;
 
 			CategorieHeures cat = a.getCategorieHeures();
-			if( this.heures.get(cat) != null)
+			
+			if( this.heures.get(cat) != null) { //Si pas HP
 				nbHeureSem = this.heures.get(cat).get(2);
+				heure += a.getNbSemaine() * a.getNbGroupe() * nbHeureSem * cat.getcoefCatHeur();
+			}else{
+				heure += a.getNbGroupe() * cat.getcoefCatHeur();
+			}
 
-			heure += a.getNbHeure() + a.getNbSemaine() * a.getNbGroupe() * nbHeureSem * cat.getcoefCatHeur();
+			System.out.println(this.code + " " + cat.getlibCatHeur() + " : " + a.getNbHeure() + " " + a.getNbSemaine() +" "+ a.getNbGroupe() +" "+ nbHeureSem +" "+ cat.getcoefCatHeur());
+
 		}
 
 		return heure;
@@ -149,7 +156,7 @@ public abstract class Module implements Comparable<Module> {
 			heure += info.get(1) * info.get(2) * catH.getcoefCatHeur();
 		}
 
-		float coef = Controleur.getControleur().getCategorieHeure("HP").getcoefCatHeur();
+		float coef = Etat.getCatHeure("HP").getcoefCatHeur();
 
 		return (int) (heure + this.heurePonctuel * coef);
 	}

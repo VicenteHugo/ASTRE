@@ -47,3 +47,4 @@ public class JTextFieldNumber extends JTextField implements KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {}
 }
+

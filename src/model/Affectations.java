@@ -128,7 +128,7 @@ public class Affectations {
 
 		int nbH = this.module.getHeures().get(this.categorieHeures).get(2);
 
-		int heure = (int) Math.ceil((this.nbHeure +  nbH * this.nbGroupe * this.nbSemaine) * this.categorieHeures.getcoefCatHeur());
+		int heure = (int) Math.ceil(( nbH * this.nbGroupe * this.nbSemaine) * this.categorieHeures.getcoefCatHeur());
 
 		return heure;
 	}
