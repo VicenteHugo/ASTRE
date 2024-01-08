@@ -415,7 +415,7 @@ public class Generation {
 					divTD+="							<ul>\n";
 					divTD+="								<li>Nb de groupes&nbsp;&nbsp;: "+affectations.getNbGroupe()+"</li>\n";
 					divTD+="								<li>Nb de semaine&nbsp;&nbsp;: "+affectations.getNbSemaine()+"</li>\n";
-					divTD+="								<li>Heures Groupe/semaine: "+3+"</li>\n";
+					divTD+="								<li>Nb Heures Totales: "+affectations.getNbGroupe() * affectations.getNbSemaine()+"</li>\n";
 					divTD+="							</ul>\n";
 					divTD+="						</li>\n";
 					divTD+="						<br>\n";
