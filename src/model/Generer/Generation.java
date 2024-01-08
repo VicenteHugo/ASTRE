@@ -155,11 +155,12 @@ public class Generation {
 			pw.println ( "			</div>");
 			pw.println ( "		</div>");
 			pw.println ( "		<div class=\"gridRessource\">");
-			pw.println (divTD(hashMapModAffec));
-			pw.println (divTP(hashMapModAffec));
-			pw.println (divCM(hashMapModAffec));
-			pw.println (divREH(hashMapModAffec));
-			pw.println (divAutre(hashMapModAffec));
+			for (CategorieHeures cat : module.getListCategorieHeure()) {
+				{
+            		pw.println (divHeure(hashMapModAffec,cat.getlibCatHeur()));
+				}
+			}
+			
 			pw.println ( "		</div>\n");
 			pw.println (this.pied);
 			pw.close();
@@ -392,197 +393,43 @@ public class Generation {
 		return divPPP;
 	}
 	
-	public String divTD(HashMap<Module, ArrayList<Affectations>> map){
-		String  divTD = "";
+	public String divHeure(HashMap<Module, ArrayList<Affectations>> map,String typeHeure){
+		String  divHeure = "";
 		String  hActuelle = "";
 		ArrayList<Affectations> affec;
 		Boolean typeH = false;
 		affec = map.get(this.module);
 		if(affec!=null){
 			for (Affectations affectations : affec) {
-				if(affectations.getModule() == this.module &&  affectations.getCategorieHeures().getlibCatHeur().equals("TD"))
+				if(affectations.getModule() == this.module &&  affectations.getCategorieHeures().getlibCatHeur().equals(typeHeure))
 				{
 					typeH = true;
 					if (!affectations.getCategorieHeures().getlibCatHeur().equals(hActuelle)){
 						hActuelle= affectations.getCategorieHeures().getlibCatHeur();
-						divTD+="			<div>\n";
-						divTD+="				<h2>TD</h2>\n";
-						divTD+="				<div class=\"barreBleue\">\n";
-						divTD+="					<ul>\n";
+						divHeure+="			<div>\n";
+						divHeure+="				<h2>TD</h2>\n";
+						divHeure+="				<div class=\"barreBleue\">\n";
+						divHeure+="					<ul>\n";
 					}
 					
-					divTD+="						<li class=\"typeHeure\">"+affectations.getIntervenant().getNomIntervenant()+" "+affectations.getIntervenant().getPrenomIntervenant()+":\n";
-					divTD+="							<ul>\n";
-					divTD+="								<li>Nb de groupes&nbsp;&nbsp;: "+affectations.getNbGroupe()+"</li>\n";
-					divTD+="								<li>Nb de semaine&nbsp;&nbsp;: "+affectations.getNbSemaine()+"</li>\n";
-					divTD+="								<li>Heures Groupe/semaine: "+3+"</li>\n";
-					divTD+="							</ul>\n";
-					divTD+="						</li>\n";
-					divTD+="						<br>\n";
+					divHeure+="						<li class=\"typeHeure\">"+affectations.getIntervenant().getNomIntervenant()+" "+affectations.getIntervenant().getPrenomIntervenant()+":\n";
+					divHeure+="							<ul>\n";
+					divHeure+="								<li>Nb de groupes&nbsp;&nbsp;: "+affectations.getNbGroupe()+"</li>\n";
+					divHeure+="								<li>Nb de semaine&nbsp;&nbsp;: "+affectations.getNbSemaine()+"</li>\n";
+					divHeure+="								<li>Heures Groupe/semaine: "+3+"</li>\n";
+					divHeure+="							</ul>\n";
+					divHeure+="						</li>\n";
+					divHeure+="						<br>\n";
 				}
 			}
 			if(typeH){
 
-				divTD+="					</ul>\n";
-				divTD+="				</div>\n";
-				divTD+="			</div>\n";
+				divHeure+="					</ul>\n";
+				divHeure+="				</div>\n";
+				divHeure+="			</div>\n";
 			}
 		}
-		return divTD;
-	}
-	public String divTP(HashMap<Module, ArrayList<Affectations>> map){
-		String  divTP = "";
-		String  hActuelle = "";
-		ArrayList<Affectations> affec;
-		Boolean typeH = false;
-		affec = map.get(this.module);
-		if(affec!=null){
-			for (Affectations affectations : affec) {
-				if(affectations.getModule() == this.module &&  affectations.getCategorieHeures().getlibCatHeur().equals("TP"))
-				{
-					typeH = true;
-					if (!affectations.getCategorieHeures().getlibCatHeur().equals(hActuelle)){
-						hActuelle= affectations.getCategorieHeures().getlibCatHeur();
-						divTP+="			<div>\n";
-						divTP+="				<h2>TP</h2>\n";
-						divTP+="				<div class=\"barreBleue\">\n";
-						divTP+="					<ul>\n";
-					}
-					
-					divTP+="						<li class=\"typeHeure\">"+affectations.getIntervenant().getNomIntervenant()+" "+affectations.getIntervenant().getPrenomIntervenant()+":\n";
-					divTP+="							<ul>\n";
-					divTP+="								<li>Nb de groupes&nbsp;&nbsp;: "+affectations.getNbGroupe()+"</li>\n";
-					divTP+="								<li>Nb de semaine&nbsp;&nbsp;: "+affectations.getNbSemaine()+"</li>\n";
-					divTP+="								<li>Heures Groupe/semaine: "+3+"</li>\n";
-					divTP+="							</ul>\n";
-					divTP+="						</li>\n";
-					divTP+="						<br>\n";
-				}
-			}
-			if(typeH){
-
-				divTP+="					</ul>\n";
-				divTP+="				</div>\n";
-				divTP+="			</div>\n";
-			}
-		}
-		return divTP;
-	}
-
-	public String divREH(HashMap<Module, ArrayList<Affectations>> map){
-		String  divREH = "";
-		String  hActuelle = "";
-		ArrayList<Affectations> affec;
-		Boolean typeH = false;
-		affec = map.get(this.module);
-		if(affec!=null){
-			for (Affectations affectations : affec) {
-				if(affectations.getModule() == this.module &&  affectations.getCategorieHeures().getlibCatHeur().equals("REH"))
-				{
-					typeH = true;
-					if (!affectations.getCategorieHeures().getlibCatHeur().equals(hActuelle)){
-						hActuelle= affectations.getCategorieHeures().getlibCatHeur();
-						divREH+="			<div>\n";
-						divREH+="				<h2>REH</h2>\n";
-						divREH+="				<div class=\"barreBleue\">\n";
-						divREH+="					<ul>\n";
-					}
-					
-					divREH+="						<li class=\"typeHeure\">"+affectations.getIntervenant().getNomIntervenant()+" "+affectations.getIntervenant().getPrenomIntervenant()+":\n";
-					divREH+="							<ul>\n";
-					divREH+="								<li>Nb de groupes&nbsp;&nbsp;: "+affectations.getNbGroupe()+"</li>\n";
-					divREH+="								<li>Nb de semaine&nbsp;&nbsp;: "+affectations.getNbSemaine()+"</li>\n";
-					divREH+="								<li>Heures Groupe/semaine: "+3+"</li>\n";
-					divREH+="							</ul>\n";
-					divREH+="						</li>\n";
-					divREH+="						<br>\n";
-				}
-			}
-			if(typeH){
-
-				divREH+="					</ul>\n";
-				divREH+="				</div>\n";
-				divREH+="			</div>\n";
-			}
-		}
-		return divREH;
-	}
-
-	public String divCM(HashMap<Module, ArrayList<Affectations>> map){
-		String  divCM = "";
-		String  hActuelle = "";
-		ArrayList<Affectations> affec;
-		Boolean typeH = false;
-		affec = map.get(this.module);
-		if(affec!=null){
-			for (Affectations affectations : affec) {
-				if(affectations.getModule() == this.module &&  affectations.getCategorieHeures().getlibCatHeur().equals("CM"))
-				{
-					typeH = true;
-					if (!affectations.getCategorieHeures().getlibCatHeur().equals(hActuelle)){
-						hActuelle= affectations.getCategorieHeures().getlibCatHeur();
-						divCM+="			<div>\n";
-						divCM+="				<h2>CM</h2>\n";
-						divCM+="				<div class=\"barreBleue\">\n";
-						divCM+="					<ul>\n";
-					}
-					
-					divCM+="						<li class=\"typeHeure\">"+affectations.getIntervenant().getNomIntervenant()+" "+affectations.getIntervenant().getPrenomIntervenant()+":\n";
-					divCM+="							<ul>\n";
-					divCM+="								<li>Nb de groupes&nbsp;&nbsp;: "+affectations.getNbGroupe()+"</li>\n";
-					divCM+="								<li>Nb de semaine&nbsp;&nbsp;: "+affectations.getNbSemaine()+"</li>\n";
-					divCM+="								<li>Heures Groupe/semaine: "+3+"</li>\n";
-					divCM+="							</ul>\n";
-					divCM+="						</li>\n";
-					divCM+="						<br>\n";
-				}
-			}
-			if(typeH){
-
-				divCM+="					</ul>\n";
-				divCM+="				</div>\n";
-				divCM+="			</div>\n";
-			}
-		}
-		return divCM;
-	}
-	public String divAutre(HashMap<Module, ArrayList<Affectations>> map){
-		String  divAutre = "";
-		String  hActuelle = "";
-		ArrayList<Affectations> affec;
-		Boolean typeH = false;
-		affec = map.get(this.module);
-		if(affec!=null){
-			for (Affectations affectations : affec) {
-				if(affectations.getModule() == this.module &&  affectations.getCategorieHeures().getlibCatHeur().equals("Autre"))
-				{
-					typeH = true;
-					if (!affectations.getCategorieHeures().getlibCatHeur().equals(hActuelle)){
-						hActuelle= affectations.getCategorieHeures().getlibCatHeur();
-						divAutre+="			<div>\n";
-						divAutre+="				<h2>Autre</h2>\n";
-						divAutre+="				<div class=\"barreBleue\">\n";
-						divAutre+="					<ul>\n";
-					}
-					
-					divAutre+="						<li class=\"typeHeure\">"+affectations.getIntervenant().getNomIntervenant()+" "+affectations.getIntervenant().getPrenomIntervenant()+":\n";
-					divAutre+="							<ul>\n";
-					divAutre+="								<li>Nb de groupes&nbsp;&nbsp;: "+affectations.getNbGroupe()+"</li>\n";
-					divAutre+="								<li>Nb de semaine&nbsp;&nbsp;: "+affectations.getNbSemaine()+"</li>\n";
-					divAutre+="								<li>Heures Groupe/semaine: "+3+"</li>\n";
-					divAutre+="							</ul>\n";
-					divAutre+="						</li>\n";
-					divAutre+="						<br>\n";
-				}
-			}
-			if(typeH){
-
-				divAutre+="					</ul>\n";
-				divAutre+="				</div>\n";
-				divAutre+="			</div>\n";
-			}
-		}
-		return divAutre;
+		return divHeure;
 	}
 	
 	
