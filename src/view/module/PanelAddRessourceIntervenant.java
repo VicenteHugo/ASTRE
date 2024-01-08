@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import view.JButtonStyle;
-import javax.swing.JComboBox;
+import view.JComboBoxStyle;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,8 +30,8 @@ import view.accueil.FrameAccueil;
 public class PanelAddRessourceIntervenant extends JPanel{
 
 	//certains attribut ne sont pas instancié
-	private JComboBox<String> boxCategorie;
-	private JComboBox<String> boxIntervenant;
+	private JComboBoxStyle<String> boxCategorie;
+	private JComboBoxStyle<String> boxIntervenant;
 	private JTextFieldNumber txtNbGroupe;
     private JTextField txtCommentaire;
 
@@ -51,14 +51,14 @@ public class PanelAddRessourceIntervenant extends JPanel{
 
 		//Création
 		ArrayList<CategorieHeures> l = Controleur.getControleur().getCategorieHeures();
-		this.boxCategorie = new JComboBox<String>();
+		this.boxCategorie = new JComboBoxStyle<String>();
 		for(int i=0; i < l.size(); i++){
 			if(l.get(i).getlibCatHeur().equals("TP") || l.get(i).getlibCatHeur().equals("TD") || l.get(i).getlibCatHeur().equals("CM") ||l.get(i).getlibCatHeur().equals("HP")){
 				this.boxCategorie.addItem(l.get(i).getlibCatHeur());
 			}
 		}
 		ArrayList<Intervenants> lstInter = Controleur.getControleur().getIntervenants();
-		this.boxIntervenant = new JComboBox<String>();
+		this.boxIntervenant = new JComboBoxStyle<String>();
 		for(int j= 0;  j < lstInter.size(); j++ ){
 			this.boxIntervenant.addItem(lstInter.get(j).getNomIntervenant() + " " + lstInter.get(j).getPrenomIntervenant());
 		} 

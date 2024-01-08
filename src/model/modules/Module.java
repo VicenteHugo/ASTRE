@@ -19,7 +19,7 @@ public abstract class Module implements Comparable<Module> {
 	/*-------------------------------------------------------------*/
 
 	/** Semestre assignée à un module */
-	private Semestres semestres;
+	protected Semestres semestres;
 
 	/** Code du module en fonction du semestre et de son libellé */
 	private String code;
@@ -105,15 +105,15 @@ public abstract class Module implements Comparable<Module> {
 
 	public int getHeurePn(){
 		int somme = 0;
+		
 		for (CategorieHeures catH : this.heures.keySet()) {
 
-			int heurePN = (int) (this.heures.get(catH).get(0) * catH.getcoefCatHeur());
+			int heurePN = this.heures.get(catH).get(0);
 
-			if(catH.getlibCatHeur().equals("TD")) heurePN = heurePN * this.semestres.getNbGpTdSem();
-			if(catH.getlibCatHeur().equals("TP")) heurePN = heurePN * this.semestres.getNbGpTpSem();
+			System.out.println("Pour mod " + this.code + " (" +catH.getlibCatHeur()+") : " + heurePN + " * " + catH.getcoefCatHeur());
 
+			somme += heurePN  * catH.getcoefCatHeur();
 
-			somme += heurePN;
 		}
 		return somme;
 	}
@@ -127,7 +127,19 @@ public abstract class Module implements Comparable<Module> {
 		int heure = 0;
 
 		for (Affectations a : this.lstAffectations) {
-			heure += a.getHeureEqtd();
+			int nbHeureSem = 0;
+
+			CategorieHeures cat = a.getCategorieHeures();
+			
+			if( this.heures.get(cat) != null) { //Si pas HP
+				nbHeureSem = this.heures.get(cat).get(2);
+				heure += a.getNbSemaine() * a.getNbGroupe() * nbHeureSem * cat.getcoefCatHeur();
+			}else{
+				heure += a.getNbGroupe() * cat.getcoefCatHeur();
+			}
+
+			System.out.println(this.code + " " + cat.getlibCatHeur() + " : " + a.getNbHeure() + " " + a.getNbSemaine() +" "+ a.getNbGroupe() +" "+ nbHeureSem +" "+ cat.getcoefCatHeur());
+
 		}
 
 		return heure;

@@ -1,4 +1,4 @@
--- \copy (
+-- COPY (
 SELECT 
 -- i.nomInt      AS "Nom",
 -- i.prenomInt   AS "Prenom",

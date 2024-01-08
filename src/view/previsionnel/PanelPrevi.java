@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import view.JButtonStyle;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -27,12 +26,14 @@ import view.module.PanelRessources;
 import view.module.PanelSAE;
 import view.module.PanelStage;
 
+import view.JComboBoxStyle;
+
 public class PanelPrevi extends JPanel {
     private FrameAccueil frame;
 
     private JTabbedPane ongletSemestres;
      
-    private JComboBox<String> cmbChoixCreer;
+    private JComboBoxStyle<String> cmbChoixCreer;
 
     private JButtonStyle btnCreer;
     private JButtonStyle btnModifier;
@@ -59,12 +60,11 @@ public class PanelPrevi extends JPanel {
 
         JPanel panel = new JPanel(new FlowLayout());
 
-        this.cmbChoixCreer = new JComboBox<String>();
+        this.cmbChoixCreer = new JComboBoxStyle<String>();
         this.cmbChoixCreer.addItem("Créer Ressource");
         this.cmbChoixCreer.addItem("Créer Saé");
         this.cmbChoixCreer.addItem("Créer Stage");
         this.cmbChoixCreer.addItem("Créer PPP");
-        this.cmbChoixCreer.setBackground(Color.decode("0xD0D0D0"));
         panel.add(this.cmbChoixCreer);
 
         this.btnCreer = new JButtonStyle("Créer Ressource");
