@@ -85,6 +85,13 @@ public class PanelSemestre extends JPanel {
 
     public Semestres getSemNew () {
 
+        if (this.txtNbETD     .getText().isEmpty()) this.txtNbETD     .setText("0");
+        if (this.txtNbGpTD    .getText().isEmpty()) this.txtNbGpTD    .setText("0");
+        if (this.txtNbGpTP    .getText().isEmpty()) this.txtNbGpTP    .setText("0");
+        if (this.txtNbSemaines.getText().isEmpty()) this.txtNbSemaines.setText("0");
+
+
+
         int etd = (Integer.parseInt(this.txtNbETD     .getText()));
         int td  = (Integer.parseInt(this.txtNbGpTD    .getText()));
         int tp  = (Integer.parseInt(this.txtNbGpTP    .getText()));
