@@ -691,10 +691,10 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		for (Affectations a : this.mod.getLstAffectations()) {
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("REH"))
-				rehAffect += a.getNbHeure() * coefREH;
+				rehAffect +=  a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
-				tutAffect += a.getNbHeure() * coefTUT;
+				tutAffect +=  a.getHeureEqtd();
 		}
 
 		this.txtREHTotEtdAffect.setText( rehAffect + "");

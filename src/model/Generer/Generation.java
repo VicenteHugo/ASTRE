@@ -2,6 +2,7 @@ package model.Generer;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
@@ -9,6 +10,8 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import javax.swing.text.html.parser.Element;
+
+import com.mysql.cj.x.protobuf.MysqlxCrud.Collection;
 
 import controleur.Controleur;
 import model.Affectations;
@@ -55,7 +58,7 @@ public class Generation {
 		this.pied +="</html>\n";
 		try
 		{
-			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/Intervenant"+cptIntervenant+".html") );
+			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/"+ intervenant.getNomIntervenant() +" "+intervenant.getPrenomIntervenant()+".html") );
 
 			pw.print (this.haut);
 			pw.println ( "		<div class=\"premiereLigne\">\n");
@@ -275,7 +278,6 @@ public class Generation {
 		new Etat();
 		ArrayList<Affectations> listeNonTriee = Etat.getAffectations();
 		ArrayList<Affectations> listeTriee = new ArrayList<Affectations>();
-		Comparable<Affectations> ;
 		//R
 		for (Affectations a : listeNonTriee) {
 			if(a.getModule().getClass().getSimpleName().equals("Ressource")&& a.getModule().getCode().length() == 5 ){
@@ -354,7 +356,13 @@ public class Generation {
 	
 	
 	public static void generationIntervenants(){
-		ArrayList<Affectations> listeTriee = Generation.triageInter();
+		new Etat();
+		Etat.changerEtat("etat1");
+		ArrayList<Affectations> listeTriee = Etat.getAffectations();
+		for (Affectations affectations : listeTriee) {
+			System.out.println(affectations.getModule().getCode());
+		}
+		Collections.sort(listeTriee);
 		HashMap <Module, ArrayList<Affectations>> hashMap = new HashMap <Module, ArrayList<Affectations>>();
 
 		for (Affectations a : listeTriee) {
