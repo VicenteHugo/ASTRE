@@ -7,7 +7,6 @@ import javax.swing.JTextField;
 
 public class JTextFieldNumber extends JTextField implements KeyListener {
     private boolean isFloat = false;
-    private boolean hasPoint = false;
 
 	public JTextFieldNumber() {
 		super();

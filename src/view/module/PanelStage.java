@@ -688,10 +688,6 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		int rehAffect = 0;
 		int tutAffect = 0;
 
-		float coefREH = Controleur.getControleur().getCategorieHeure("REH").getcoefCatHeur();
-		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
-
-
 		for (Affectations a : this.mod.getLstAffectations()) {
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("REH"))
