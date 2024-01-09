@@ -26,7 +26,7 @@ public class Generation {
 	private Module module;
 	private List<Affectations> listeTriee;
 	private Set<String> printedItems = new HashSet<String>();
-	public Generation(Intervenants intervenant)
+	public Generation(Intervenants intervenant, String chemin)
 	{
 		this.intervenant = intervenant;
 		this.listeTriee = new ArrayList<Affectations>();
@@ -50,7 +50,7 @@ public class Generation {
 		
 		try
 		{
-			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/"+ intervenant.getNomIntervenant() +" "+intervenant.getPrenomIntervenant()+".html") );
+			PrintWriter pw = new PrintWriter( new FileOutputStream(chemin+ intervenant.getNomIntervenant() +" "+intervenant.getPrenomIntervenant()+".html") );
 
 			pw.print (this.haut);
 			pw.println ( "		<div class=\"premiereLigne\">\n");
@@ -92,7 +92,7 @@ public class Generation {
 		catch (Exception e){ e.printStackTrace(); }
 	}
 
-	public Generation(Module module)
+	public Generation(Module module, String chemin)
 	{
 		this.module = module;
 		Set<Intervenants> listeIntervenants =  new HashSet<>();
@@ -114,12 +114,11 @@ public class Generation {
 		this.haut +="			<img id=\"logoTitre\" src=\"../lib/logoAstre-nobg.png\" alt=\"LogoAstre\">\n" ;
 		this.haut +="			<h1>ASTRE- "+ module.getCode() +" "+module.getLibLong() +"</h1>\n";
 		this.haut +="		</header>\n";
-
 		this.pied  ="	</body>\n";
 		this.pied +="</html>\n";
 		try
 		{
-			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/"+ module.getCode()+module.getLibCourt() +".html") );
+			PrintWriter pw = new PrintWriter( new FileOutputStream(chemin+ module.getCode()+module.getLibCourt() +".html") );
 
 			pw.print (this.haut);
 			pw.println ( "		<div class=\"premiereLigne\">\n");
@@ -302,20 +301,20 @@ public class Generation {
 		return divHeure;
 	}
 	
-	public static void generationIntervenants(){
+	public static void generationIntervenants(String chemin){
 		for (Intervenants i : Etat.getIntervenants()) {
-			new Generation(i);
+			new Generation(i,chemin);
 		}
 	}
-	public static void generationModules(){
+	public static void generationModules(String chemin){
 		for (Module m : Etat.getModules()) {
-			new Generation(m);
+			new Generation(m,chemin);
 		}
 	}
 	public static void main(String[] args) {
 		new Etat();
 		Etat.changerEtat("fz");
-		Generation.generationIntervenants();
-		Generation.generationModules();
+		//Generation.generationIntervenants();
+		//Generation.generationModules();
 	}
 }
