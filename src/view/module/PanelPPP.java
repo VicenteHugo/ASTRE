@@ -87,6 +87,8 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 	private Module       mod;
 	private boolean      estNouveau;
 
+	private JFrame f;
+
 
 	public PanelPPP(FrameAccueil frame, Semestres semestres){
 
@@ -652,6 +654,8 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 	private void quitter () {
+		if(f!=null)
+		this.f.dispose();
 		this.frame.changePanel(new PanelPrevi(this.frame));
 		Controleur.getControleur().annuler();
 	}
@@ -720,7 +724,8 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 	private void ajouter () {
-		JFrame f = new JFrame();
+		if(f != null) return;
+		f = new JFrame();
         f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
         f.setTitle("Ajout d'une affectation");
 		f.pack();

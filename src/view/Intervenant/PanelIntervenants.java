@@ -27,6 +27,8 @@ public class PanelIntervenants extends JPanel {
 
 	private FrameAccueil frame;
 
+	private JFrame f;
+
 	public PanelIntervenants(FrameAccueil frame) {
 
 		this.frame = frame;
@@ -78,7 +80,8 @@ public class PanelIntervenants extends JPanel {
 		// Action
 		this.btnAnnuler.addActionListener((e) -> this.annuler());
 		this.btnAjout.addActionListener((e) -> {
-			JFrame f = new JFrame();
+			if(f != null) return;
+			f = new JFrame();
 			f.add(new PanelAddIntervenant(this, this.frame, f));
 			f.setTitle("Ajout d'un Intervenant");
 			f.pack();
@@ -101,6 +104,7 @@ public class PanelIntervenants extends JPanel {
 
 	private void annuler() {
 		this.frame.changePanel(new PanelAccueil(this.frame));
+		this.f.dispose();
 		Controleur.getControleur().annuler();
 	}
 
