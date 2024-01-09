@@ -3,7 +3,10 @@ package model.Generer;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -28,82 +31,97 @@ import model.modules.Stage;
 
 import java.io.FileOutputStream;
 
-public class Generation {
+public class GenerationSecours {
 
-	private String haut;
-	private String pied;
-	private Intervenants intervenant;
-	private Module module;
-	private List<Affectations> listeTriee;
-	private Set<Module> printedItems = new HashSet<Module>();
-	public Generation(Intervenants intervenant)
+	private static final String nomDoss = "./";
+
+	private static final String ligHaut   = "<!DOCTYPE HTML>\n"
+	                                      + "<html lang=\"fr\">\n"
+		                                  + "	<head>\n"
+										  + "		<meta charset=\"utf-8\" />\n" 
+										  + "		<title>ASTRE - ? </title>\n" 
+										  + "		<link href=\"style/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\">\n"
+										  + "	</head>\n"
+										  + "	<body>\n"
+										  + "		<header>\n"
+										  + "			<img id=\"logoTitre\" src=\"../lib/logoAstre-nobg.png\" alt=\"LogoAstre\">\n"
+										  + "			<h1>ASTRE- ? </h1>\n"
+										  + "		</header>\n";
+	
+	private static final String ligBas    = "	</body>\n</html>\n";
+
+
+	public static void genererHTML(Intervenants intervenant)
 	{
-		this.intervenant = intervenant;
-		this.listeTriee = new ArrayList<Affectations>();
-		
-		this.printedItems.clear();
-		this.haut  ="<!DOCTYPE HTML>\n";
-		this.haut +="<html lang=\"fr\">\n";
-		this.haut +="	<head>\n" ;
-		this.haut +="		<meta charset=\"utf-8\" />\n" ;
-		this.haut +="		<title>ASTRE-"+ intervenant.getNomIntervenant()+" "+intervenant.getPrenomIntervenant() +"</title>\n" ;
-		this.haut +="		<link href=\"style/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\">\n";
-		this.haut +="	</head>\n" ;
-		this.haut +="	<body>\n" ;
-		this.haut +="		<header>\n" ;
-		this.haut +="			<img id=\"logoTitre\" src=\"../lib/logoAstre-nobg.png\" alt=\"LogoAstre\">\n" ;
-		this.haut +="			<h1>ASTRE- "+ intervenant.getNomIntervenant() +" "+intervenant.getPrenomIntervenant() +" - "+intervenant.getCategorieIntervenant().getLibCatInt()+"</h1>\n";
-		this.haut +="		</header>\n";
-
-		this.pied  ="	</body>\n";
-		this.pied +="</html>\n";
-		
-		try
-		{
-			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/"+ intervenant.getNomIntervenant() +" "+intervenant.getPrenomIntervenant()+".html") );
-
-			pw.print (this.haut);
-			pw.println ( "		<div class=\"premiereLigne\">\n");
-			pw.println ( "			<div>");
-			pw.println ( "				<h2>Intervenant</h2>");
-			pw.println ( "				<div class=\"barreBleue\">");
-			pw.println ( "					<ul>");
-			pw.println ( "						<li>Nom&nbsp;&nbsp;&nbsp;&nbsp;: "+intervenant.getNomIntervenant()+"</li>");
-			pw.println ( "						<li>Prenom : "+intervenant.getPrenomIntervenant()+"</li>");
-			pw.println ( "						<br>");
-			pw.println ( "						<li>Heure Maximum : "+intervenant.getMaxHeures()+"</li>");
-			pw.println ( "						<li>Heure Minimum : "+intervenant.getServices()+"</li>");
-			pw.println ( "						<li>Heures Prévues : "+intervenant.getSommeSem()+"</li>");
-			pw.println ( "					</ul>");
-			pw.println ( "				</div>");
-			pw.println ( "			</div>");
-			pw.println ( "			<div>");
-			pw.println ( "				<h2>Modules</h2>");
-			pw.println ( "				<div class=\"barreBleue\">");
-			pw.println ( "					<ul>");
-			this.listeTriee = this.intervenant.getLstAffectations();
-			Collections.sort(this.listeTriee);
-			for (Affectations a : this.listeTriee) {
-				if (!this.printedItems.contains(a.getModule())) {
-					pw.println ("					<li>"+ a.getModule().getCode()+" "+a.getModule().getLibLong()+"</li>");
-					this.printedItems.add(a.getModule());
-				}
-			}
-			pw.println ( "					</ul>");
-			pw.println ( "				</div>");
-			pw.println ( "			</div>");
-			pw.println ( "		</div>");
-			pw.println ( "		<div class=\"gridRessource\">");
-            pw.println (divModule("Ressource"));
-            pw.println (divModule("Sae"));
-			pw.println (divModule("Stage"));
-			pw.println (divModule("PPP"));
+		try {
+			PrintWriter pw = new PrintWriter(new FileOutputStream(GenerationSecours.nomDoss + Etat.nom + "/"+intervenant.getNomIntervenant()+ "-" + intervenant.getPrenomIntervenant()));
+	
 			
-			pw.println ( "		</div>\n");
-			pw.println (this.pied);
+			//Récupération et tries des données
+			List<Affectations> lstAffectations               = intervenant.getLstAffectations();
+			HashMap<Module, List <Affectations>> hashModules = new HashMap<>();
+
+			//Récupération des modules + des affectations en lien
+			for (Affectations a : lstAffectations) {
+
+				//Si le module n'a pas la clé, on l'ajoute
+				if (! hashModules.containsKey(a.getModule())) {
+					hashModules.put(a.getModule(), new ArrayList<>());
+				}
+				
+				//On ajoute l'affectation au module
+				hashModules.get(a.getModule()).add(a);
+			}
+
+			//Pour trier les codes
+			List<Map.Entry<Module, List<Affectations>>> entryList = new ArrayList<>(hashModules.entrySet());
+			entryList.sort(Comparator.comparing(entry -> entry.getKey().getCode()));
+
+			//Ecriture des informations de l'intervenants 
+			String haut = GenerationSecours.ligHaut.replaceAll("?", intervenant.getNomIntervenant() + " " + intervenant.getPrenomIntervenant());
+			pw.println(haut);
+
+			pw.println("		<div class=\"premiereLigne\">\n");
+			pw.println("			<div>");
+			pw.println("				<h2>Intervenant</h2>");
+			pw.println("				<div class=\"barreBleue\">");
+			pw.println("					<ul>");
+			pw.println("						<li>Nom&nbsp;&nbsp;&nbsp;&nbsp;: " + intervenant.getNomIntervenant() + "</li>");
+			pw.println("						<li>Prenom : " + intervenant.getPrenomIntervenant() + "</li>");
+			pw.println("						<br>");
+			pw.println("						<li>Heure Maximum : " + intervenant.getMaxHeures() + "</li>");
+			pw.println("						<li>Heure Minimum : " + intervenant.getServices() + "</li>");
+			pw.println("						<li>Heures Prévues : " + intervenant.getSommeSem() + "</li>");
+			pw.println("					</ul>");
+			pw.println("				</div>");
+			pw.println("			</div>");
+			pw.println("			<div>");
+			pw.println("				<h2>Modules</h2>");
+			pw.println("				<div class=\"barreBleue\">");
+			pw.println("					<ul>");
+
+			for (Map.Entry<Module, List<Affectations>> entry : entryList) {
+				pw.println("					<li>" +  entry.getKey().getCode() + " " + entry.getKey().getLibLong() + "</li>");
+			}
+
+			pw.println("					</ul>");
+
+		
+			// Affichage par Modules
+			for (Map.Entry<Module, List<Affectations>> entry : entryList) {
+				
+				HashMap <CategorieHeures, List<Affectations>> hashCatHeure = new HashMap<>();
+			}
+
+
+	
 			pw.close();
 		}
-		catch (Exception e){ e.printStackTrace(); }
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
 	public Generation(Module module ,ArrayList<Affectations> listeTriee)
@@ -116,21 +134,8 @@ public class Generation {
 				listeIntervenants.add(a.getIntervenant());
 			}
 		}
-		this.haut  ="<!DOCTYPE HTML>\n";
-		this.haut +="<html lang=\"fr\">\n";
-		this.haut +="	<head>\n" ;
-		this.haut +="		<meta charset=\"utf-8\" />\n" ;
-		this.haut +="		<title>ASTRE-"+ module.getCode()+" "+module.getLibLong() +"</title>\n" ;
-		this.haut +="		<link href=\"style/style.css\" type=\"text/css\" rel=\"stylesheet\" media=\"all\">\n";
-		this.haut +="	</head>\n" ;
-		this.haut +="	<body>\n" ;
-		this.haut +="		<header>\n" ;
-		this.haut +="			<img id=\"logoTitre\" src=\"../lib/logoAstre-nobg.png\" alt=\"LogoAstre\">\n" ;
-		this.haut +="			<h1>ASTRE- "+ module.getCode() +" "+module.getLibLong() +"</h1>\n";
-		this.haut +="		</header>\n";
+		
 
-		this.pied  ="	</body>\n";
-		this.pied +="</html>\n";
 		try
 		{
 			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/"+ module.getCode() +" "+module.getLibLong() +".html") );
@@ -162,9 +167,11 @@ public class Generation {
 			pw.println ( "			</div>");
 			pw.println ( "		</div>");
 			pw.println ( "		<div class=\"gridRessource\">");
+			System.out.println("Avant la boucle");
 			for (CategorieHeures cat : module.getListCategorieHeure()) {
             		pw.println (divHeure(cat.getlibCatHeur()));
 			}
+			System.out.println("Après la boucle");
 			
 			pw.println ( "		</div>\n");
 			pw.println (this.pied);
@@ -181,69 +188,74 @@ public class Generation {
 		ArrayList<Affectations> affec;
 		Boolean premPassage   = false;
 		Boolean modulePresent = false;
-		int cpt=0;
-		HashMap<String, ArrayList<Affectations>> map = new HashMap<String, ArrayList<Affectations>>();
+		HashMap<CategorieHeures, ArrayList<Affectations>> map = new HashMap<CategorieHeures, ArrayList<Affectations>>();
 		for (Affectations a : this.intervenant.getLstAffectations()) {
-			if(! map.containsKey(a.getCategorieHeures().getlibCatHeur()))
+			if(! map.containsKey(a.getCategorieHeures()))
 			{
-				map.put(a.getCategorieHeures().getlibCatHeur(),new ArrayList < Affectations >());
+				map.put(a.getCategorieHeures(),new ArrayList < Affectations >());
 			}
-			map.get(a.getCategorieHeures().getlibCatHeur()).add(a);
+			map.get(a.getCategorieHeures()).add(a);
 		}
-		System.out.println(typeMod);
-		this.printedItems.clear();
-		System.out.println("passageDeb");
-		for (Affectations a : this.listeTriee){
-			if (!this.printedItems.contains(a.getModule())) {
-				//System.out.println(a.getModule().getCode());	
-				printedItems.add(a.getModule());
-				for (String libCat : map.keySet()) {
-					affec = map.get(libCat);
-					Collections.sort(affec);
-					for (Affectations catA : affec) {
-						if(catA.getModule().getClass().getSimpleName().equals(typeMod))
-						{
-							modulePresent = true;
-							System.out.println(catA.getModule().getCode());
-							if (!a.getModule().getCode().equals(codeActuel)){
-								if(premPassage)
-								{
-									divMod+="					</ul>\n";
-									divMod+="				</div>\n";
-									divMod+="			</div>\n";
-								}
-								cpt = 1;
-								premPassage = true;
-								catHeure = null;
-								codeActuel= a.getModule().getCode();
-								divMod+="			<div>\n";
-								divMod+="				<h2>"+ a.getModule().getCode()+" "+a.getModule().getLibLong()+"</h2>\n";
-								divMod+="				<div class=\"barreBleue\">\n";
-								divMod+="					<ul>\n";
-							}
 
-							if (a.getModule().getCode().equals(codeActuel)){
-								if (!a.getCategorieHeures().getlibCatHeur().equals(catHeure)) {
+		int cpt = 1;
+		for (String s : this.printedItems) {
+			System.out.println(s);
+		}
+		this.printedItems.clear();
+		for (Affectations a : this.listeTriee){
+			if (!this.printedItems.contains(a.getModule().getLibLong())) {
+				for (String s : this.printedItems) {
+
+				System.out.println(s);
+				}
+				for (CategorieHeures cat : a.getModule().getListCategorieHeure()) {
+					if(map.containsKey(cat))
+					{
+						affec = map.get(cat);
+						for (Affectations catA : affec) {
+							if(catA.getModule().getClass().getSimpleName().equals(typeMod))
+							{
+								modulePresent = true;
+								if (!a.getModule().getCode().equals(codeActuel)){
+									if(premPassage)
+									{
+										divMod+="					</ul>\n";
+										divMod+="				</div>\n";
+										divMod+="			</div>\n";
+									}
 									cpt = 1;
-									divMod+="						<li class=\"typeHeure\">"+a.getCategorieHeures().getlibCatHeur()+":\n";
-									catHeure  = a.getCategorieHeures().getlibCatHeur();
+									premPassage = true;
+									catHeure = null;
+									codeActuel= a.getModule().getCode();
+									divMod+="			<div>\n";
+									divMod+="				<h2>"+ a.getModule().getCode()+" "+a.getModule().getLibLong()+"</h2>\n";
+									divMod+="				<div class=\"barreBleue\">\n";
+									divMod+="					<ul>\n";
 								}
-								divMod+="								<ul>\n";
-								divMod+="									<li>Affectation "+cpt+" :\n";
-								divMod+="										<ul>\n";
-								divMod+="											<li>Nb Heures&nbsp;&nbsp;: "+a.getNbHeure()+"</li>\n";
-								divMod+="											<li>Nb Semaine : "+a.getNbSemaine()+"</li>\n";
-								divMod+="										</ul>\n";
-								divMod+="									</li>\n";
-								divMod+="								</ul>\n";
-								cpt++;
+
+								if (a.getModule().getCode().equals(codeActuel)){
+									if (!a.getCategorieHeures().getlibCatHeur().equals(catHeure)) {
+										cpt = 1;
+										divMod+="						<li class=\"typeHeure\">"+a.getCategorieHeures().getlibCatHeur()+":\n";
+										catHeure  = a.getCategorieHeures().getlibCatHeur();
+									}
+									divMod+="								<ul>\n";
+									divMod+="									<li>Affectation "+cpt+" :\n";
+									divMod+="										<ul>\n";
+									divMod+="											<li>Nb Heures&nbsp;&nbsp;: "+a.getNbHeure()+"</li>\n";
+									divMod+="											<li>Nb Semaine : "+a.getNbSemaine()+"</li>\n";
+									divMod+="										</ul>\n";
+									divMod+="									</li>\n";
+									divMod+="								</ul>\n";
+									cpt++;
+								}
 							}
 						}
 					}
 				}
+				printedItems.add(a.getModule().getLibLong());
 			}
 		}
-		System.out.println("passageFin");
 		if(modulePresent){
 			divMod+="					</ul>\n";
 			divMod+="				</div>\n";
@@ -374,18 +386,14 @@ public class Generation {
 	
 	public static void generationIntervenants(){
 		new Etat();
-		Etat.changerEtat("fz");
-
-		Generation g = new Generation(Etat.getIntervenants().get(0));
-		int cpt = 0;
-		//for (Intervenants i : Etat.getIntervenants()) {
-		//	System.out.println(cpt + Etat.getIntervenants().get(cpt).getNomIntervenant());
-		//	cpt++;
-			//Generation g = new Generation(i);
-		//}
+		Etat.changerEtat("etat1");
+		for (Intervenants i : Etat.getIntervenants()) {
+			Generation g = new Generation(i);
+		}
 	}
 	public static void generationModules(){
-		Etat.changerEtat("fz");
+		new Etat();
+		Etat.changerEtat("etat1");
 		ArrayList<Affectations> listeTriee = Etat.getAffectations();
 		Collections.sort(listeTriee);
 		HashMap <Module, ArrayList<Affectations>> hashMap = new HashMap <Module, ArrayList<Affectations>>();
@@ -401,6 +409,26 @@ public class Generation {
 			//Generation g = new Generation(i,hashMap,listeTriee);
 		}
 	}
+
+
+
+	
+	public static Map<String, List<Affectations>> sortHashMapByModuleCode(Map<Module, List<Affectations>> map) {
+        // Créer une liste d'entrées
+        List<Map.Entry<Module, List<Affectations>>> entryList = new LinkedList<>(map.entrySet());
+
+        // Trier la liste d'entrées en utilisant un comparateur personnalisé basé sur le code du module
+        Collections.sort(entryList, Comparator.comparing(Map.Entry::getKey));
+
+        // Créer une LinkedHashMap à partir de la liste triée
+        Map<String, List<Affectations>> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, List<Affectations>> entry : entryList) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedMap;
+    }
+
 	public static void main(String[] args) {
 		Generation.generationIntervenants();
 		//Generation.generationModules();

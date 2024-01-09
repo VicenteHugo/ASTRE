@@ -9,29 +9,29 @@ public class JTextFieldNumber extends JTextField implements KeyListener {
     private boolean isFloat = false;
     private boolean hasPoint = false;
 
-    public JTextFieldNumber() {
-        super();
-        this.addKeyListener(this);
-    }
+	public JTextFieldNumber() {
+		super();
+		this.addKeyListener(this);
+	}
 
-    public JTextFieldNumber(int ind) {
-        super(ind);
-        this.addKeyListener(this);
-    }
+	public JTextFieldNumber(int ind) {
+		super(ind);
+		this.addKeyListener(this);
+	}
 
-    public JTextFieldNumber(String message) {
-        super(message);
-        this.addKeyListener(this);
-    }
+	public JTextFieldNumber(String message) {
+		super(message);
+		this.addKeyListener(this);
+	}
 
-    public JTextFieldNumber(String message, int ind) {
-        super(message, ind);
-        this.addKeyListener(this);
-    }
+	public JTextFieldNumber(String message, int ind) {
+		super(message, ind);
+		this.addKeyListener(this);
+	}
 
-    public void setFloat(boolean isFloat) {
-        this.isFloat = isFloat;
-    }
+	public void setFloat(boolean isFloat) {
+		this.isFloat = isFloat;
+	}
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -53,9 +53,10 @@ public class JTextFieldNumber extends JTextField implements KeyListener {
         }
     }
 
-    public void keyPressed(KeyEvent e) {}
+	public void keyPressed(KeyEvent e) {}
 
     public void keyReleased(KeyEvent e) {}
 
  
 }
+
