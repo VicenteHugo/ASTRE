@@ -73,7 +73,9 @@ public class GrilleCatInt extends AbstractTableModel {
 			return;
 		switch (col) {
 			case 2:
-				coef = Float.parseFloat(tmp);
+				if(validateNumeric(tmp)){
+					coef = Float.parseFloat(tmp);
+				}
 				break;
 
 			case 3:
