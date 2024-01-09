@@ -104,7 +104,9 @@ public class PanelIntervenants extends JPanel {
 
 	private void annuler() {
 		this.frame.changePanel(new PanelAccueil(this.frame));
-		this.f.dispose();
+		if(f != null)
+			this.f.dispose();
+			
 		Controleur.getControleur().annuler();
 	}
 

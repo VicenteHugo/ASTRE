@@ -120,7 +120,23 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 		// Activation
 		
 		this.btnValider.addActionListener(this);
-		this.btnAnnuler.addActionListener((e) -> this.frameM.dispose());
+		this.btnAnnuler.addActionListener((e) -> p.annulerAjout());
+
+		this.boxCategorie.addActionListener(new ActionListener() {
+           	
+			@Override
+            public void actionPerformed(ActionEvent e) {
+                for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
+					if (ch.getCodeCatInt().equals(boxCategorie.getSelectedItem())) {
+						categ = ch;
+						txtHServ .setText(categ.getHeureMinCatInt() + "");
+						txtHMax  .setText(categ.getHeureMaxCatInt() + "");
+						txtCoefTP.setText(categ.getCoefCatInt()     + "");
+						break;
+					}
+				}		
+            }
+        });
 	}
 
 	public void actionPerformed(ActionEvent e) {{
@@ -171,6 +187,7 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 				JOptionPane.showMessageDialog(this, "Catégorie introuvable.");
 			}
 			this.panelIntervenants.maj();
+			panelIntervenants.annulerAjout();
 		};
 	}
 }
