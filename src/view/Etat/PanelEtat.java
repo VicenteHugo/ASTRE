@@ -38,6 +38,8 @@ public class PanelEtat extends JPanel {
 
     private String                 fichier = "";
 
+    private JFrame f;
+
     public PanelEtat(FrameAccueil frame) {
         /* Frame */
         this.frame = frame;
@@ -166,12 +168,19 @@ public class PanelEtat extends JPanel {
         }
     }
 
-    public void quitter () {this.frame.changePanel(new PanelAccueil(this.frame));}
+    public void quitter () {
+        if(f!=null)
+        f.dispose();
+        f = null;
+        this.frame.changePanel(new PanelAccueil(this.frame));
+        }
 
     private void ajouterEtat () {
-        JFrame f = new JFrame();
+        if(f!=null) return;
+        f = new JFrame();
 		f.add(new PanelAddEtat(this, f));
 		f.setTitle("Création d'un etat");
+        f.setResizable(false);
 		f.pack();
 		f.setLocationRelativeTo(null);
 		f.setAlwaysOnTop(true);

@@ -24,9 +24,6 @@ import model.Intervenants;
 import model.modules.Module;
 import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
-import view.module.*;
-import view.module.PanelStage;
-
 
 
 public class PanelAddSAEIntervenant extends JPanel {	

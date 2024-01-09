@@ -757,12 +757,6 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusLost(FocusEvent e) {
-
-		float coefCM  = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
-		float coefTP  = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
-		float coefTD  = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
-		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
-
 		int totPN   = Integer.parseInt(this.txtHeureEtdTutPN.getText()) + Integer.parseInt(this.txtHeureEtdCmPN.getText()) + 
 		              Integer.parseInt(this.txtHeureEtdTpPN .getText()) * Integer.parseInt(this.txtNbGpTp      .getText()) + 
 					  Integer.parseInt(this.txtHeureEtdTdPN .getText()) * Integer.parseInt(this.txtNbGpTd      .getText()) ;

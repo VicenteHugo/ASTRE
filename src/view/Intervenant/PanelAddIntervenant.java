@@ -22,8 +22,6 @@ import model.CategorieIntervenant;
 import model.Intervenants;
 import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
-import java.util.Scanner;
-import java.io.InputStream;
 
 public class PanelAddIntervenant extends JPanel implements ActionListener{
 	private JComboBoxStyle<String> boxCategorie;
@@ -40,7 +38,6 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 
 	private PanelIntervenants panelIntervenants;
 	private boolean isValid = true;
-	CategorieIntervenant categ = null;
 
 	public PanelAddIntervenant(PanelIntervenants p,FrameAccueil frame, Frame frameM) {
 		this.panelIntervenants = p;
@@ -144,6 +141,18 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {{
 			this.isValid = true;
+			CategorieIntervenant categ = null;
+			for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
+				if (ch.getCodeCatInt().equals(this.boxCategorie.getSelectedItem())) {
+					categ = ch;
+
+					this.txtHServ .setText(categ.getHeureMinCatInt() + "");
+					this.txtHMax  .setText(categ.getHeureMaxCatInt() + "");
+					this.txtCoefTP.setText(categ.getCoefCatInt()     + "");
+
+					break;
+				}
+			}
 			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
 				if(inter.getNomIntervenant().equals(this.txtNom.getText()) && inter.getPrenomIntervenant().equals(this.txtPrenom.getText())){
 					JOptionPane.showMessageDialog(this, "Utilisateur déja crée, changer de nom ou de prénom");
