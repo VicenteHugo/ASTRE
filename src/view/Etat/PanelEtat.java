@@ -8,6 +8,8 @@ import java.awt.Insets;
 
 import view.JButtonStyle;
 import view.JComboBoxStyle;
+
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,7 +31,12 @@ public class PanelEtat extends JPanel {
     private JComboBoxStyle<String> lstGeneration;
     private JButtonStyle           btnGenerer;
 
+    private JButtonStyle           btnChoix;
+    private JFileChooser           fileChooser;
+
     private JButtonStyle           btnRetour;
+
+    private String                 fichier = "";
 
     public PanelEtat(FrameAccueil frame) {
         /* Frame */
@@ -55,6 +62,13 @@ public class PanelEtat extends JPanel {
         //Retourner à l'acceuil
         this.btnRetour    = new JButtonStyle("Retour");
 
+        this.btnChoix = new JButtonStyle("Choisir Fichier");
+
+        this.fileChooser = new JFileChooser();
+        this.fileChooser.setCurrentDirectory(new java.io.File("."));
+        this.fileChooser.setDialogTitle("Choisir un répertoire");
+        this.fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
 
         /* STYLE */
 
@@ -72,6 +86,8 @@ public class PanelEtat extends JPanel {
         this.btnSelection.setPreferredSize(buttonSize);
         this.btnSupprimer.setPreferredSize(buttonSize);
 
+
+        this.btnGenerer.setEnabled(false);
 
         //List
         Dimension listSize = new Dimension(150, 30);
@@ -111,11 +127,14 @@ public class PanelEtat extends JPanel {
         gbc.gridx++;
         this.add(this.lstGeneration, gbc);
         gbc.gridx++;
+        this.add(this.btnChoix, gbc);
+        gbc.gridx++;
         this.add(this.btnGenerer, gbc);
 
         gbc.gridx = 0;
         gbc.gridy++;
         this.add(this.btnRetour, gbc);
+        
 
         // Action
         this.btnRetour   .addActionListener((e)->this.quitter());
@@ -123,6 +142,13 @@ public class PanelEtat extends JPanel {
         this.btnSelection.addActionListener((e)->this.changerEtat());
         this.btnSupprimer.addActionListener((e)->this.suppEtat());
         this.btnGenerer  .addActionListener((e)->this.generer());
+        this.btnChoix    .addActionListener((e)->{
+            int returnVal = this.fileChooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                this.fichier = this.fileChooser.getSelectedFile().getAbsolutePath();
+                this.btnGenerer.setEnabled(true);
+            }
+        });
     }
 
     private void changerEtat () {
@@ -171,5 +197,7 @@ public class PanelEtat extends JPanel {
 
     }
 
-
+    public String getFichier() {
+        return this.fichier;
+    }
 }
