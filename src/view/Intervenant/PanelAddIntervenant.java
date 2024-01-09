@@ -6,6 +6,8 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import view.JButtonStyle;
@@ -21,7 +23,7 @@ import model.Intervenants;
 import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 
-public class PanelAddIntervenant extends JPanel {
+public class PanelAddIntervenant extends JPanel implements ActionListener{
 	private JComboBoxStyle<String> boxCategorie;
 	private JTextField txtNom;
 	private JTextField txtPrenom;
@@ -117,12 +119,36 @@ public class PanelAddIntervenant extends JPanel {
 
 		// Activation
 		
-		this.btnValider.addActionListener((e) -> {
+		this.btnValider.addActionListener(this);
+		this.btnAnnuler.addActionListener((e) -> p.annulerAjout());
+
+		this.boxCategorie.addActionListener(new ActionListener() {
+           	
+			@Override
+            public void actionPerformed(ActionEvent e) {
+                for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
+					if (ch.getCodeCatInt().equals(boxCategorie.getSelectedItem())) {
+						txtHServ .setText(ch.getHeureMinCatInt() + "");
+						txtHMax  .setText(ch.getHeureMaxCatInt() + "");
+						txtCoefTP.setText(ch.getCoefCatInt()     + "");
+						break;
+					}
+				}		
+            }
+        });
+	}
+
+	public void actionPerformed(ActionEvent e) {{
 			this.isValid = true;
 			CategorieIntervenant categ = null;
 			for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
 				if (ch.getCodeCatInt().equals(this.boxCategorie.getSelectedItem())) {
 					categ = ch;
+
+					this.txtHServ .setText(categ.getHeureMinCatInt() + "");
+					this.txtHMax  .setText(categ.getHeureMaxCatInt() + "");
+					this.txtCoefTP.setText(categ.getCoefCatInt()     + "");
+
 					break;
 				}
 			}
@@ -136,9 +162,14 @@ public class PanelAddIntervenant extends JPanel {
 			}
 			if (categ != null && isValid) {
 				try {
+
+					if (this.txtHServ .getText().isEmpty()) this.txtHServ .setText(categ.getHeureMinCatInt() + "");
+					if (this.txtHMax  .getText().isEmpty()) this.txtHMax  .setText(categ.getHeureMaxCatInt() + "");
+					if (this.txtCoefTP.getText().isEmpty()) this.txtCoefTP.setText(categ.getCoefCatInt()     + "");
+
 					int heuresService = Integer.parseInt(this.txtHServ.getText());
-					int heuresMax = Integer.parseInt(this.txtHMax.getText());
-					float coef = Float.parseFloat(this.txtCoefTP.getText());
+					int heuresMax     = Integer.parseInt(this.txtHMax.getText());
+					float coef        = Float.parseFloat(this.txtCoefTP.getText());
 					if(heuresMax > heuresService){
 						Intervenants inter = new Intervenants(categ, this.txtNom.getText(), this.txtPrenom.getText(),
 							heuresService,heuresMax,coef);
@@ -155,7 +186,7 @@ public class PanelAddIntervenant extends JPanel {
 				JOptionPane.showMessageDialog(this, "Catégorie introuvable.");
 			}
 			this.panelIntervenants.maj();
-		});
-		this.btnAnnuler.addActionListener((e) -> this.frameM.dispose());
+			panelIntervenants.annulerAjout();
+		};
 	}
 }

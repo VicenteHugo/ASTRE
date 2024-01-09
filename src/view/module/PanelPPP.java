@@ -87,6 +87,8 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 	private Module       mod;
 	private boolean      estNouveau;
 
+	private JFrame f;
+
 
 	public PanelPPP(FrameAccueil frame, Semestres semestres){
 
@@ -652,6 +654,8 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 	private void quitter () {
+		if(f!=null)
+		this.f.dispose();
 		this.frame.changePanel(new PanelPrevi(this.frame));
 		Controleur.getControleur().annuler();
 	}
@@ -720,7 +724,8 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 	private void ajouter () {
-		JFrame f = new JFrame();
+		if(f != null) return;
+		f = new JFrame();
         f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
         f.setTitle("Ajout d'une affectation");
 		f.pack();
@@ -752,12 +757,6 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusLost(FocusEvent e) {
-
-		float coefCM  = Controleur.getControleur().getCategorieHeure("CM").getcoefCatHeur();
-		float coefTP  = Controleur.getControleur().getCategorieHeure("TP").getcoefCatHeur();
-		float coefTD  = Controleur.getControleur().getCategorieHeure("TD").getcoefCatHeur();
-		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
-
 		int totPN   = Integer.parseInt(this.txtHeureEtdTutPN.getText()) + Integer.parseInt(this.txtHeureEtdCmPN.getText()) + 
 		              Integer.parseInt(this.txtHeureEtdTpPN .getText()) * Integer.parseInt(this.txtNbGpTp      .getText()) + 
 					  Integer.parseInt(this.txtHeureEtdTdPN .getText()) * Integer.parseInt(this.txtNbGpTd      .getText()) ;
@@ -810,5 +809,10 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusGained(FocusEvent e) {
+	}
+
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
 	}
 }

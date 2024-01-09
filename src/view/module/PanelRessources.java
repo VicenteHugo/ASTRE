@@ -97,6 +97,8 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	private Module       mod;
 	private boolean      estNouveau;
 
+	private JFrame f;
+
 
 	public PanelRessources(FrameAccueil frame, Semestres semestres) {
 		this.frame = frame;
@@ -755,6 +757,8 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 	private void quitter () {
+		if(f != null)
+		this.f.dispose();
 		this.frame.changePanel(new PanelPrevi(this.frame));
 		Controleur.getControleur().annuler();
 	}
@@ -813,7 +817,8 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 	private void ajouter () {
-		JFrame f = new JFrame();
+		if(f != null) return;
+		f = new JFrame();
         f.add(new PanelAddRessourceIntervenant(this,this.frame, f,mod));
         f.setTitle("Ajout d'une affectation");
 		f.pack();
@@ -942,5 +947,10 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	}
 	
 	public void focusGained(FocusEvent e) {
+	}
+
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
 	}
 }

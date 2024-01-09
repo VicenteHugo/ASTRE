@@ -74,6 +74,8 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 	private Module       mod;
 	private boolean      estNouveau;
 
+	private JFrame f;
+
 
 	public PanelSAE(FrameAccueil frame, Semestres semestres){
 
@@ -573,6 +575,8 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 	private void quitter () {
+		if (this.f != null)
+		this.f.dispose();
 		this.frame.changePanel(new PanelPrevi(this.frame));
 		Controleur.getControleur().annuler();
 	}
@@ -634,7 +638,8 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 	private void ajouter () {
-		JFrame f = new JFrame();
+		if(f != null) return;
+		f = new JFrame();
         f.add(new PanelAddSAEIntervenant(this,this.frame, f,this.mod));
         f.setTitle("Ajout d'une affectation");
 		f.pack();
@@ -666,10 +671,6 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusLost(FocusEvent e) {
-
-		float coefSAE = Controleur.getControleur().getCategorieHeure("SAE").getcoefCatHeur();
-		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
-
 		int totPN   = Integer.parseInt(this.txtHeureEtdSaePN.getText())   + Integer.parseInt(this.txtHeureEtdTutPN.getText());
 		int totEqtd = Integer.parseInt(this.txtEtdSaePromRep.getText()) + Integer.parseInt(this.txtEtdTutPromRep.getText());
 
@@ -700,5 +701,10 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusGained(FocusEvent e) {
+	}
+
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
 	}
 }

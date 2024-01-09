@@ -27,6 +27,8 @@ public class PanelIntPara extends JPanel {
 	private JButtonStyle btnAjouter;
 	private JButtonStyle btnSupprimer;
 
+	private JFrame f;
+
 	public PanelIntPara(FrameAccueil frame) {
 
 		// Frame
@@ -95,6 +97,8 @@ public class PanelIntPara extends JPanel {
 	}
 	
 	private void annuler() {
+		if(f!=null)
+		f.dispose();
 		this.frame.changePanel(new PanelParametre(this.frame));
 		Controleur.getControleur().annuler();
 	}
@@ -107,7 +111,8 @@ public class PanelIntPara extends JPanel {
 	}
 
 	private void ajouter() {
-		JFrame f = new JFrame();
+		if(f != null) return;
+		f = new JFrame();
 		f.add(new PanelAddCatInt(this, f));
 		f.setTitle("Ajout d'une catégorie");
 		f.pack();
@@ -152,4 +157,8 @@ public class PanelIntPara extends JPanel {
 		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
+	}
 }

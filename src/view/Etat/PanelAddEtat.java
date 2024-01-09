@@ -41,9 +41,6 @@ public class PanelAddEtat extends JPanel {
 		this.panel = panel;
 		this.frameM = frameM;
 
-		this.frameM.setSize(350, 350);
-		this.frameM.setResizable(false);
-
 		//Création
 		this.txtNom = new JTextField(10);
 		this.lstEtat = new JComboBoxStyle<>();

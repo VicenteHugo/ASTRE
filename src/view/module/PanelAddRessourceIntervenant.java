@@ -194,9 +194,10 @@ public class PanelAddRessourceIntervenant extends JPanel{
 
 				}
 			}
+			panel.annulerAjout();
 		});
 
-		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
+		this.btnAnnuler.addActionListener((e)->panel.annulerAjout());
 	}
 
 	private int calculNbGroupe(int nbGroupe,CategorieHeures categ){
