@@ -128,10 +128,9 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
             public void actionPerformed(ActionEvent e) {
                 for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
 					if (ch.getCodeCatInt().equals(boxCategorie.getSelectedItem())) {
-						categ = ch;
-						txtHServ .setText(categ.getHeureMinCatInt() + "");
-						txtHMax  .setText(categ.getHeureMaxCatInt() + "");
-						txtCoefTP.setText(categ.getCoefCatInt()     + "");
+						txtHServ .setText(ch.getHeureMinCatInt() + "");
+						txtHMax  .setText(ch.getHeureMaxCatInt() + "");
+						txtCoefTP.setText(ch.getCoefCatInt()     + "");
 						break;
 					}
 				}		
