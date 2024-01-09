@@ -126,4 +126,9 @@ public class PanelIntervenants extends JPanel {
 	public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleInt());
 	}
+
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
+	}
 }

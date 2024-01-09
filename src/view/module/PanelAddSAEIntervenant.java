@@ -163,7 +163,7 @@ public class PanelAddSAEIntervenant extends JPanel {
 			}	
 		});
 
-		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());
+		this.btnAnnuler.addActionListener((e)->panel.annulerAjout());
 	}
 
 	public PanelAddSAEIntervenant (PanelStage panel, FrameAccueil frame, Frame frameM, Module mod2) {
@@ -426,6 +426,8 @@ public class PanelAddSAEIntervenant extends JPanel {
 					this.panelPPP.focusLost(null);		
 				}
 			}	
+
+			panel.annulerAjout();
 		});
 
 		this.btnAnnuler.addActionListener((e)->this.frameM.dispose());

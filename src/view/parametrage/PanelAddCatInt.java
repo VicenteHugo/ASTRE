@@ -123,7 +123,7 @@ public class PanelAddCatInt extends JPanel {
 
 		//Activation
 		this.btnValider.addActionListener((e) -> this.ajouterCatInt());
-		this.btnAnnuler.addActionListener((e) -> this.frameM.dispose());
+		this.btnAnnuler.addActionListener((e) -> panel.annulerAjout());
 	}
 
 	private void ajouterCatInt() {
@@ -163,6 +163,8 @@ public class PanelAddCatInt extends JPanel {
 		} catch (NumberFormatException e) {
 			showMessageDialog("Entrez des valeurs numériques pour le coefficient et les heures.");
 		}
+
+		panel.annulerAjout();
 	}
 
 	private void showMessageDialog(String message) {

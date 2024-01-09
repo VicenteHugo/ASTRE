@@ -816,4 +816,9 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 	public void focusGained(FocusEvent e) {
 	}
+
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
+	}
 }

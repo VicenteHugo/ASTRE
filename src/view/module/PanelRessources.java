@@ -948,4 +948,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 	
 	public void focusGained(FocusEvent e) {
 	}
+
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
+	}
 }

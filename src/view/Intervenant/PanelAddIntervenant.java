@@ -155,7 +155,8 @@ public class PanelAddIntervenant extends JPanel {
 				JOptionPane.showMessageDialog(this, "Catégorie introuvable.");
 			}
 			this.panelIntervenants.maj();
+			p.annulerAjout();
 		});
-		this.btnAnnuler.addActionListener((e) -> this.frameM.dispose());
+		this.btnAnnuler.addActionListener((e) -> p.annulerAjout());
 	}
 }
