@@ -38,6 +38,7 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 
 	private PanelIntervenants panelIntervenants;
 	private boolean isValid = true;
+	CategorieIntervenant categ;
 
 	public PanelAddIntervenant(PanelIntervenants p,FrameAccueil frame, Frame frameM) {
 		this.panelIntervenants = p;
@@ -130,9 +131,9 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 			for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
 				if (ch.getCodeCatInt().equals(boxCategorie.getSelectedItem())) {
 					categ = ch;
-					txtHServ .setText(categ.getHeureMinCatInt() + "");
-					txtHMax  .setText(categ.getHeureMaxCatInt() + "");
-					txtCoefTP.setText(categ.getCoefCatInt()     + "");
+					txtHServ .setText(ch.getHeureMinCatInt() + "");
+					txtHMax  .setText(ch.getHeureMaxCatInt() + "");
+					txtCoefTP.setText(ch.getCoefCatInt()     + "");
 					break;	
 				}
 			}		
@@ -141,18 +142,6 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {{
 			this.isValid = true;
-			CategorieIntervenant categ = null;
-			for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
-				if (ch.getCodeCatInt().equals(this.boxCategorie.getSelectedItem())) {
-					categ = ch;
-
-					this.txtHServ .setText(categ.getHeureMinCatInt() + "");
-					this.txtHMax  .setText(categ.getHeureMaxCatInt() + "");
-					this.txtCoefTP.setText(categ.getCoefCatInt()     + "");
-
-					break;
-				}
-			}
 			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
 				if(inter.getNomIntervenant().equals(this.txtNom.getText()) && inter.getPrenomIntervenant().equals(this.txtPrenom.getText())){
 					JOptionPane.showMessageDialog(this, "Utilisateur déja crée, changer de nom ou de prénom");
