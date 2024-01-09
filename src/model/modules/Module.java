@@ -110,8 +110,6 @@ public abstract class Module implements Comparable<Module> {
 
 			int heurePN = this.heures.get(catH).get(0);
 
-			System.out.println("Pour mod " + this.code + " (" +catH.getlibCatHeur()+") : " + heurePN + " * " + catH.getcoefCatHeur());
-
 			somme += heurePN  * catH.getcoefCatHeur();
 
 		}
@@ -137,8 +135,6 @@ public abstract class Module implements Comparable<Module> {
 			}else{
 				heure += a.getNbGroupe() * cat.getcoefCatHeur();
 			}
-
-			System.out.println(this.code + " " + cat.getlibCatHeur() + " : " + a.getNbHeure() + " " + a.getNbSemaine() +" "+ a.getNbGroupe() +" "+ nbHeureSem +" "+ cat.getcoefCatHeur());
 
 		}
 

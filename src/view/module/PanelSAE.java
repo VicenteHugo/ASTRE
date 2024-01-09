@@ -624,8 +624,6 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 		}else{
 
-			System.out.println(map);
-
 			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, 0, val, map)) {
 				Controleur.getControleur().enregistrer();
 				this.quitter();
