@@ -40,7 +40,6 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 
 	private PanelIntervenants panelIntervenants;
 	private boolean isValid = true;
-	CategorieIntervenant categ = null;
 
 	public PanelAddIntervenant(PanelIntervenants p,FrameAccueil frame, Frame frameM) {
 		this.panelIntervenants = p;
@@ -124,26 +123,22 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 		
 		this.btnValider.addActionListener(this);
 		this.btnAnnuler.addActionListener((e) -> this.frameM.dispose());
-
-		this.boxCategorie.addActionListener(new ActionListener() {
-           	
-			@Override
-            public void actionPerformed(ActionEvent e) {
-                for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
-					if (ch.getCodeCatInt().equals(boxCategorie.getSelectedItem())) {
-						categ = ch;
-						txtHServ .setText(categ.getHeureMinCatInt() + "");
-						txtHMax  .setText(categ.getHeureMaxCatInt() + "");
-						txtCoefTP.setText(categ.getCoefCatInt()     + "");
-						break;
-					}
-				}		
-            }
-        });
 	}
 
 	public void actionPerformed(ActionEvent e) {{
 			this.isValid = true;
+			CategorieIntervenant categ = null;
+			for (CategorieIntervenant ch : Controleur.getControleur().getCategorieIntervenants()) {
+				if (ch.getCodeCatInt().equals(this.boxCategorie.getSelectedItem())) {
+					categ = ch;
+
+					this.txtHServ .setText(categ.getHeureMinCatInt() + "");
+					this.txtHMax  .setText(categ.getHeureMaxCatInt() + "");
+					this.txtCoefTP.setText(categ.getCoefCatInt()     + "");
+
+					break;
+				}
+			}
 			for(Intervenants inter : Controleur.getControleur().getIntervenants()){
 				if(inter.getNomIntervenant().equals(this.txtNom.getText()) && inter.getPrenomIntervenant().equals(this.txtPrenom.getText())){
 					JOptionPane.showMessageDialog(this, "Utilisateur déja crée, changer de nom ou de prénom");
@@ -178,8 +173,6 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 				JOptionPane.showMessageDialog(this, "Catégorie introuvable.");
 			}
 			this.panelIntervenants.maj();
-			p.annulerAjout();
-		});
-		this.btnAnnuler.addActionListener((e) -> p.annulerAjout());
+		};
 	}
 }
