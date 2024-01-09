@@ -123,7 +123,7 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 		// Activation
 		
 		this.btnValider.addActionListener(this);
-		this.btnAnnuler.addActionListener((e) -> this.frameM.dispose());
+		this.btnAnnuler.addActionListener((e) -> p.annulerAjout());
 
 		this.boxCategorie.addActionListener(new ActionListener() {
            	
@@ -178,8 +178,7 @@ public class PanelAddIntervenant extends JPanel implements ActionListener{
 				JOptionPane.showMessageDialog(this, "Catégorie introuvable.");
 			}
 			this.panelIntervenants.maj();
-			p.annulerAjout();
-		});
-		this.btnAnnuler.addActionListener((e) -> p.annulerAjout());
+			panelIntervenants.annulerAjout();
+		};
 	}
 }
