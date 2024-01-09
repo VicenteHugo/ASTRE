@@ -22,6 +22,8 @@ import model.CategorieIntervenant;
 import model.Intervenants;
 import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
+import java.util.Scanner;
+import java.io.InputStream;
 
 public class PanelAddIntervenant extends JPanel implements ActionListener{
 	private JComboBoxStyle<String> boxCategorie;
