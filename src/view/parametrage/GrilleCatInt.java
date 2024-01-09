@@ -79,7 +79,9 @@ public class GrilleCatInt extends AbstractTableModel {
 				break;
 
 			case 2:
-				coef = Float.parseFloat(tmp);
+				if(validateNumeric(tmp)){
+					coef = Float.parseFloat(tmp);
+				}
 				break;
 
 			case 3:
@@ -102,9 +104,9 @@ public class GrilleCatInt extends AbstractTableModel {
 
 	}
 	
-	
-
-	// private void showMessageDialog(String message) {
-	// 	JOptionPane.showMessageDialog(this., message, "Erreur", JOptionPane.ERROR_MESSAGE);
-	// }
+	private static boolean validateNumeric(String input) {
+        // Regex pour un entier ou un nombre à virgule flottante avec un seul point ou virgule
+        String regex = "^[+-]?\\d*\\.?\\d+$";
+        return input.matches(regex);
+    }
 }
