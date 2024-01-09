@@ -77,7 +77,7 @@ public class Etat {
 		Etat.lstActions = new ArrayList<>();
 
 		try {
-			Scanner sc = new Scanner(new FileReader("./config/login.dat"));
+			/*Scanner sc = new Scanner(new FileReader("./config/login.dat"));
 			Scanner sc2 = new Scanner(sc.next());
 			sc2.useDelimiter("=");
 			sc2.next();
@@ -91,7 +91,7 @@ public class Etat {
 			sc2 = new Scanner(sc.next());
 			sc2.useDelimiter("=");
 			sc2.next();
-			String serveur = sc2.next();
+			String serveur = sc2.next();*/
 
 			Class.forName("org.postgresql.Driver"); //Postgress
 
@@ -113,9 +113,9 @@ public class Etat {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (FileNotFoundException e) {
+		} /*catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	

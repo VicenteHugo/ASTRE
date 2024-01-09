@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 
 public class JTextFieldNumber extends JTextField implements KeyListener {
     private boolean isFloat = false;
+    private boolean hasPoint = false;
 
     public JTextFieldNumber() {
         super();
@@ -45,6 +46,8 @@ public class JTextFieldNumber extends JTextField implements KeyListener {
             }
         } else {
             if (isPointOrComma) {
+                e.consume();
+            } else if (!Character.isDigit(e.getKeyChar()) && !isPointOrComma) {
                 e.consume();
             }
         }
