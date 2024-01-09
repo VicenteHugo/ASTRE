@@ -111,7 +111,9 @@ public class PanelIntervenants extends JPanel {
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
-
+		if(ind < 0){
+			return ;
+		}
 		if (!Controleur.getControleur().supprimerIntervenant(ind)) {
 			JOptionPane.showMessageDialog(this, "L'intervenant à encore des affectations", "Erreur", JOptionPane.ERROR_MESSAGE);
 			return ;
