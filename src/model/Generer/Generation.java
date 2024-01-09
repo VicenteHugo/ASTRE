@@ -165,6 +165,7 @@ public class Generation {
 		String  catHeure   = "";
 		ArrayList<Affectations> affec;
 		Boolean premPassage   = false;
+		Boolean premierPassageHeure = false;
 		Boolean modulePresent = false;
 		int cpt=0;
 		HashMap<String, ArrayList<Affectations>> map = new HashMap<String, ArrayList<Affectations>>();
@@ -209,12 +210,16 @@ public class Generation {
 							divMod+="								<ul>\n";
 							divMod+="									<li>Affectation "+cpt+" :\n";
 							divMod+="										<ul>\n";
-							divMod+="											<li>Nb Heures&nbsp;&nbsp;: "+catA.getNbHeure()+"</li>\n";
-							divMod+="											<li>Nb Semaine : "+catA.getNbSemaine()+"</li>\n";
+							divMod+="											<li>Nb Heures/Semaine : "+catA.getNbHeure()+"</li>\n";
+							divMod+="											<li>Nb Semaine&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: "+catA.getNbSemaine()+"</li>\n";
 							divMod+="										</ul>\n";
 							divMod+="									</li>\n";
 							divMod+="								</ul>\n";
 							cpt++;
+						}
+						if (catA.getCategorieHeures().getlibCatHeur().equals(catHeure)) {
+							divMod+="									<li>Total? :\n";
+
 						}
 					}
 				}
@@ -308,6 +313,8 @@ public class Generation {
 		}
 	}
 	public static void main(String[] args) {
+		new Etat();
+		Etat.changerEtat("fz");
 		Generation.generationIntervenants();
 		Generation.generationModules();
 	}
