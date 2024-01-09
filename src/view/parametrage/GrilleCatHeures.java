@@ -55,7 +55,7 @@ public class GrilleCatHeures extends AbstractTableModel {
 	public void setValueAt(Object value, int row, int col) {
 
 		String lib  = (String) this.tabDonnees[row][0];
-		float  coef = (Float) this.tabDonnees[row][1];
+		float  coef;
 
 		String tmp = (String) value;
 		if(validateNumeric(tmp)){
