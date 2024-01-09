@@ -672,9 +672,6 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 	public void focusLost(FocusEvent e) {
 
-		float coefSAE = Controleur.getControleur().getCategorieHeure("SAE").getcoefCatHeur();
-		float coefTUT = Controleur.getControleur().getCategorieHeure("TUT").getcoefCatHeur();
-
 		int totPN   = Integer.parseInt(this.txtHeureEtdSaePN.getText())   + Integer.parseInt(this.txtHeureEtdTutPN.getText());
 		int totEqtd = Integer.parseInt(this.txtEtdSaePromRep.getText()) + Integer.parseInt(this.txtEtdTutPromRep.getText());
 

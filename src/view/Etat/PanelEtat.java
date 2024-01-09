@@ -17,9 +17,13 @@ import javax.swing.JPanel;
 
 import controleur.Controleur;
 import model.Etat;
+import model.Generer.Generation;
 import view.accueil.*;
 
 public class PanelEtat extends JPanel {
+
+    private static String                 fichier = "";
+
 
     private FrameAccueil frame;
     
@@ -36,7 +40,6 @@ public class PanelEtat extends JPanel {
 
     private JButtonStyle           btnRetour;
 
-    private String                 fichier = "";
 
     public PanelEtat(FrameAccueil frame) {
         /* Frame */
@@ -145,7 +148,7 @@ public class PanelEtat extends JPanel {
         this.btnChoix    .addActionListener((e)->{
             int returnVal = this.fileChooser.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                this.fichier = this.fileChooser.getSelectedFile().getAbsolutePath();
+                PanelEtat.fichier = this.fileChooser.getSelectedFile().getAbsolutePath();
                 this.btnGenerer.setEnabled(true);
             }
         });
@@ -199,7 +202,7 @@ public class PanelEtat extends JPanel {
 
     }
 
-    public String getFichier() {
-        return this.fichier;
+    public static String getFichier() {
+        return PanelEtat.fichier;
     }
 }
