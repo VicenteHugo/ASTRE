@@ -6,7 +6,8 @@ import java.awt.event.KeyListener;
 import javax.swing.JTextField;
 
 public class JTextFieldNumber extends JTextField implements KeyListener {
-	private boolean isFloat = false;
+    private boolean isFloat = false;
+    private boolean hasPoint = false;
 
 	public JTextFieldNumber() {
 		super();
@@ -32,17 +33,30 @@ public class JTextFieldNumber extends JTextField implements KeyListener {
 		this.isFloat = isFloat;
 	}
 
-	public void keyTyped(KeyEvent e) {
-		boolean isPoint = false;
-		if(this.isFloat) isPoint = (e.getKeyChar() == '.' || e.getKeyChar() == ',');
-			
-		if (!Character.isDigit(e.getKeyChar()) && !isPoint)
-			e.consume();
-	}
+    @Override
+    public void keyTyped(KeyEvent e) {
+        boolean isPointOrComma = (e.getKeyChar() == '.' || e.getKeyChar() == ',');
+        boolean containsPointOrComma = (this.getText().contains(",") || this.getText().contains("."));
+
+        if (this.isFloat) {
+            if (isPointOrComma && containsPointOrComma) {
+                e.consume();
+            } else if (!Character.isDigit(e.getKeyChar()) && !isPointOrComma) {
+                e.consume();
+            }
+        } else {
+            if (isPointOrComma) {
+                e.consume();
+            } else if (!Character.isDigit(e.getKeyChar()) && !isPointOrComma) {
+                e.consume();
+            }
+        }
+    }
 
 	public void keyPressed(KeyEvent e) {}
 
-	public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {}
 
+ 
 }
 

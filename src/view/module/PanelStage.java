@@ -74,7 +74,7 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	private Module       mod;
 	private boolean      estNouveau;
 
-
+	private JFrame f;
 
 
 	public PanelStage(FrameAccueil frame, Semestres semestres) {
@@ -635,12 +635,16 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 
 	private void quitter () {
+		if (this.f != null)
+		this.f.dispose();
 		this.frame.changePanel(new PanelPrevi(frame));
+		Controleur.getControleur().annuler();
 	}
 
 
 	private void ajouter () {
-		JFrame f = new JFrame();
+		if(f != null) return;
+		f = new JFrame();
         f.add(new PanelAddSAEIntervenant(this,this.frame, f,mod));
         f.setTitle("Ajout d'une affectation");
 		f.pack();

@@ -13,6 +13,8 @@ import model.modules.Stage;
 import model.modules.PPP;
 import java.util.Scanner;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
 
@@ -75,14 +77,30 @@ public class Etat {
 		Etat.lstActions = new ArrayList<>();
 
 		try {
+			/*Scanner sc = new Scanner(new FileReader("./config/login.dat"));
+			Scanner sc2 = new Scanner(sc.next());
+			sc2.useDelimiter("=");
+			sc2.next();
+			String name = sc2.next();
+			sc2.close();
+			sc2 = new Scanner(sc.next());
+			sc2.useDelimiter("=");
+			sc2.next();
+			String pwd = sc2.next();
+			sc2.close();
+			sc2 = new Scanner(sc.next());
+			sc2.useDelimiter("=");
+			sc2.next();
+			String serveur = sc2.next();*/
+
 			Class.forName("org.postgresql.Driver"); //Postgress
 
 			// Connection
-			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
-			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hugo","hugo","sui12345"); //Postgress
-			Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
+			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hugo","hugo","sui12345"); //Postgress
+			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dave","dave","davepass"); //Postgress
-			
+			/* Etat.connec = DriverManager.getConnection("jdbc:postgresql://" + serveur + ":5432/" + name, name, pwd); //avec instaler */
 			Etat.recupererNomEtat();
 
 			//Lancer le scripts en cas de Table détruite
@@ -95,7 +113,9 @@ public class Etat {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} /*catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}*/
 	}
 
 	

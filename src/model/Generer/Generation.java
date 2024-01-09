@@ -35,7 +35,7 @@ public class Generation {
 	private Intervenants intervenant;
 	private Module module;
 	private List<Affectations> listeTriee;
-	private Set<String> printedItems = new HashSet<String>();
+	private Set<Module> printedItems = new HashSet<Module>();
 	public Generation(Intervenants intervenant)
 	{
 		this.intervenant = intervenant;
@@ -84,17 +84,11 @@ public class Generation {
 			this.listeTriee = this.intervenant.getLstAffectations();
 			Collections.sort(this.listeTriee);
 			for (Affectations a : this.listeTriee) {
-				if (!this.printedItems.contains(a.getModule().getLibLong())) {
+				if (!this.printedItems.contains(a.getModule())) {
 					pw.println ("					<li>"+ a.getModule().getCode()+" "+a.getModule().getLibLong()+"</li>");
-					this.printedItems.add(a.getModule().getLibLong());
-					System.out.println(a.getModule().getCode());
+					this.printedItems.add(a.getModule());
 				}
-			}	
-			System.out.println("print?");
-			for (Affectations affectations : listeTriee) {
-				System.out.println(affectations.getModule().getCode());
 			}
-			System.out.println();
 			pw.println ( "					</ul>");
 			pw.println ( "				</div>");
 			pw.println ( "			</div>");
@@ -168,11 +162,9 @@ public class Generation {
 			pw.println ( "			</div>");
 			pw.println ( "		</div>");
 			pw.println ( "		<div class=\"gridRessource\">");
-			System.out.println("Avant la boucle");
 			for (CategorieHeures cat : module.getListCategorieHeure()) {
             		pw.println (divHeure(cat.getlibCatHeur()));
 			}
-			System.out.println("Après la boucle");
 			
 			pw.println ( "		</div>\n");
 			pw.println (this.pied);
@@ -189,74 +181,69 @@ public class Generation {
 		ArrayList<Affectations> affec;
 		Boolean premPassage   = false;
 		Boolean modulePresent = false;
-		HashMap<CategorieHeures, ArrayList<Affectations>> map = new HashMap<CategorieHeures, ArrayList<Affectations>>();
+		int cpt=0;
+		HashMap<String, ArrayList<Affectations>> map = new HashMap<String, ArrayList<Affectations>>();
 		for (Affectations a : this.intervenant.getLstAffectations()) {
-			if(! map.containsKey(a.getCategorieHeures()))
+			if(! map.containsKey(a.getCategorieHeures().getlibCatHeur()))
 			{
-				map.put(a.getCategorieHeures(),new ArrayList < Affectations >());
+				map.put(a.getCategorieHeures().getlibCatHeur(),new ArrayList < Affectations >());
 			}
-			map.get(a.getCategorieHeures()).add(a);
+			map.get(a.getCategorieHeures().getlibCatHeur()).add(a);
 		}
-
-		int cpt = 1;
-		for (String s : this.printedItems) {
-			System.out.println(s);
-		}
+		System.out.println(typeMod);
 		this.printedItems.clear();
+		System.out.println("passageDeb");
 		for (Affectations a : this.listeTriee){
-			if (!this.printedItems.contains(a.getModule().getLibLong())) {
-				for (String s : this.printedItems) {
+			if (!this.printedItems.contains(a.getModule())) {
+				//System.out.println(a.getModule().getCode());	
+				printedItems.add(a.getModule());
+				for (String libCat : map.keySet()) {
+					affec = map.get(libCat);
+					Collections.sort(affec);
+					for (Affectations catA : affec) {
+						if(catA.getModule().getClass().getSimpleName().equals(typeMod))
+						{
+							modulePresent = true;
+							System.out.println(catA.getModule().getCode());
+							if (!a.getModule().getCode().equals(codeActuel)){
+								if(premPassage)
+								{
+									divMod+="					</ul>\n";
+									divMod+="				</div>\n";
+									divMod+="			</div>\n";
+								}
+								cpt = 1;
+								premPassage = true;
+								catHeure = null;
+								codeActuel= a.getModule().getCode();
+								divMod+="			<div>\n";
+								divMod+="				<h2>"+ a.getModule().getCode()+" "+a.getModule().getLibLong()+"</h2>\n";
+								divMod+="				<div class=\"barreBleue\">\n";
+								divMod+="					<ul>\n";
+							}
 
-				System.out.println(s);
-				}
-				for (CategorieHeures cat : a.getModule().getListCategorieHeure()) {
-					if(map.containsKey(cat))
-					{
-						affec = map.get(cat);
-						for (Affectations catA : affec) {
-							if(catA.getModule().getClass().getSimpleName().equals(typeMod))
-							{
-								modulePresent = true;
-								if (!a.getModule().getCode().equals(codeActuel)){
-									if(premPassage)
-									{
-										divMod+="					</ul>\n";
-										divMod+="				</div>\n";
-										divMod+="			</div>\n";
-									}
+							if (a.getModule().getCode().equals(codeActuel)){
+								if (!a.getCategorieHeures().getlibCatHeur().equals(catHeure)) {
 									cpt = 1;
-									premPassage = true;
-									catHeure = null;
-									codeActuel= a.getModule().getCode();
-									divMod+="			<div>\n";
-									divMod+="				<h2>"+ a.getModule().getCode()+" "+a.getModule().getLibLong()+"</h2>\n";
-									divMod+="				<div class=\"barreBleue\">\n";
-									divMod+="					<ul>\n";
+									divMod+="						<li class=\"typeHeure\">"+a.getCategorieHeures().getlibCatHeur()+":\n";
+									catHeure  = a.getCategorieHeures().getlibCatHeur();
 								}
-
-								if (a.getModule().getCode().equals(codeActuel)){
-									if (!a.getCategorieHeures().getlibCatHeur().equals(catHeure)) {
-										cpt = 1;
-										divMod+="						<li class=\"typeHeure\">"+a.getCategorieHeures().getlibCatHeur()+":\n";
-										catHeure  = a.getCategorieHeures().getlibCatHeur();
-									}
-									divMod+="								<ul>\n";
-									divMod+="									<li>Affectation "+cpt+" :\n";
-									divMod+="										<ul>\n";
-									divMod+="											<li>Nb Heures&nbsp;&nbsp;: "+a.getNbHeure()+"</li>\n";
-									divMod+="											<li>Nb Semaine : "+a.getNbSemaine()+"</li>\n";
-									divMod+="										</ul>\n";
-									divMod+="									</li>\n";
-									divMod+="								</ul>\n";
-									cpt++;
-								}
+								divMod+="								<ul>\n";
+								divMod+="									<li>Affectation "+cpt+" :\n";
+								divMod+="										<ul>\n";
+								divMod+="											<li>Nb Heures&nbsp;&nbsp;: "+a.getNbHeure()+"</li>\n";
+								divMod+="											<li>Nb Semaine : "+a.getNbSemaine()+"</li>\n";
+								divMod+="										</ul>\n";
+								divMod+="									</li>\n";
+								divMod+="								</ul>\n";
+								cpt++;
 							}
 						}
 					}
 				}
-				printedItems.add(a.getModule().getLibLong());
 			}
 		}
+		System.out.println("passageFin");
 		if(modulePresent){
 			divMod+="					</ul>\n";
 			divMod+="				</div>\n";
@@ -387,14 +374,18 @@ public class Generation {
 	
 	public static void generationIntervenants(){
 		new Etat();
-		Etat.changerEtat("etat1");
-		for (Intervenants i : Etat.getIntervenants()) {
-			Generation g = new Generation(i);
-		}
+		Etat.changerEtat("fz");
+
+		Generation g = new Generation(Etat.getIntervenants().get(0));
+		int cpt = 0;
+		//for (Intervenants i : Etat.getIntervenants()) {
+		//	System.out.println(cpt + Etat.getIntervenants().get(cpt).getNomIntervenant());
+		//	cpt++;
+			//Generation g = new Generation(i);
+		//}
 	}
 	public static void generationModules(){
-		new Etat();
-		Etat.changerEtat("etat1");
+		Etat.changerEtat("fz");
 		ArrayList<Affectations> listeTriee = Etat.getAffectations();
 		Collections.sort(listeTriee);
 		HashMap <Module, ArrayList<Affectations>> hashMap = new HashMap <Module, ArrayList<Affectations>>();
