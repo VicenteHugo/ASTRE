@@ -647,7 +647,9 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
-		
+		if(ind < 0){
+			return ;
+		}
 		Controleur.getControleur().supprimerIntervenant(ind);
 		if (ind >= 0)
 			this.tblGrilleDonnees.setRowSelectionInterval(ind, ind);
@@ -684,10 +686,10 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 		for (Affectations a : this.mod.getLstAffectations()) {
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("SAE"))
-				saeAffect += a.getNbHeure() * coefSAE;
+				saeAffect +=  a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TUT"))
-				tutAffect += a.getNbHeure() * coefTUT;
+				tutAffect +=  a.getHeureEqtd();
 		}
 
 		this.txtEtdSaeAffectRep.setText(saeAffect + "");

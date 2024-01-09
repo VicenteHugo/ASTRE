@@ -826,6 +826,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 	private void supprimer() {
 		int ind = this.tblGrilleDonnees.getSelectedRow();
+		if(ind < 0){
+			return ;
+		}
 		ArrayList<Affectations> list = (ArrayList<Affectations>) Controleur.getControleur().getAffectations(this.mod);
 		Controleur.getControleur().supprimerAffectation(list.get(ind));
 		if (ind >= 0)
@@ -918,16 +921,16 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		for (Affectations a : this.mod.getLstAffectations()) {
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("CM"))
-				cmAffect += (cmHeu * a.getNbSemaine() * a.getNbGroupe()) * coefCM;
+				cmAffect += a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TD"))
-				tdAffect += (tdHeu * a.getNbSemaine() * a.getNbGroupe()) * coefTD;
+				tdAffect +=  a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("TP"))
-				tpAffect += (tpHeu * a.getNbSemaine() * a.getNbGroupe() ) * coefTP;
+				tpAffect +=  a.getHeureEqtd();
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("HP"))
-				hpAffect += a.getNbGroupe() * coefHP;
+				hpAffect +=  a.getHeureEqtd();
 		}
 
 		this.txtCMTotEtdAffect.setText(cmAffect + "");

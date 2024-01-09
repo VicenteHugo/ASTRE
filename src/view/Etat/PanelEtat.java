@@ -182,17 +182,19 @@ public class PanelEtat extends JPanel {
     private void generer() {
         String option = (String) this.lstGeneration.getSelectedItem();
 
-
         if (option.equals("Recap intervenants (CSV)")) {
             Controleur.getControleur().genererCSV();
+            this.quitter();
         }
 
         if(option.equals("Par intervenants (HTML)")) {
             Controleur.getControleur().genererHTMLIntervenants();
+            this.quitter();
         }
 
         if(option.equals("Par modules (HTML)")) {
             Controleur.getControleur().genererHTMLModules();
+            this.quitter();
         }
 
     }

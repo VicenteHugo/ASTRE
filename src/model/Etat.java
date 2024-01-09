@@ -78,13 +78,15 @@ public class Etat {
 			Class.forName("org.postgresql.Driver"); //Postgress
 
 			// Connection
-			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
-			Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hugo","hugo","sui12345"); //Postgress
+			 Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hugo","hugo","sui12345"); //Postgress
+			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
+			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dave","dave","davepass"); //Postgress
 			
 			Etat.recupererNomEtat();
 
 			//Lancer le scripts en cas de Table détruite
-			Etat.lireFichierSQL(Etat.FIC_CREATE);
+			// Etat.lireFichierSQL(Etat.FIC_CREATE);
 
 
 			Etat.genererInfos();
@@ -539,6 +541,8 @@ public class Etat {
 			} else {
 				st.executeUpdate("INSERT INTO Etat (etat) VALUES ('Etat1')");
 				Etat.nom = "Etat1";
+
+				Etat.lireFichierSQL(Etat.FIC_CREATE);
 			}
 
 		} catch (Exception e) {e.printStackTrace();}
@@ -566,7 +570,6 @@ public class Etat {
 	/* SET ETATS */
 	public static void changerEtat (String nom) {
 		Etat.nom = nom;
-		Etat.lireFichierSQL(Etat.FIC_CREATE);
 		Etat.genererInfos();
 	}
 
@@ -680,11 +683,11 @@ public class Etat {
 	/*-------------------------------------------------*/
 
 	public static void genererHTMLIntervenants(){
-		new Generation(lstIntervenants);
+		Generation.generationIntervenants();
 	}
 
 	public static void genererHTMLModules(){
-		new Generation(lstModule);
+		Generation.generationModules();
 	}
 
 	// JAI PAS ACCES A LA COMMANDE DONC MODE BRUTAL

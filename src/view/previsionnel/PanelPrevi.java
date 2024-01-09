@@ -167,10 +167,12 @@ public class PanelPrevi extends JPanel {
     }
     
     public void supprimer(){
+
         Module m = null;
         PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getSelectedComponent();
         JTable table = panelSemestre.getTable();
         int[] selectedRow = table.getSelectedRows();
+
         for (int i =0; i < selectedRow.length; i++) {
             int val = selectedRow[i];
             val-= i;

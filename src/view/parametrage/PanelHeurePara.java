@@ -143,6 +143,7 @@ public class PanelHeurePara extends JPanel {
 	private void valider() {
 		if (this.tblGrilleDonnees.isEditing())
 			this.tblGrilleDonnees.getCellEditor().stopCellEditing();
+		
 		this.frame.changePanel(new PanelParametre(this.frame));
 		Controleur.getControleur().enregistrer();
 	}
