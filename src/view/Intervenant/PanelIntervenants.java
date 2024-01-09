@@ -104,14 +104,18 @@ public class PanelIntervenants extends JPanel {
 
 	private void annuler() {
 		this.frame.changePanel(new PanelAccueil(this.frame));
-		this.f.dispose();
+		if(f != null)
+			this.f.dispose();
+			
 		Controleur.getControleur().annuler();
 	}
 
 	private void supprimer() {
 
 		int ind = this.tblGrilleDonnees.getSelectedRow();
-
+		if(ind < 0){
+			return ;
+		}
 		if (!Controleur.getControleur().supprimerIntervenant(ind)) {
 			JOptionPane.showMessageDialog(this, "L'intervenant à encore des affectations", "Erreur", JOptionPane.ERROR_MESSAGE);
 			return ;
@@ -125,5 +129,10 @@ public class PanelIntervenants extends JPanel {
 
 	public void maj() {
 		this.tblGrilleDonnees.setModel(new GrilleInt());
+	}
+
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
 	}
 }

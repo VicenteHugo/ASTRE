@@ -616,8 +616,6 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 		}else{
 
-			System.out.println(map);
-
 			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, 0, val, map)) {
 				Controleur.getControleur().enregistrer();
 				this.quitter();
@@ -688,7 +686,6 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 		int rehAffect = 0;
 		int tutAffect = 0;
 
-
 		for (Affectations a : this.mod.getLstAffectations()) {
 
 			if (a.getCategorieHeures().getlibCatHeur().equals("REH"))
@@ -708,5 +705,10 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 	}
 
 	public void focusGained(FocusEvent e) {
+	}
+
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
 	}
 }

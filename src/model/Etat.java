@@ -385,6 +385,10 @@ public class Etat {
 		return null;
 	}
 
+	public static CategorieIntervenant getCatInt(int indice) {
+		return Etat.lstCategorieIntervenants.get(indice);
+	}
+
 	
 	//Intervenants 
 	public static Intervenants getIntervenant(String nom, String prenom) {

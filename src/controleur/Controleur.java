@@ -110,6 +110,9 @@ public class Controleur {
 	public CategorieIntervenant getCategorieIntervenant(String nom) {
 		return Etat.getCatInt(nom);
 	}
+	public CategorieIntervenant getCategorieIntervenant(int indice){
+		return Etat.getCatInt(indice);
+	}
 
 	public CategorieHeures getCategorieHeure(String nom) {
 		return Etat.getCatHeure(nom);

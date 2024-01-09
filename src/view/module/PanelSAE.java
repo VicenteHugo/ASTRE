@@ -624,8 +624,6 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 		}else{
 
-			System.out.println(map);
-
 			if (Controleur.getControleur().modifModules(mod, cod, liL, liC, 0, val, map)) {
 				Controleur.getControleur().enregistrer();
 				this.quitter();
@@ -671,7 +669,6 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusLost(FocusEvent e) {
-
 		int totPN   = Integer.parseInt(this.txtHeureEtdSaePN.getText())   + Integer.parseInt(this.txtHeureEtdTutPN.getText());
 		int totEqtd = Integer.parseInt(this.txtEtdSaePromRep.getText()) + Integer.parseInt(this.txtEtdTutPromRep.getText());
 
@@ -702,5 +699,10 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusGained(FocusEvent e) {
+	}
+
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
 	}
 }

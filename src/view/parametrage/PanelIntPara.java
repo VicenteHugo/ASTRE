@@ -157,4 +157,8 @@ public class PanelIntPara extends JPanel {
 		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
 	}
 
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
+	}
 }

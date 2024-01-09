@@ -757,8 +757,6 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusLost(FocusEvent e) {
-
-
 		int totPN   = Integer.parseInt(this.txtHeureEtdTutPN.getText()) + Integer.parseInt(this.txtHeureEtdCmPN.getText()) + 
 		              Integer.parseInt(this.txtHeureEtdTpPN .getText()) * Integer.parseInt(this.txtNbGpTp      .getText()) + 
 					  Integer.parseInt(this.txtHeureEtdTdPN .getText()) * Integer.parseInt(this.txtNbGpTd      .getText()) ;
@@ -811,5 +809,10 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusGained(FocusEvent e) {
+	}
+
+	public void annulerAjout(){
+		this.f.dispose();
+		this.f = null;
 	}
 }
