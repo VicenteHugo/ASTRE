@@ -26,6 +26,7 @@ import view.JTextFieldNumber;
 import view.accueil.FrameAccueil;
 
 
+
 public class PanelAddSAEIntervenant extends JPanel {	
 
 	private JTextFieldNumber txtNbHeure;
