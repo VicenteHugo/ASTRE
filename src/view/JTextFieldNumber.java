@@ -32,7 +32,6 @@ public class JTextFieldNumber extends JTextField implements KeyListener {
 		this.isFloat = isFloat;
 	}
 
-	@Override
 	public void keyTyped(KeyEvent e) {
 		boolean isPoint = false;
 		if(this.isFloat) isPoint = (e.getKeyChar() == '.' || e.getKeyChar() == ',');
