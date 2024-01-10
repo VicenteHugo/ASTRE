@@ -78,7 +78,7 @@ public class Etat {
 		Etat.lstActions = new ArrayList<>();
 
 		try {
-			/*Scanner sc = new Scanner(new FileReader("../config/login.dat"));
+			Scanner sc = new Scanner(new FileReader("config/login.dat"));
 			Scanner sc2 = new Scanner(sc.next());
 			sc2.useDelimiter("=");
 			sc2.next();
@@ -87,22 +87,22 @@ public class Etat {
 			sc2 = new Scanner(sc.next());
 			sc2.useDelimiter("=");
 			sc2.next();
-			String pwd = sc2.next();
+			String serveur = sc2.next();
 			sc2.close();
 			sc2 = new Scanner(sc.next());
 			sc2.useDelimiter("=");
 			sc2.next();
-			String serveur = sc2.next();*/
+			String pwd = sc2.next();
 
 			Class.forName("org.postgresql.Driver"); //Postgress
 
 			// Connection
-			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			 //Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/","hs220880","SAHAU2004"); //Postgress
 			 //Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hugo","hugo","sui12345"); //Postgress
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dave","dave","davepass"); //Postgress
-			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://" + serveur + ":5432/" + name, name, pwd); //avec instaler 
+			Etat.connec = DriverManager.getConnection("jdbc:postgresql://" + serveur + "/" + name, name, pwd); //avec instaler 
 			Etat.recupererNomEtat();
 
 			//Lancer le scripts en cas de Table détruite
@@ -727,6 +727,7 @@ public class Etat {
 	// JAI PAS ACCES A LA COMMANDE DONC MODE BRUTAL
 	public static void genererCSV() { 
 
+		String fic = PanelEtat.getFichier() + "/";
 		String sqlInt = "SELECT \n" + //
 				"i.nomInt      AS \"Nom\",\n" + //
 				"i.prenomInt   AS \"Prenom\",\n" + //
@@ -799,7 +800,7 @@ public class Etat {
 		try {
              PreparedStatement preparedStatement = Etat.connec.prepareStatement(sqlInt);
              ResultSet resultSet = preparedStatement.executeQuery();
-             try (FileWriter csvWriter = new FileWriter("data_" + Etat.nom + ".csv")) {
+             try (FileWriter csvWriter = new FileWriter(fic + "data_" + Etat.nom + ".csv")) {
 
 				// Write CSV header
 				csvWriter.append("Intervenants,,Categorie,,,,S1,,S3,,S5,,SSTot,,S2,,S4,,S6,,SSTot,,Totaux,,\n");

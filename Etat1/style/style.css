@@ -1,0 +1,109 @@
+*{
+	margin: 0;
+	padding: 0;
+  	box-sizing: border-box;
+}
+header {
+	background-color: white;
+	padding: 0%;
+	text-align: left;
+	color: Black;
+	display: flex;
+	flex-direction: row;
+	padding-bottom: 10px;
+	border-bottom: 3px solid #0097B2;
+}
+#logoTitre{
+	width: 150px;
+	height: auto;
+	margin: 10px;
+}
+h1{
+	padding-top: 50px;
+	padding-bottom: 50px;
+	margin: 10px;
+	flex: auto;
+}
+body {
+	font-family: 'Open Sans', sans-serif;
+	background-color: whitesmoke;
+}
+div{
+	font-family: 'Courier New', Courier, monospace;
+}
+.premiereLigne{
+	display: flex; 
+	flex-wrap: wrap;
+	gap: 50px;
+	padding: 20px;
+	margin-bottom:50px;
+}
+.gridRessource{
+	margin-left: 20px;
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax(470px, 470px) );
+	grid-gap: 40px;
+}
+.icecube{
+	border: 1px solid #0097B2;
+}
+.barreBleue{
+	padding-left: 10px;
+	margin-left: 20px;
+	border-left: 3px solid #0097B2;
+}
+/**
+*titre de la partie
+*/
+h2 {
+	font-size: 20px;
+	color: #0097B2;
+}
+.module{
+	font-size: 15px;
+}
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+	margin-left: 20px;
+}
+.ressource {
+	display: inline-block;
+	margin-right: 10px;
+	width: 100px; /* Remplacez 100px par la largeur souhaitée */
+	overflow: hidden; /* Pour s'assurer que le contenu ne dépasse pas la largeur spécifiée */
+	white-space: nowrap; /* Empêche le texte de passer à la ligne */
+}
+/**
+*liste des informations
+*/
+li {
+	color: black;
+	font-size: 15px;
+	font-weight: normal;
+}
+.typeHeure{
+	font-weight: bold;
+}
+/**
+*Placer un point ou autre avant la liste (compensation li sur la même ligne)
+*/
+li::before {
+	content: "'"2022'; /**unicode**/
+	font-size: 1.2em;
+	margin-right: 5px;
+}
+/**
+*information générer dans le li 
+*/
+.info {
+	color: black;
+	font-weight: normal;
+	font-size: 12px;
+}

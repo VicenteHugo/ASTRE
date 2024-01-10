@@ -235,9 +235,9 @@ public class Generation {
 			}
 		}
 		if(modulePresent){
-			divMod+="					</ul>\n";
+			divMod+="						</ul>\n";
+			divMod+="					</div>\n";
 			divMod+="				</div>\n";
-			divMod+="			</div>\n";
 		}
 		return divMod;
 	}
@@ -303,9 +303,9 @@ public class Generation {
 			}
 		}
 		if(modulePresent){
-					divHeure+="					</ul>\n";
+					divHeure+="						</ul>\n";
+					divHeure+="					</div>\n";
 					divHeure+="				</div>\n";
-					divHeure+="			</div>\n";
 				}
 		return divHeure;
 	}
@@ -324,12 +324,14 @@ public class Generation {
 					"  	box-sizing: border-box;\n"+
 				    "}\n"+
 					"header {\n"+
-					"	background-color: darkgrey;\n"+
+					"	background-color: white;\n"+
 					"	padding: 0%;\n"+
 					"	text-align: left;\n"+
-					"	color: whitesmoke;\n"+
+					"	color: Black;\n"+
 					"	display: flex;\n"+
 					"	flex-direction: row;\n"+
+					"	padding-bottom: 10px;\n"+
+  					"	border-bottom: 3px solid #0097B2;\n"+
 					"}\n"+
 					"#logoTitre{\n"+
 					"	width: 150px;\n"+
