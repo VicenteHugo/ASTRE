@@ -349,6 +349,11 @@ public class Controleur {
 				mNew = new Stage(mOld.getSemestres(), code, libL, libC, hp, v);
 
 			mNew.setHeures(heures);
+			mNew.setListCategorieHeure(mOld.getListCategorieHeure());
+			System.out.println(mNew.getListCategorieHeure());
+
+
+
 
 			int i = Etat.getModules().indexOf(mOld);
 			Etat.getModules().remove(mOld);
@@ -360,7 +365,14 @@ public class Controleur {
 			mNew.setHeures(heures);
 
 			// On ajouter l'action
-			Etat.ajouterAction(new Modification(mOld, mNew));
+
+			if (mNew.getCode().equals(mOld.getCode())) {
+				Etat.ajouterAction(new Modification(mOld, mNew));
+			} else {
+				Etat.ajouterAction(new Modification(mOld, mNew));
+				Etat.ajouterAction(new Suppression(mOld));
+			}
+
 			return true;
 		}
 
