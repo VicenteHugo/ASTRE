@@ -1,13 +1,108 @@
+DROP TABLE IF EXISTS AffectationEtat1;
+DROP TABLE IF EXISTS ModulesCatHeuresEtat1;
+DROP TABLE IF EXISTS ModulesEtat1;
+DROP TABLE IF EXISTS IntervenantsEtat1;
+DROP TABLE IF EXISTS SemestresEtat1;
+DROP TABLE IF EXISTS CategorieHeuresEtat1;
+DROP TABLE IF EXISTS CategorieIntervenantsEtat1;
 
+-- Création des tables ayant un niveau de liaison 1
+CREATE TABLE IF NOT EXISTS CategorieIntervenantsEtat1
+(
+    codeCatInt     VARCHAR(255) PRIMARY KEY , 
+    libCatInt      VARCHAR(255), 
+    coefCatInt     FLOAT DEFAULT 1 CHECK (coefCatInt >= 0) ,
+    heureMinCatInt INTEGER NOT NULL CHECK (heureMinCatInt >= 0),
+    heureMaxCatInt INTEGER NOT NULL CHECK (heureMaxCatInt >= heureMinCatInt)
+);
+
+CREATE TABLE IF NOT EXISTS CategorieHeuresEtat1
+(
+    libCatHeur  VARCHAR(255) PRIMARY KEY UNIQUE, 
+    coefCatHeur FLOAT DEFAULT 1.0 CHECK (coefCatHeur >= 0)
+);
+
+-- Création de la table Semestres
+CREATE TABLE IF NOT EXISTS SemestresEtat1
+(
+    numSem    INTEGER NOT NULL PRIMARY KEY,
+    nbGpTdSem INTEGER DEFAULT 0 CHECK (nbGpTdSem >= 0),
+    nbGpTpSem INTEGER DEFAULT 0 CHECK (nbGpTpSem >= 0),
+    nbEtdSem  INTEGER DEFAULT 0 CHECK (nbEtdSem >= 0),
+    nbSemSem  INTEGER DEFAULT 0 CHECK (nbSemSem >= 0)
+);
+
+-- Création des tables ayant un niveau de liaison 2
+CREATE TABLE IF NOT EXISTS ModulesEtat1
+(
+    codeMod     VARCHAR(255) PRIMARY KEY, 
+    semMod      INTEGER      REFERENCES SemestresEtat1(numSem),
+    typeMod     VARCHAR(255) NOT NULL CHECK (typeMod IN ('Ressource', 'Sae', 'Stage', 'PPP')),
+    libCourtMod VARCHAR(255) NOT NULL,
+    libLongMod  VARCHAR(255) NOT NULL,
+    validMod    BOOLEAN NOT NULL DEFAULT false,
+    nbHeurPonc  INTEGER DEFAULT 0 NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS IntervenantsEtat1
+(
+    nomInt      VARCHAR(255) NOT NULL,
+    prenomInt   VARCHAR(255) NOT NULL,
+    heureMinInt INTEGER NOT NULL CHECK (heureMinInt >= 0),
+    heureMaxInt INTEGER NOT NULL CHECK (heureMaxInt >= heureMinInt),
+    coefInt     FLOAT DEFAULT 1 CHECK  (coefInt >= 0),
+    categInt    VARCHAR(255) REFERENCES CategorieIntervenantsEtat1(codeCatInt),
+	PRIMARY KEY (nomInt, prenomInt)
+);
+
+
+-- Création des tables ayant un niveau de liaison 3
+CREATE TABLE IF NOT EXISTS ModulesCatHeuresEtat1
+(
+	codeMod    VARCHAR(255) NOT NULL REFERENCES ModulesEtat1(codeMod) ON DELETE CASCADE,
+	libCatHeur VARCHAR(255) NOT NULL REFERENCES CategorieHeuresEtat1(libCatHeur),
+	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN >= 0),
+	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem >= 0),
+	nbSemaine  INTEGER NOT NULL CHECK (nbSemaine >= 0),
+	PRIMARY KEY(codeMod, libCatHeur),
+    UNIQUE(codeMod, libCatHeur)
+);
+
+CREATE TABLE IF NOT EXISTS AffectationEtat1
+(
+    cle         SERIAL       PRIMARY KEY,
+	nomInt      VARCHAR(255) NOT NULL,
+	prenomInt   VARCHAR(255) NOT NULL,
+	codeMod     VARCHAR(255) NOT NULL REFERENCES ModulesEtat1(codeMod),
+	libCatHeur  VARCHAR(255) NOT NULL REFERENCES CategorieHeuresEtat1(libCatHeur),
+	nbSem       INTEGER NOT NULL CHECK (nbSem >= 0),
+	nbGroupe    INTEGER NOT NULL CHECK (nbGroupe >= 0),
+	commentaire VARCHAR(255),
+	FOREIGN KEY(nomInt, prenomInt) REFERENCES IntervenantsEtat1(nomInt, prenomInt)
+);
 
 /* Données dans la table CatégoriesIntervenant */
-INSERT INTO CategorieIntervenantsEtat1 VALUES('Prof'  ,'Professeurs'             ,2,600,1024);
-INSERT INTO CategorieIntervenantsEtat1 VALUES('Cher'  ,'Professeurs-Chercheur'   ,4,300,600 );
-INSERT INTO CategorieIntervenantsEtat1 VALUES('Vac'   ,'Vacataire'               ,4,50 ,100 );
-INSERT INTO CategorieIntervenantsEtat1 VALUES('Cont'  ,'Contractuel'             ,4,30 ,80  );
-INSERT INTO CategorieIntervenantsEtat1 VALUES('A'     ,'Autre'                   ,4,1  ,20  );
+INSERT INTO CategorieIntervenantsEtat1 VALUES('prof'  ,'Professeurs'             ,2,600,1024);
+INSERT INTO CategorieIntervenantsEtat1 VALUES('cher'  ,'Professeurs-Chercheur'   ,4,300,600 );
+INSERT INTO CategorieIntervenantsEtat1 VALUES('vac'   ,'Vacataire'               ,4,50 ,100 );
+INSERT INTO CategorieIntervenantsEtat1 VALUES('cont'  ,'Contractuel'             ,4,30 ,80  );
+INSERT INTO CategorieIntervenantsEtat1 VALUES('a'     ,'Autre'                   ,4,1  ,20  );
 
+/* Données dans la table SemestresEtat1 */
+INSERT INTO SemestresEtat1 VALUES(1,4,7,120,16);
+INSERT INTO SemestresEtat1 VALUES(2,3,6,80,15);
+INSERT INTO SemestresEtat1 VALUES(3,2,4,60,16);
+INSERT INTO SemestresEtat1 VALUES(4,2,4,55,15);
+INSERT INTO SemestresEtat1 VALUES(5,2,4,50,16);
+INSERT INTO SemestresEtat1 VALUES(6,2,3,45,15);
 
+/* Données dans la table CategorieHeuresEtat1 */
+INSERT INTO CategorieHeuresEtat1 VALUES('TP' ,2.0);
+INSERT INTO CategorieHeuresEtat1 VALUES('TD' ,2.0);
+INSERT INTO CategorieHeuresEtat1 VALUES('CM' ,1.5);
+INSERT INTO CategorieHeuresEtat1 VALUES('TUT',1.5);
+INSERT INTO CategorieHeuresEtat1 VALUES('REH',1.0);
+INSERT INTO CategorieHeuresEtat1 VALUES('SAE',1.5);
 
 /* Données dans la table Module */
 /* S1 */
@@ -82,26 +177,27 @@ INSERT INTO ModulesEtat1 VALUES('S6.ST',6,'Stage'    ,'Stage'    ,'Stages'      
 
 
 /* Données dans la table Intervenant */
-INSERT INTO IntervenantsEtat1 VALUES('Le Pivert' , 'Philippe'  , 150, 200, 4, 'Prof');
-INSERT INTO IntervenantsEtat1 VALUES('Colignon'  , 'Thomas'    , 60 , 70 , 5, 'Vac' );
-INSERT INTO IntervenantsEtat1 VALUES('Dubocage'  , 'Tiphaine'  , 60 , 70 , 5, 'Vac' );
-INSERT INTO IntervenantsEtat1 VALUES('Legrix'    , 'Bruno'     , 150, 200, 4, 'Prof');
-INSERT INTO IntervenantsEtat1 VALUES('Boukachour', 'Hadhoum'   , 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsEtat1 VALUES('Guinand'   , 'Frederic'  , 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsEtat1 VALUES('Pytel'     , 'Steve'     , 60 , 70 , 5, 'Vac' );
-INSERT INTO IntervenantsEtat1 VALUES('Boukachour', 'Jaouad'    , 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsEtat1 VALUES('Zahour'    , 'Abderrazak', 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsEtat1 VALUES('Boudebous' , 'Dalila'    , 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsEtat1 VALUES('Sadeg'     , 'Bruno'     , 80 , 100, 5, 'Cont');
-INSERT INTO IntervenantsEtat1 VALUES('Alabboud'  , 'Hassan'    , 80 , 100, 5, 'Cont');
-INSERT INTO IntervenantsEtat1 VALUES('Pascal'    , 'Rembert'   , 80 , 100, 5, 'Cont');
-INSERT INTO IntervenantsEtat1 VALUES('Griette'   , 'Quentin'   , 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsEtat1 VALUES('Laffaech'  , 'Quentin'   , 150, 200, 4, 'Prof');
-INSERT INTO IntervenantsEtat1 VALUES('Foubert'   , 'Jean'      , 100, 150, 4, 'Cont');
-INSERT INTO IntervenantsEtat1 VALUES('Bertin'    , 'Sebastien' , 60 , 70 , 5, 'Cont');
-INSERT INTO IntervenantsEtat1 VALUES('Delarue'   , 'Isabelle'  , 60 , 70 , 5, 'Cont');
-INSERT INTO IntervenantsEtat1 VALUES('Nivet'     , 'Laurence'  , 150, 200, 4, 'Prof');
-INSERT INTO IntervenantsEtat1 VALUES('Colin'     , 'Jean-Yves' , 100, 150, 4, 'Prof');
+INSERT INTO IntervenantsEtat1 VALUES('Le Pivert' , 'Philippe'  , 150, 200, 4, 'prof');
+INSERT INTO IntervenantsEtat1 VALUES('Colignon'  , 'Thomas'    , 60 , 70 , 5, 'vac' );
+INSERT INTO IntervenantsEtat1 VALUES('Dubocage'  , 'Tiphaine'  , 60 , 70 , 5, 'vac' );
+INSERT INTO IntervenantsEtat1 VALUES('Legrix'    , 'Bruno'     , 150, 200, 4, 'prof');
+INSERT INTO IntervenantsEtat1 VALUES('Boukachour', 'Hadhoum'   , 100, 150, 4, 'cher');
+INSERT INTO IntervenantsEtat1 VALUES('Guinand'   , 'Frederic'  , 100, 150, 4, 'cher');
+INSERT INTO IntervenantsEtat1 VALUES('Pytel'     , 'Steve'     , 60 , 70 , 5, 'vac' );
+INSERT INTO IntervenantsEtat1 VALUES('Boukachour', 'Jaouad'    , 100, 150, 4, 'cher');
+INSERT INTO IntervenantsEtat1 VALUES('Zahour'    , 'Abderrazak', 100, 150, 4, 'cher');
+INSERT INTO IntervenantsEtat1 VALUES('Boudebous' , 'Dalila'    , 100, 150, 4, 'cher');
+INSERT INTO IntervenantsEtat1 VALUES('Sadeg'     , 'Bruno'     , 80 , 100, 5, 'cont');
+INSERT INTO IntervenantsEtat1 VALUES('Alabboud'  , 'Hassan'    , 80 , 100, 5, 'cont');
+INSERT INTO IntervenantsEtat1 VALUES('Pascal'    , 'Rembert'   , 80 , 100, 5, 'cont');
+INSERT INTO IntervenantsEtat1 VALUES('Griette'   , 'Quentin'   , 100, 150, 4, 'cher');
+INSERT INTO IntervenantsEtat1 VALUES('Laffaech'  , 'Quentin'   , 150, 200, 4, 'prof');
+INSERT INTO IntervenantsEtat1 VALUES('Foubert'   , 'Jean'      , 100, 150, 4, 'cont');
+INSERT INTO IntervenantsEtat1 VALUES('Bertin'    , 'Sebastien' , 60 , 70 , 5, 'cont');
+INSERT INTO IntervenantsEtat1 VALUES('Delarue'   , 'Isabelle'  , 60 , 70 , 5, 'cont');
+INSERT INTO IntervenantsEtat1 VALUES('Nivet'     , 'Laurence'  , 150, 200, 4, 'prof');
+INSERT INTO IntervenantsEtat1 VALUES('Colin'     , 'Jean-Yves' , 100, 150, 4, 'prof');
+INSERT INTO IntervenantsEtat1 VALUES('Serin'     , 'Frederic'  , 100, 150, 4, 'prof');
 
 
 
@@ -110,7 +206,7 @@ INSERT INTO IntervenantsEtat1 VALUES('Colin'     , 'Jean-Yves' , 100, 150, 4, 'P
 INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'CM' , 8 , 2, 2 );
 INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'TD' , 10, 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'TP' , 10, 2, 14);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'TUT' , 10, 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'TUT', 10, 2, 14);
 
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.01', 'CM' , 8 , 2, 2 );
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.01', 'TD' , 10, 4, 14);
@@ -147,6 +243,19 @@ INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.08', 'CM' , 5 , 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.09', 'TD' , 5 , 2, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.09', 'TP' , 5 , 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.09', 'CM' , 5 , 4, 14);
+
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.10', 'TD' , 5 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.10', 'TP' , 5 , 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.10', 'CM' , 5 , 4, 14);
+
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.11', 'TD' , 5 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.11', 'TP' , 5 , 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.11', 'CM' , 5 , 4, 14);
+
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'TD' , 5 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'TP' , 5 , 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'CM' , 5 , 4, 14);
+
 
 
 /* S2 */
@@ -231,9 +340,10 @@ INSERT INTO ModulesCatHeuresEtat1 VALUES('R3.14', 'CM' , 5 , 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('S3.01', 'SAE' , 5 , 2, 1);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('S3.01', 'TUT' , 5 , 4, 1);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('P3.01', 'SAE' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('P3.01', 'TUT' , 5 , 4, 1);
-
+INSERT INTO ModulesCatHeuresEtat1 VALUES('P3.01', 'CM' , 8 , 2, 2 );
+INSERT INTO ModulesCatHeuresEtat1 VALUES('P3.01', 'TD' , 10, 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('P3.01', 'TP' , 10, 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('P3.01', 'TUT' , 10, 2, 14);
 
 /* S4 */
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R4.01', 'CM' , 8 , 2, 2 );
@@ -248,12 +358,16 @@ INSERT INTO ModulesCatHeuresEtat1 VALUES('R4.03', 'TD' , 8 , 2, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R4.03', 'TP' , 8 , 2, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R4.03', 'CM' , 8 , 2, 14);
 
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R4.04', 'TD' , 8 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R4.04', 'TP' , 8 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R4.04', 'CM' , 8 , 2, 14);
+
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R4.08', 'TD' , 10, 2, 7 );
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R4.08', 'TP' , 2 , 4, 7 );
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R4.08', 'CM' , 2 , 4, 7 );
 
 INSERT INTO ModulesCatHeuresEtat1 VALUES('S4.ST', 'TUT' , 5 , 4, 1);
-
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S4.ST', 'REH' , 5 , 4, 1);
 
 /* S5 */
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R5.01', 'CM' , 8 , 2, 2 );
@@ -306,6 +420,7 @@ INSERT INTO ModulesCatHeuresEtat1 VALUES('R6.03', 'TP' , 8 , 2, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R6.03', 'CM' , 8 , 2, 14);
 
 INSERT INTO ModulesCatHeuresEtat1 VALUES('S6.ST', 'TUT' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S6.ST', 'REH' , 5 , 4, 1);
 
 
 /* Données dans la table AffectationEtat1 */
