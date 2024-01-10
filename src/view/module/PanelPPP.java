@@ -669,6 +669,19 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 			return;
 		}
 
+		//Si case vide on met à 0
+		if (this.txtHeureEtdTutPN.getText().isEmpty()) this.txtHeureEtdTutPN.setText(0 + "");
+		if (this.txtHeureEtdTpPN .getText().isEmpty()) this.txtHeureEtdTpPN .setText(0 + "");
+		if (this.txtHeureEtdTdPN .getText().isEmpty()) this.txtHeureEtdTdPN .setText(0 + "");
+		if (this.txtHeureEtdCmPN .getText().isEmpty()) this.txtHeureEtdCmPN .setText(0 + "");
+
+		if (this.txtEtdHpPromRep .getText().isEmpty()) this.txtEtdHpPromRep .setText(0 + "");
+		if (this.txtEtdTdPromRep .getText().isEmpty()) this.txtEtdTdPromRep .setText(0 + "");
+		if (this.txtEtdTpPromRep .getText().isEmpty()) this.txtEtdTpPromRep .setText(0 + "");
+		if (this.txtEtdCmPromRep .getText().isEmpty()) this.txtEtdCmPromRep .setText(0 + "");
+		if (this.txtEtdTutPromRep.getText().isEmpty()) this.txtEtdTutPromRep.setText(0 + "");
+
+
 		boolean   val = this.cbValide      .isSelected();
 		String    cod = this.txtCodeMod    .getText();
 		String    liL = this.txtLibLongMod .getText();
@@ -757,6 +770,24 @@ public class PanelPPP extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusLost(FocusEvent e) {
+
+		//PN
+		if (this.txtHeureEtdTutPN.getText().isEmpty()) this.txtHeureEtdTutPN.setText(0 + "");
+		if (this.txtHeureEtdTpPN .getText().isEmpty()) this.txtHeureEtdTpPN .setText(0 + "");
+		if (this.txtHeureEtdTdPN .getText().isEmpty()) this.txtHeureEtdTdPN .setText(0 + "");
+		if (this.txtHeureEtdCmPN .getText().isEmpty()) this.txtHeureEtdCmPN .setText(0 + "");
+
+		//REP
+		if (this.txtEtdHpPromRep .getText().isEmpty()) this.txtEtdHpPromRep .setText(0 + "");
+		if (this.txtEtdTdPromRep .getText().isEmpty()) this.txtEtdTdPromRep .setText(0 + "");
+		if (this.txtEtdTpPromRep .getText().isEmpty()) this.txtEtdTpPromRep .setText(0 + "");
+		if (this.txtEtdCmPromRep .getText().isEmpty()) this.txtEtdCmPromRep .setText(0 + "");
+		if (this.txtEtdTutPromRep.getText().isEmpty()) this.txtEtdTutPromRep.setText(0 + "");
+
+
+
+
+
 		int totPN   = Integer.parseInt(this.txtHeureEtdTutPN.getText()) + Integer.parseInt(this.txtHeureEtdCmPN.getText()) + 
 		              Integer.parseInt(this.txtHeureEtdTpPN .getText()) * Integer.parseInt(this.txtNbGpTp      .getText()) + 
 					  Integer.parseInt(this.txtHeureEtdTdPN .getText()) * Integer.parseInt(this.txtNbGpTd      .getText()) ;
