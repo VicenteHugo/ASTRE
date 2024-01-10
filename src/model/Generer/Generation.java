@@ -26,7 +26,7 @@ public class Generation {
 	private Module module;
 	private List<Affectations> listeTriee;
 	private Set<String> printedItems = new HashSet<String>();
-	public Generation(Intervenants intervenant)
+	public Generation(Intervenants intervenant, String chemin)
 	{
 		this.intervenant = intervenant;
 		this.listeTriee = new ArrayList<Affectations>();
@@ -50,7 +50,7 @@ public class Generation {
 		
 		try
 		{
-			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/"+ intervenant.getNomIntervenant() +" "+intervenant.getPrenomIntervenant()+".html") );
+			PrintWriter pw = new PrintWriter( new FileOutputStream(chemin+ intervenant.getNomIntervenant() +" "+intervenant.getPrenomIntervenant()+".html") );
 
 			pw.print (this.haut);
 			pw.println ( "		<div class=\"premiereLigne\">\n");
@@ -92,7 +92,7 @@ public class Generation {
 		catch (Exception e){ e.printStackTrace(); }
 	}
 
-	public Generation(Module module)
+	public Generation(Module module, String chemin)
 	{
 		this.module = module;
 		Set<Intervenants> listeIntervenants =  new HashSet<>();
@@ -114,12 +114,11 @@ public class Generation {
 		this.haut +="			<img id=\"logoTitre\" src=\"../lib/logoAstre-nobg.png\" alt=\"LogoAstre\">\n" ;
 		this.haut +="			<h1>ASTRE- "+ module.getCode() +" "+module.getLibLong() +"</h1>\n";
 		this.haut +="		</header>\n";
-
 		this.pied  ="	</body>\n";
 		this.pied +="</html>\n";
 		try
 		{
-			PrintWriter pw = new PrintWriter( new FileOutputStream("./generation/"+ module.getCode()+module.getLibCourt() +".html") );
+			PrintWriter pw = new PrintWriter( new FileOutputStream(chemin+ module.getCode()+module.getLibCourt() +".html") );
 
 			pw.print (this.haut);
 			pw.println ( "		<div class=\"premiereLigne\">\n");
@@ -164,8 +163,9 @@ public class Generation {
 		String  codeActuel = "";
 		String  catHeure   = "";
 		ArrayList<Affectations> affec;
+		int     size = 0;
+		int     totalH = 0;
 		Boolean premPassage   = false;
-		Boolean premierPassageHeure = false;
 		Boolean modulePresent = false;
 		int cpt=0;
 		HashMap<String, ArrayList<Affectations>> map = new HashMap<String, ArrayList<Affectations>>();
@@ -199,14 +199,20 @@ public class Generation {
 					affec = map.get(key);
 					Collections.sort(affec);
 					catHeure = "";
+					size = 0;
+					for (Affectations catA2 : affec) {
+						if(catA2.getModule().equals(a.getModule())){size++;}
+						}
 					for (Affectations catA : affec) {
 						modulePresent = true;
 						if (catA.getModule().equals(a.getModule())){
 							if (!catA.getCategorieHeures().getlibCatHeur().equals(catHeure)) {
-								cpt = 1;
+								cpt = 0;
+								totalH = 0;
 								divMod+="						<li class=\"typeHeure\">"+catA.getCategorieHeures().getlibCatHeur()+":\n";
 								catHeure  = catA.getCategorieHeures().getlibCatHeur();
 							}
+							cpt++;
 							divMod+="								<ul>\n";
 							divMod+="									<li>Affectation "+cpt+" :\n";
 							divMod+="										<ul>\n";
@@ -214,12 +220,13 @@ public class Generation {
 							divMod+="											<li>Nb Semaine&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: "+catA.getNbSemaine()+"</li>\n";
 							divMod+="										</ul>\n";
 							divMod+="									</li>\n";
-							divMod+="								</ul>\n";
-							cpt++;
-						}
-						if (catA.getCategorieHeures().getlibCatHeur().equals(catHeure)) {
-							divMod+="									<li>Total? :\n";
+							totalH+= catA.getNbHeure()*catA.getNbSemaine();
 
+							if (cpt == size) {
+								divMod+="									<li>Total des heures : "+totalH+"</li>\n";
+								divMod+="								</ul>\n";
+							}
+							else{divMod+="								</ul>\n";}
 						}
 					}
 				}
@@ -302,20 +309,21 @@ public class Generation {
 		return divHeure;
 	}
 	
-	public static void generationIntervenants(){
-		for (Intervenants i : Etat.getIntervenants()) {
-			new Generation(i);
-		}
+	public static void generationIntervenants(String chemin){
+		new Generation(Etat.getIntervenants().get(0),chemin);
+		//for (Intervenants i : Etat.getIntervenants()) {
+		//	new Generation(i,chemin);
+		//}
 	}
-	public static void generationModules(){
+	public static void generationModules(String chemin){
 		for (Module m : Etat.getModules()) {
-			new Generation(m);
+			new Generation(m,chemin);
 		}
 	}
 	public static void main(String[] args) {
 		new Etat();
 		Etat.changerEtat("fz");
-		Generation.generationIntervenants();
-		Generation.generationModules();
+		Generation.generationIntervenants("./generation/");
+		//Generation.generationModules();
 	}
 }
