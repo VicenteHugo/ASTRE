@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStream;
+import java.io.PrintWriter;
 
 public class Etat {
 
@@ -708,11 +709,11 @@ public class Etat {
 	/*-------------------------------------------------*/
 
 	public static void genererHTMLIntervenants(){
-		Generation.generationIntervenants(PanelEtat.getFichier() + "/" + Etat.nom);
+		Generation.generationIntervenants(PanelEtat.getFichier() + "/" + Etat.nom + "/");
 	}
 
 	public static void genererHTMLModules(){
-		Generation.generationModules(PanelEtat.getFichier() + "/" + Etat.nom);
+		Generation.generationModules(PanelEtat.getFichier() + "/" + Etat.nom + "/");
 	}
 
 	// JAI PAS ACCES A LA COMMANDE DONC MODE BRUTAL
