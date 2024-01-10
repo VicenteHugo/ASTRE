@@ -99,6 +99,29 @@ public class PanelPrevi extends JPanel {
     }
 
     private void creation(int indice) {
+
+        boolean euModif = false;
+        //Si des donner on était modifier on demander à enregistrer ou non 
+        for(int i = 0; i < this.ongletSemestres.getTabCount();i++){
+            PanelSemestre panelSemestre = (PanelSemestre) ongletSemestres.getComponentAt(i);
+
+            if (!panelSemestre.getSemNew().equals(panelSemestre.getSemOld()))
+                euModif = true;
+        }
+
+        //On demande d'enregistrer ou non
+        if (euModif) {
+            int reply = JOptionPane.showConfirmDialog(this, "Des semestres ont été modifiés. Voulez vous sauvegarder les modifications ?", "Modif", JOptionPane.YES_NO_OPTION);
+
+            if (reply == JOptionPane.YES_OPTION) {
+                this.sauvegarde();
+            } else {
+                Controleur.getControleur().annuler();
+            }
+        }
+
+
+
         if(indice < 0) indice = 0;
         Semestres sem = Etat.getSemestres().get(this.ongletSemestres.getSelectedIndex());
 

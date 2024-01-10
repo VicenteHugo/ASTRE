@@ -15,6 +15,8 @@ import model.modules.PPP;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 
 public class Etat {
@@ -76,7 +78,7 @@ public class Etat {
 		Etat.lstActions = new ArrayList<>();
 
 		try {
-			/*Scanner sc = new Scanner(new FileReader("./config/login.dat"));
+			Scanner sc = new Scanner(new FileReader("../config/login.dat"));
 			Scanner sc2 = new Scanner(sc.next());
 			sc2.useDelimiter("=");
 			sc2.next();
@@ -90,16 +92,16 @@ public class Etat {
 			sc2 = new Scanner(sc.next());
 			sc2.useDelimiter("=");
 			sc2.next();
-			String serveur = sc2.next();*/
+			String serveur = sc2.next();
 
 			Class.forName("org.postgresql.Driver"); //Postgress
 
 			// Connection
-			 Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			// // Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hugo","hugo","sui12345"); //Postgress
-			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
+			Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dave","dave","davepass"); //Postgress
-			/* Etat.connec = DriverManager.getConnection("jdbc:postgresql://" + serveur + ":5432/" + name, name, pwd); //avec instaler */
+			 Etat.connec = DriverManager.getConnection("jdbc:postgresql://" + serveur + ":5432/" + name, name, pwd); //avec instaler 
 			Etat.recupererNomEtat();
 
 			//Lancer le scripts en cas de Table détruite
@@ -112,9 +114,9 @@ public class Etat {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} /*catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 
 	
@@ -318,13 +320,17 @@ public class Etat {
 			while (res.next()) {
 
 				Intervenants inter = Etat.getIntervenant(res.getString("nomInt"), res.getString("prenomInt"));
+				System.out.println(res.getString("codeMod"));
+
+				System.out.println("Code : " + res.getString("codeMod"));
 				Module mode = Etat.getModule(res.getString("codeMod"));
 				CategorieHeures cat = Etat.getCatHeure(res.getString("libCatHeur"));
 				int nbs = res.getInt("nbSem");
 				int nbg = res.getInt("nbGroupe");
 				String comm = res.getString("commentaire");
 
-				Etat.lstAffectations.add(new Affectations(inter, mode, cat, nbs, nbg, comm));
+				if (mode != null)
+					Etat.lstAffectations.add(new Affectations(inter, mode, cat, nbs, nbg, comm));
 			}
 
 			res.close();
@@ -531,7 +537,9 @@ public class Etat {
 						st.setBoolean(i, (Boolean) info);
 				}
 
+
 				// On l'execute
+				System.out.println(st);
 				st.executeUpdate();
 			}
 		} catch (Exception e) { e.printStackTrace(); }

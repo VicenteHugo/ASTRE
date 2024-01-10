@@ -1,4 +1,4 @@
 {
 	"editor.autoIndent": "brackets",
-	"java.debug.settings.onBuildFailureProceed": true
+	"java.debug.settings.onBuildFailureProceed": true,
 }
