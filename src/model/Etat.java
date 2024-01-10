@@ -10,6 +10,7 @@ import model.modules.Module;
 import model.modules.Ressource;
 import model.modules.Sae;
 import model.modules.Stage;
+import view.Etat.PanelEtat;
 import model.modules.PPP;
 import java.util.Scanner;
 import java.io.FileInputStream;
@@ -93,7 +94,7 @@ public class Etat {
 			Class.forName("org.postgresql.Driver"); //Postgress
 
 			// Connection
-			Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			 Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hugo","hugo","sui12345"); //Postgress
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dave","dave","davepass"); //Postgress
@@ -704,11 +705,11 @@ public class Etat {
 	/*-------------------------------------------------*/
 
 	public static void genererHTMLIntervenants(){
-		Generation.generationIntervenants();
+		Generation.generationIntervenants(PanelEtat.getFichier() + "/" + Etat.nom);
 	}
 
 	public static void genererHTMLModules(){
-		Generation.generationModules();
+		Generation.generationModules(PanelEtat.getFichier() + "/" + Etat.nom);
 	}
 
 	// JAI PAS ACCES A LA COMMANDE DONC MODE BRUTAL
