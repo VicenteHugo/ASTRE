@@ -183,7 +183,7 @@ public class PanelAddRessourceIntervenant extends JPanel{
 					int heure =  (int)Math.ceil((mod.getHeures().get(categ).get(2)*nbGroupe*nbSemaine)* categ.getcoefCatHeur());
 					int nbHeureTotal = nbHeureTotal(intervenant,heure);
 					if(heure > intervenant.getMaxHeures()|| nbHeureTotal > intervenant.getMaxHeures()){
-							JOptionPane.showMessageDialog(this, "Attention rop d'heures sont assignés");
+							JOptionPane.showMessageDialog(this, "Attention trop d'heures sont assignés");
 					}	
 				}
 				if(isOk){
