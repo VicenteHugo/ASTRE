@@ -1,108 +1,81 @@
+/*
+* @title  : CreateTablesAstre
+* @author : SHOAL™
+* @date   : 10/01/2024
+* @sub    : Insertion de table données
+*/
+
 
 
 /* Données dans la table CatégoriesIntervenant */
-INSERT INTO CategorieIntervenantsETAT VALUES('Prof'  ,'Professeurs'             ,2,600,1024);
-INSERT INTO CategorieIntervenantsETAT VALUES('Cher'  ,'Professeurs-Chercheur'   ,4,300,600 );
-INSERT INTO CategorieIntervenantsETAT VALUES('Vac'   ,'Vacataire'               ,4,50 ,100 );
-INSERT INTO CategorieIntervenantsETAT VALUES('Cont'  ,'Contractuel'             ,4,30 ,80  );
-INSERT INTO CategorieIntervenantsETAT VALUES('A'     ,'Autre'                   ,4,1  ,20  );
+INSERT INTO CategorieIntervenantsETAT2 VALUES('prof'  ,'Professeurs'             ,2,600,1024);
+INSERT INTO CategorieIntervenantsETAT2VALUES('cher'  ,'Professeurs-Chercheur'   ,4,300,600 );
+INSERT INTO CategorieIntervenantsETAT2VALUES('vac'   ,'Vacataire'               ,4,50 ,100 );
+INSERT INTO CategorieIntervenantsETAT2VALUES('cont'  ,'Contractuel'             ,4,30 ,80  );
+INSERT INTO CategorieIntervenantsETAT2VALUES('a'     ,'Autre'                   ,4,1  ,20  );
+
+
+
+/* Données dans la table CatégoriesHeures */
+INSERT INTO CategorieHeuresETAT2  VALUES('CM'   ,1.5);
+INSERT INTO CategorieHeuresETAT2  VALUES('TP'   ,1.5);
+INSERT INTO CategorieHeuresETAT2  VALUES('TD'   ,1.5);
+INSERT INTO CategorieHeuresETAT2  VALUES('Tut'  ,1  );
+INSERT INTO CategorieHeuresETAT2  VALUES('REH'  ,1  );
+INSERT INTO CategorieHeuresETAT2  VALUES('Autre',1  );
+
+
+
+/* Données dans la table Semestre */
+INSERT INTO SemestresETAT2 VALUES(1,4,9,131,16);
+INSERT INTO SemestresETAT2 VALUES(2,3,6,85 ,9 );
+INSERT INTO SemestresETAT2 VALUES(3,4,8,120,15);
+INSERT INTO SemestresETAT2 VALUES(4,2,5,82 ,10);
+INSERT INTO SemestresETAT2 VALUES(5,3,7,104,13);
+INSERT INTO SemestresETAT2 VALUES(6,2,4,62 ,12);
 
 
 
 /* Données dans la table Module */
 /* S1 */
-INSERT INTO ModulesETAT VALUES('R1.01',1,'Ressource','Init-Dev'   ,'Initiation au développement'                           ,false,10);
-INSERT INTO ModulesETAT VALUES('R1.02',1,'Ressource','Dev-Web'    ,'Développement interfaces Web'                          ,false,5 );
-INSERT INTO ModulesETAT VALUES('R1.03',1,'Ressource','Intro-Archi','Introduction Architecture'                             ,false,5 );
-INSERT INTO ModulesETAT VALUES('R1.04',1,'Ressource','Intro-Sys'  ,'Introduction Système'                                  ,false,8 );
-INSERT INTO ModulesETAT VALUES('R1.05',1,'Ressource','Intro-BD'   ,'Introduction Base de données'                          ,false,5 );
-INSERT INTO ModulesETAT VALUES('R1.06',1,'Ressource','Maths-Dis'  ,'Mathématiques discrètes'                               ,false,2 );
-INSERT INTO ModulesETAT VALUES('R1.07',1,'Ressource','Out-Fond'   ,'Outils mathématiques fondamentaux'                     ,false,2 );
-INSERT INTO ModulesETAT VALUES('R1.08',1,'Ressource','GPO'        ,'Gestion de projet et des organisations'                ,false,5 );
-INSERT INTO ModulesETAT VALUES('R1.09',1,'Ressource','Eco'        ,'Économie durable et numérique'                         ,false,2 );
-INSERT INTO ModulesETAT VALUES('R1.10',1,'Ressource','Ang'        ,'Anglais Technique'                                     ,false,2 );
-INSERT INTO ModulesETAT VALUES('R1.11',1,'Ressource','Com'        ,'Bases de la communication'                             ,false,2 );
-INSERT INTO ModulesETAT VALUES('R1.12',1,'Ressource','PPP'        ,'Projet Professionnel et Personnel'                     ,false,2 );
-INSERT INTO ModulesETAT VALUES('P1.01',1,'PPP'      ,'Port'       ,'Portfolio'                                             ,false,12);
-INSERT INTO ModulesETAT VALUES('S1.01',1,'Sae'      ,'Impl-Besoin','Implémentation d un besoin client'                     ,false,0 );
-INSERT INTO ModulesETAT VALUES('S1.02',1,'Sae'      ,'Comp-Algo'  ,'Comparaison d approches algorithmiques'                ,false,0 );
-INSERT INTO ModulesETAT VALUES('S1.05',1,'Sae'      ,'Rec-Besoins','Recueil de besoins'                                    ,false,0 );
-INSERT INTO ModulesETAT VALUES('S1.06',1,'Sae'      ,'Env-info'   ,'Découverte de l environnement économique et écologique',false,0 );
+INSERT INTO ModulesETAT2 VALUES('R1.01',1,'Ressource','Init-Dev'   ,'Initiation au développement'                                ,false,10);
+INSERT INTO ModulesETAT2 VALUES('R1.02',1,'Ressource','Dev-Web'    ,'Développement interfaces Web'                               ,false,5 );
+INSERT INTO ModulesETAT2 VALUES('R1.03',1,'Ressource','Intro-Archi','Introduction Architecture'                                  ,false,5 );
+
 
 /* S2 */
-INSERT INTO ModulesETAT VALUES('R2.01',2,'Ressource','Dev-Objet'  ,'Développement orienté objets'              ,false,10);
-INSERT INTO ModulesETAT VALUES('R2.02',2,'Ressource','Dev-IHM'    ,'Développement d applications IHM'          ,false,5 );
-INSERT INTO ModulesETAT VALUES('R2.03',2,'Ressource','Quali-dev'  ,'Qualité de développement'                  ,false,5 );
-INSERT INTO ModulesETAT VALUES('R2.04',2,'Ressource','Com-Bas-Niv','Communication et fonctionnement bas niveau',false,5 );
-INSERT INTO ModulesETAT VALUES('R2.05',2,'Ressource','Intro-Res'  ,'Introduction aux services réseaux'         ,false,5 );
-INSERT INTO ModulesETAT VALUES('R2.06',2,'Ressource','Exp-BD'     ,'Exploitation d une base de données'        ,false,5 );
-INSERT INTO ModulesETAT VALUES('R2.07',2,'Ressource','Graph'      ,'Graphes'                                   ,false,2 );
-INSERT INTO ModulesETAT VALUES('R2.13',2,'Ressource','Com'        ,'Communication Technique'                   ,false,2 );
-INSERT INTO ModulesETAT VALUES('S2.01',2,'Sae'      ,'Dev-Appli'  ,'Développement d une application'           ,false,0 );
-INSERT INTO ModulesETAT VALUES('S2.02',2,'Sae'      ,'Exp-Algo'   ,'Exploration algorithmique d un problème'   ,false,0 );
-INSERT INTO ModulesETAT VALUES('S2.03',2,'Sae'      ,'Serv-Res'   ,'Installation de services réseau '          ,false,0 );
-INSERT INTO ModulesETAT VALUES('S2.04',2,'Sae'      ,'Exp-BD'     ,'Exploitation d une base de données'        ,false,0 );
+INSERT INTO ModulesETAT2 VALUES('R2.01',2,'Ressource','Dev-Objet'  ,'Développement orienté objets'                               ,false,10);
+
 
 /* S3 */
-INSERT INTO ModulesETAT VALUES('R3.01',3,'Ressource','Dev-Web'  ,'Développement WEB'                   ,false,10);
-INSERT INTO ModulesETAT VALUES('R3.02',3,'Ressource','Dev-Eff'  ,'Développement Efficace'              ,false,5 );
-INSERT INTO ModulesETAT VALUES('R3.03',3,'Ressource','Anal'     ,'Analyse'                             ,false,10);
-INSERT INTO ModulesETAT VALUES('R3.05',3,'Ressource','Prog-Sys' ,'Programmation Système '              ,false,10);
-INSERT INTO ModulesETAT VALUES('R3.07',3,'Ressource','SQL'      ,'SQL dans un langage de programmation',false,2 );
-INSERT INTO ModulesETAT VALUES('R3.08',3,'Ressource','Proba'    ,'Probabilité'                         ,false,2 );
-INSERT INTO ModulesETAT VALUES('R3.11',3,'Ressource','Droit-Num','Droits des contrats et du numérique' ,false,2 );
-INSERT INTO ModulesETAT VALUES('R3.14',3,'Ressource','PPP 3'    ,'Projet Professionnel et Personnel'   ,false,12);
-INSERT INTO ModulesETAT VALUES('P3.01',3,'PPP'      ,'Port'     ,'Portfolio'                           ,false,2 );
-INSERT INTO ModulesETAT VALUES('S3.01',3,'Sae'      ,'Dev-Appli','Développement d une application'     ,false,0 );
+INSERT INTO ModulesETAT2 VALUES('R3.01',3,'Ressource','Dev-Web'  ,'Développement WEB'                                            ,false,10);
 
 /* S4 */
-INSERT INTO ModulesETAT VALUES('R4.01',4,'Ressource','Archi-log' ,'Architecture logicielle'             ,false,10);
-INSERT INTO ModulesETAT VALUES('R4.02',4,'Ressource','Quali-dev' ,'Qualité de développement 4'          ,false,5 );
-INSERT INTO ModulesETAT VALUES('R4.03',4,'Ressource','Quali-Rela','Qualité et au delà du relationnel'   ,false,5 );
-INSERT INTO ModulesETAT VALUES('R4.04',4,'Ressource','Opti-Met'  ,'Methode d optimisation'              ,false,5 );
-INSERT INTO ModulesETAT VALUES('R4.08',4,'Ressource','Virtu'     ,'Virtualisation'                      ,false,5 );
-INSERT INTO ModulesETAT VALUES('S4.ST',4,'Stage'    ,'Stage'     ,'Stages'                              ,false,2 );
+INSERT INTO ModulesETAT2 VALUES('R4.01',4,'Ressource','Archi-log' ,'Architecture logicielle'                                     ,false,10);
+
 
 /* S5 */
-INSERT INTO ModulesETAT VALUES('R5.01',5,'Ressource','Init-Manag','Initiation au management d’une équipe de projet informatique',false,10);
-INSERT INTO ModulesETAT VALUES('R5.02',5,'Ressource','PPP'       ,'Projet Personnel et Professionnel'                           ,false,2 );
-INSERT INTO ModulesETAT VALUES('R5.03',5,'Ressource','Com-Polit' ,'Politique de communication'                                  ,false,5 );
-INSERT INTO ModulesETAT VALUES('R5.05',5,'Ressource','Prog-Avan' ,'Programmation avancée'                                       ,false,5 );
-INSERT INTO ModulesETAT VALUES('R5.06',5,'Ressource','Prog-Multi','Programmation Multimédia - Traitement de l image'            ,false,5 );
-INSERT INTO ModulesETAT VALUES('R5.07',5,'Ressource','Auto-Prod' ,'Automatisation de la chaîne de production'                   ,false,5 );
-INSERT INTO ModulesETAT VALUES('R5.09',5,'Ressource','Virtu-Avan','Virtualisation avancée'                                      ,false,5 );
-INSERT INTO ModulesETAT VALUES('R5.14',5,'Ressource','Ang'       ,'Anglais'                                                     ,false,2 );
-INSERT INTO ModulesETAT VALUES('S5.01',5,'Sae'      ,'Dev-Avan'  ,'Développement avancé'                                        ,false,0 );
+INSERT INTO ModulesETAT2 VALUES('R5.01',5,'Ressource','Init-Manag','Initiation au management d’une équipe de projet informatique',false,10);
+
 
 /* S6 */
-INSERT INTO ModulesETAT VALUES('R6.01',6,'Ressource','Init-Entr','Initiation à l’entrepreneuriat'                            ,false,10);
-INSERT INTO ModulesETAT VALUES('R6.02',6,'Ressource','Droit-Num','Droit du numérique et de la propriété intellectuelle'      ,false,2 );
-INSERT INTO ModulesETAT VALUES('R6.03',6,'Ressource','Com'      ,'Communication : organisation et diffusion de l’information',false,2 );
-INSERT INTO ModulesETAT VALUES('S6.ST',6,'Stage'    ,'Stage'    ,'Stages'                                                    ,false,2 );
+INSERT INTO ModulesETAT2 VALUES('R6.01',6,'Ressource','Init-Entr','Initiation à l’entrepreneuriat'                               ,false,10);
+
 
 
 
 /* Données dans la table Intervenant */
-INSERT INTO IntervenantsETAT VALUES('Le Pivert' , 'Philippe'  , 150, 200, 4, 'Prof');
-INSERT INTO IntervenantsETAT VALUES('Colignon'  , 'Thomas'    , 60 , 70 , 5, 'Vac' );
-INSERT INTO IntervenantsETAT VALUES('Dubocage'  , 'Tiphaine'  , 60 , 70 , 5, 'Vac' );
-INSERT INTO IntervenantsETAT VALUES('Legrix'    , 'Bruno'     , 150, 200, 4, 'Prof');
-INSERT INTO IntervenantsETAT VALUES('Boukachour', 'Hadhoum'   , 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsETAT VALUES('Guinand'   , 'Frederic'  , 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsETAT VALUES('Pytel'     , 'Steve'     , 60 , 70 , 5, 'Vac' );
-INSERT INTO IntervenantsETAT VALUES('Boukachour', 'Jaouad'    , 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsETAT VALUES('Zahour'    , 'Abderrazak', 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsETAT VALUES('Boudebous' , 'Dalila'    , 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsETAT VALUES('Sadeg'     , 'Bruno'     , 80 , 100, 5, 'Cont');
-INSERT INTO IntervenantsETAT VALUES('Alabboud'  , 'Hassan'    , 80 , 100, 5, 'Cont');
-INSERT INTO IntervenantsETAT VALUES('Pascal'    , 'Rembert'   , 80 , 100, 5, 'Cont');
-INSERT INTO IntervenantsETAT VALUES('Griette'   , 'Quentin'   , 100, 150, 4, 'Cher');
-INSERT INTO IntervenantsETAT VALUES('Laffaech'  , 'Quentin'   , 150, 200, 4, 'Prof');
-INSERT INTO IntervenantsETAT VALUES('Foubert'   , 'Jean'      , 100, 150, 4, 'Cont');
-INSERT INTO IntervenantsETAT VALUES('Bertin'    , 'Sebastien' , 60 , 70 , 5, 'Cont');
-INSERT INTO IntervenantsETAT VALUES('Delarue'   , 'Isabelle'  , 60 , 70 , 5, 'Cont');
-INSERT INTO IntervenantsETAT VALUES('Nivet'     , 'Laurence'  , 150, 200, 4, 'Prof');
-INSERT INTO IntervenantsETAT VALUES('Colin'     , 'Jean-Yves' , 100, 150, 4, 'Prof');
+INSERT INTO IntervenantsETAT VALUES('Cocagne' , 'Oscar'  , 20, 25, 1, 'prof');
+INSERT INTO IntervenantsETAT VALUES('Hautot'  , 'Sarah'    , 14 , 50 , 2, 'vac' );
+INSERT INTO IntervenantsETAT VALUES('Chalansonnet'  , 'Adrian'  , 60 , 70 , 5, 'cher' );
+INSERT INTO IntervenantsETAT VALUES('Marouard' , 'Louis'  , 100, 125, 1, 'prof');
+INSERT INTO IntervenantsETAT VALUES('Vicente'  , 'Hugo'    , 160 , 270 , 2, 'vac' );
+INSERT INTO IntervenantsETAT VALUES('Gaulos' , 'thiérie'  , 200, 205, 5, 'prof');
+INSERT INTO IntervenantsETAT VALUES('Ochon'  , 'Paul'    , 12 , 35 , 5, 'vac' );
+INSERT INTO IntervenantsETAT VALUES('Ptipeu'  , 'Justin'  , 10 , 15 , 1, 'cher' );
+INSERT INTO IntervenantsETAT VALUES('Bonboeur' , 'Louis'  , 10, 190, 10, 'prof');
+INSERT INTO IntervenantsETAT VALUES('Mentation'  , 'Ali'    , 190 , 191 , 2, 'vac' );
+
 
 
 
@@ -110,14 +83,13 @@ INSERT INTO IntervenantsETAT VALUES('Colin'     , 'Jean-Yves' , 100, 150, 4, 'Pr
 INSERT INTO ModulesCatHeuresETAT VALUES('R1.01', 'CM' , 8 , 2, 2 );
 INSERT INTO ModulesCatHeuresETAT VALUES('R1.01', 'TD' , 10, 4, 14);
 INSERT INTO ModulesCatHeuresETAT VALUES('R1.01', 'TP' , 10, 2, 14);
-INSERT INTO ModulesCatHeuresETAT VALUES('R1.01', 'Tut', 5 , 1, 5 );
-INSERT INTO ModulesCatHeuresETAT VALUES('R1.02', 'TD' , 5 , 5, 14);
-INSERT INTO ModulesCatHeuresETAT VALUES('R1.02', 'TP' , 5 , 3, 14);
+
+INSERT INTO ModulesCatHeuresETAT VALUES('R1.02', 'CM' , 10 , 5, 10 );
+INSERT INTO ModulesCatHeuresETAT VALUES('R1.02', 'TD' , 2 , 3, 20);
+INSERT INTO ModulesCatHeuresETAT VALUES('R1.02', 'TP' , 1 , 3, 14);
+
 INSERT INTO ModulesCatHeuresETAT VALUES('R1.03', 'TD' , 8 , 2, 14);
-INSERT INTO ModulesCatHeuresETAT VALUES('R1.04', 'TD' , 10, 2, 7 );
-INSERT INTO ModulesCatHeuresETAT VALUES('R1.04', 'TP' , 2 , 4, 7 );
-INSERT INTO ModulesCatHeuresETAT VALUES('R1.05', 'TD' , 5 , 2, 14);
-INSERT INTO ModulesCatHeuresETAT VALUES('R1.05', 'TP' , 5 , 4, 14);
+
 
 INSERT INTO ModulesCatHeuresETAT VALUES('R2.01', 'TP'   , 10, 4 , 13);
 INSERT INTO ModulesCatHeuresETAT VALUES('R2.01', 'TD'   , 5 , 2 , 13);
@@ -250,3 +222,4 @@ INSERT INTO AffectationETAT(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe) 
 INSERT INTO AffectationETAT(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Colin', 'Jean-Yves', 'R4.01', 'TP' , 14  , 2);
 INSERT INTO AffectationETAT(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Colin', 'Jean-Yves', 'R5.07', 'TP' , 14  , 2);
 INSERT INTO AffectationETAT(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Colin', 'Jean-Yves', 'R5.09', 'TP' , 12  , 2);
+
