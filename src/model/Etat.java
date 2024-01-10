@@ -13,6 +13,7 @@ import model.modules.Stage;
 import view.Etat.PanelEtat;
 import model.modules.PPP;
 import java.util.Scanner;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 
@@ -705,11 +706,13 @@ public class Etat {
 	/*-------------------------------------------------*/
 
 	public static void genererHTMLIntervenants(){
-		Generation.generationIntervenants(PanelEtat.getFichier() + "/" + Etat.nom);
+		new File(PanelEtat.getFichier()+ "/" + Etat.nom).mkdir();
+		Generation.generationIntervenants(PanelEtat.getFichier() + "/" + Etat.nom + "/");
 	}
 
 	public static void genererHTMLModules(){
-		Generation.generationModules(PanelEtat.getFichier() + "/" + Etat.nom);
+		new File(PanelEtat.getFichier()+ "/" + Etat.nom).mkdir();
+		Generation.generationModules(PanelEtat.getFichier() + "/" + Etat.nom + "/");
 	}
 
 	// JAI PAS ACCES A LA COMMANDE DONC MODE BRUTAL
