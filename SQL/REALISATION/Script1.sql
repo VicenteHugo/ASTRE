@@ -1,3 +1,13 @@
+/*
+* @title  : CreateTablesAstre
+* @author : SHOAL™
+* @date   : 10/01/2024
+* @sub    : Création du scénario 1 
+*
+* Script du premier scénario, avec beaucoup de données
+* 
+*/
+
 DROP TABLE IF EXISTS AffectationEtat1;
 DROP TABLE IF EXISTS ModulesCatHeuresEtat1;
 DROP TABLE IF EXISTS ModulesEtat1;
