@@ -43,7 +43,7 @@ public class Generation {
 		this.haut +="	</head>\n" ;
 		this.haut +="	<body>\n" ;
 		this.haut +="		<header>\n" ;
-		this.haut +="			<img id=\"logoTitre\" src=\"image/logoAstre-nobg.png\" alt=\"LogoAstre\">\n" ;
+		this.haut +="			<img id=\"logoTitre\" src=\"image/logoAstre.png\" alt=\"LogoAstre\">\n" ;
 		this.haut +="			<h1>ASTRE- "+ intervenant.getNomIntervenant() +" "+intervenant.getPrenomIntervenant() +" - "+intervenant.getCategorieIntervenant().getLibCatInt()+"</h1>\n";
 		this.haut +="		</header>\n";
 
@@ -113,7 +113,7 @@ public class Generation {
 		this.haut +="	</head>\n" ;
 		this.haut +="	<body>\n" ;
 		this.haut +="		<header>\n" ;
-		this.haut +="			<img id=\"logoTitre\" src=\"image/logoAstre-nobg.png\" alt=\"LogoAstre\">\n" ;
+		this.haut +="			<img id=\"logoTitre\" src=\"image/logoAstre.png\" alt=\"LogoAstre\">\n" ;
 		this.haut +="			<h1>ASTRE- "+ module.getCode() +" "+module.getLibLong() +"</h1>\n";
 		this.haut +="		</header>\n";
 		this.pied  ="	</body>\n";
@@ -300,7 +300,6 @@ public class Generation {
 						}
 					}
 				}
-				
 			}
 		}
 		if(modulePresent){
@@ -314,9 +313,10 @@ public class Generation {
 	public static void genererStyle(String chemin){		
 		new File(chemin+"style").mkdir();
 		new File(chemin+"image").mkdir();
+		System.out.println(chemin);
 		try {
-			BufferedImage image = ImageIO.read(new File("./lib/logoAstre-nobg.png"));
-			ImageIO.write(image, "png", new File(chemin+"image/logoAstre-nobg.png"));		
+			BufferedImage image = ImageIO.read(new File("./lib/logoAstre.png"));
+			ImageIO.write(image, "png", new File(chemin+"image/logoAstre.png"));		
 		} catch (IOException e) {e.printStackTrace();}
 		String s =  "*{\n"+
 					"	margin: 0;\n"+
@@ -462,9 +462,5 @@ public class Generation {
 				new Generation(m,chemin);
 			}
 		}
-	}
-	public static void main(String[] args) {
-		//Generation.generationIntervenants("./generation/");
-		//Generation.generationModules();
 	}
 }
