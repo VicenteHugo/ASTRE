@@ -115,7 +115,7 @@ public class Etat {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch (FileNotFoundException e) {
+		} /*catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}*/
 	}
