@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS IntervenantsEtat2
 -- Création des tables ayant un niveau de liaison 3
 CREATE TABLE IF NOT EXISTS ModulesCatHeuresEtat2
 (
-	codeMod    VARCHAR(255) NOT NULL REFERENCES ModulesEtat22(codeMod) ON DELETE CASCADE,
+	codeMod    VARCHAR(255) NOT NULL REFERENCES ModulesEtat2(codeMod) ON DELETE CASCADE,
 	libCatHeur VARCHAR(255) NOT NULL REFERENCES CategorieHeuresEtat2(libCatHeur),
 	nbHeurePN  INTEGER NOT NULL CHECK (nbHeurePN >= 0),
 	nbHeureSem INTEGER NOT NULL CHECK (nbHeureSem >= 0),
@@ -211,4 +211,4 @@ INSERT INTO AffectationEtat2(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)
 INSERT INTO AffectationEtat2(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Chalansonnet', 'Adrian', 'R2.01', 'TP', 12 , 2);
 
 INSERT INTO AffectationEtat2(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe,commentaire)  VALUES('Bonboeur', 'Jean', 'R1.01', 'TP', 13 , 2,'C est le meilleur sandwich !');
-INSERT INTO AffectationEtat2(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Vicente', 'Hugo', 'R2.02', 'TP', 12 , 2);
+INSERT INTO AffectationEtat2(nomInt,prenomInt,codeMod,libCatHeur,nbSem,nbGroupe)  VALUES('Vicente', 'Hugo', 'R2.01', 'TP', 12 , 2);
