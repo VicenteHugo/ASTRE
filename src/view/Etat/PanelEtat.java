@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 
 import controleur.Controleur;
 import model.Etat;
-import model.Generer.Generation;
 import view.accueil.*;
 
 public class PanelEtat extends JPanel {

@@ -26,6 +26,7 @@ import view.JButtonStyle;
 import controleur.*;
 import model.Affectations;
 import model.CategorieHeures;
+import model.Etat;
 import model.Semestres;
 import model.modules.Module;
 import model.modules.Ressource;
@@ -789,13 +790,20 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 		map.put(Controleur.getControleur().getCategorieHeure("TP"), lstTP);
 		map.put(Controleur.getControleur().getCategorieHeure("TD"), lstTD);
 
+		System.out.println(this.estNouveau);
+
 		if (this.estNouveau) {
 			this.mod.setCode         (cod);
 			this.mod.setLibLong      (liL);
 			this.mod.setLibCourt     (liC);
 			this.mod.setValide       (val);
-			this.mod.initList        (map);
 			this.mod.setHeurePonctuel(hp );
+
+			this.mod.setListCategorieHeure(List.of(Controleur.getControleur().getCategorieHeure("CM"),Controleur.getControleur().getCategorieHeure("TP"), Controleur.getControleur().getCategorieHeure("TD")));
+			this.mod.setHeures(map);
+
+			System.out.println("HASHMAP \n " + this.mod.getHeures() + " \n\n\n");
+			System.out.println("LIST    \n " + this.mod.getListCategorieHeure() + " \n\n\n");
 
 			if (Controleur.getControleur().ajouterModule(this.mod)) {
 				Controleur.getControleur().enregistrer();
@@ -817,6 +825,9 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 	private void ajouter () {
+
+		this.mod.setCode(this.txtCodeMod.getText());
+
 		if(f != null) return;
 		f = new JFrame();
         f.add(new PanelAddRessourceIntervenant(this,this.frame, f,mod));
