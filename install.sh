@@ -72,14 +72,15 @@ echo "bd=$bd" >> $install/ASTRE/config/login.dat
 echo "pwd=$pwd" >> $install/ASTRE/config/login.dat
 
 # création du raccourci sur le bureau
-echo "[Desktop Entry]" > $HOME/Bureau/ASTRE.desktop
+echo "#!/usr/bin/env xdg-open" > $HOME/Bureau/ASTRE.desktop
+echo "[Desktop Entry]" >> $HOME/Bureau/ASTRE.desktop
 echo "Version=1.0" >> $HOME/Bureau/ASTRE.desktop
 echo "Type=Application" >> $HOME/Bureau/ASTRE.desktop
 echo "Name=ASTRE" >> $HOME/Bureau/ASTRE.desktop
 echo "Comment=Application de gestion prévisuel" >> $HOME/Bureau/ASTRE.desktop
-echo "Exec=$install/ASTRE/launch.sh" >> $HOME/Bureau/ASTRE.desktop
+echo "Exec=java -jar $install/ASTRE/ASTRE.jar" >> $HOME/Bureau/ASTRE.desktop
 echo "Icon=$install/ASTRE/ASTRE.png" >> $HOME/Bureau/ASTRE.desktop
-echo "Path=$install" >> $HOME/Bureau/ASTRE.desktop
+echo "Path=$install/ASTRE" >> $HOME/Bureau/ASTRE.desktop
 echo "Terminal=false" >> $HOME/Bureau/ASTRE.desktop
 echo "StartupNotify=false" >> $HOME/Bureau/ASTRE.desktop
 
