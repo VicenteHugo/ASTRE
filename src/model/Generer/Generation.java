@@ -1,14 +1,17 @@
 package model.Generer;
 
 import java.io.PrintWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Set;
-
-
+import java.awt.image.*;
+import javax.imageio.ImageIO;
 
 import model.Affectations;
 import model.CategorieHeures;
@@ -16,7 +19,6 @@ import model.Etat;
 import model.Intervenants;
 import model.modules.Module;
 
-import java.io.FileOutputStream;
 
 public class Generation {
 
@@ -41,7 +43,7 @@ public class Generation {
 		this.haut +="	</head>\n" ;
 		this.haut +="	<body>\n" ;
 		this.haut +="		<header>\n" ;
-		this.haut +="			<img id=\"logoTitre\" src=\"../lib/logoAstre-nobg.png\" alt=\"LogoAstre\">\n" ;
+		this.haut +="			<img id=\"logoTitre\" src=\"image/logoAstre.png\" alt=\"LogoAstre\">\n" ;
 		this.haut +="			<h1>ASTRE- "+ intervenant.getNomIntervenant() +" "+intervenant.getPrenomIntervenant() +" - "+intervenant.getCategorieIntervenant().getLibCatInt()+"</h1>\n";
 		this.haut +="		</header>\n";
 
@@ -111,7 +113,7 @@ public class Generation {
 		this.haut +="	</head>\n" ;
 		this.haut +="	<body>\n" ;
 		this.haut +="		<header>\n" ;
-		this.haut +="			<img id=\"logoTitre\" src=\"../lib/logoAstre-nobg.png\" alt=\"LogoAstre\">\n" ;
+		this.haut +="			<img id=\"logoTitre\" src=\"image/logoAstre.png\" alt=\"LogoAstre\">\n" ;
 		this.haut +="			<h1>ASTRE- "+ module.getCode() +" "+module.getLibLong() +"</h1>\n";
 		this.haut +="		</header>\n";
 		this.pied  ="	</body>\n";
@@ -308,22 +310,162 @@ public class Generation {
 				}
 		return divHeure;
 	}
+
+	public static void genererStyle(String chemin){		
+		new File(chemin+"style").mkdir();
+		new File(chemin+"image").mkdir();
+		System.out.println(chemin);
+		try {
+			BufferedImage image = ImageIO.read(new File("./lib/logoAstre.png"));
+			ImageIO.write(image, "png", new File(chemin+"image/logoAstre.png"));		
+		} catch (IOException e) {e.printStackTrace();}
+		String s =  "*{\n"+
+					"	margin: 0;\n"+
+					"	padding: 0;\n"+
+					"  	box-sizing: border-box;\n"+
+				    "}\n"+
+					"header {\n"+
+					"	background-color: darkgrey;\n"+
+					"	padding: 0%;\n"+
+					"	text-align: left;\n"+
+					"	color: whitesmoke;\n"+
+					"	display: flex;\n"+
+					"	flex-direction: row;\n"+
+					"}\n"+
+					"#logoTitre{\n"+
+					"	width: 150px;\n"+
+					"	height: auto;\n"+
+					"	margin: 10px;\n"+
+					"}\n"+
+					"h1{\n"+
+					"	padding-top: 50px;\n"+
+					"	padding-bottom: 50px;\n"+
+					"	margin: 10px;\n"+
+					"	flex: auto;\n"+
+					"}\n"+
+
+					"body {\n"+
+					"	font-family: 'Open Sans', sans-serif;\n"+
+					"	background-color: whitesmoke;\n"+
+					"}\n"+
+
+					"div{\n"+
+					"	font-family: 'Courier New', Courier, monospace;\n"+
+					"}\n"+
+
+					".premiereLigne{\n"+
+					"	display: flex; \n"+
+					"	flex-wrap: wrap;\n"+
+					"	gap: 50px;\n"+
+					"	padding: 20px;\n"+
+					"	margin-bottom:50px;\n"+
+					"}\n"+
+					".gridRessource{\n"+
+					"	margin-left: 20px;\n"+
+					"	display: grid;\n"+
+					"	grid-template-columns: repeat( auto-fit, minmax(470px, 470px) );\n"+
+					"	grid-gap: 40px;\n"+
+					"}\n"+
+					".icecube{\n"+
+					"	border: 1px solid #0097B2;\n"+
+					"}\n"+
+					".barreBleue{\n"+
+					"	padding-left: 10px;\n"+
+					"	margin-left: 20px;\n"+
+					"	border-left: 3px solid #0097B2;\n"+
+					"}\n"+
+					"/**\n"+
+					"*titre de la partie\n"+
+					"*/\n"+
+					"h2 {\n"+
+					"	font-size: 20px;\n"+
+					"	color: #0097B2;\n"+
+					"}\n"+
+
+					".module{\n"+
+					"	font-size: 15px;\n"+
+					"}\n"+
+
+
+					"ul {\n"+
+					"	list-style-type: none;\n"+
+					"	padding: 0;\n"+
+					"	margin: 0;\n"+
+					"}\n"+
+
+					"ul ul,\n"+
+					"ul ol,\n"+
+					"ol ul,\n"+
+					"ol ol {\n"+
+					"	margin-left: 20px;\n"+
+					"}\n"+
+
+					".ressource {\n"+
+					"	display: inline-block;\n"+
+					"	margin-right: 10px;\n"+
+					"	width: 100px; /* Remplacez 100px par la largeur souhaitée */\n"+
+					"	overflow: hidden; /* Pour s'assurer que le contenu ne dépasse pas la largeur spécifiée */\n"+
+					"	white-space: nowrap; /* Empêche le texte de passer à la ligne */\n"+
+					"}\n"+
+						
+					"/**\n"+
+					"*liste des informations\n"+
+					"*/\n"+
+
+					"li {\n"+
+					"	color: black;\n"+
+					"	font-size: 15px;\n"+
+					"	font-weight: normal;\n"+
+					"}\n"+
+
+					".typeHeure{\n"+
+					"	font-weight: bold;\n"+
+					"}\n"+
+
+					"/**\n"+
+					"*Placer un point ou autre avant la liste (compensation li sur la même ligne)\n"+
+					"*/\n"+
+					"li::before {\n"+
+					"	content: \"'\"2022'; /**unicode**/\n"+
+					"	font-size: 1.2em;\n"+
+					"	margin-right: 5px;\n"+
+					"}\n"+
+					"/**\n"+
+					"*information générer dans le li \n"+
+					"*/\n"+
+					".info {\n"+
+					"	color: black;\n"+
+					"	font-weight: normal;\n"+
+					"	font-size: 12px;\n"+
+					"}";
+		
+		try
+		{
+			PrintWriter pw = new PrintWriter( new FileOutputStream(chemin+"style/style.css") );
+			pw.print(s);
+			pw.close();
+		}
+		catch (Exception e){ e.printStackTrace(); }
+	}
 	
 	public static void generationIntervenants(String chemin){
-		new Generation(Etat.getIntervenants().get(0),chemin);
-		//for (Intervenants i : Etat.getIntervenants()) {
-		//	new Generation(i,chemin);
-		//}
+		if(Etat.getIntervenants() != null && Etat.getIntervenants().size() > 0){
+			Generation.genererStyle(chemin);
+			for (Intervenants i : Etat.getIntervenants()) {
+				new Generation(i,chemin);
+			}
+		}
 	}
 	public static void generationModules(String chemin){
-		for (Module m : Etat.getModules()) {
-			new Generation(m,chemin);
+		if(Etat.getModules() != null && Etat.getModules().size() > 0){
+			Generation.genererStyle(chemin);
+			for (Module m : Etat.getModules()) {
+				new Generation(m,chemin);
+			}
 		}
 	}
 	public static void main(String[] args) {
-		new Etat();
-		Etat.changerEtat("fz");
-		Generation.generationIntervenants("./generation/");
+		//Generation.generationIntervenants("./generation/");
 		//Generation.generationModules();
 	}
 }
