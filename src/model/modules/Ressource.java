@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.CategorieHeures;
+import model.Etat;
 import model.Semestres;
 
 public class Ressource extends Module {
@@ -12,7 +13,6 @@ public class Ressource extends Module {
 		super(semestres, code, libLong, libCourt, heurePonctuel, valid);
 	}
 
-	@Override
 	public void initList(int heurePN, int nbSemaine, int heureSemaine, CategorieHeures catH) {
 
 		List<Integer> list = new ArrayList<>();

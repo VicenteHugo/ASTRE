@@ -96,9 +96,9 @@ public class Etat {
 			Class.forName("org.postgresql.Driver"); //Postgress
 
 			// Connection
-			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			// // Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hugo","hugo","sui12345"); //Postgress
-			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
+			Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dave","dave","davepass"); //Postgress
 			 Etat.connec = DriverManager.getConnection("jdbc:postgresql://" + serveur + ":5432/" + name, name, pwd); //avec instaler 
 			Etat.recupererNomEtat();
@@ -319,13 +319,17 @@ public class Etat {
 			while (res.next()) {
 
 				Intervenants inter = Etat.getIntervenant(res.getString("nomInt"), res.getString("prenomInt"));
+				System.out.println(res.getString("codeMod"));
+
+				System.out.println("Code : " + res.getString("codeMod"));
 				Module mode = Etat.getModule(res.getString("codeMod"));
 				CategorieHeures cat = Etat.getCatHeure(res.getString("libCatHeur"));
 				int nbs = res.getInt("nbSem");
 				int nbg = res.getInt("nbGroupe");
 				String comm = res.getString("commentaire");
 
-				Etat.lstAffectations.add(new Affectations(inter, mode, cat, nbs, nbg, comm));
+				if (mode != null)
+					Etat.lstAffectations.add(new Affectations(inter, mode, cat, nbs, nbg, comm));
 			}
 
 			res.close();
@@ -532,7 +536,9 @@ public class Etat {
 						st.setBoolean(i, (Boolean) info);
 				}
 
+
 				// On l'execute
+				System.out.println(st);
 				st.executeUpdate();
 			}
 		} catch (Exception e) { e.printStackTrace(); }
@@ -707,11 +713,11 @@ public class Etat {
 	/*-------------------------------------------------*/
 
 	public static void genererHTMLIntervenants(){
-		Generation.generationIntervenants(PanelEtat.getFichier() + "/" + Etat.nom);
+		Generation.generationIntervenants(PanelEtat.getFichier() + "/" + Etat.nom + "/");
 	}
 
 	public static void genererHTMLModules(){
-		Generation.generationModules(PanelEtat.getFichier() + "/" + Etat.nom);
+		Generation.generationModules(PanelEtat.getFichier() + "/" + Etat.nom + "/");
 	}
 
 	// JAI PAS ACCES A LA COMMANDE DONC MODE BRUTAL
