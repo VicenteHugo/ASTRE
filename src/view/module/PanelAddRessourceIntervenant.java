@@ -171,6 +171,7 @@ public class PanelAddRessourceIntervenant extends JPanel{
 							JOptionPane.showMessageDialog(this, "Trop de groupe " +  categerie +" sont assignés");
 						}else{
 							ArrayList<Integer> list = (ArrayList<Integer>) mod.getHeures().get(categ);
+							System.out.println(mod);
 							nbSemaine = list.get(1);
 							isOk = true;
 						}
