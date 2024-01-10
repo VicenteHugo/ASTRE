@@ -51,6 +51,10 @@ do
 done
 
 # installation de ASTRE
+cd $install
+mkdir ASTRE
+cd ASTRE
+curl -O https://github.com/VicenteHugo/ASTRE/releases/download/v1.0.0/ASTRE.jar
 {
 for ((i = 0 ; i <= 100 ; i += RANDOM % 15)); do
     sleep 0.2
@@ -61,18 +65,27 @@ done
 echo "Installation de ASTRE terminée"
 
 # ajout du fichier login.dat dans le dossier config
-echo "user=$user" > $install/config/login.dat
-echo "bd=$bd" >> $install/config/login.dat
-echo "pwd=$pwd" >> $install/config/login.dat
+mkdir $install/ASTRE/config
+
+echo "user=$user" > $install/ASTRE/config/login.dat
+echo "bd=$bd" >> $install/ASTRE/config/login.dat
+echo "pwd=$pwd" >> $install/ASTRE/config/login.dat
 
 # création du raccourci sur le bureau
-echo "[Desktop Entry]" > /home/$USER/Bureau/ASTRE.desktop
-echo "Version=1.0" >> /home/$USER/Bureau/ASTRE.desktop
-echo "Type=Application" >> /home/$USER/Bureau/ASTRE.desktop
-echo "Name=ASTRE" >> /home/$USER/Bureau/ASTRE.desktop
-echo "Comment=Application de gestion prévisuel" >> /home/$USER/Bureau/ASTRE.desktop
-echo "Exec=$install/ASTRE" >> /home/$USER/Bureau/ASTRE.desktop
-echo "Icon=$install/ASTRE.png" >> /home/$USER/Bureau/ASTRE.desktop
-echo "Path=$install" >> /home/$USER/Bureau/ASTRE.desktop
-echo "Terminal=false" >> /home/$USER/Bureau/ASTRE.desktop
-echo "StartupNotify=false" >> /home/$USER/Bureau/ASTRE.desktop
+echo "[Desktop Entry]" > $HOME/Bureau/ASTRE.desktop
+echo "Version=1.0" >> $HOME/Bureau/ASTRE.desktop
+echo "Type=Application" >> $HOME/Bureau/ASTRE.desktop
+echo "Name=ASTRE" >> $HOME/Bureau/ASTRE.desktop
+echo "Comment=Application de gestion prévisuel" >> $HOME/Bureau/ASTRE.desktop
+echo "Exec=$install/ASTRE/launch.sh" >> $HOME/Bureau/ASTRE.desktop
+echo "Icon=$install/ASTRE/ASTRE.png" >> $HOME/Bureau/ASTRE.desktop
+echo "Path=$install" >> $HOME/Bureau/ASTRE.desktop
+echo "Terminal=false" >> $HOME/Bureau/ASTRE.desktop
+echo "StartupNotify=false" >> $HOME/Bureau/ASTRE.desktop
+
+chmod +x $HOME/Bureau/ASTRE.desktop
+
+# ajout du fichier launch.sh pour lancer l'application
+echo "#!/bin/bash" > $install/ASTRE/launch.sh
+echo "java -jar ASTRE.jar" >> $install/ASTRE/launch.sh
+chmod +x $install/ASTRE/launch.sh

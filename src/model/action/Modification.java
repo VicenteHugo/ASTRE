@@ -27,19 +27,26 @@ public class Modification extends Action {
 
 	public Modification(Module mOld, Module mNew) {
 
-		this.requetes = "UPDATE Modules" + Etat.nom + " SET codeMod = ?, semMod = ?, libCourtMod = ?, libLongMod = ?, validMod = ?, nbHeurPonc = ? WHERE codeMod = ?;";
-
-		this.info = new ArrayList<>(
-				List.of(mNew.getCode(), mNew.getSemestres().getNumSem(), mNew.getLibCourt(), mNew.getLibLong(), mNew.isValide(), mNew.getHeurePonctuel(), mOld.getCode()));
-
+		this.info = new ArrayList<>();
+		this.requetes = "";
 		
+		if (!mNew.getCode().equals(mOld.getCode())) {
+			this.requetes = "INSERT INTO Modules" + Etat.nom+ " (codeMod, semMod, typeMod, libCourtMod, libLongMod, validMod, nbHeurPonc) VALUES (?,?,?,?,?,?,?);";
+			this.info = new ArrayList<>(List.of(mNew.getCode(), mNew.getSemestres().getNumSem(), mNew.getClass().getSimpleName(), mNew.getLibCourt(), mNew.getLibLong(), mNew.isValide(), mNew.getHeurePonctuel()));
+		}
 
 		for (CategorieHeures cat : mNew.getHeures().keySet()) {
 			List<Integer> lst = mNew.getHeures().get(cat);
-			this.requetes += "UPDATE ModulesCatHeures" + Etat.nom+ " SET nbHeurePN = ?, nbHeureSem = ?, nbSemaine = ? WHERE codeMod = ? AND libCatHeur = ?;";
+			this.requetes += "UPDATE ModulesCatHeures" + Etat.nom+ " SET nbHeurePN = ?, nbHeureSem = ?, nbSemaine = ?, codeMod = ? WHERE codeMod = ? AND libCatHeur = ?;";
 
-			this.info.addAll(List.of(lst.get(0), lst.get(2), lst.get(1), mNew.getCode(), cat.getlibCatHeur()));
+			this.info.addAll(List.of(lst.get(0), lst.get(2), lst.get(1), mNew.getCode(), mOld.getCode(), cat.getlibCatHeur()));
 		}
+
+		this.requetes += "UPDATE Affectation" + Etat.nom+ " SET codeMod = ? WHERE codeMod = ?;";
+		this.info.addAll(List.of(mNew.getCode(), mOld.getCode()));
+
+		
+
 	}
 
 	public Modification(Intervenants iOld, Intervenants iNew) {

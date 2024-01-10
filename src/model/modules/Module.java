@@ -2,8 +2,6 @@ package model.modules;
 
 import java.util.List;
 
-import controleur.Controleur;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 

@@ -335,6 +335,9 @@ public class Controleur {
 	public boolean modifModules(Module mOld, String code, String libL, String libC, int hp, boolean v,
 			HashMap<CategorieHeures, List<Integer>> heures) {
 
+		System.out.println("Code nouveau ? " + (Etat.getModule(code) == null || Etat.getModule(code) == mOld));
+		System.out.println("Code meme    ? " + (Etat.getModule(code) == null || Etat.getModule(code) == mOld));
+
 		if ((Etat.getModule(code) == null || Etat.getModule(code) == mOld)) {
 			// On remplace l'objet
 			Module mNew = null;
@@ -349,6 +352,12 @@ public class Controleur {
 				mNew = new Stage(mOld.getSemestres(), code, libL, libC, hp, v);
 
 			mNew.setHeures(heures);
+			mNew.setListCategorieHeure(mOld.getListCategorieHeure());
+
+			System.out.println("HEURES QUE J'AI : " + heures);
+
+
+
 
 			int i = Etat.getModules().indexOf(mOld);
 			Etat.getModules().remove(mOld);
@@ -360,7 +369,13 @@ public class Controleur {
 			mNew.setHeures(heures);
 
 			// On ajouter l'action
+			
 			Etat.ajouterAction(new Modification(mOld, mNew));
+
+			if (!mNew.getCode().equals(mOld.getCode())) {
+				Etat.ajouterAction(new Suppression(mOld));
+			}
+
 			return true;
 		}
 

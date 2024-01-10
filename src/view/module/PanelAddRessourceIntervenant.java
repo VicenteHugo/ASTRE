@@ -171,6 +171,7 @@ public class PanelAddRessourceIntervenant extends JPanel{
 							JOptionPane.showMessageDialog(this, "Trop de groupe " +  categerie +" sont assignés");
 						}else{
 							ArrayList<Integer> list = (ArrayList<Integer>) mod.getHeures().get(categ);
+							System.out.println(mod);
 							nbSemaine = list.get(1);
 							isOk = true;
 						}
@@ -179,11 +180,13 @@ public class PanelAddRessourceIntervenant extends JPanel{
 				}else{
 					isOk = true;
 				}
-				int heure =  (int)Math.ceil((mod.getHeures().get(categ).get(2)*nbGroupe*nbSemaine)* categ.getcoefCatHeur());
-				int nbHeureTotal = nbHeureTotal(intervenant,heure);
-				if(heure > intervenant.getMaxHeures()|| nbHeureTotal > intervenant.getMaxHeures()){
-						JOptionPane.showMessageDialog(this, "Attention rop d'heures sont assignés");
-				}	
+				if(!(categ.getlibCatHeur().equals("HP"))){
+					int heure =  (int)Math.ceil((mod.getHeures().get(categ).get(2)*nbGroupe*nbSemaine)* categ.getcoefCatHeur());
+					int nbHeureTotal = nbHeureTotal(intervenant,heure);
+					if(heure > intervenant.getMaxHeures()|| nbHeureTotal > intervenant.getMaxHeures()){
+							JOptionPane.showMessageDialog(this, "Attention trop d'heures sont assignés");
+					}	
+				}
 				if(isOk){
 					Affectations affectations = new Affectations(intervenant, this.mod, categ, nbSemaine, nbGroupe, this.txtCommentaire.getText());
 					Controleur.getControleur().ajouterAffectation(affectations);

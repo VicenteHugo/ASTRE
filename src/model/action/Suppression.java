@@ -22,10 +22,12 @@ public class Suppression extends Action
 
 	public Suppression (Module m) 
 	{ 
-		this.requetes = "DELETE FROM Modules" + Etat.nom + " WHERE codeMod = ?" ;
+		this.requetes  = "DELETE FROM Affectation" + Etat.nom + " WHERE codeMod = ?;" ;
+		this.requetes += "DELETE FROM Modules" + Etat.nom + " WHERE codeMod = ?;" ;
+		this.requetes += "DELETE FROM ModulesCatHeures" + Etat.nom + " WHERE codeMod = ?;" ;
 
 		String code = m.getCode();
-		this.info = new ArrayList<>(List.of(code));
+		this.info = new ArrayList<>(List.of(code, code, code));
 	}
 
 	public Suppression (Intervenants inter) 
