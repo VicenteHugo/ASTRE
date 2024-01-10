@@ -51,6 +51,7 @@ do
 done
 
 # installation de ASTRE
+curl -O #lien github
 {
 for ((i = 0 ; i <= 100 ; i += RANDOM % 15)); do
     sleep 0.2

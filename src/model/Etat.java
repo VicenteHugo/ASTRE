@@ -14,10 +14,7 @@ import view.Etat.PanelEtat;
 import model.modules.PPP;
 import java.util.Scanner;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.InputStream;
 
 public class Etat {
 

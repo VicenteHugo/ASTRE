@@ -1,16 +1,12 @@
 package model.Generer;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import model.Affectations;
 import model.CategorieHeures;
-import model.CategorieIntervenant;
-import model.Etat;
 import model.Intervenants;
-import model.Semestres;
 import model.modules.Module;
 import model.modules.Ressource;
 
