@@ -464,8 +464,4 @@ public class Generation {
 			}
 		}
 	}
-	public static void main(String[] args) {
-		//Generation.generationIntervenants("./generation/");
-		//Generation.generationModules();
-	}
 }

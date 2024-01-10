@@ -26,7 +26,6 @@ import view.JButtonStyle;
 import controleur.*;
 import model.Affectations;
 import model.CategorieHeures;
-import model.Etat;
 import model.Semestres;
 import model.modules.Module;
 import model.modules.Ressource;

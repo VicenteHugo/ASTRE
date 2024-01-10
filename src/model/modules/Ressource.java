@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.CategorieHeures;
-import model.Etat;
 import model.Semestres;
 
 public class Ressource extends Module {
