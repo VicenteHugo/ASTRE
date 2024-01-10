@@ -30,18 +30,18 @@ INSERT INTO ModulesEtat1 VALUES('S1.05',1,'Sae'      ,'Rec-Besoins','Recueil de 
 INSERT INTO ModulesEtat1 VALUES('S1.06',1,'Sae'      ,'Env-info'   ,'Découverte de l environnement économique et écologique',false,0 );
 
 /* S2 */
--- INSERT INTO ModulesEtat1 VALUES('R2.01',2,'Ressource','Dev-Objet'  ,'Développement orienté objets'              ,false,10);
--- INSERT INTO ModulesEtat1 VALUES('R2.02',2,'Ressource','Dev-IHM'    ,'Développement d applications IHM'          ,false,5 );
--- INSERT INTO ModulesEtat1 VALUES('R2.03',2,'Ressource','Quali-dev'  ,'Qualité de développement'                  ,false,5 );
--- INSERT INTO ModulesEtat1 VALUES('R2.04',2,'Ressource','Com-Bas-Niv','Communication et fonctionnement bas niveau',false,5 );
--- INSERT INTO ModulesEtat1 VALUES('R2.05',2,'Ressource','Intro-Res'  ,'Introduction aux services réseaux'         ,false,5 );
--- INSERT INTO ModulesEtat1 VALUES('R2.06',2,'Ressource','Exp-BD'     ,'Exploitation d une base de données'        ,false,5 );
--- INSERT INTO ModulesEtat1 VALUES('R2.07',2,'Ressource','Graph'      ,'Graphes'                                   ,false,2 );
--- INSERT INTO ModulesEtat1 VALUES('R2.13',2,'Ressource','Com'        ,'Communication Technique'                   ,false,2 );
--- INSERT INTO ModulesEtat1 VALUES('S2.01',2,'Sae'      ,'Dev-Appli'  ,'Développement d une application'           ,false,0 );
--- INSERT INTO ModulesEtat1 VALUES('S2.02',2,'Sae'      ,'Exp-Algo'   ,'Exploration algorithmique d un problème'   ,false,0 );
--- INSERT INTO ModulesEtat1 VALUES('S2.03',2,'Sae'      ,'Serv-Res'   ,'Installation de services réseau '          ,false,0 );
--- INSERT INTO ModulesEtat1 VALUES('S2.04',2,'Sae'      ,'Exp-BD'     ,'Exploitation d une base de données'        ,false,0 );
+INSERT INTO ModulesEtat1 VALUES('R2.01',2,'Ressource','Dev-Objet'  ,'Développement orienté objets'              ,false,10);
+INSERT INTO ModulesEtat1 VALUES('R2.02',2,'Ressource','Dev-IHM'    ,'Développement d applications IHM'          ,false,5 );
+INSERT INTO ModulesEtat1 VALUES('R2.03',2,'Ressource','Quali-dev'  ,'Qualité de développement'                  ,false,5 );
+INSERT INTO ModulesEtat1 VALUES('R2.04',2,'Ressource','Com-Bas-Niv','Communication et fonctionnement bas niveau',false,5 );
+INSERT INTO ModulesEtat1 VALUES('R2.05',2,'Ressource','Intro-Res'  ,'Introduction aux services réseaux'         ,false,5 );
+INSERT INTO ModulesEtat1 VALUES('R2.06',2,'Ressource','Exp-BD'     ,'Exploitation d une base de données'        ,false,5 );
+INSERT INTO ModulesEtat1 VALUES('R2.07',2,'Ressource','Graph'      ,'Graphes'                                   ,false,2 );
+INSERT INTO ModulesEtat1 VALUES('R2.13',2,'Ressource','Com'        ,'Communication Technique'                   ,false,2 );
+INSERT INTO ModulesEtat1 VALUES('S2.01',2,'Sae'      ,'Dev-Appli'  ,'Développement d une application'           ,false,0 );
+INSERT INTO ModulesEtat1 VALUES('S2.02',2,'Sae'      ,'Exp-Algo'   ,'Exploration algorithmique d un problème'   ,false,0 );
+INSERT INTO ModulesEtat1 VALUES('S2.03',2,'Sae'      ,'Serv-Res'   ,'Installation de services réseau '          ,false,0 );
+INSERT INTO ModulesEtat1 VALUES('S2.04',2,'Sae'      ,'Exp-BD'     ,'Exploitation d une base de données'        ,false,0 );
 
 -- /* S3 */
 -- INSERT INTO ModulesEtat1 VALUES('R3.01',3,'Ressource','Dev-Web'  ,'Développement WEB'                   ,false,10);
@@ -106,6 +106,7 @@ INSERT INTO IntervenantsEtat1 VALUES('Colin'     , 'Jean-Yves' , 100, 150, 4, 'P
 
 
 /* Données dans la table ModulesCatHeuresEtat1 */
+/* S1 */
 INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'CM' , 8 , 2, 2 );
 INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'TD' , 10, 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('P1.01', 'TP' , 10, 2, 14);
@@ -115,11 +116,9 @@ INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.01', 'CM' , 8 , 2, 2 );
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.01', 'TD' , 10, 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.01', 'TP' , 10, 2, 14);
 
-
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.02', 'TD' , 5 , 5, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.02', 'TP' , 5 , 3, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.02', 'CM' , 5 , 3, 14);
-
 
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.03', 'TD' , 8 , 2, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.03', 'TP' , 8 , 2, 14);
@@ -149,35 +148,50 @@ INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.09', 'TD' , 5 , 2, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.09', 'TP' , 5 , 4, 14);
 INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.09', 'CM' , 5 , 4, 14);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.10', 'TD' , 5 , 2, 14);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.10', 'TP' , 5 , 4, 14);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.10', 'CM' , 5 , 4, 14);
+/* S2 */
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.01', 'CM' , 8 , 2, 2 );
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.01', 'TD' , 10, 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.01', 'TP' , 10, 2, 14);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.11', 'TD' , 5 , 2, 14);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.11', 'TP' , 5 , 4, 14);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.11', 'CM' , 5 , 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.02', 'TD' , 5 , 5, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.02', 'TP' , 5 , 3, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.02', 'CM' , 5 , 3, 14);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'TD' , 5 , 2, 14);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'TP' , 5 , 4, 14);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('R1.12', 'CM' , 5 , 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.03', 'TD' , 8 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.03', 'TP' , 8 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.03', 'CM' , 8 , 2, 14);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'SAE' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.01', 'TUT' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.04', 'TD' , 10, 2, 7 );
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.04', 'TP' , 2 , 4, 7 );
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.04', 'CM' , 2 , 4, 7 );
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'SAE' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.02', 'TUT' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.05', 'TD' , 5 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.05', 'TP' , 5 , 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.05', 'CM' , 5 , 4, 14);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'SAE' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.05', 'TUT' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.06', 'TD' , 5 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.06', 'TP' , 5 , 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.06', 'CM' , 5 , 4, 14);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'SAE' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'TUT' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.07', 'TD' , 5 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.07', 'TP' , 5 , 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.07', 'CM' , 5 , 4, 14);
 
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'SAE' , 5 , 2, 1);
-INSERT INTO ModulesCatHeuresEtat1 VALUES('S1.06', 'TUT' , 5 , 4, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.13', 'TD' , 5 , 2, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.13', 'TP' , 5 , 4, 14);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.13', 'CM' , 5 , 4, 14);
 
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S2.01', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S2.01', 'TUT' , 5 , 4, 1);
 
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S2.02', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S2.02', 'TUT' , 5 , 4, 1);
 
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S2.03', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S2.03', 'TUT' , 5 , 4, 1);
+
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S2.04', 'SAE' , 5 , 2, 1);
+INSERT INTO ModulesCatHeuresEtat1 VALUES('S2.04', 'TUT' , 5 , 4, 1);
 
 
 -- INSERT INTO ModulesCatHeuresEtat1 VALUES('R2.01', 'TP'   , 10, 4 , 13);
