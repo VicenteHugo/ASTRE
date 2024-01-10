@@ -98,6 +98,7 @@ public class Etat {
 
 			// Connection
 			 Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
+			 Etat.connec = DriverManager.getConnection("jdbc:postgresql://woody/hs220880","hs220880","SAHAU2004"); //Postgress
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hugo","hugo","sui12345"); //Postgress
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dave","dave","davepass"); //Postgress
