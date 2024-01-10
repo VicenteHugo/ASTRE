@@ -52,9 +52,9 @@ done
 
 # installation de ASTRE
 cd $install
-mkdir ASTRE
+mkdir ASTRE 
 cd ASTRE
-curl -O https://github.com/VicenteHugo/ASTRE/releases/download/v1.0.0/ASTRE.jar
+curl -O https://github.com/VicenteHugo/ASTRE/releases/download/v1.0.0/ASTRE.jar &
 {
 for ((i = 0 ; i <= 100 ; i += RANDOM % 15)); do
     sleep 0.2
