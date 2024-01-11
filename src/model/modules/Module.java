@@ -108,7 +108,7 @@ public abstract class Module implements Comparable<Module> {
 
 			int heurePN = this.heures.get(catH).get(0);
 
-			somme += heurePN  * catH.getcoefCatHeur();
+			somme +=  Math.round(heurePN  * catH.getcoefCatHeur());
 
 		}
 		return somme;
@@ -216,5 +216,16 @@ public abstract class Module implements Comparable<Module> {
 		return "Module [semestres=" + semestres + ", code=" + code + ", libLong=" + libLong + ", libCourt=" + libCourt
 				+ ", valide=" + valide + ", heurePonctuel=" + heurePonctuel + ", listCategorieHeure="
 				+ listCategorieHeure + ", heures=" + heures + "]";
+	}
+
+	public float getHeureAffect(CategorieHeures categorieHeures) 
+	{
+		int somme = 0;
+
+		for (Affectations a : this.lstAffectations)
+			if (a.getCategorieHeures() == categorieHeures)
+				somme += a.getHeureEqtd();
+
+		return somme;
 	}
 }
