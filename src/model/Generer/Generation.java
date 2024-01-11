@@ -325,7 +325,7 @@ public class Generation {
 		new File(chemin+"style").mkdir();
 		new File(chemin+"image").mkdir();
 		try {
-			BufferedImage image = ImageIO.read(new File("./lib/logoAstre.png"));
+			BufferedImage image = ImageIO.read(new File("../lib/logoAstre.png"));
 			ImageIO.write(image, "png", new File(chemin+"image/logoAstre.png"));		
 		} catch (IOException e) {e.printStackTrace();}
 		String s =  "*{\n"+

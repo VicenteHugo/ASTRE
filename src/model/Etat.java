@@ -26,8 +26,8 @@ public class Etat {
 	/*-------------------------------------------------*/
 
 	/**Chemin vers le scripts sql.*/
-	public static final String FIC_CREATE = "./SQL/REALISATION/CreateTablesAstre.sql";
-	public static final String FIC_CSV    = "./SQL/REALISATION/Function.sql";
+	public static final String FIC_CREATE = "../SQL/REALISATION/CreateTablesAstre.sql";
+	public static final String FIC_CSV    = "../SQL/REALISATION/Function.sql";
 
 	/**Liste des Tables.Utile pour la verification de leurs présences. */
 	public static final String[] LST_NOM_TABLES = new String[] 
@@ -78,7 +78,8 @@ public class Etat {
 		Etat.lstActions = new ArrayList<>();
 
 		try {
-			Scanner sc = new Scanner(new FileReader("config/login.dat"));
+			System.out.println("../config/login.dat");
+			Scanner sc = new Scanner(new FileReader("./../config/login.dat"));
 			Scanner sc2 = new Scanner(sc.next());
 			sc2.useDelimiter("=");
 			sc2.next();
