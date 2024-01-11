@@ -102,6 +102,7 @@ public class Etat {
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hugo","hugo","sui12345"); //Postgress
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dave","dave","davepass"); //Postgress
+
 			Etat.connec = DriverManager.getConnection("jdbc:postgresql://" + serveur + "/" + name, name, pwd); //avec instaler 
 			Etat.recupererNomEtat();
 
@@ -321,9 +322,7 @@ public class Etat {
 			while (res.next()) {
 
 				Intervenants inter = Etat.getIntervenant(res.getString("nomInt"), res.getString("prenomInt"));
-				System.out.println(res.getString("codeMod"));
 
-				System.out.println("Code : " + res.getString("codeMod"));
 				Module mode = Etat.getModule(res.getString("codeMod"));
 				CategorieHeures cat = Etat.getCatHeure(res.getString("libCatHeur"));
 				int nbs = res.getInt("nbSem");
@@ -540,7 +539,6 @@ public class Etat {
 
 
 				// On l'execute
-				System.out.println(st);
 				st.executeUpdate();
 			}
 		} catch (Exception e) { e.printStackTrace(); }
@@ -727,6 +725,7 @@ public class Etat {
 	// JAI PAS ACCES A LA COMMANDE DONC MODE BRUTAL
 	public static void genererCSV() { 
 
+		String fic = PanelEtat.getFichier() + "/";
 		String sqlInt = "SELECT \n" + //
 				"i.nomInt      AS \"Nom\",\n" + //
 				"i.prenomInt   AS \"Prenom\",\n" + //
@@ -799,7 +798,7 @@ public class Etat {
 		try {
              PreparedStatement preparedStatement = Etat.connec.prepareStatement(sqlInt);
              ResultSet resultSet = preparedStatement.executeQuery();
-             try (FileWriter csvWriter = new FileWriter("data_" + Etat.nom + ".csv")) {
+             try (FileWriter csvWriter = new FileWriter(fic + "data_" + Etat.nom + ".csv")) {
 
 				// Write CSV header
 				csvWriter.append("Intervenants,,Categorie,,,,S1,,S3,,S5,,SSTot,,S2,,S4,,S6,,SSTot,,Totaux,,\n");
