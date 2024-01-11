@@ -335,8 +335,6 @@ public class Controleur {
 	public boolean modifModules(Module mOld, String code, String libL, String libC, int hp, boolean v,
 			HashMap<CategorieHeures, List<Integer>> heures) {
 
-		System.out.println("Code nouveau ? " + (Etat.getModule(code) == null || Etat.getModule(code) == mOld));
-		System.out.println("Code meme    ? " + (Etat.getModule(code) == null || Etat.getModule(code) == mOld));
 
 		if ((Etat.getModule(code) == null || Etat.getModule(code) == mOld)) {
 			// On remplace l'objet
@@ -353,8 +351,6 @@ public class Controleur {
 
 			mNew.setHeures(heures);
 			mNew.setListCategorieHeure(mOld.getListCategorieHeure());
-
-			System.out.println("HEURES QUE J'AI : " + heures);
 
 
 

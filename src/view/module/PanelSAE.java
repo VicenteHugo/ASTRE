@@ -590,6 +590,14 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 			return;
 		}
 
+	
+		//Si case vide on met à 0
+		if (this.txtEtdSaePromRep.getText().isEmpty()) this.txtEtdSaePromRep.setText(0 + "");
+		if (this.txtEtdTutPromRep.getText().isEmpty()) this.txtEtdTutPromRep.setText(0 + "");
+
+		if (this.txtHeureEtdSaePN.getText().isEmpty()) this.txtHeureEtdSaePN.setText(0 + "");
+		if (this.txtHeureEtdTutPN.getText().isEmpty()) this.txtHeureEtdTutPN.setText(0 + "");
+
 		boolean   val = this.cbValide      .isSelected();
 		String    cod = this.txtCodeMod    .getText();
 		String    liL = this.txtLibLongMod .getText();
@@ -669,6 +677,16 @@ public class PanelSAE extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusLost(FocusEvent e) {
+
+		
+		//Si case vide on met à 0
+		if (this.txtEtdSaePromRep.getText().isEmpty()) this.txtEtdSaePromRep.setText(0 + "");
+		if (this.txtEtdTutPromRep.getText().isEmpty()) this.txtEtdTutPromRep.setText(0 + "");
+
+		if (this.txtHeureEtdSaePN.getText().isEmpty()) this.txtHeureEtdSaePN.setText(0 + "");
+		if (this.txtHeureEtdTutPN.getText().isEmpty()) this.txtHeureEtdTutPN.setText(0 + "");
+
+		
 		int totPN   = Integer.parseInt(this.txtHeureEtdSaePN.getText())   + Integer.parseInt(this.txtHeureEtdTutPN.getText());
 		int totEqtd = Integer.parseInt(this.txtEtdSaePromRep.getText()) + Integer.parseInt(this.txtEtdTutPromRep.getText());
 

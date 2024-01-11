@@ -102,6 +102,7 @@ public class Etat {
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hugo","hugo","sui12345"); //Postgress
 			//Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/hs220880","hs220880","SAHAU2004"); //Postgress
 			// Etat.connec = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dave","dave","davepass"); //Postgress
+
 			Etat.connec = DriverManager.getConnection("jdbc:postgresql://" + serveur + "/" + name, name, pwd); //avec instaler 
 			Etat.recupererNomEtat();
 
@@ -115,9 +116,9 @@ public class Etat {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} /*catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}*/
+		}
 	}
 
 	
@@ -321,9 +322,7 @@ public class Etat {
 			while (res.next()) {
 
 				Intervenants inter = Etat.getIntervenant(res.getString("nomInt"), res.getString("prenomInt"));
-				System.out.println(res.getString("codeMod"));
 
-				System.out.println("Code : " + res.getString("codeMod"));
 				Module mode = Etat.getModule(res.getString("codeMod"));
 				CategorieHeures cat = Etat.getCatHeure(res.getString("libCatHeur"));
 				int nbs = res.getInt("nbSem");
@@ -540,7 +539,6 @@ public class Etat {
 
 
 				// On l'execute
-				System.out.println(st);
 				st.executeUpdate();
 			}
 		} catch (Exception e) { e.printStackTrace(); }

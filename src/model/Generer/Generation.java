@@ -28,6 +28,8 @@ public class Generation {
 	private Module module;
 	private List<Affectations> listeTriee;
 	private Set<String> printedItems = new HashSet<String>();
+
+	
 	public Generation(Intervenants intervenant, String chemin)
 	{
 		this.intervenant = intervenant;
@@ -129,7 +131,8 @@ public class Generation {
 			pw.println ( "				<div class=\"barreBleue\">");
 			pw.println ( "					<ul>");
 			pw.println ( "						<li>Module&nbsp;&nbsp;&nbsp;&nbsp;: "+module.getCode()+" "+module.getLibLong()+"</li>");
-			pw.println ( "						<li>Heures totales(TD) : "+module.getHeureTotal()+"</li>");
+			pw.println ( "						<li>Heures programmes (eqtd) : "+module.getHeurePn()+"</li>");
+			pw.println ( "						<li>Heures affectés&nbsp;&nbsp; (eqtd) : "+module.getHeureAffecte()+"</li>");
 			pw.println ( "						<li>Nombres d'intervenants : "+listeIntervenants.size() + "</li>");
 			pw.println ( "						<br>");
 			pw.println ( "					</ul>");
@@ -274,6 +277,10 @@ public class Generation {
 					divHeure+="				<h2>"+a.getCategorieHeures().getlibCatHeur()+"</h2>\n";
 					divHeure+="				<div class=\"barreBleue\">\n";
 					divHeure+="					<ul>\n";
+					divHeure+="						<li> Heure PN&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(eqtd) : " + (int) (Math.ceil(a.getModule().getHeures().get(a.getCategorieHeures()).get(0) * a.getCategorieHeures().getcoefCatHeur())) +"</li>\n";
+					divHeure+="						<li> Heure Affect (eqtd) : " + (int) (a.getModule().getHeureAffect(a.getCategorieHeures())) +"</li>\n";
+					divHeure+="						<br>\n";
+
 				}
 				for (Intervenants key : map.keySet()) {
 					affec = map.get(key);
@@ -285,6 +292,7 @@ public class Generation {
 							if (!profA.getIntervenant().equals(profActuel)) {
 								cpt = 1;
 								divHeure+="						<li class=\"typeHeure\">"+profA.getIntervenant().getNomIntervenant()+" "+profA.getIntervenant().getPrenomIntervenant()+":\n";
+												
 								profActuel  = profA.getIntervenant();
 							}
 							divHeure+="								<ul>\n";
@@ -292,7 +300,10 @@ public class Generation {
 							divHeure+="										<ul>\n";
 							divHeure+="											<li>Nb de groupes&nbsp;&nbsp;: "+profA.getNbGroupe()+"</li>\n";
 							divHeure+="											<li>Nb de semaine&nbsp;&nbsp;: "+profA.getNbSemaine()+"</li>\n";
-							divHeure+="											<li>Heures Totales: "+profA.getNbGroupe()*profA.getNbSemaine()+"</li>\n";
+
+							int hSem = profA.getModule().getHeures().get(profA.getCategorieHeures()).get(2);
+							divHeure+="											<li>Nb de heures&nbsp;&nbsp; : "+ hSem +"</li>\n";
+							divHeure+="											<li>Heures Tot Eqtd: "+ (int) ((profA.getNbGroupe()*profA.getNbSemaine() * hSem) * profA.getCategorieHeures().getcoefCatHeur()) +"</li>\n";
 							divHeure+="										</ul>\n";
 							divHeure+="									</li>\n";
 							divHeure+="								</ul>\n";
@@ -313,7 +324,6 @@ public class Generation {
 	public static void genererStyle(String chemin){		
 		new File(chemin+"style").mkdir();
 		new File(chemin+"image").mkdir();
-		System.out.println(chemin);
 		try {
 			BufferedImage image = ImageIO.read(new File("./lib/logoAstre.png"));
 			ImageIO.write(image, "png", new File(chemin+"image/logoAstre.png"));		

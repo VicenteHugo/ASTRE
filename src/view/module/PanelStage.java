@@ -582,6 +582,15 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 			this.showMessageDialog("Le code est obligatoire");
 			return;
 		}
+		
+		//Si case vide on met à 0
+		if (this.txtHeureEtdREHPN .getText().isEmpty()) this.txtHeureEtdREHPN .setText(0 + "");
+		if (this.txtHeureEtdhTutPN.getText().isEmpty()) this.txtHeureEtdhTutPN.setText(0 + "");
+
+		if (this.txthTutTotEtd.getText().isEmpty()) this.txthTutTotEtd.setText(0 + "");
+		if (this.txtREHTotEtd .getText().isEmpty()) this.txtREHTotEtd .setText(0 + "");
+
+
 
 		boolean   val = this.cbValide      .isSelected();
 		String    cod = this.txtCodeMod    .getText();
@@ -672,6 +681,15 @@ public class PanelStage extends JPanel implements ActionListener, FocusListener{
 
 
 	public void focusLost(FocusEvent e) {
+		
+
+		
+		//Si case vide on met à 0
+		if (this.txtHeureEtdREHPN .getText().isEmpty()) this.txtHeureEtdREHPN .setText(0 + "");
+		if (this.txtHeureEtdhTutPN.getText().isEmpty()) this.txtHeureEtdhTutPN.setText(0 + "");
+
+		if (this.txthTutTotEtd.getText().isEmpty()) this.txthTutTotEtd.setText(0 + "");
+		if (this.txtREHTotEtd .getText().isEmpty()) this.txtREHTotEtd .setText(0 + "");
 
 		int totPN = Integer.parseInt(this.txtHeureEtdREHPN.getText()) + Integer.parseInt(this.txtHeureEtdhTutPN.getText());
 		this.txtHeureEtdSPN.setText(totPN + "");

@@ -771,6 +771,23 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 			return;
 		}
 
+		//Si case vide on met à 0
+		if (this.txtCMNbHeure.getText().isEmpty()) this.txtCMNbHeure.setText(0 + "");
+		if (this.txtCMNbSem  .getText().isEmpty()) this.txtCMNbSem  .setText(0 + "");
+
+		if (this.txtTDNbHeure.getText().isEmpty()) this.txtTDNbHeure.setText(0 + "");
+		if (this.txtTDNbSem  .getText().isEmpty()) this.txtTDNbSem  .setText(0 + "");
+
+		if (this.txtTPNbHeure.getText().isEmpty()) this.txtTPNbHeure.setText(0 + "");
+		if (this.txtTPNbSem  .getText().isEmpty()) this.txtTPNbSem  .setText(0 + "");
+
+		if (this.txtHPTot.getText().isEmpty()) this.txtHPTot.setText(0 + "");
+
+		if (this.txtHeureTPPN.getText().isEmpty()) this.txtHeureTPPN.setText(0 + "");
+		if (this.txtHeureTDPN.getText().isEmpty()) this.txtHeureTDPN.setText(0 + "");
+		if (this.txtHeureCMPN.getText().isEmpty()) this.txtHeureCMPN.setText(0 + "");
+
+
 		boolean   val = this.cbValide      .isSelected();
 		String    cod = this.txtCodeMod    .getText();
 		String    liL = this.txtLibLongMod .getText();
@@ -858,6 +875,23 @@ public class PanelRessources extends JPanel implements ActionListener, FocusList
 
 
 	public void focusLost(FocusEvent e) {
+
+		//Si case vide on met à 0
+		if (this.txtCMNbHeure.getText().isEmpty()) this.txtCMNbHeure.setText(0 + "");
+		if (this.txtCMNbSem  .getText().isEmpty()) this.txtCMNbSem  .setText(0 + "");
+
+		if (this.txtTDNbHeure.getText().isEmpty()) this.txtTDNbHeure.setText(0 + "");
+		if (this.txtTDNbSem  .getText().isEmpty()) this.txtTDNbSem  .setText(0 + "");
+
+		if (this.txtTPNbHeure.getText().isEmpty()) this.txtTPNbHeure.setText(0 + "");
+		if (this.txtTPNbSem  .getText().isEmpty()) this.txtTPNbSem  .setText(0 + "");
+
+		if (this.txtHPTot.getText().isEmpty()) this.txtHPTot.setText(0 + "");
+
+		if (this.txtHeureTPPN.getText().isEmpty()) this.txtHeureTPPN.setText(0 + "");
+		if (this.txtHeureTDPN.getText().isEmpty()) this.txtHeureTDPN.setText(0 + "");
+		if (this.txtHeureCMPN.getText().isEmpty()) this.txtHeureCMPN.setText(0 + "");
+
 
 		//Récupération des données
 		int cmPN  = Integer.parseInt(this.txtHeureCMPN.getText());

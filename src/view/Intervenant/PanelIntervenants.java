@@ -14,6 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import controleur.Controleur;
+import model.Etat;
 import view.accueil.FrameAccueil;
 import view.accueil.PanelAccueil;
 
@@ -80,6 +81,14 @@ public class PanelIntervenants extends JPanel {
 		// Action
 		this.btnAnnuler.addActionListener((e) -> this.annuler());
 		this.btnAjout.addActionListener((e) -> {
+			
+			if (Etat.getCategoriesIntervenants().size()==0) {
+				JOptionPane.showMessageDialog(this, "Veuillez créer une catégorie d'intervenants avant", "Erreur", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+
+
 			if(f != null) return;
 			f = new JFrame();
 			f.add(new PanelAddIntervenant(this, this.frame, f));
