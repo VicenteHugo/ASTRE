@@ -113,6 +113,7 @@ INSERT INTO CategorieHeuresEtat1 VALUES('CM' ,1.5);
 INSERT INTO CategorieHeuresEtat1 VALUES('TUT',1.5);
 INSERT INTO CategorieHeuresEtat1 VALUES('REH',1.0);
 INSERT INTO CategorieHeuresEtat1 VALUES('SAE',1.5);
+INSERT INTO CategorieHeuresEtat1 VALUES('HP', 1.5);
 
 /* Données dans la table Module */
 /* S1 */

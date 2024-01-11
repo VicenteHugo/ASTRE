@@ -98,12 +98,13 @@ INSERT INTO CategorieIntervenantsEtat2 VALUES('a'     ,'Autre'                  
 
 
 /* Données dans la table CatégoriesHeures */
-INSERT INTO CategorieHeuresEtat2  VALUES('CM'   ,1.5);
-INSERT INTO CategorieHeuresEtat2  VALUES('TP'   ,1.5);
-INSERT INTO CategorieHeuresEtat2  VALUES('TD'   ,1.5);
-INSERT INTO CategorieHeuresEtat2  VALUES('Tut'  ,1  );
-INSERT INTO CategorieHeuresEtat2  VALUES('REH'  ,1  );
-INSERT INTO CategorieHeuresEtat2  VALUES('Autre',1  );
+INSERT INTO CategorieHeuresEtat2 VALUES('TP' ,1.0);
+INSERT INTO CategorieHeuresEtat2 VALUES('TD' ,1.0);
+INSERT INTO CategorieHeuresEtat2 VALUES('CM' ,1.5);
+INSERT INTO CategorieHeuresEtat2 VALUES('TUT',1.5);
+INSERT INTO CategorieHeuresEtat2 VALUES('REH',1.5);
+INSERT INTO CategorieHeuresEtat2 VALUES('SAE',1.0);
+INSERT INTO CategorieHeuresEtat2 VALUES('HP', 1.5);
 
 
 
